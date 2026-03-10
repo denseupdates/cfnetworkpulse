@@ -16,7 +16,7 @@
 <link rel="author" href="https://www.perplexity.ai/computer">
 
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +24,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./base.css">
+  <link rel="stylesheet" href="./style.css">
   <style>
     /* ========== RESET & BASE ========== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -98,30 +100,6 @@
       line-height: 1.6;
       color: var(--color-text);
       background: var(--color-bg);
-    }
-
-    /* ========== HEADER ========== */
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.25rem 1.5rem;
-    }
-
-    .header__brand {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      color: var(--color-text);
-    }
-
-    .header__logo {
-      font-family: var(--font-display);
-      font-size: 1.75rem;
-      letter-spacing: 0.02em;
     }
 
     .theme-toggle {
@@ -520,16 +498,52 @@
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <a href="./index.html" class="header__brand">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-      <span class="header__logo">CF NETWORKNEWS</span>
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="./index.html" class="logo" aria-label="CF Network News home">
+      <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+        <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+        <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+      </svg>
+      <div class="logo__text">CF NETWORK<span>NEWS</span></div>
     </a>
+
     <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
-  </header>
+  </div>
+</header>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span class="ticker__item">BREAKING: Jacob Heppner Reveals Hiking Injury in Hawaii &mdash; Missed 26.2 Score Submission</span>
+    <span class="ticker__item">Colten Mertens Leads the Men&rsquo;s Open After 26.2 &mdash; Lucy Campbell Dominates the Women&rsquo;s Side</span>
+    <span class="ticker__item">26.3 Announced Live from Wodapalooza Miami Beach &mdash; Thursday March 12 at 3 PM ET</span>
+    <span class="ticker__item">BREAKING: Jacob Heppner Reveals Hiking Injury in Hawaii &mdash; Missed 26.2 Score Submission</span>
+    <span class="ticker__item">Colten Mertens Leads the Men&rsquo;s Open After 26.2 &mdash; Lucy Campbell Dominates the Women&rsquo;s Side</span>
+    <span class="ticker__item">26.3 Announced Live from Wodapalooza Miami Beach &mdash; Thursday March 12 at 3 PM ET</span>
+  </div>
+</div>
+
+<!-- ===== SECTION NAV ===== -->
+<nav class="section-nav" aria-label="Section navigation">
+  <div class="section-nav__track">
+    <a href="./news.html" class="section-nav__link">Top Stories</a>
+    <a href="./gossip.html" class="section-nav__link">Gossip</a>
+    <a href="./open.html" class="section-nav__link">The Open</a>
+    <a href="./shows.html" class="section-nav__link">Today's Shows</a>
+    <a href="./rankings.html" class="section-nav__link">Rankings</a>
+    <a href="./rogue.html" class="section-nav__link">Rogue</a>
+    <a href="./competitions.html" class="section-nav__link">Competitions</a>
+    <a href="./wza-schedule.html" class="section-nav__link section-nav__link--active">WZA Schedule</a>
+    <a href="./games.html" class="section-nav__link">2026 Games</a>
+    <a href="./index.html#subscribe" class="section-nav__link">Subscribe</a>
+  </div>
+</nav>
 
   <!-- Hero -->
   <section class="hero">
@@ -1101,28 +1115,7 @@
       });
     });
 
-    // Dark mode toggle
-    (function(){
-      const t = document.querySelector('[data-theme-toggle]');
-      const r = document.documentElement;
-      let d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
-      r.setAttribute('data-theme', d);
-      updateIcon();
-
-      t && t.addEventListener('click', () => {
-        d = d === 'dark' ? 'light' : 'dark';
-        r.setAttribute('data-theme', d);
-        t.setAttribute('aria-label', 'Switch to ' + (d === 'dark' ? 'light' : 'dark') + ' mode');
-        updateIcon();
-      });
-
-      function updateIcon() {
-        if (!t) return;
-        t.innerHTML = d === 'dark'
-          ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
-          : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-      }
-    })();
   </script>
+  <script src="./app.js"></script>
 </body>
 </html>
