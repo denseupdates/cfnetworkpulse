@@ -432,4 +432,98 @@
   }
 
   render();
+
+  // ===== PAID ADS SECTION =====
+  var AD_KEY = "cfnn_ads";
+  var adForm = document.getElementById("adForm");
+  var adFeed = document.getElementById("adFeed");
+  var adEmpty = document.getElementById("adEmpty");
+
+  function getAds() {
+    try { return JSON.parse(storeGet(AD_KEY)) || []; }
+    catch (e) { return []; }
+  }
+
+  function saveAds(ads) {
+    storeSet(AD_KEY, JSON.stringify(ads));
+  }
+
+  function renderAds() {
+    if (!adFeed) return;
+    var ads = getAds();
+    // Remove old ad cards
+    var oldCards = adFeed.querySelectorAll(".ad-card");
+    oldCards.forEach(function (el) { el.remove(); });
+
+    if (ads.length === 0) {
+      if (adEmpty) adEmpty.style.display = "flex";
+      return;
+    }
+    if (adEmpty) adEmpty.style.display = "none";
+
+    ads.forEach(function (ad) {
+      var card = document.createElement("div");
+      var tierClass = ad.tier === "premium" ? " ad-card--premium" : (ad.tier === "featured" ? " ad-card--featured" : "");
+      card.className = "ad-card" + tierClass;
+
+      var tierLabel = ad.tier === "premium" ? "Premium Sponsor" : (ad.tier === "featured" ? "Featured Sponsor" : "Sponsored");
+      var html = '<div class="ad-card__sponsor">' + tierLabel + '</div>';
+      html += '<div class="ad-card__name">' + escapeHtml(ad.name) + '</div>';
+      html += '<div class="ad-card__text">' + escapeHtml(ad.text) + '</div>';
+      if (ad.link) {
+        html += '<a href="' + escapeHtml(ad.link) + '" target="_blank" rel="noopener noreferrer" class="ad-card__link">Visit Site <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>';
+      }
+      card.innerHTML = html;
+      adFeed.insertBefore(card, adEmpty);
+    });
+  }
+
+  if (adForm) {
+    adForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var adName = document.getElementById("adName").value.trim();
+      var adEmail = document.getElementById("adEmail").value.trim();
+      var adTier = document.getElementById("adTier").value;
+      var adMessage = document.getElementById("adMessage").value.trim();
+      var adLink = document.getElementById("adLink").value.trim();
+
+      if (!adName || !adEmail || !adMessage) return;
+
+      var ads = getAds();
+      ads.unshift({
+        id: generateId(),
+        name: adName,
+        email: adEmail,
+        tier: adTier,
+        text: adMessage,
+        link: adLink || "",
+        ts: Date.now(),
+        status: "pending"
+      });
+      saveAds(ads);
+
+      // Show success
+      var successEl = adForm.querySelector(".ad-form__success");
+      if (!successEl) {
+        successEl = document.createElement("div");
+        successEl.className = "ad-form__success";
+        adForm.appendChild(successEl);
+      }
+      successEl.textContent = "Ad request submitted! Your ad for \"" + adName + "\" is pending review.";
+      successEl.style.display = "block";
+
+      // Reset form
+      adForm.reset();
+
+      // Render ads
+      renderAds();
+
+      // Hide success after 5s
+      setTimeout(function () {
+        successEl.style.display = "none";
+      }, 5000);
+    });
+  }
+
+  renderAds();
 })();
