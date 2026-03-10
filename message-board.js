@@ -463,10 +463,10 @@
 
     ads.forEach(function (ad) {
       var card = document.createElement("div");
-      var tierClass = ad.tier === "premium" ? " ad-card--premium" : (ad.tier === "featured" ? " ad-card--featured" : "");
+      var tierClass = ad.tier === "monthly" ? " ad-card--featured" : "";
       card.className = "ad-card" + tierClass;
 
-      var tierLabel = ad.tier === "premium" ? "Premium Sponsor" : (ad.tier === "featured" ? "Featured Sponsor" : "Sponsored");
+      var tierLabel = ad.tier === "monthly" ? "Monthly Sponsor" : "Weekly Sponsor";
       var html = '<div class="ad-card__sponsor">' + tierLabel + '</div>';
       html += '<div class="ad-card__name">' + escapeHtml(ad.name) + '</div>';
       html += '<div class="ad-card__text">' + escapeHtml(ad.text) + '</div>';
