@@ -441,6 +441,12 @@
     monthly: "https://buy.stripe.com/eVqbJ25sQ97i7l2cix2Ry01"
   };
 
+  /* Duration in milliseconds for each tier */
+  var TIER_DURATION = {
+    weekly: 7 * 24 * 60 * 60 * 1000,   /* 7 days */
+    monthly: 30 * 24 * 60 * 60 * 1000  /* 30 days */
+  };
+
   var adForm = document.getElementById("adForm");
   var adFeed = document.getElementById("adFeed");
   var adEmpty = document.getElementById("adEmpty");
@@ -462,8 +468,11 @@
       if (pendingRaw) {
         try {
           var pendingAd = JSON.parse(pendingRaw);
+          var now = Date.now();
           pendingAd.status = "active";
-          pendingAd.ts = Date.now();
+          pendingAd.paidAt = now;
+          pendingAd.expiresAt = now + (TIER_DURATION[pendingAd.tier] || TIER_DURATION.weekly);
+          pendingAd.ts = now;
           var ads = getAds();
           ads.unshift(pendingAd);
           saveAds(ads);
@@ -477,9 +486,36 @@
 
   checkPaymentReturn();
 
+  /* Human-readable time remaining */
+  function timeRemaining(expiresAt) {
+    var diff = expiresAt - Date.now();
+    if (diff <= 0) return "Expired";
+    var days = Math.floor(diff / (24 * 60 * 60 * 1000));
+    var hours = Math.floor((diff % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+    if (days > 1) return days + " days left";
+    if (days === 1) return "1 day left";
+    if (hours > 1) return hours + " hours left";
+    if (hours === 1) return "1 hour left";
+    return "< 1 hour left";
+  }
+
+  /* Purge expired ads and persist cleanup */
+  function purgeExpiredAds() {
+    var now = Date.now();
+    var ads = getAds();
+    var cleaned = ads.filter(function (a) {
+      if (a.status !== "active") return false;
+      /* Ads without expiresAt are legacy — treat as 7-day from ts */
+      var exp = a.expiresAt || (a.ts + TIER_DURATION.weekly);
+      return exp > now;
+    });
+    if (cleaned.length !== ads.length) saveAds(cleaned);
+    return cleaned;
+  }
+
   function renderAds() {
     if (!adFeed) return;
-    var ads = getAds().filter(function (a) { return a.status === "active"; });
+    var ads = purgeExpiredAds();
     // Remove old ad cards
     var oldCards = adFeed.querySelectorAll(".ad-card");
     oldCards.forEach(function (el) { el.remove(); });
@@ -496,14 +532,84 @@
       card.className = "ad-card" + tierClass;
 
       var tierLabel = ad.tier === "monthly" ? "Monthly Sponsor" : "Weekly Sponsor";
-      var html = '<div class="ad-card__sponsor">' + tierLabel + '</div>';
+      var expiry = ad.expiresAt || (ad.ts + TIER_DURATION.weekly);
+      var remaining = timeRemaining(expiry);
+
+      var html = '<div class="ad-card__top-row">';
+      html += '<div class="ad-card__sponsor">' + tierLabel + '</div>';
+      html += '<span class="ad-card__expiry">' + remaining + '</span>';
+      html += '</div>';
       html += '<div class="ad-card__name">' + escapeHtml(ad.name) + '</div>';
+      if (ad.image) {
+        html += '<img class="ad-card__image" src="' + ad.image + '" alt="Ad image for ' + escapeHtml(ad.name) + '" loading="lazy">';
+      }
       html += '<div class="ad-card__text">' + escapeHtml(ad.text) + '</div>';
       if (ad.link) {
         html += '<a href="' + escapeHtml(ad.link) + '" target="_blank" rel="noopener noreferrer" class="ad-card__link">Visit Site <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>';
       }
       card.innerHTML = html;
       adFeed.insertBefore(card, adEmpty);
+    });
+  }
+
+  // --- Image upload handling ---
+  var adImageData = "";
+  var adImageInput = document.getElementById("adImage");
+  var adUploadPlaceholder = document.getElementById("adUploadPlaceholder");
+  var adUploadPreview = document.getElementById("adUploadPreview");
+  var adPreviewImg = document.getElementById("adPreviewImg");
+  var adRemoveImg = document.getElementById("adRemoveImg");
+  var adUploadArea = document.getElementById("adUploadArea");
+
+  function handleImageFile(file) {
+    if (!file || !file.type.match(/^image\//)) return;
+    if (file.size > 2 * 1024 * 1024) {
+      alert("Image must be under 2MB.");
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function (ev) {
+      adImageData = ev.target.result;
+      if (adPreviewImg) adPreviewImg.src = adImageData;
+      if (adUploadPlaceholder) adUploadPlaceholder.style.display = "none";
+      if (adUploadPreview) adUploadPreview.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+  }
+
+  if (adImageInput) {
+    adImageInput.addEventListener("change", function () {
+      if (adImageInput.files && adImageInput.files[0]) {
+        handleImageFile(adImageInput.files[0]);
+      }
+    });
+  }
+
+  if (adRemoveImg) {
+    adRemoveImg.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      adImageData = "";
+      if (adImageInput) adImageInput.value = "";
+      if (adUploadPlaceholder) adUploadPlaceholder.style.display = "flex";
+      if (adUploadPreview) adUploadPreview.style.display = "none";
+    });
+  }
+
+  if (adUploadArea) {
+    adUploadArea.addEventListener("dragover", function (ev) {
+      ev.preventDefault();
+      adUploadArea.classList.add("dragging");
+    });
+    adUploadArea.addEventListener("dragleave", function () {
+      adUploadArea.classList.remove("dragging");
+    });
+    adUploadArea.addEventListener("drop", function (ev) {
+      ev.preventDefault();
+      adUploadArea.classList.remove("dragging");
+      if (ev.dataTransfer.files && ev.dataTransfer.files[0]) {
+        handleImageFile(ev.dataTransfer.files[0]);
+      }
     });
   }
 
@@ -526,6 +632,7 @@
         tier: adTier,
         text: adMessage,
         link: adLink || "",
+        image: adImageData || "",
         ts: Date.now(),
         status: "pending_payment"
       };
@@ -533,7 +640,6 @@
 
       // Build Stripe checkout URL with return parameter
       var stripeUrl = STRIPE_LINKS[adTier] || STRIPE_LINKS.weekly;
-      var returnUrl = window.location.origin + window.location.pathname + "?ad_paid=true";
 
       // Redirect to Stripe Checkout
       window.location.href = stripeUrl;

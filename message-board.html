@@ -180,6 +180,21 @@
               <textarea id="adMessage" placeholder="Describe what you're promoting..." rows="3" maxlength="300" required></textarea>
             </div>
             <div class="ad-form__field">
+              <label for="adImage">Upload Image</label>
+              <div class="ad-form__upload" id="adUploadArea">
+                <input type="file" id="adImage" accept="image/*" class="ad-form__file-input">
+                <div class="ad-form__upload-placeholder" id="adUploadPlaceholder">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  <span>Click or drag to upload</span>
+                  <span class="ad-form__upload-hint">JPG, PNG, or GIF &bull; Max 2MB</span>
+                </div>
+                <div class="ad-form__upload-preview" id="adUploadPreview" style="display:none">
+                  <img id="adPreviewImg" alt="Ad preview">
+                  <button type="button" class="ad-form__upload-remove" id="adRemoveImg" aria-label="Remove image">&times;</button>
+                </div>
+              </div>
+            </div>
+            <div class="ad-form__field">
               <label for="adLink">Link (optional)</label>
               <input type="url" id="adLink" placeholder="https://yoursite.com">
             </div>
