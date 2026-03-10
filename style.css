@@ -2430,6 +2430,8 @@ a.athlete-card:hover .athlete-card__ig {
 .ad-panel__label { font-family: var(--font-display); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: #d97706; margin-bottom: var(--space-1); }
 .ad-panel__title { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.02em; color: var(--color-text); margin-bottom: var(--space-1); }
 .ad-panel__desc { font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.5; }
+.ad-panel__cta { display: inline-block; font-size: var(--text-sm); font-weight: 600; color: #d97706; text-decoration: none; margin-top: var(--space-1); transition: color 180ms ease; }
+.ad-panel__cta:hover { color: #b45309; text-decoration: underline; }
 .ad-panel__pricing { padding: var(--space-3) var(--space-4); display: flex; flex-direction: column; gap: var(--space-2); border-bottom: 1px solid var(--color-divider); }
 .ad-tier { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) 0; }
 .ad-tier__badge { font-family: var(--font-display); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; min-width: 70px; text-align: center; }

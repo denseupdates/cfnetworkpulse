@@ -57,6 +57,7 @@
     <a href="./wza-schedule.html" class="section-nav__link">WZA Schedule</a>
     <a href="./games.html" class="section-nav__link">2026 Games</a>
     <a href="./message-board.html" class="section-nav__link section-nav__link--active">Message Board</a>
+    <a href="./advertise.html" class="section-nav__link">Advertise</a>
     <a href="./index.html#subscribe" class="section-nav__link">Subscribe</a>
   </div>
 </nav>
@@ -128,78 +129,13 @@
         </div>
       </div>
 
-      <!-- RIGHT COLUMN: Paid Posts / Ads -->
+      <!-- RIGHT COLUMN: Sponsored Ads -->
       <aside class="mb-layout__sidebar">
         <div class="ad-panel">
           <div class="ad-panel__header">
             <div class="ad-panel__label">Sponsored</div>
-            <p class="ad-panel__desc">Promote your gym, brand, coaching, or product to the CrossFit community.</p>
+            <a href="./advertise.html" class="ad-panel__cta">To advertise on this page, click here &rarr;</a>
           </div>
-
-          <!-- Pricing Info -->
-          <div class="ad-panel__pricing">
-            <div class="ad-tier">
-              <div class="ad-tier__badge ad-tier__badge--basic">Weekly</div>
-              <div class="ad-tier__details">
-                <span class="ad-tier__price">$1.99</span>
-                <span class="ad-tier__period">/ 7 days</span>
-              </div>
-              <span class="ad-tier__note">Text + 1 image</span>
-            </div>
-            <div class="ad-tier">
-              <div class="ad-tier__badge ad-tier__badge--featured">Monthly</div>
-              <div class="ad-tier__details">
-                <span class="ad-tier__price">$5.00</span>
-                <span class="ad-tier__period">/ 30 days</span>
-              </div>
-              <span class="ad-tier__note">Text + 1 image</span>
-            </div>
-          </div>
-
-          <!-- Ad Submission Form -->
-          <form class="ad-form" id="adForm">
-            <h4 class="ad-form__heading">Submit Your Ad</h4>
-            <div class="ad-form__field">
-              <label for="adName">Your Name / Business</label>
-              <input type="text" id="adName" placeholder="e.g. Iron City CrossFit" maxlength="60" required>
-            </div>
-            <div class="ad-form__field">
-              <label for="adEmail">Contact Email</label>
-              <input type="email" id="adEmail" placeholder="you@example.com" required>
-            </div>
-            <div class="ad-form__field">
-              <label for="adTier">Ad Tier</label>
-              <select id="adTier" required>
-                <option value="weekly">Weekly — $1.99 / 7 days</option>
-                <option value="monthly">Monthly — $5.00 / 30 days</option>
-              </select>
-            </div>
-            <div class="ad-form__field">
-              <label for="adMessage">Ad Content</label>
-              <textarea id="adMessage" placeholder="Describe what you're promoting..." rows="3" maxlength="300" required></textarea>
-            </div>
-            <div class="ad-form__field">
-              <label for="adImage">Upload Image</label>
-              <div class="ad-form__upload" id="adUploadArea">
-                <input type="file" id="adImage" accept="image/*" class="ad-form__file-input">
-                <div class="ad-form__upload-placeholder" id="adUploadPlaceholder">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                  <span>Click or drag to upload</span>
-                  <span class="ad-form__upload-hint">JPG, PNG, or GIF &bull; Max 2MB</span>
-                </div>
-                <div class="ad-form__upload-preview" id="adUploadPreview" style="display:none">
-                  <img id="adPreviewImg" alt="Ad preview">
-                  <button type="button" class="ad-form__upload-remove" id="adRemoveImg" aria-label="Remove image">&times;</button>
-                </div>
-              </div>
-            </div>
-            <div class="ad-form__field">
-              <label for="adLink">Link (optional)</label>
-              <input type="url" id="adLink" placeholder="https://yoursite.com">
-            </div>
-            <button type="submit" class="ad-form__submit">Pay &amp; Post Ad</button>
-            <p class="ad-form__note">You'll be redirected to Stripe to complete payment. Your ad goes live immediately after checkout.</p>
-          </form>
 
           <!-- Active Ads Feed -->
           <div class="ad-feed" id="adFeed">
@@ -387,6 +323,7 @@
     <a href="./wza-schedule.html" class="fab-nav__item">WZA Schedule</a>
     <a href="./games.html" class="fab-nav__item">2026 Games</a>
     <a href="./message-board.html" class="fab-nav__item">Message Board</a>
+    <a href="./advertise.html" class="fab-nav__item">Advertise</a>
     <a href="./index.html#subscribe" class="fab-nav__item">Subscribe</a>
   </div>
   <button class="fab-nav__btn" id="fabToggle" aria-label="Open navigation menu">
