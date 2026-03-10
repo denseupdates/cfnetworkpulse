@@ -200,7 +200,7 @@
       html += '<div class="mb-reply-form" id="reply-form-' + msg.id + '" style="display:none">';
       html += '<input type="text" class="mb-reply-form__name" placeholder="Your name" maxlength="40" value="' + escapeHtml(getSavedName()) + '">';
       html += '<div class="mb-reply-form__row">';
-      html += '<textarea class="mb-reply-form__textarea" placeholder="Write a reply..." rows="2" maxlength="75"></textarea>';
+      html += '<textarea class="mb-reply-form__textarea" placeholder="Write a reply..." rows="2" maxlength="150"></textarea>';
       html += '<button class="mb-reply-form__submit" data-submit-reply="' + msg.id + '">Reply</button>';
       html += '</div>';
       html += '</div>';
