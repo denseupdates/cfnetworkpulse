@@ -81,36 +81,11 @@
     });
   });
 
-  // ===== Newsletter Form — Mailchimp JSONP Integration =====
+  // ===== Newsletter Form — Mailchimp Integration =====
   var nlForm = document.getElementById("newsletterForm");
   var nlSuccess = document.getElementById("newsletterSuccess");
   var nlError = document.getElementById("newsletterError");
   var nlBtn = nlForm ? nlForm.querySelector(".newsletter__btn") : null;
-
-  // Global callback for Mailchimp JSONP response
-  window.mcCallback = function (resp) {
-    if (nlBtn) {
-      nlBtn.disabled = false;
-      nlBtn.textContent = "Subscribe";
-    }
-    if (resp.result === "success") {
-      nlForm.style.display = "none";
-      if (nlSuccess) nlSuccess.classList.add("newsletter__success--visible");
-      if (nlError) nlError.style.display = "none";
-    } else {
-      // Clean up Mailchimp error messages (strip HTML links etc.)
-      var msg = resp.msg || "Something went wrong. Please try again.";
-      if (msg.indexOf("already subscribed") > -1) {
-        msg = "You're already subscribed! Check your inbox for updates.";
-      } else if (msg.indexOf(" - ") > -1) {
-        msg = msg.substring(msg.indexOf(" - ") + 3);
-      }
-      if (nlError) {
-        nlError.textContent = msg;
-        nlError.style.display = "block";
-      }
-    }
-  };
 
   if (nlForm) {
     nlForm.addEventListener("submit", function (e) {
@@ -129,30 +104,58 @@
       }
       if (nlError) nlError.style.display = "none";
 
-      // Build Mailchimp JSONP URL
-      var baseUrl = "https://cfnetworknews.us13.list-manage.com/subscribe/post-json?u=d40058698a0dbd5c27f2fa54c&id=8bda743e10&c=mcCallback";
-      var params = "&EMAIL=" + encodeURIComponent(email);
+      // Build form data
       var phone = document.getElementById("nl-phone").value.trim();
-      if (phone) params += "&PHONE=" + encodeURIComponent(phone);
+      var formData = "u=d40058698a0dbd5c27f2fa54c&id=8bda743e10";
+      formData += "&EMAIL=" + encodeURIComponent(email);
+      if (phone) formData += "&PHONE=" + encodeURIComponent(phone);
+      formData += "&b_d40058698a0dbd5c27f2fa54c_8bda743e10=";
 
-      // JSONP request
-      var script = document.createElement("script");
-      script.src = baseUrl + params;
-      document.body.appendChild(script);
+      // Submit via hidden iframe to avoid redirect
+      var iframeName = "mc-iframe-" + Date.now();
+      var iframe = document.createElement("iframe");
+      iframe.name = iframeName;
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
 
-      // Clean up script tag after response
-      script.onload = function () { document.body.removeChild(script); };
-      script.onerror = function () {
-        document.body.removeChild(script);
+      var form = document.createElement("form");
+      form.method = "POST";
+      form.action = "https://cfnetworknews.us13.list-manage.com/subscribe/post";
+      form.target = iframeName;
+      form.style.display = "none";
+
+      // Add fields to the hidden form
+      var fields = {
+        u: "d40058698a0dbd5c27f2fa54c",
+        id: "8bda743e10",
+        EMAIL: email,
+        b_d40058698a0dbd5c27f2fa54c_8bda743e10: ""
+      };
+      if (phone) fields.PHONE = phone;
+
+      for (var key in fields) {
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = fields[key];
+        form.appendChild(input);
+      }
+
+      document.body.appendChild(form);
+      form.submit();
+
+      // Show success after brief delay (iframe POST won't give us a callback)
+      setTimeout(function () {
+        nlForm.style.display = "none";
+        if (nlSuccess) nlSuccess.classList.add("newsletter__success--visible");
         if (nlBtn) {
           nlBtn.disabled = false;
           nlBtn.textContent = "Subscribe";
         }
-        if (nlError) {
-          nlError.textContent = "Network error. Please try again.";
-          nlError.style.display = "block";
-        }
-      };
+        // Clean up
+        document.body.removeChild(form);
+        document.body.removeChild(iframe);
+      }, 1500);
     });
   }
 
