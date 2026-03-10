@@ -81,26 +81,78 @@
     });
   });
 
-  // ===== Newsletter Form =====
+  // ===== Newsletter Form — Mailchimp JSONP Integration =====
   var nlForm = document.getElementById("newsletterForm");
   var nlSuccess = document.getElementById("newsletterSuccess");
+  var nlError = document.getElementById("newsletterError");
+  var nlBtn = nlForm ? nlForm.querySelector(".newsletter__btn") : null;
+
+  // Global callback for Mailchimp JSONP response
+  window.mcCallback = function (resp) {
+    if (nlBtn) {
+      nlBtn.disabled = false;
+      nlBtn.textContent = "Subscribe";
+    }
+    if (resp.result === "success") {
+      nlForm.style.display = "none";
+      if (nlSuccess) nlSuccess.classList.add("newsletter__success--visible");
+      if (nlError) nlError.style.display = "none";
+    } else {
+      // Clean up Mailchimp error messages (strip HTML links etc.)
+      var msg = resp.msg || "Something went wrong. Please try again.";
+      if (msg.indexOf("already subscribed") > -1) {
+        msg = "You're already subscribed! Check your inbox for updates.";
+      } else if (msg.indexOf(" - ") > -1) {
+        msg = msg.substring(msg.indexOf(" - ") + 3);
+      }
+      if (nlError) {
+        nlError.textContent = msg;
+        nlError.style.display = "block";
+      }
+    }
+  };
 
   if (nlForm) {
     nlForm.addEventListener("submit", function (e) {
       e.preventDefault();
       var email = document.getElementById("nl-email").value.trim();
-      var phone = document.getElementById("nl-phone").value.trim();
-      var wantsNewsletter = nlForm.querySelector('[name="newsletter"]').checked;
-      var wantsAlerts = nlForm.querySelector('[name="alerts"]').checked;
 
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         document.getElementById("nl-email").focus();
         return;
       }
 
-      // Show success (connect to email service API when ready)
-      nlForm.style.display = "none";
-      if (nlSuccess) nlSuccess.classList.add("newsletter__success--visible");
+      // Disable button while submitting
+      if (nlBtn) {
+        nlBtn.disabled = true;
+        nlBtn.textContent = "Subscribing...";
+      }
+      if (nlError) nlError.style.display = "none";
+
+      // Build Mailchimp JSONP URL
+      var baseUrl = "https://cfnetworknews.us13.list-manage.com/subscribe/post-json?u=d40058698a0dbd5c27f2fa54c&id=8bda743e10&c=mcCallback";
+      var params = "&EMAIL=" + encodeURIComponent(email);
+      var phone = document.getElementById("nl-phone").value.trim();
+      if (phone) params += "&PHONE=" + encodeURIComponent(phone);
+
+      // JSONP request
+      var script = document.createElement("script");
+      script.src = baseUrl + params;
+      document.body.appendChild(script);
+
+      // Clean up script tag after response
+      script.onload = function () { document.body.removeChild(script); };
+      script.onerror = function () {
+        document.body.removeChild(script);
+        if (nlBtn) {
+          nlBtn.disabled = false;
+          nlBtn.textContent = "Subscribe";
+        }
+        if (nlError) {
+          nlError.textContent = "Network error. Please try again.";
+          nlError.style.display = "block";
+        }
+      };
     });
   }
 

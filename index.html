@@ -974,29 +974,26 @@
         <h2 class="newsletter__title">Get Breaking News &amp; Alerts</h2>
         <p class="newsletter__desc">Sign up to receive the CF Network News newsletter and breaking news alerts. Be the first to know when major stories drop — CEO changes, Open workouts, athlete injuries, and everything in between.</p>
       </div>
-      <form class="newsletter__form" id="newsletterForm" novalidate>
+      <form class="newsletter__form" id="newsletterForm" action="https://cfnetworknews.us13.list-manage.com/subscribe/post-json?u=d40058698a0dbd5c27f2fa54c&amp;id=8bda743e10&amp;c=mcCallback" method="GET" novalidate>
+        <input type="hidden" name="u" value="d40058698a0dbd5c27f2fa54c">
+        <input type="hidden" name="id" value="8bda743e10">
         <div class="newsletter__row">
           <div class="newsletter__field">
             <label for="nl-email">Email Address</label>
-            <input type="email" id="nl-email" class="newsletter__input" placeholder="you@example.com" required>
+            <input type="email" id="nl-email" name="EMAIL" class="newsletter__input" placeholder="you@example.com" required>
           </div>
           <div class="newsletter__field">
             <label for="nl-phone">Phone Number <span style="font-weight:400;opacity:0.6">(optional)</span></label>
-            <input type="tel" id="nl-phone" class="newsletter__input" placeholder="(555) 123-4567">
+            <input type="tel" id="nl-phone" name="PHONE" class="newsletter__input" placeholder="(555) 123-4567">
           </div>
         </div>
-        <div class="newsletter__checks">
-          <label class="newsletter__check">
-            <input type="checkbox" name="newsletter" checked>
-            Daily Newsletter
-          </label>
-          <label class="newsletter__check">
-            <input type="checkbox" name="alerts" checked>
-            Breaking News Alerts
-          </label>
+        <!-- Anti-bot honeypot field — do not remove -->
+        <div style="position:absolute;left:-5000px" aria-hidden="true">
+          <input type="text" name="b_d40058698a0dbd5c27f2fa54c_8bda743e10" tabindex="-1" value="">
         </div>
         <button type="submit" class="newsletter__btn">Subscribe</button>
         <div class="newsletter__success" id="newsletterSuccess">You're in! Watch your inbox for the next CF Network News update.</div>
+        <div class="newsletter__error" id="newsletterError" style="display:none;color:#ff4444;margin-top:0.75rem;font-size:var(--text-sm);"></div>
       </form>
     </div>
   </div>
