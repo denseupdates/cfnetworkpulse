@@ -21,8 +21,8 @@
 
   var AD_PENDING_KEY = "cfnn_ad_pending";
   var STRIPE_LINKS = {
-    weekly: "https://buy.stripe.com/4gM14odZm5V65cUfuJ2Ry00",
-    monthly: "https://buy.stripe.com/eVqbJ25sQ97i7l2cix2Ry01"
+    weekly: "https://buy.stripe.com/fZueVe9J6bfqeNufuJ2Ry02",
+    monthly: "https://buy.stripe.com/fZubJ2aNa4R27l2gyN2Ry03"
   };
 
   var adForm = document.getElementById("adForm");
