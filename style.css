@@ -317,6 +317,30 @@
   padding-bottom: var(--space-4);
 }
 
+.hero__mobile-image {
+  display: none;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-6);
+}
+
+.hero__mobile-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .hero__mobile-image {
+    display: block;
+  }
+  .hero--minimal {
+    padding-top: var(--space-4);
+  }
+}
+
 .hero__bg {
   position: absolute;
   inset: 0;
