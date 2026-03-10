@@ -415,7 +415,7 @@
 .ticker__track {
   display: inline-flex;
   gap: var(--space-8);
-  animation: ticker-scroll 40s linear infinite;
+  animation: ticker-scroll 80s linear infinite;
 }
 
 .ticker__item {
