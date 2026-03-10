@@ -397,6 +397,22 @@
 </div>
 
 <script src="./app.js" defer></script>
+
+<!-- Firebase SDK (compat for static sites) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+  firebase.initializeApp({
+    apiKey: "AIzaSyD1JQffSvumRnn0x40V6hk4j3EdyyBrGig",
+    authDomain: "cf-network-news.firebaseapp.com",
+    databaseURL: "https://cf-network-news-default-rtdb.firebaseio.com",
+    projectId: "cf-network-news",
+    storageBucket: "cf-network-news.firebasestorage.app",
+    messagingSenderId: "637738242934",
+    appId: "1:637738242934:web:aede6dd97c6c6139d92057"
+  });
+  window.cfnnDb = firebase.firestore();
+</script>
 <script src="./message-board.js" defer></script>
 </body>
 </html>

@@ -1,12 +1,10 @@
-/* CF Network News — Message Board */
+/* CF Network News — Message Board (Firebase Firestore real-time) */
 (function () {
   "use strict";
 
-  var STORAGE_KEY = "cfnn_messages";
-  var LIKES_KEY = "cfnn_likes";
-  var NAME_KEY = "cfnn_username";
-
-  // Storage abstraction: persistent store if available, in-memory fallback
+  /* ================================================
+     STORAGE ABSTRACTION (for local-only data: name, likes, ads)
+     ================================================ */
   var memStore = {};
   var _ls = null;
   var canUseLS = false;
@@ -27,6 +25,29 @@
     memStore[key] = val;
   }
 
+  /* ================================================
+     CONSTANTS & FIREBASE REFERENCE
+     ================================================ */
+  var NAME_KEY = "cfnn_username";
+  var LIKES_KEY = "cfnn_likes";
+  var USER_ID_KEY = "cfnn_uid";
+  var db = window.cfnnDb;
+  var commentsRef = db.collection("comments");
+
+  /* Generate or retrieve a persistent anonymous user ID */
+  function getUserId() {
+    var uid = storeGet(USER_ID_KEY);
+    if (!uid) {
+      uid = Date.now().toString(36) + Math.random().toString(36).substr(2, 8);
+      storeSet(USER_ID_KEY, uid);
+    }
+    return uid;
+  }
+  var currentUserId = getUserId();
+
+  /* ================================================
+     DOM REFERENCES
+     ================================================ */
   var feed = document.getElementById("mbFeed");
   var emptyState = document.getElementById("mbEmpty");
   var form = document.getElementById("mbForm");
@@ -43,42 +64,20 @@
   var currentSort = "newest";
   var currentSearch = "";
 
-  // --- Data helpers ---
-  function getMessages() {
-    try {
-      return JSON.parse(storeGet(STORAGE_KEY)) || [];
-    } catch (e) {
-      return [];
-    }
-  }
+  /* Live cache of comments from Firestore */
+  var liveComments = [];
 
-  function saveMessages(msgs) {
-    storeSet(STORAGE_KEY, JSON.stringify(msgs));
-  }
+  /* ================================================
+     HELPERS
+     ================================================ */
+  function getSavedName() { return storeGet(NAME_KEY) || ""; }
+  function saveName(name) { storeSet(NAME_KEY, name); }
 
   function getLikes() {
-    try {
-      return JSON.parse(storeGet(LIKES_KEY)) || {};
-    } catch (e) {
-      return {};
-    }
+    try { return JSON.parse(storeGet(LIKES_KEY)) || {}; }
+    catch (e) { return {}; }
   }
-
-  function saveLikes(likes) {
-    storeSet(LIKES_KEY, JSON.stringify(likes));
-  }
-
-  function getSavedName() {
-    return storeGet(NAME_KEY) || "";
-  }
-
-  function saveName(name) {
-    storeSet(NAME_KEY, name);
-  }
-
-  function generateId() {
-    return Date.now().toString(36) + Math.random().toString(36).substr(2, 6);
-  }
+  function saveLikes(likes) { storeSet(LIKES_KEY, JSON.stringify(likes)); }
 
   function getInitial(name) {
     return name ? name.trim().charAt(0).toUpperCase() : "?";
@@ -124,7 +123,9 @@
     return escaped.replace(regex, '<mark class="mb-highlight">$1</mark>');
   }
 
-  // --- Count all comments + replies ---
+  /* ================================================
+     COUNT, SORT, FILTER
+     ================================================ */
   function countAll(msgs) {
     var total = 0;
     msgs.forEach(function (m) {
@@ -134,7 +135,6 @@
     return total;
   }
 
-  // --- Sort ---
   function sortMessages(msgs, method) {
     var sorted = msgs.slice();
     if (method === "newest") {
@@ -147,7 +147,6 @@
     return sorted;
   }
 
-  // --- Filter by search ---
   function filterMessages(msgs, query) {
     if (!query) return msgs;
     var q = query.toLowerCase();
@@ -164,7 +163,9 @@
     });
   }
 
-  // --- Render ---
+  /* ================================================
+     RENDER
+     ================================================ */
   function renderComment(msg, isReply, parentId) {
     var likes = getLikes();
     var likeKey = isReply ? (parentId + ":" + msg.id) : msg.id;
@@ -191,7 +192,6 @@
     }
     html += '</div>';
 
-    // Reply form (hidden by default)
     if (!isReply) {
       html += '<div class="mb-reply-form" id="reply-form-' + msg.id + '" style="display:none">';
       html += '<input type="text" class="mb-reply-form__name" placeholder="Your name" maxlength="40" value="' + escapeHtml(getSavedName()) + '">';
@@ -204,7 +204,6 @@
 
     html += '</div></div>';
 
-    // Replies
     if (!isReply && msg.replies && msg.replies.length > 0) {
       html += '<div class="mb-replies">';
       msg.replies.forEach(function (r) {
@@ -217,7 +216,7 @@
   }
 
   function render() {
-    var msgs = getMessages();
+    var msgs = liveComments;
     var filtered = filterMessages(msgs, currentSearch);
     var sorted = sortMessages(filtered, currentSort);
 
@@ -233,7 +232,6 @@
         emptyState.querySelector("p").textContent = "No comments yet. Be the first to start the conversation.";
         searchResults.style.display = "none";
       }
-      // Remove all comment elements
       var existing = feed.querySelectorAll(".mb-comment-wrapper");
       existing.forEach(function (el) { el.remove(); });
       return;
@@ -248,17 +246,14 @@
       searchResults.style.display = "none";
     }
 
-    // Build HTML
     var html = "";
     sorted.forEach(function (msg) {
       html += '<div class="mb-comment-wrapper">' + renderComment(msg, false, null) + '</div>';
     });
 
-    // Remove old wrappers
     var oldWrappers = feed.querySelectorAll(".mb-comment-wrapper");
     oldWrappers.forEach(function (el) { el.remove(); });
 
-    // Insert before empty state
     var temp = document.createElement("div");
     temp.innerHTML = html;
     while (temp.firstChild) {
@@ -266,7 +261,25 @@
     }
   }
 
-  // --- Event: Submit comment ---
+  /* ================================================
+     FIRESTORE: REAL-TIME LISTENER
+     ================================================ */
+  commentsRef.orderBy("ts", "desc").onSnapshot(function (snapshot) {
+    liveComments = [];
+    snapshot.forEach(function (doc) {
+      var data = doc.data();
+      data.id = doc.id;
+      if (!data.replies) data.replies = [];
+      liveComments.push(data);
+    });
+    render();
+  }, function (err) {
+    console.error("Firestore listener error:", err);
+  });
+
+  /* ================================================
+     EVENT: SUBMIT COMMENT (write to Firestore)
+     ================================================ */
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var name = nameInput.value.trim();
@@ -277,30 +290,29 @@
     composeAvatar.textContent = getInitial(name);
     composeAvatar.style.background = getAvatarColor(name);
 
-    var msgs = getMessages();
-    msgs.push({
-      id: generateId(),
+    commentsRef.add({
       name: name,
       text: text,
       ts: Date.now(),
       likes: 0,
-      replies: []
+      replies: [],
+      uid: currentUserId
+    }).then(function () {
+      msgInput.value = "";
+      charCount.textContent = "0";
+      feed.scrollIntoView({ behavior: "smooth", block: "start" });
+    }).catch(function (err) {
+      console.error("Error posting comment:", err);
     });
-    saveMessages(msgs);
-    msgInput.value = "";
-    charCount.textContent = "0";
-    render();
-
-    // Scroll to top of feed
-    feed.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
-  // --- Event: Char count ---
+  /* ================================================
+     EVENT: CHAR COUNT
+     ================================================ */
   msgInput.addEventListener("input", function () {
     charCount.textContent = msgInput.value.length;
   });
 
-  // --- Event: Name input updates avatar ---
   nameInput.addEventListener("input", function () {
     var n = nameInput.value.trim();
     composeAvatar.textContent = getInitial(n);
@@ -311,43 +323,53 @@
     }
   });
 
-  // --- Event delegation for likes, replies ---
+  /* ================================================
+     EVENT DELEGATION: LIKES, REPLIES
+     ================================================ */
   feed.addEventListener("click", function (e) {
-    // Like button
+    /* --- Like button --- */
     var likeBtn = e.target.closest("[data-like]");
     if (likeBtn) {
       var likeKey = likeBtn.getAttribute("data-like");
       var parentId = likeBtn.getAttribute("data-parent");
       var replyId = likeBtn.getAttribute("data-reply");
       var likes = getLikes();
-      var msgs = getMessages();
 
-      var parentMsg = msgs.find(function (m) { return m.id === parentId; });
+      /* Find the parent doc in liveComments */
+      var parentMsg = liveComments.find(function (m) { return m.id === parentId; });
       if (!parentMsg) return;
 
       var target;
-      if (replyId) {
-        target = parentMsg.replies.find(function (r) { return r.id === replyId; });
-      } else {
-        target = parentMsg;
-      }
-      if (!target) return;
-
+      var delta;
       if (likes[likeKey]) {
         delete likes[likeKey];
-        target.likes = Math.max(0, (target.likes || 0) - 1);
+        delta = -1;
       } else {
         likes[likeKey] = true;
-        target.likes = (target.likes || 0) + 1;
+        delta = 1;
       }
-
       saveLikes(likes);
-      saveMessages(msgs);
-      render();
+
+      if (replyId && parentMsg.replies) {
+        /* Like on a reply — update the reply in the replies array */
+        var replyIndex = -1;
+        for (var ri = 0; ri < parentMsg.replies.length; ri++) {
+          if (parentMsg.replies[ri].id === replyId) { replyIndex = ri; break; }
+        }
+        if (replyIndex === -1) return;
+        var updatedReplies = parentMsg.replies.slice();
+        updatedReplies[replyIndex] = Object.assign({}, updatedReplies[replyIndex]);
+        updatedReplies[replyIndex].likes = Math.max(0, (updatedReplies[replyIndex].likes || 0) + delta);
+        commentsRef.doc(parentId).update({ replies: updatedReplies });
+      } else {
+        /* Like on the parent comment */
+        var newLikes = Math.max(0, (parentMsg.likes || 0) + delta);
+        commentsRef.doc(parentId).update({ likes: newLikes });
+      }
       return;
     }
 
-    // Reply toggle
+    /* --- Reply toggle --- */
     var replyBtn = e.target.closest("[data-reply-to]");
     if (replyBtn) {
       var msgId = replyBtn.getAttribute("data-reply-to");
@@ -362,7 +384,7 @@
       return;
     }
 
-    // Submit reply
+    /* --- Submit reply --- */
     var submitBtn = e.target.closest("[data-submit-reply]");
     if (submitBtn) {
       var parentMsgId = submitBtn.getAttribute("data-submit-reply");
@@ -371,29 +393,32 @@
       var replyText = replyFormEl.querySelector(".mb-reply-form__textarea").value.trim();
 
       if (!replyName || !replyText) return;
-
       saveName(replyName);
 
-      var allMsgs = getMessages();
-      var parent = allMsgs.find(function (m) { return m.id === parentMsgId; });
+      /* Find parent in liveComments */
+      var parent = liveComments.find(function (m) { return m.id === parentMsgId; });
       if (!parent) return;
 
-      if (!parent.replies) parent.replies = [];
-      parent.replies.push({
-        id: generateId(),
+      var newReply = {
+        id: Date.now().toString(36) + Math.random().toString(36).substr(2, 6),
         name: replyName,
         text: replyText,
         ts: Date.now(),
-        likes: 0
-      });
+        likes: 0,
+        uid: currentUserId
+      };
 
-      saveMessages(allMsgs);
-      render();
+      var newReplies = (parent.replies || []).concat([newReply]);
+      commentsRef.doc(parentMsgId).update({ replies: newReplies }).catch(function (err) {
+        console.error("Error posting reply:", err);
+      });
       return;
     }
   });
 
-  // --- Search ---
+  /* ================================================
+     SEARCH
+     ================================================ */
   var searchTimer;
   searchInput.addEventListener("input", function () {
     clearTimeout(searchTimer);
@@ -413,7 +438,9 @@
     searchInput.focus();
   });
 
-  // --- Sort ---
+  /* ================================================
+     SORT
+     ================================================ */
   sortBtns.forEach(function (btn) {
     btn.addEventListener("click", function () {
       sortBtns.forEach(function (b) { b.classList.remove("mb-sort__btn--active"); });
@@ -423,7 +450,9 @@
     });
   });
 
-  // --- Init ---
+  /* ================================================
+     INIT: RESTORE SAVED NAME
+     ================================================ */
   var savedName = getSavedName();
   if (savedName) {
     nameInput.value = savedName;
@@ -431,9 +460,9 @@
     composeAvatar.style.background = getAvatarColor(savedName);
   }
 
-  render();
-
-  // ===== PAID ADS SECTION =====
+  /* ================================================
+     PAID ADS SECTION (unchanged — uses local storage + Stripe)
+     ================================================ */
   var AD_KEY = "cfnn_ads";
   var AD_PENDING_KEY = "cfnn_ad_pending";
   var STRIPE_LINKS = {
@@ -443,8 +472,8 @@
 
   /* Duration in milliseconds for each tier */
   var TIER_DURATION = {
-    weekly: 7 * 24 * 60 * 60 * 1000,   /* 7 days */
-    monthly: 30 * 24 * 60 * 60 * 1000  /* 30 days */
+    weekly: 7 * 24 * 60 * 60 * 1000,
+    monthly: 30 * 24 * 60 * 60 * 1000
   };
 
   var adForm = document.getElementById("adForm");
@@ -460,7 +489,6 @@
     storeSet(AD_KEY, JSON.stringify(ads));
   }
 
-  // Check if returning from Stripe payment
   function checkPaymentReturn() {
     var params = new URLSearchParams(window.location.search);
     if (params.get("ad_paid") === "true") {
@@ -479,14 +507,12 @@
           storeSet(AD_PENDING_KEY, "");
         } catch (e) { /* ignore */ }
       }
-      // Clean URL
       window.history.replaceState({}, "", window.location.pathname);
     }
   }
 
   checkPaymentReturn();
 
-  /* Human-readable time remaining */
   function timeRemaining(expiresAt) {
     var diff = expiresAt - Date.now();
     if (diff <= 0) return "Expired";
@@ -499,13 +525,11 @@
     return "< 1 hour left";
   }
 
-  /* Purge expired ads and persist cleanup */
   function purgeExpiredAds() {
     var now = Date.now();
     var ads = getAds();
     var cleaned = ads.filter(function (a) {
       if (a.status !== "active") return false;
-      /* Ads without expiresAt are legacy — treat as 7-day from ts */
       var exp = a.expiresAt || (a.ts + TIER_DURATION.weekly);
       return exp > now;
     });
@@ -516,7 +540,6 @@
   function renderAds() {
     if (!adFeed) return;
     var ads = purgeExpiredAds();
-    // Remove old ad cards
     var oldCards = adFeed.querySelectorAll(".ad-card");
     oldCards.forEach(function (el) { el.remove(); });
 
@@ -552,7 +575,7 @@
     });
   }
 
-  // --- Image upload handling ---
+  /* --- Image upload handling --- */
   var adImageData = "";
   var adImageInput = document.getElementById("adImage");
   var adUploadPlaceholder = document.getElementById("adUploadPlaceholder");
@@ -624,9 +647,8 @@
 
       if (!adName || !adEmail || !adMessage) return;
 
-      // Save ad as pending payment
       var pendingAd = {
-        id: generateId(),
+        id: Date.now().toString(36) + Math.random().toString(36).substr(2, 6),
         name: adName,
         email: adEmail,
         tier: adTier,
@@ -638,10 +660,7 @@
       };
       storeSet(AD_PENDING_KEY, JSON.stringify(pendingAd));
 
-      // Build Stripe checkout URL with return parameter
       var stripeUrl = STRIPE_LINKS[adTier] || STRIPE_LINKS.weekly;
-
-      // Redirect to Stripe Checkout
       window.location.href = stripeUrl;
     });
   }
