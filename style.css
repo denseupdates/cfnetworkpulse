@@ -1,5 +1,5 @@
 /* Art direction: CrossFit News Hub → Bold, high-energy, athletic editorial
-   Palette: Dark/moody with electric red accent for urgency and intensity
+   Palette: Dark/moody with clean black & white design
    Typography: Bebas Neue (display, condensed impact) + Space Grotesk (body, modern geometric)
    Density: balanced — editorial sections breathe, news cards dense */
 
@@ -61,13 +61,13 @@
   --color-text-faint:     #5a5957;
   --color-text-inverse:   #0a0a0a;
 
-  --color-primary:        #e63333;
-  --color-primary-hover:  #cc2222;
-  --color-primary-active: #aa1a1a;
-  --color-primary-highlight: #3a2020;
+  --color-primary:        #ffffff;
+  --color-primary-hover:  #d4d4d4;
+  --color-primary-active: #a3a3a3;
+  --color-primary-highlight: #262626;
 
-  --color-accent:         #ff4444;
-  --color-accent-soft:    rgba(230, 51, 51, 0.12);
+  --color-accent:         #ffffff;
+  --color-accent-soft:    rgba(255, 255, 255, 0.10);
 
   --color-warning:        #bb653b;
   --color-success:        #6daa45;
@@ -92,13 +92,13 @@
   --color-text-faint:     #9a9996;
   --color-text-inverse:   #f5f4f0;
 
-  --color-primary:        #cc2222;
-  --color-primary-hover:  #aa1a1a;
-  --color-primary-active: #881414;
-  --color-primary-highlight: #f5dddd;
+  --color-primary:        #1a1917;
+  --color-primary-hover:  #333333;
+  --color-primary-active: #555555;
+  --color-primary-highlight: #e5e4e0;
 
-  --color-accent:         #cc2222;
-  --color-accent-soft:    rgba(204, 34, 34, 0.08);
+  --color-accent:         #1a1917;
+  --color-accent-soft:    rgba(26, 25, 23, 0.08);
 
   --color-warning:        #964219;
   --color-success:        #437a22;
@@ -121,12 +121,12 @@
     --color-text-muted:     #6a6966;
     --color-text-faint:     #9a9996;
     --color-text-inverse:   #f5f4f0;
-    --color-primary:        #cc2222;
-    --color-primary-hover:  #aa1a1a;
-    --color-primary-active: #881414;
-    --color-primary-highlight: #f5dddd;
-    --color-accent:         #cc2222;
-    --color-accent-soft:    rgba(204, 34, 34, 0.08);
+    --color-primary:        #1a1917;
+    --color-primary-hover:  #333333;
+    --color-primary-active: #555555;
+    --color-primary-highlight: #e5e4e0;
+    --color-accent:         #1a1917;
+    --color-accent-soft:    rgba(26, 25, 23, 0.08);
     --color-warning:        #964219;
     --color-success:        #437a22;
     --shadow-sm: 0 1px 2px oklch(0.2 0.01 80 / 0.06);
@@ -1543,8 +1543,8 @@ a.athlete-card:hover .athlete-card__ig {
 }
 
 .show-card__badge--new {
-  background: rgba(255, 0, 0, 0.15);
-  color: #ff0000;
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
 }
 
 .show-card__badge--soon {
