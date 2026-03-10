@@ -288,6 +288,12 @@
   background: var(--color-accent-soft);
 }
 
+.section-nav__link--active {
+  color: var(--color-text);
+  background: var(--color-accent-soft);
+  border-bottom: 2px solid var(--color-primary);
+}
+
 @media (max-width: 768px) {
   .section-nav__track {
     justify-content: flex-start;

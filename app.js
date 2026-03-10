@@ -1,14 +1,13 @@
-/* CF Network News — app.js */
+/* CF Network News — app.js (multi-page) */
 
 (function () {
   "use strict";
 
   // ===== Theme Toggle =====
-  const toggle = document.querySelector("[data-theme-toggle]");
-  const root = document.documentElement;
-  let theme = matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  var toggle = document.querySelector("[data-theme-toggle]");
+  var root = document.documentElement;
+
+  var theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   root.setAttribute("data-theme", theme);
 
   function updateToggleIcon() {
@@ -35,7 +34,6 @@
 
   // ===== Header Scroll Shadow =====
   var header = document.getElementById("header");
-  var lastY = 0;
 
   function onScroll() {
     var y = window.scrollY;
@@ -46,34 +44,16 @@
         header.classList.remove("header--scrolled");
       }
     }
-    lastY = y;
   }
 
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  // ===== Mobile Menu Toggle =====
-  var mobileToggle = document.getElementById("mobileToggle");
-  var mainNav = document.getElementById("mainNav");
-
-  if (mobileToggle && mainNav) {
-    mobileToggle.addEventListener("click", function () {
-      var isOpen = mainNav.classList.toggle("nav--open");
-      mobileToggle.setAttribute("aria-expanded", String(isOpen));
-    });
-
-    // Close menu on link click
-    mainNav.querySelectorAll(".nav__link").forEach(function (link) {
-      link.addEventListener("click", function () {
-        mainNav.classList.remove("nav--open");
-        mobileToggle.setAttribute("aria-expanded", "false");
-      });
-    });
-  }
-
-  // ===== Smooth Scroll for Anchor Links =====
+  // ===== Smooth Scroll for Same-Page Anchor Links =====
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener("click", function (e) {
-      var target = document.querySelector(this.getAttribute("href"));
+      var href = this.getAttribute("href");
+      if (href === "#") return;
+      var target = document.querySelector(href);
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -105,10 +85,8 @@
       if (nlError) nlError.style.display = "none";
 
       // Build form data
-      var phone = document.getElementById("nl-phone").value.trim();
       var formData = "u=d40058698a0dbd5c27f2fa54c&id=8bda743e10";
       formData += "&EMAIL=" + encodeURIComponent(email);
-      if (phone) formData += "&PHONE=" + encodeURIComponent(phone);
       formData += "&b_d40058698a0dbd5c27f2fa54c_8bda743e10=";
 
       // Submit via hidden iframe to avoid redirect
@@ -131,7 +109,6 @@
         EMAIL: email,
         b_d40058698a0dbd5c27f2fa54c_8bda743e10: ""
       };
-      if (phone) fields.PHONE = phone;
 
       for (var key in fields) {
         var input = document.createElement("input");
@@ -144,7 +121,7 @@
       document.body.appendChild(form);
       form.submit();
 
-      // Show success after brief delay (iframe POST won't give us a callback)
+      // Show success after brief delay
       setTimeout(function () {
         nlForm.style.display = "none";
         if (nlSuccess) nlSuccess.classList.add("newsletter__success--visible");
@@ -152,7 +129,6 @@
           nlBtn.disabled = false;
           nlBtn.textContent = "Subscribe";
         }
-        // Clean up
         document.body.removeChild(form);
         document.body.removeChild(iframe);
       }, 1500);

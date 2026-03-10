@@ -1,10 +1,10 @@
-<!-- Daily refresh: March 10 2026 5:03 AM CDT -->
+<!-- Multi-page CF Network News -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CF Network News — Your Daily Source for CrossFit News, Gossip & Events</title>
+<title>Your Daily Source for CrossFit News, Gossip & Events — CF Network News</title>
 <meta name="description" content="Stay on top of the CrossFit world. Breaking news, Open updates, athlete gossip, Rogue Fitness gear, local competitions, and 2026 Games coverage.">
 <meta property="og:title" content="CF Network News — CrossFit News Hub">
 <meta property="og:description" content="Breaking CrossFit news, athlete gossip, Rogue Fitness updates, and competition schedules — all in one place.">
@@ -16,7 +16,7 @@
 <!-- ===== HEADER ===== -->
 <header class="header" id="header">
   <div class="container header__inner">
-    <a href="#" class="logo" aria-label="CF Network News home">
+    <a href="./index.html" class="logo" aria-label="CF Network News home">
       <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
         <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
@@ -48,15 +48,15 @@
 <!-- ===== SECTION NAV ===== -->
 <nav class="section-nav" aria-label="Section navigation">
   <div class="section-nav__track">
-    <a href="#news" class="section-nav__link">Top Stories</a>
-    <a href="#gossip" class="section-nav__link">Gossip</a>
-    <a href="#open" class="section-nav__link">The Open</a>
-    <a href="#shows" class="section-nav__link">Today's Shows</a>
-    <a href="#rankings" class="section-nav__link">Rankings</a>
-    <a href="#rogue" class="section-nav__link">Rogue</a>
-    <a href="#competitions" class="section-nav__link">Competitions</a>
-    <a href="#games" class="section-nav__link">2026 Games</a>
-    <a href="#subscribe" class="section-nav__link">Subscribe</a>
+    <a href="./news.html" class="section-nav__link">Top Stories</a>
+    <a href="./gossip.html" class="section-nav__link">Gossip</a>
+    <a href="./open.html" class="section-nav__link">The Open</a>
+    <a href="./shows.html" class="section-nav__link">Today's Shows</a>
+    <a href="./rankings.html" class="section-nav__link">Rankings</a>
+    <a href="./rogue.html" class="section-nav__link">Rogue</a>
+    <a href="./competitions.html" class="section-nav__link">Competitions</a>
+    <a href="./games.html" class="section-nav__link">2026 Games</a>
+    <a href="./index.html#subscribe" class="section-nav__link">Subscribe</a>
   </div>
 </nav>
 
@@ -145,48 +145,32 @@
 
 <hr class="section-divider">
 
-<!-- ===== GOSSIP ===== -->
-<section class="section" id="gossip">
+
+<section class="section" style="padding-bottom:var(--space-12)">
   <div class="container">
     <div class="section__header">
       <div>
         <div class="section__label" style="color:#9333ea">Via Dense Updates &bull; CF Network</div>
         <h2 class="section__title">Gossip &amp; Drama</h2>
       </div>
-      <a href="https://www.youtube.com/@CFNetwork" target="_blank" rel="noopener noreferrer" class="section__link" style="color:#9333ea">Watch Dense Updates &rarr;</a>
+      <a href="./gossip.html" class="section__link" style="color:#9333ea">See All &rarr;</a>
     </div>
-
-    <div class="gossip-grid fade-in">
+    
+    <div class="gossip-grid fade-in" style="grid-template-columns: repeat(3, 1fr);">
       <div class="gossip-card">
         <div class="gossip-card__icon">&#129309;</div>
         <div class="gossip-card__image"><img src="./assets/img-hiller.jpg" alt="Andrew Hiller apologizes to Taylor Self on CF Network"></div>
         <div class="gossip-card__label">Making Amends</div>
         <h3 class="gossip-card__title">Hiller Apologizes to Taylor Self &mdash; Live on CF Network</h3>
-        <p class="gossip-card__text">Andrew Hiller joined Sevan and Taylor Self live on the CF Network YouTube channel for a roughly 30-minute conversation. Hiller opened by apologizing to Taylor. He said it "rips at his brain" having friends in the space while also wanting to make content, and that he felt like a hypocrite for not making certain videos because of his loyalty to the group. He originally planned to wait until Wodapalooza to talk in person but decided not to let it go on any longer. Sevan said the trust in the original group was "crazy" and that when three people (JY, Tyler, and Hiller) left, it "rocked" them. Taylor said he doesn't hate Hiller and the conversation appeared genuine.</p>
-      </div>
-
-      <div class="gossip-card">
-        <div class="gossip-card__icon">&#129300;</div>
-        <div class="gossip-card__image"><img src="./assets/img-tyler-watkins.jpg" alt="Tyler Watkins from The Barbell Spin"></div>
-        <div class="gossip-card__label">Still Unresolved</div>
-        <h3 class="gossip-card__title">What About Tyler Watkins?</h3>
-        <p class="gossip-card__text">During the Hiller apology conversation, Taylor brought up Tyler Watkins specifically. Taylor called out what he described as "objective lies" &mdash; Tyler telling people they kicked him out of the group, that he hates phone calls, and that he was friends with Brian Friendly. Hiller acknowledged the group fallout but didn't directly address Tyler's side. With Hiller and Taylor clearing the air, the question remains whether Tyler will also address the situation.</p>
+        <p class="gossip-card__text" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">Andrew Hiller joined Sevan and Taylor Self live on the CF Network YouTube channel. Hiller opened by apologizing to Taylor, saying it "rips at his brain" having friends in the space while also wanting to make content.</p>
       </div>
 
       <div class="gossip-card">
         <div class="gossip-card__icon">&#127919;</div>
         <div class="gossip-card__image"><img src="./assets/img-taylor.jpg" alt="Taylor Self at Fittest Coach Charlotte"></div>
         <div class="gossip-card__label">Competition</div>
-        <h3 class="gossip-card__title">Taylor Self Wins Fittest Coach in Charlotte &mdash; Opponent Caught Cheating</h3>
-        <p class="gossip-card__text">Taylor Self won the Fittest Coach competition in Charlotte, live-streamed on the CF Network YouTube channel, taking home $1,000. During the event, Taylor confronted an opponent who allegedly started the assault bike with 4-5 calories already on the screen. Dense Updates noted that some competitors were "butt hurt" that the fittest coach in Charlotte actually came to win it.</p>
-      </div>
-
-      <div class="gossip-card">
-        <div class="gossip-card__icon">&#128165;</div>
-        <div class="gossip-card__image"><img src="./assets/img-castro-sevan.jpg" alt="Dave Castro and Sevan do 26.2"></div>
-        <div class="gossip-card__label">Face Off</div>
-        <h3 class="gossip-card__title">Dave Castro Shows Up at Sevan's House &mdash; They Do 26.2 Together</h3>
-        <p class="gossip-card__text">Dave Castro made a surprise appearance at Sevan Matossian's Games Update Show, just showing up at his house. The next morning, the two did 26.2 together live at CrossFit West Santa Cruz. Dave made it to the muscle-ups but couldn't get any. Sevan made it through the chest-to-bar and back to the dumbbell. Dense Updates noted people enjoy seeing media personalities put themselves out there and open to public scrutiny in the live chats.</p>
+        <h3 class="gossip-card__title">Taylor Self Wins Fittest Coach in Charlotte</h3>
+        <p class="gossip-card__text" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">Taylor Self won the Fittest Coach competition in Charlotte, live-streamed on the CF Network YouTube channel, taking home $1,000.</p>
       </div>
 
       <div class="gossip-card">
@@ -194,43 +178,28 @@
         <div class="gossip-card__image"><img src="./assets/img-don-faul.jpg" alt="CEO Don Faul Quits Mid-Open"></div>
         <div class="gossip-card__label">Breaking</div>
         <h3 class="gossip-card__title">CEO Don Faul Quits Mid-Open &mdash; 3 Days Notice</h3>
-        <p class="gossip-card__text">Don Faul resigned as CrossFit CEO with approximately 3 days notice during the Open. His last day was March 6th. Dense Updates covered the resignation, noting it came right as the Fittest documentary launched on Apple TV and Amazon Prime on March 3rd. The team meeting about his departure happened the same day as the documentary release during the second week of the Open.</p>
+        <p class="gossip-card__text" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">Don Faul resigned as CrossFit CEO with approximately 3 days notice during the Open. His last day was March 6th.</p>
       </div>
-
-      <div class="gossip-card">
-        <div class="gossip-card__icon">&#127909;</div>
-        <div class="gossip-card__image"><img src="./assets/img-tia.jpg" alt="Tia Toomey in The Fittest documentary"></div>
-        <div class="gossip-card__label">Documentary</div>
-        <h3 class="gossip-card__title">The Fittest Documentary &mdash; Tia "Oozes Authenticity"</h3>
-        <p class="gossip-card__text">The 2025 CrossFit Games documentary is now streaming on Apple TV and Amazon Prime. Dense Updates described Tia-Clair Toomey as someone who "oozes authenticity" in the film. The documentary covers the controversial pegboard event with a conversation between Dave Castro and Tia after the event. Dense Updates noted how competitive Tia is and how frustrated she gets when events don't go her way.</p>
-      </div>
-
-      <div class="gossip-card">
-        <div class="gossip-card__icon">&#9992;</div>
-        <div class="gossip-card__image"><img src="./assets/img-wza.jpg" alt="Wodapalooza Miami Beach 26.3"></div>
-        <div class="gossip-card__label">WZA Preview</div>
-        <h3 class="gossip-card__title">Media Crew Heading to Wodapalooza for 26.3</h3>
-        <p class="gossip-card__text">Dense Updates confirmed that multiple CF Network personalities are traveling to Wodapalooza for the 26.3 announcement. Taylor Self and Bryson Delmonte plan to do the workout live. Dense Updates will live-stream it. Claire Bays from WodPrep, Grant from Kipping It Real, and potentially Andrew Hiller will also participate. Dense Updates and Kate Lawrence from B.Friendly's channel have a date to do the workout together on-site.</p>
-      </div>
-
     </div>
+
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ===== THE OPEN ===== -->
-<section class="section" id="open">
+
+
+<section class="section" style="padding-bottom:var(--space-12)">
   <div class="container">
     <div class="section__header">
       <div>
         <div class="section__label">2026 Season</div>
         <h2 class="section__title">The CrossFit Open</h2>
       </div>
-      <a href="https://games.crossfit.com/open/overview" target="_blank" rel="noopener noreferrer" class="section__link">Official Leaderboard &rarr;</a>
+      <a href="./open.html" class="section__link">See All &rarr;</a>
     </div>
-
-    <div class="news-grid fade-in">
+    
+    <div class="news-grid fade-in" style="grid-template-columns: 1fr 1fr;">
       <a href="https://wodapalooza.com/26-3-is-coming-to-miami-beach/" target="_blank" rel="noopener noreferrer" class="card">
         <div class="card__image">
           <img src="./assets/img-wza-gymreapers.jpg" alt="Gymreapers Wodapalooza Miami Beach 26.3 announcement">
@@ -238,38 +207,10 @@
         </div>
         <div class="card__body">
           <span class="card__meta">March 12, 2026</span>
-          <h3 class="card__title">26.3 Live from Wodapalooza Miami Beach &mdash; Thursday at 3 PM ET</h3>
-          <p class="card__excerpt">The final Open workout will be announced live at Gymreapers Wodapalooza on Thursday, March 12 at 12:00 PM PT / 3:00 PM ET. Danielle Brandon, Arielle Loewen, and Olivia Kerstetter face off. Athletes can complete 26.3 on-site for an official score. Scores due by Monday March 16.</p>
-          <div class="card__footer">
-            <span class="card__read-more">Read &rarr;</span>
-          </div>
+          <h3 class="card__title">26.3 Live from Wodapalooza Miami Beach</h3>
+          <p class="card__excerpt">The final Open workout announced live at Gymreapers WZA on Thursday, March 12 at 3 PM ET.</p>
         </div>
       </a>
-
-      <div class="card" style="padding:var(--space-6);justify-content:center;gap:var(--space-5)">
-        <div class="section__label">Open Schedule</div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-xl);text-transform:uppercase;letter-spacing:0.02em;">Week-by-Week</h3>
-        <div class="timeline">
-          <div class="timeline__item">
-            <div class="timeline__dot timeline__dot--active"></div>
-            <div class="timeline__date">Feb 26 &mdash; Mar 2</div>
-            <div class="timeline__title">Open Workout 26.1</div>
-            <div class="timeline__desc">Wall balls, box jump overs, med ball step overs. Completed.</div>
-          </div>
-          <div class="timeline__item">
-            <div class="timeline__dot timeline__dot--active"></div>
-            <div class="timeline__date">Mar 5 &mdash; Mar 9</div>
-            <div class="timeline__title">Open Workout 26.2</div>
-            <div class="timeline__desc">DB lunges, snatches, pull-ups to ring MUs. Scores locked.</div>
-          </div>
-          <div class="timeline__item">
-            <div class="timeline__dot timeline__dot--upcoming"></div>
-            <div class="timeline__date">Mar 12 &mdash; Mar 16</div>
-            <div class="timeline__title">Open Workout 26.3</div>
-            <div class="timeline__desc">Announced Thursday at WZA Miami Beach. 12 PM PT.</div>
-          </div>
-        </div>
-      </div>
 
       <div class="card" style="padding:var(--space-6);justify-content:center;gap:var(--space-4)">
         <span class="card__meta">Leaderboard After 26.2</span>
@@ -281,8 +222,6 @@
               <li>Colten Mertens &mdash; 9 pts</li>
               <li>Jeffrey Adler &mdash; 15 pts</li>
               <li>Thomas Stroier &mdash; 17 pts</li>
-              <li>Jonne Koski &mdash; 18 pts</li>
-              <li>Peter Ellis &mdash; 18 pts</li>
             </ol>
           </div>
           <div>
@@ -291,40 +230,30 @@
               <li>Lucy Campbell &mdash; 6 pts</li>
               <li>Mirjam von Rohr &mdash; 16 pts</li>
               <li>Aline Wirz &mdash; 24 pts</li>
-              <li>Elena Carratal&aacute; &mdash; 36 pts</li>
-              <li>Leah St&oslash;ren &mdash; 36 pts</li>
             </ol>
           </div>
         </div>
-        <p style="font-size:var(--text-xs);opacity:0.6;margin-top:var(--space-2)">Top 25% cutline: ~97 reps + 8:51 tiebreak</p>
       </div>
     </div>
+
   </div>
 </section>
 
-<!-- ===== FULL-BLEED IMAGE BREAK ===== -->
-<div class="image-break fade-in">
-  <img src="./assets/open.png" alt="CrossFit Open competition from above">
-  <div class="image-break__overlay">
-    <div class="image-break__text">20 Years of Finding<br>The Fittest on Earth</div>
-  </div>
-</div>
-
 <hr class="section-divider">
 
-<!-- ===== TODAY'S SHOWS ===== -->
-<section class="section" id="shows">
+
+
+<section class="section" style="padding-bottom:var(--space-12)">
   <div class="container">
     <div class="section__header">
       <div>
         <div class="section__label" style="color:#3b82f6">Daily Schedule &bull; March 10, 2026</div>
         <h2 class="section__title">Today's Shows &amp; Videos</h2>
       </div>
+      <a href="./shows.html" class="section__link" style="color:#3b82f6">See All &rarr;</a>
     </div>
-
-        <div class="shows-grid fade-in">
-
-      <!-- CF Network — 26.2 Leaderboard Review (Replay — streamed early this morning) -->
+    
+    <div class="shows-grid fade-in" style="max-height:none;">
       <a href="https://www.youtube.com/watch?v=FGQT483SBWk" target="_blank" rel="noopener noreferrer" class="show-card show-card--live">
         <div class="show-card__icon">&#9654;</div>
         <div class="show-card__info">
@@ -334,8 +263,15 @@
         </div>
         <span class="show-card__badge show-card__badge--new">New</span>
       </a>
-
-      <!-- CF Network — Review of Castro WIR (Upcoming) -->
+      <a href="https://www.youtube.com/watch?v=GwiegHz_Weo" target="_blank" rel="noopener noreferrer" class="show-card show-card--live">
+        <div class="show-card__icon">&#9654;</div>
+        <div class="show-card__info">
+          <span class="show-card__channel">CF Network</span>
+          <span class="show-card__title">Dense Updates | 26.2 | Hiller Apology | Sevan &amp; Dave Face Off</span>
+          <span class="show-card__meta">New &bull; Yesterday</span>
+        </div>
+        <span class="show-card__badge show-card__badge--new">New</span>
+      </a>
       <a href="https://www.youtube.com/watch?v=VRYAwvBMY9U" target="_blank" rel="noopener noreferrer" class="show-card show-card--upcoming">
         <div class="show-card__icon">&#128197;</div>
         <div class="show-card__info">
@@ -345,96 +281,6 @@
         </div>
         <span class="show-card__badge show-card__badge--soon">Upcoming</span>
       </a>
-
-      <!-- CF Network — Coaching Development (Upcoming) -->
-      <a href="https://www.youtube.com/watch?v=e_u-sQvRQGE" target="_blank" rel="noopener noreferrer" class="show-card show-card--upcoming">
-        <div class="show-card__icon">&#128197;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">CF Network</span>
-          <span class="show-card__title">Coaching Development // Taylor Self &amp; Todd Occhiuto Ep 3</span>
-          <span class="show-card__meta">Today &bull; 7:30 AM</span>
-        </div>
-        <span class="show-card__badge show-card__badge--soon">Upcoming</span>
-      </a>
-
-      <!-- CF Network — Dense Updates -->
-      <a href="https://www.youtube.com/watch?v=GwiegHz_Weo" target="_blank" rel="noopener noreferrer" class="show-card show-card--live">
-        <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">CF Network</span>
-          <span class="show-card__title">Dense Updates | 26.2 | Hiller Apology | Sevan &amp; Dave Face Off | Taylor Fittest Coach</span>
-          <span class="show-card__meta">New &bull; Yesterday</span>
-        </div>
-        <span class="show-card__badge show-card__badge--new">New</span>
-      </a>
-
-      <!-- CF Network — Keith Barlow XENOM Global (Upcoming) -->
-      <a href="https://www.youtube.com/watch?v=A88K9_7f8Qc" target="_blank" rel="noopener noreferrer" class="show-card show-card--upcoming">
-        <div class="show-card__icon">&#128197;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">CF Network</span>
-          <span class="show-card__title">Keith Barlow | XENOM Global</span>
-          <span class="show-card__meta">Fri Mar 13 &bull; 7:00 AM</span>
-        </div>
-        <span class="show-card__badge show-card__badge--soon">Upcoming</span>
-      </a>
-
-      <!-- Dense Updates -->
-      <a href="https://www.youtube.com/watch?v=my2p2C9bidI" target="_blank" rel="noopener noreferrer" class="show-card show-card--live">
-        <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">Dense Updates</span>
-          <span class="show-card__title">26.2 at CrossFit Overtake &mdash; Friday Night Lights</span>
-          <span class="show-card__meta">New &bull; Yesterday</span>
-        </div>
-        <span class="show-card__badge show-card__badge--new">New</span>
-      </a>
-
-      <!-- HillerFit Training — NoReps -->
-      <a href="https://www.youtube.com/watch?v=H76QrUV4P18" target="_blank" rel="noopener noreferrer" class="show-card show-card--live">
-        <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">HillerFit Training</span>
-          <span class="show-card__title">NoReps, 26.2, and Cheating</span>
-          <span class="show-card__meta">New &bull; 13 hours ago</span>
-        </div>
-        <span class="show-card__badge show-card__badge--new">New</span>
-      </a>
-
-      <!-- Andrew Hiller -->
-      <a href="https://www.youtube.com/watch?v=1I__vtaNBD0" target="_blank" rel="noopener noreferrer" class="show-card show-card--live">
-        <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">Andrew Hiller</span>
-          <span class="show-card__title">Helping Everybody on CrossFit Open 26.2</span>
-          <span class="show-card__meta">New &bull; 18 hours ago</span>
-        </div>
-        <span class="show-card__badge show-card__badge--new">New</span>
-      </a>
-
-      <!-- Clydesdale Media — Sunday Night Talk (Replay) -->
-      <a href="https://www.youtube.com/watch?v=Vt_jXDDyaiE" target="_blank" rel="noopener noreferrer" class="show-card">
-        <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">Clydesdale Media</span>
-          <span class="show-card__title">Sunday Night CrossFit Talk &mdash; Where Does the Leaderboard Stand with 26.2?</span>
-          <span class="show-card__meta">Streamed &bull; Last night</span>
-        </div>
-        <span class="show-card__badge">Replay</span>
-      </a>
-
-      <!-- Boys Interrupted -->
-      <a href="https://www.youtube.com/watch?v=hmYj_HdcCXY" target="_blank" rel="noopener noreferrer" class="show-card">
-        <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">Boys Interrupted</span>
-          <span class="show-card__title">CrossFit Open Punishments: Henna Tattoo | Ep. 58</span>
-          <span class="show-card__meta">Streamed &bull; 9 hours ago</span>
-        </div>
-        <span class="show-card__badge">Replay</span>
-      </a>
-
-      <!-- CrossFit Mayhem — Rich Froning -->
       <a href="https://www.youtube.com/watch?v=fpaUHSzqCa4" target="_blank" rel="noopener noreferrer" class="show-card show-card--live">
         <div class="show-card__icon">&#9654;</div>
         <div class="show-card__info">
@@ -444,148 +290,25 @@
         </div>
         <span class="show-card__badge show-card__badge--new">New</span>
       </a>
-
-      <!-- Dave Castro — WIR -->
-      <a href="https://www.youtube.com/watch?v=GsEI0rhuT1A" target="_blank" rel="noopener noreferrer" class="show-card show-card--live">
-        <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">Dave Castro</span>
-          <span class="show-card__title">WIR &mdash; 26.2 Portugal, Head-to-Head with Sevan, Volunteer Portal, WZA</span>
-          <span class="show-card__meta">New &bull; 12 hours ago</span>
-        </div>
-        <span class="show-card__badge show-card__badge--new">New</span>
-      </a>
-
-      <!-- PRVN Fitness -->
-      <a href="https://www.youtube.com/watch?v=7oLlvRo6rOk" target="_blank" rel="noopener noreferrer" class="show-card show-card--live">
-        <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">PRVN Fitness</span>
-          <span class="show-card__title">Catching Up with Tia and 26.2</span>
-          <span class="show-card__meta">New &bull; Yesterday</span>
-        </div>
-        <span class="show-card__badge show-card__badge--new">New</span>
-      </a>
-
-      <!-- CrossFit — Coaching HSPU -->
-      <a href="https://www.youtube.com/watch?v=v5YFA0sqsXo" target="_blank" rel="noopener noreferrer" class="show-card show-card--live">
-        <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">CrossFit</span>
-          <span class="show-card__title">Coaching Handstand Push-Ups | Key Cues for Tripod Position</span>
-          <span class="show-card__meta">New &bull; 15 hours ago</span>
-        </div>
-        <span class="show-card__badge show-card__badge--new">New</span>
-      </a>
-
-      <!-- CrossFit — 26.3 Coach Tips (Upcoming) -->
-      <a href="https://www.youtube.com/watch?v=os5_5dz9gG8" target="_blank" rel="noopener noreferrer" class="show-card show-card--upcoming">
-        <div class="show-card__icon">&#128197;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">CrossFit</span>
-          <span class="show-card__title">CrossFit Open 26.3 &mdash; Tips for CrossFit Coaches</span>
-          <span class="show-card__meta">Thu Mar 12 &bull; 12:15 PM</span>
-        </div>
-        <span class="show-card__badge show-card__badge--soon">Upcoming</span>
-      </a>
-
-      <!-- Training Think Tank -->
-      <a href="https://www.youtube.com/watch?v=CFtwJcx7v3U" target="_blank" rel="noopener noreferrer" class="show-card show-card--live">
-        <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">Training Think Tank</span>
-          <span class="show-card__title">How to Do Better Wall Walks (26.3?!)</span>
-          <span class="show-card__meta">New &bull; 15 hours ago</span>
-        </div>
-        <span class="show-card__badge show-card__badge--new">New</span>
-      </a>
-
-      <!-- Rogue Fitness — Mitchell Hooper -->
-      <a href="https://www.youtube.com/watch?v=W0SB9ELZhMQ" target="_blank" rel="noopener noreferrer" class="show-card show-card--live">
-        <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">Rogue Fitness</span>
-          <span class="show-card__title">Mitchell Hooper Wins His 4th Arnold Strongman Classic | 2026</span>
-          <span class="show-card__meta">New &bull; Yesterday</span>
-        </div>
-        <span class="show-card__badge show-card__badge--new">New</span>
-      </a>
-
-      <!-- B.Friendly Fitness — WZA Preview (Replay) -->
-      <a href="https://www.youtube.com/watch?v=rJpqLNq6XH4" target="_blank" rel="noopener noreferrer" class="show-card">
-        <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">B.Friendly Fitness</span>
-          <span class="show-card__title">Gymreapers Wodapalooza Preview</span>
-          <span class="show-card__meta">Streamed &bull; 10 hours ago</span>
-        </div>
-        <span class="show-card__badge">Replay</span>
-      </a>
-
-      <!-- B.Friendly Fitness — Fitness Under Fire (Upcoming) -->
-      <a href="https://www.youtube.com/watch?v=7QDDS2P5X6c" target="_blank" rel="noopener noreferrer" class="show-card show-card--upcoming">
-        <div class="show-card__icon">&#128197;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">B.Friendly Fitness</span>
-          <span class="show-card__title">Fitness Under Fire (Ep. 7) &mdash; What is the Cost of Competition?</span>
-          <span class="show-card__meta">Thu Mar 12 &bull; 12:00 PM</span>
-        </div>
-        <span class="show-card__badge show-card__badge--soon">Upcoming</span>
-      </a>
-
-      <!-- Coffee Pods And Wods -->
-      <a href="https://www.youtube.com/watch?v=7wl9WK_w12o" target="_blank" rel="noopener noreferrer" class="show-card show-card--live">
-        <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">Coffee Pods &amp; Wods</span>
-          <span class="show-card__title">CrossFit Open 26.2 From Method Training</span>
-          <span class="show-card__meta">New &bull; 18 hours ago</span>
-        </div>
-        <span class="show-card__badge show-card__badge--new">New</span>
-      </a>
-
-      <!-- WODprep -->
-      <a href="https://www.youtube.com/watch?v=F2Ej8T24fRc" target="_blank" rel="noopener noreferrer" class="show-card show-card--live">
-        <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">WODprep</span>
-          <span class="show-card__title">Monday Night CrossFit | 26.2 Recap</span>
-          <span class="show-card__meta">New &bull; 11 hours ago</span>
-        </div>
-        <span class="show-card__badge show-card__badge--new">New</span>
-      </a>
-
-      <!-- WODprep — Upcoming -->
-      <a href="https://www.youtube.com/watch?v=dDIkHFBWxgo" target="_blank" rel="noopener noreferrer" class="show-card show-card--upcoming">
-        <div class="show-card__icon">&#128197;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">WODprep</span>
-          <span class="show-card__title">26.3 Live Announcement | WATCH PARTY</span>
-          <span class="show-card__meta">Thu Mar 12 &bull; 12:00 PM</span>
-        </div>
-        <span class="show-card__badge show-card__badge--soon">Upcoming</span>
-      </a>
-
     </div>
-    <!-- No shows disclaimer -->
 
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ===== CHANNEL RANKINGS ===== -->
-<section class="section" id="rankings">
+
+
+<section class="section" style="padding-bottom:var(--space-12)">
   <div class="container">
     <div class="section__header">
       <div>
         <div class="section__label" style="color:#f59e0b">Monthly Views &bull; March 2026</div>
         <h2 class="section__title">Channel Rankings</h2>
       </div>
+      <a href="./rankings.html" class="section__link" style="color:#f59e0b">See All &rarr;</a>
     </div>
-
-    <p class="rankings-intro">Top 10 CrossFit YouTube channels ranked by estimated views in the last 30 days. Data collected from public channel pages.</p>
-
+    
     <div class="rankings-grid fade-in">
       <a href="https://www.youtube.com/@CrossFitGamesTV" target="_blank" rel="noopener noreferrer" class="rank-card">
         <div class="rank-card__rank rank-card__rank--top1">1</div>
@@ -652,92 +375,26 @@
         </div>
         <div class="rank-card__views">286K</div>
       </a>
-      <a href="https://www.youtube.com/@TrainingThinkTank" target="_blank" rel="noopener noreferrer" class="rank-card">
-        <div class="rank-card__rank">6</div>
-        <div class="rank-card__info">
-          <div class="rank-card__header">
-            <span class="rank-card__name">Training Think Tank</span>
-            <span class="rank-card__subs">54.1K subs</span>
-          </div>
-          <div class="rank-card__bar-wrap">
-            <div class="rank-card__bar " style="width:15%"></div>
-          </div>
-        </div>
-        <div class="rank-card__views">202K</div>
-      </a>
-      <a href="https://www.youtube.com/@crossfit" target="_blank" rel="noopener noreferrer" class="rank-card">
-        <div class="rank-card__rank">7</div>
-        <div class="rank-card__info">
-          <div class="rank-card__header">
-            <span class="rank-card__name">CrossFit</span>
-            <span class="rank-card__subs">1.79M subs</span>
-          </div>
-          <div class="rank-card__bar-wrap">
-            <div class="rank-card__bar " style="width:10%"></div>
-          </div>
-        </div>
-        <div class="rank-card__views">136K</div>
-      </a>
-
-      <a href="https://www.youtube.com/@hillerfit2.0" target="_blank" rel="noopener noreferrer" class="rank-card">
-        <div class="rank-card__rank">8</div>
-        <div class="rank-card__info">
-          <div class="rank-card__header">
-            <span class="rank-card__name">HillerFit Training</span>
-            <span class="rank-card__subs">6.52K subs</span>
-          </div>
-          <div class="rank-card__bar-wrap">
-            <div class="rank-card__bar " style="width:5%"></div>
-          </div>
-        </div>
-        <div class="rank-card__views">73K</div>
-      </a>
-      <a href="https://www.youtube.com/@Amanda_Hari" target="_blank" rel="noopener noreferrer" class="rank-card">
-        <div class="rank-card__rank">9</div>
-        <div class="rank-card__info">
-          <div class="rank-card__header">
-            <span class="rank-card__name">Amanda Hari</span>
-            <span class="rank-card__subs">8.51K subs</span>
-          </div>
-          <div class="rank-card__bar-wrap">
-            <div class="rank-card__bar " style="width:5%"></div>
-          </div>
-        </div>
-        <div class="rank-card__views">64K</div>
-      </a>
-      <a href="https://www.youtube.com/@prvnfitness" target="_blank" rel="noopener noreferrer" class="rank-card">
-        <div class="rank-card__rank">10</div>
-        <div class="rank-card__info">
-          <div class="rank-card__header">
-            <span class="rank-card__name">PRVN Fitness</span>
-            <span class="rank-card__subs">40.6K subs</span>
-          </div>
-          <div class="rank-card__bar-wrap">
-            <div class="rank-card__bar " style="width:5%"></div>
-          </div>
-        </div>
-        <div class="rank-card__views">48K</div>
-      </a>
     </div>
 
-    <p class="shows-note">Estimated monthly views based on recent video view counts. Actual figures may vary. Updated daily.</p>
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ===== ROGUE FITNESS ===== -->
-<section class="section rogue-section" id="rogue">
+
+
+<section class="section" style="padding-bottom:var(--space-12)">
   <div class="container">
     <div class="section__header">
       <div>
         <div class="section__label" style="color:#d97706">Gear &amp; Events</div>
         <h2 class="section__title">Rogue Fitness</h2>
       </div>
-      <a href="https://www.roguefitness.com/new-gear" target="_blank" rel="noopener noreferrer" class="section__link" style="color:#d97706">Shop New Gear &rarr;</a>
+      <a href="./rogue.html" class="section__link" style="color:#d97706">See All &rarr;</a>
     </div>
-
-    <div class="rogue-grid fade-in">
+    
+    <div class="rogue-grid fade-in" style="grid-template-columns: 1fr 1fr;">
       <a href="https://www.roguefitness.com/invitational" target="_blank" rel="noopener noreferrer" class="rogue-card">
         <div class="rogue-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -745,7 +402,7 @@
         <div class="rogue-card__label">Event</div>
         <div class="rogue-card__image"><img src="./assets/img-rogue-invitational.jpg" alt="Rogue Invitational Aberdeen Scotland"></div>
         <h3 class="rogue-card__title">2026 Rogue Invitational Returns to Scotland</h3>
-        <p class="rogue-card__text">The 8th annual Rogue Invitational is heading back to P&J Live in Aberdeen for a third consecutive year, October 23-25. CrossFit, Strongman, and Strongwoman athletes will compete for a massive prize purse including $1M cash plus Bitcoin investments.</p>
+        <p class="rogue-card__text" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">The 8th annual Rogue Invitational heads back to P&amp;J Live in Aberdeen for a third consecutive year, October 23-25.</p>
       </a>
 
       <a href="https://www.roguefitness.com/arnold-strongman-classic/events" target="_blank" rel="noopener noreferrer" class="rogue-card">
@@ -755,43 +412,27 @@
         <div class="rogue-card__label">Just Happened</div>
         <div class="rogue-card__image"><img src="./assets/thumb-arnold.jpg" alt="Arnold Strongman Classic 2026"></div>
         <h3 class="rogue-card__title">Arnold Strongman Classic 2026 Recap</h3>
-        <p class="rogue-card__text">The event wrapped March 6-7 in Columbus, Ohio. Highlights included the Rogue Elephant Bar Deadlift, Stone to Shoulder, and the intense Ramp Rage finale — athletes carried three Rogue sandbags up a 30-foot ramp.</p>
-      </a>
-
-      <a href="https://www.roguefitness.com/new-gear" target="_blank" rel="noopener noreferrer" class="rogue-card">
-        <div class="rogue-card__icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-        </div>
-        <div class="rogue-card__label">New Gear</div>
-        <h3 class="rogue-card__title">Latest Equipment Drops from Rogue</h3>
-        <p class="rogue-card__text">New arrivals hitting the warehouse daily — barbells, bumpers, racks, rigs, and accessories. The SR-2 Speed Rope 3.0 and Echo Sandbag 2.0 are among the highlighted drops heading into competition season.</p>
-      </a>
-
-      <a href="https://www.roguefitness.com/invitational/prizepurse" target="_blank" rel="noopener noreferrer" class="rogue-card">
-        <div class="rogue-card__icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26Z"/></svg>
-        </div>
-        <div class="rogue-card__label">Prize Purse</div>
-        <h3 class="rogue-card__title">Invitational Prize Purse: $1M+ and Growing</h3>
-        <p class="rogue-card__text">Rogue's Iron Game prize purse includes a $1M cash investment, $275K in Bitcoin bought at $95K/coin, plus per-ticket, per-shirt, and per-shoe contributions. The purse grows with ticket sales and merch.</p>
+        <p class="rogue-card__text" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">The event wrapped March 6-7 in Columbus, Ohio. Rogue Elephant Bar Deadlift, Stone to Shoulder, and the Ramp Rage finale.</p>
       </a>
     </div>
+
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ===== COMPETITIONS ===== -->
-<section class="section" id="competitions">
+
+
+<section class="section" style="padding-bottom:var(--space-12)">
   <div class="container">
     <div class="section__header">
       <div>
         <div class="section__label" style="color:#059669">Find Your Fight</div>
         <h2 class="section__title">Upcoming Competitions</h2>
       </div>
-      <a href="https://games.crossfit.com/competitions" target="_blank" rel="noopener noreferrer" class="section__link" style="color:#059669">All Licensed Events &rarr;</a>
+      <a href="./competitions.html" class="section__link" style="color:#059669">See All &rarr;</a>
     </div>
-
+    
     <div class="comp-list fade-in">
       <a href="https://wodapalooza.com" target="_blank" rel="noopener noreferrer" class="comp-item">
         <div class="comp-item__date">
@@ -806,7 +447,6 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </a>
-
       <a href="https://games.crossfit.com/article/2026-crossfit-games-season-dates-and-details-division" target="_blank" rel="noopener noreferrer" class="comp-item">
         <div class="comp-item__date">
           <span class="comp-item__date-month">Mar</span>
@@ -820,7 +460,6 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </a>
-
       <a href="https://games.crossfit.com/competitions" target="_blank" rel="noopener noreferrer" class="comp-item">
         <div class="comp-item__date">
           <span class="comp-item__date-month">Apr</span>
@@ -834,97 +473,37 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </a>
-
-      <a href="https://games.crossfit.com/competitions" target="_blank" rel="noopener noreferrer" class="comp-item">
-        <div class="comp-item__date">
-          <span class="comp-item__date-month">Apr</span>
-          <span class="comp-item__date-day">17</span>
-        </div>
-        <div class="comp-item__info">
-          <div class="comp-item__title">Athens Throwdown</div>
-          <div class="comp-item__location">CrossFit Kallithea — Athens, Greece</div>
-        </div>
-        <div class="comp-item__arrow">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </a>
-
-      <a href="https://www.crossfit.com/sport/the-2026-crossfit-semifinals-dates-and-details" target="_blank" rel="noopener noreferrer" class="comp-item">
-        <div class="comp-item__date">
-          <span class="comp-item__date-month">Apr</span>
-          <span class="comp-item__date-day">17</span>
-        </div>
-        <div class="comp-item__info">
-          <div class="comp-item__title">North America East Semifinal</div>
-          <div class="comp-item__location">Cookeville, Tennessee, USA — April 17-19 — 3 Men &amp; 3 Women Qualify</div>
-        </div>
-        <div class="comp-item__arrow">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </a>
-
-      <a href="https://games.crossfit.com/competitions" target="_blank" rel="noopener noreferrer" class="comp-item">
-        <div class="comp-item__date">
-          <span class="comp-item__date-month">Apr</span>
-          <span class="comp-item__date-day">25</span>
-        </div>
-        <div class="comp-item__info">
-          <div class="comp-item__title">Spring Thaw Throwdown 2026</div>
-          <div class="comp-item__location">Cumming, GA, USA</div>
-        </div>
-        <div class="comp-item__arrow">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </a>
-
-      <a href="https://www.roguefitness.com/invitational" target="_blank" rel="noopener noreferrer" class="comp-item">
-        <div class="comp-item__date">
-          <span class="comp-item__date-month">Oct</span>
-          <span class="comp-item__date-day">23</span>
-        </div>
-        <div class="comp-item__info">
-          <div class="comp-item__title">Rogue Invitational 2026</div>
-          <div class="comp-item__location">P&amp;J Live — Aberdeen, Scotland — Oct 23-25 — CrossFit, Strongman &amp; Strongwoman</div>
-        </div>
-        <div class="comp-item__arrow">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </a>
     </div>
+
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ===== 2026 GAMES ===== -->
-<section class="section" id="games">
+
+
+<section class="section" style="padding-bottom:var(--space-12)">
   <div class="container">
     <div class="section__header">
       <div>
         <div class="section__label">The Main Event</div>
         <h2 class="section__title">2026 CrossFit Games</h2>
       </div>
-      <a href="https://games.crossfit.com/finals/overview" target="_blank" rel="noopener noreferrer" class="section__link">Official Games Page &rarr;</a>
+      <a href="./games.html" class="section__link">See All &rarr;</a>
     </div>
-
+    
     <div class="news-grid fade-in" style="grid-template-columns: 1fr 1fr;">
-      <a href="https://games.crossfit.com/article/2026-crossfit-games-tickets" target="_blank" rel="noopener noreferrer" class="card">
+      <div class="card">
         <div class="card__image">
           <img src="./assets/games.png" alt="CrossFit Games arena with competition equipment">
           <span class="card__badge">20th Anniversary</span>
         </div>
         <div class="card__body">
           <span class="card__meta">July 24-26, 2026</span>
-          <div class="card__image">
-            <img src="./assets/img-sap-center.jpg" alt="SAP Center San Jose aerial view at sunset">
-          </div>
           <h3 class="card__title">Games Return to California — SAP Center, San Jose</h3>
-          <p class="card__excerpt">Celebrating 20 years of the CrossFit Games. The top 30 men and 30 women, plus the top 20 teams, will compete to be crowned Fittest on Earth. Masters, Teenage, and Adaptive divisions compete at the nearby Convention Center.</p>
-          <div class="card__footer">
-            <span class="card__read-more">Get Tickets &rarr;</span>
-          </div>
+          <p class="card__excerpt">Celebrating 20 years of the CrossFit Games. The top 30 men and 30 women, plus the top 20 teams, will compete to be crowned Fittest on Earth.</p>
         </div>
-      </a>
+      </div>
 
       <div class="card" style="padding:var(--space-6);justify-content:center;gap:var(--space-4)">
         <div class="section__label">Season Roadmap</div>
@@ -944,12 +523,6 @@
           </div>
           <div class="timeline__item">
             <div class="timeline__dot timeline__dot--upcoming"></div>
-            <div class="timeline__date">Apr — Jun</div>
-            <div class="timeline__title">Semifinals</div>
-            <div class="timeline__desc">In-person + online. Global events.</div>
-          </div>
-          <div class="timeline__item">
-            <div class="timeline__dot timeline__dot--upcoming"></div>
             <div class="timeline__date">Jul 24 — 26</div>
             <div class="timeline__title">The CrossFit Games</div>
             <div class="timeline__desc">SAP Center, San Jose, CA.</div>
@@ -957,8 +530,12 @@
         </div>
       </div>
     </div>
+
   </div>
 </section>
+
+<hr class="section-divider">
+
 
 <hr class="section-divider">
 
@@ -996,7 +573,7 @@
   <div class="container">
     <div class="footer__inner">
       <div>
-        <a href="#" class="logo" aria-label="CF Network News home" style="margin-bottom:var(--space-2)">
+        <a href="./index.html" class="logo" aria-label="CF Network News home" style="margin-bottom:var(--space-2)">
           <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
             <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
@@ -1010,13 +587,13 @@
       <div>
         <h4 class="footer__heading">Sections</h4>
         <ul class="footer__links" role="list">
-          <li><a href="#news">Top Stories</a></li>
-          <li><a href="#gossip">Gossip &amp; Drama</a></li>
-          <li><a href="#open">The Open</a></li>
-          <li><a href="#shows">Today's Shows</a></li>
-          <li><a href="#rankings">Channel Rankings</a></li>
-          <li><a href="#rogue">Rogue Fitness</a></li>
-          <li><a href="#competitions">Competitions</a></li>
+          <li><a href="./news.html">Top Stories</a></li>
+          <li><a href="./gossip.html">Gossip &amp; Drama</a></li>
+          <li><a href="./open.html">The Open</a></li>
+          <li><a href="./shows.html">Today's Shows</a></li>
+          <li><a href="./rankings.html">Channel Rankings</a></li>
+          <li><a href="./rogue.html">Rogue Fitness</a></li>
+          <li><a href="./competitions.html">Competitions</a></li>
         </ul>
       </div>
       <div>
@@ -1048,15 +625,15 @@
 <!-- ===== MOBILE FLOATING NAV ===== -->
 <div class="fab-nav" id="fabNav">
   <div class="fab-nav__menu" id="fabMenu">
-    <a href="#news" class="fab-nav__item">Top Stories</a>
-    <a href="#gossip" class="fab-nav__item">Gossip</a>
-    <a href="#open" class="fab-nav__item">The Open</a>
-    <a href="#shows" class="fab-nav__item">Today's Shows</a>
-    <a href="#rankings" class="fab-nav__item">Rankings</a>
-    <a href="#rogue" class="fab-nav__item">Rogue</a>
-    <a href="#competitions" class="fab-nav__item">Competitions</a>
-    <a href="#games" class="fab-nav__item">2026 Games</a>
-    <a href="#subscribe" class="fab-nav__item">Subscribe</a>
+    <a href="./news.html" class="fab-nav__item">Top Stories</a>
+    <a href="./gossip.html" class="fab-nav__item">Gossip</a>
+    <a href="./open.html" class="fab-nav__item">The Open</a>
+    <a href="./shows.html" class="fab-nav__item">Today's Shows</a>
+    <a href="./rankings.html" class="fab-nav__item">Rankings</a>
+    <a href="./rogue.html" class="fab-nav__item">Rogue</a>
+    <a href="./competitions.html" class="fab-nav__item">Competitions</a>
+    <a href="./games.html" class="fab-nav__item">2026 Games</a>
+    <a href="./index.html#subscribe" class="fab-nav__item">Subscribe</a>
   </div>
   <button class="fab-nav__btn" id="fabToggle" aria-label="Open navigation menu">
     <svg class="fab-nav__icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
