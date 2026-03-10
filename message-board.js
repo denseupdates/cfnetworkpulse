@@ -32,6 +32,10 @@
   var LIKES_KEY = "cfnn_likes";
   var USER_ID_KEY = "cfnn_uid";
   var db = window.cfnnDb;
+  if (!db) {
+    console.error("CFNN: Firestore not initialized — window.cfnnDb is", db);
+    return;
+  }
   var commentsRef = db.collection("comments");
 
   /* Generate or retrieve a persistent anonymous user ID */
