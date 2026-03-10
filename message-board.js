@@ -465,10 +465,10 @@
   }
 
   /* ================================================
-     PAID ADS SECTION (unchanged — uses local storage + Stripe)
+     PAID ADS SECTION (Firestore — visible to all visitors)
      ================================================ */
-  var AD_KEY = "cfnn_ads";
   var AD_PENDING_KEY = "cfnn_ad_pending";
+  var adsRef = db.collection("ads");
   var STRIPE_LINKS = {
     weekly: "https://buy.stripe.com/4gM14odZm5V65cUfuJ2Ry00",
     monthly: "https://buy.stripe.com/eVqbJ25sQ97i7l2cix2Ry01"
@@ -484,15 +484,10 @@
   var adFeed = document.getElementById("adFeed");
   var adEmpty = document.getElementById("adEmpty");
 
-  function getAds() {
-    try { return JSON.parse(storeGet(AD_KEY)) || []; }
-    catch (e) { return []; }
-  }
+  /* Live cache of ads from Firestore */
+  var liveAds = [];
 
-  function saveAds(ads) {
-    storeSet(AD_KEY, JSON.stringify(ads));
-  }
-
+  /* Check if returning from Stripe payment */
   function checkPaymentReturn() {
     var params = new URLSearchParams(window.location.search);
     if (params.get("ad_paid") === "true") {
@@ -505,9 +500,10 @@
           pendingAd.paidAt = now;
           pendingAd.expiresAt = now + (TIER_DURATION[pendingAd.tier] || TIER_DURATION.weekly);
           pendingAd.ts = now;
-          var ads = getAds();
-          ads.unshift(pendingAd);
-          saveAds(ads);
+          /* Write to Firestore so all visitors see it */
+          adsRef.add(pendingAd).catch(function (err) {
+            console.error("Error saving ad:", err);
+          });
           storeSet(AD_PENDING_KEY, "");
         } catch (e) { /* ignore */ }
       }
@@ -529,21 +525,16 @@
     return "< 1 hour left";
   }
 
-  function purgeExpiredAds() {
+  function renderAds() {
+    if (!adFeed) return;
     var now = Date.now();
-    var ads = getAds();
-    var cleaned = ads.filter(function (a) {
+    /* Filter to only active, non-expired ads */
+    var ads = liveAds.filter(function (a) {
       if (a.status !== "active") return false;
       var exp = a.expiresAt || (a.ts + TIER_DURATION.weekly);
       return exp > now;
     });
-    if (cleaned.length !== ads.length) saveAds(cleaned);
-    return cleaned;
-  }
 
-  function renderAds() {
-    if (!adFeed) return;
-    var ads = purgeExpiredAds();
     var oldCards = adFeed.querySelectorAll(".ad-card");
     oldCards.forEach(function (el) { el.remove(); });
 
@@ -578,6 +569,19 @@
       adFeed.insertBefore(card, adEmpty);
     });
   }
+
+  /* Real-time listener for ads */
+  adsRef.orderBy("ts", "desc").onSnapshot(function (snapshot) {
+    liveAds = [];
+    snapshot.forEach(function (doc) {
+      var data = doc.data();
+      data.id = doc.id;
+      liveAds.push(data);
+    });
+    renderAds();
+  }, function (err) {
+    console.error("Ads listener error:", err);
+  });
 
   /* --- Image upload handling --- */
   var adImageData = "";
@@ -651,8 +655,8 @@
 
       if (!adName || !adEmail || !adMessage) return;
 
+      /* Save pending ad to local storage before Stripe redirect */
       var pendingAd = {
-        id: Date.now().toString(36) + Math.random().toString(36).substr(2, 6),
         name: adName,
         email: adEmail,
         tier: adTier,
@@ -668,6 +672,4 @@
       window.location.href = stripeUrl;
     });
   }
-
-  renderAds();
 })();
