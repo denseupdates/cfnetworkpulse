@@ -1,4 +1,4 @@
-/* CrossFit Pulse — app.js */
+/* CF Network News — app.js */
 
 (function () {
   "use strict";
