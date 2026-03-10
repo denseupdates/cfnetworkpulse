@@ -724,6 +724,7 @@ a.gossip-card:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 20%;
 }
 
 .gossip-card__text {
