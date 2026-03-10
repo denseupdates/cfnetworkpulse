@@ -435,6 +435,12 @@
 
   // ===== PAID ADS SECTION =====
   var AD_KEY = "cfnn_ads";
+  var AD_PENDING_KEY = "cfnn_ad_pending";
+  var STRIPE_LINKS = {
+    weekly: "https://buy.stripe.com/4gM14odZm5V65cUfuJ2Ry00",
+    monthly: "https://buy.stripe.com/eVqbJ25sQ97i7l2cix2Ry01"
+  };
+
   var adForm = document.getElementById("adForm");
   var adFeed = document.getElementById("adFeed");
   var adEmpty = document.getElementById("adEmpty");
@@ -448,9 +454,32 @@
     storeSet(AD_KEY, JSON.stringify(ads));
   }
 
+  // Check if returning from Stripe payment
+  function checkPaymentReturn() {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get("ad_paid") === "true") {
+      var pendingRaw = storeGet(AD_PENDING_KEY);
+      if (pendingRaw) {
+        try {
+          var pendingAd = JSON.parse(pendingRaw);
+          pendingAd.status = "active";
+          pendingAd.ts = Date.now();
+          var ads = getAds();
+          ads.unshift(pendingAd);
+          saveAds(ads);
+          storeSet(AD_PENDING_KEY, "");
+        } catch (e) { /* ignore */ }
+      }
+      // Clean URL
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+  }
+
+  checkPaymentReturn();
+
   function renderAds() {
     if (!adFeed) return;
-    var ads = getAds();
+    var ads = getAds().filter(function (a) { return a.status === "active"; });
     // Remove old ad cards
     var oldCards = adFeed.querySelectorAll(".ad-card");
     oldCards.forEach(function (el) { el.remove(); });
@@ -489,8 +518,8 @@
 
       if (!adName || !adEmail || !adMessage) return;
 
-      var ads = getAds();
-      ads.unshift({
+      // Save ad as pending payment
+      var pendingAd = {
         id: generateId(),
         name: adName,
         email: adEmail,
@@ -498,30 +527,16 @@
         text: adMessage,
         link: adLink || "",
         ts: Date.now(),
-        status: "pending"
-      });
-      saveAds(ads);
+        status: "pending_payment"
+      };
+      storeSet(AD_PENDING_KEY, JSON.stringify(pendingAd));
 
-      // Show success
-      var successEl = adForm.querySelector(".ad-form__success");
-      if (!successEl) {
-        successEl = document.createElement("div");
-        successEl.className = "ad-form__success";
-        adForm.appendChild(successEl);
-      }
-      successEl.textContent = "Ad request submitted! Your ad for \"" + adName + "\" is pending review.";
-      successEl.style.display = "block";
+      // Build Stripe checkout URL with return parameter
+      var stripeUrl = STRIPE_LINKS[adTier] || STRIPE_LINKS.weekly;
+      var returnUrl = window.location.origin + window.location.pathname + "?ad_paid=true";
 
-      // Reset form
-      adForm.reset();
-
-      // Render ads
-      renderAds();
-
-      // Hide success after 5s
-      setTimeout(function () {
-        successEl.style.display = "none";
-      }, 5000);
+      // Redirect to Stripe Checkout
+      window.location.href = stripeUrl;
     });
   }
 
