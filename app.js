@@ -7,7 +7,9 @@
   var toggle = document.querySelector("[data-theme-toggle]");
   var root = document.documentElement;
 
-  var theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  // Persist theme choice across pages and sessions
+  var savedTheme = localStorage.getItem("cfnn-theme");
+  var theme = savedTheme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
   root.setAttribute("data-theme", theme);
 
   function updateToggleIcon() {
@@ -28,6 +30,7 @@
     toggle.addEventListener("click", function () {
       theme = theme === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", theme);
+      localStorage.setItem("cfnn-theme", theme);
       updateToggleIcon();
     });
   }
