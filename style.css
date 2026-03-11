@@ -252,16 +252,13 @@
 
 .section-nav__track {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: var(--space-1);
   max-width: var(--content-wide);
   margin-inline: auto;
   padding: var(--space-1) var(--space-6);
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 
 .section-nav__track::-webkit-scrollbar {
