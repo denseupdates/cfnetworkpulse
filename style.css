@@ -599,13 +599,18 @@ a.card:hover .card__image img {
   letter-spacing: 0.08em;
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-sm);
-  background: var(--color-primary);
+  background: #f0eeeb;
+  color: #1a1917;
+}
+
+[data-theme="light"] .card__badge {
+  background: #1a1917;
   color: #fff;
 }
 
-.card__badge--gossip { background: #9333ea; }
-.card__badge--rogue { background: #d97706; }
-.card__badge--comp { background: #059669; }
+.card__badge--gossip { background: #9333ea; color: #fff; }
+.card__badge--rogue { background: #d97706; color: #fff; }
+.card__badge--comp { background: #059669; color: #fff; }
 
 .card__body {
   padding: var(--space-5);
