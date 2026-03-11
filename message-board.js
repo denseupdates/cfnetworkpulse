@@ -600,11 +600,11 @@
         try {
           var pendingAd = JSON.parse(pendingRaw);
           var now = Date.now();
-          pendingAd.status = "active";
+          pendingAd.status = "pending";
           pendingAd.paidAt = now;
           pendingAd.expiresAt = now + (TIER_DURATION[pendingAd.tier] || TIER_DURATION.weekly);
           pendingAd.ts = now;
-          /* Write to Firestore so all visitors see it */
+          /* Write to Firestore — pending admin approval */
           adsRef.add(pendingAd).catch(function (err) {
             console.error("Error saving ad:", err);
           });

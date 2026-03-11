@@ -1,0 +1,301 @@
+<!-- CF Network News — Admin: Ad Approval -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin — CF Network News</title>
+<link rel="stylesheet" href="./base.css">
+<link rel="stylesheet" href="./style.css">
+<style>
+  .admin-gate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: var(--space-4);
+    text-align: center;
+    padding: var(--space-6);
+  }
+  .admin-gate__title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    color: var(--color-text);
+  }
+  .admin-gate__form {
+    display: flex;
+    gap: var(--space-2);
+    width: 100%;
+    max-width: 320px;
+  }
+  .admin-gate__input {
+    flex: 1;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-divider);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--color-text);
+    -webkit-appearance: none;
+  }
+  .admin-gate__input:focus {
+    outline: none;
+    border-color: #10b981;
+  }
+  .admin-gate__btn {
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-primary);
+    color: var(--color-bg);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .admin-gate__error {
+    color: #e11d48;
+    font-size: var(--text-xs);
+    display: none;
+  }
+
+  /* Admin dashboard */
+  .admin-dash { display: none; }
+  .admin-dash--active { display: block; }
+
+  .admin-section {
+    padding: var(--space-6) 0;
+  }
+  .admin-section__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--color-text);
+    margin-bottom: var(--space-1);
+  }
+  .admin-section__count {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+  }
+
+  .admin-ad {
+    border: 1px solid var(--color-divider);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-bottom: var(--space-4);
+    background: var(--color-surface);
+  }
+  .admin-ad__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+    margin-bottom: var(--space-3);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+  .admin-ad__badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.65rem;
+  }
+  .admin-ad__badge--pending {
+    background: #fbbf24;
+    color: #1a1a1a;
+  }
+  .admin-ad__badge--active {
+    background: #10b981;
+    color: #fff;
+  }
+  .admin-ad__badge--rejected {
+    background: #ef4444;
+    color: #fff;
+  }
+  .admin-ad__badge--weekly {
+    background: var(--color-surface-offset);
+    color: var(--color-text-muted);
+  }
+  .admin-ad__badge--monthly {
+    background: #7c3aed;
+    color: #fff;
+  }
+  .admin-ad__name {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--space-1);
+  }
+  .admin-ad__email {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-3);
+  }
+  .admin-ad__text {
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    line-height: 1.6;
+    margin-bottom: var(--space-3);
+  }
+  .admin-ad__image {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-3);
+    object-fit: contain;
+  }
+  .admin-ad__link {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    word-break: break-all;
+    margin-bottom: var(--space-3);
+    display: block;
+  }
+  .admin-ad__actions {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+  .admin-ad__btn {
+    padding: var(--space-2) var(--space-4);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 44px;
+    transition: opacity 180ms ease;
+  }
+  .admin-ad__btn:hover { opacity: 0.85; }
+  .admin-ad__btn--approve {
+    background: #10b981;
+    color: #fff;
+  }
+  .admin-ad__btn--reject {
+    background: #ef4444;
+    color: #fff;
+  }
+  .admin-ad__btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .admin-empty {
+    text-align: center;
+    padding: var(--space-8);
+    color: var(--color-text-faint);
+    font-size: var(--text-sm);
+  }
+
+  .admin-tabs {
+    display: flex;
+    gap: var(--space-1);
+    margin-bottom: var(--space-4);
+  }
+  .admin-tab {
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-divider);
+    border-radius: var(--radius-sm);
+    background: none;
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all 180ms ease;
+  }
+  .admin-tab--active {
+    background: var(--color-primary);
+    color: var(--color-bg);
+    border-color: var(--color-primary);
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="./index.html" class="logo" aria-label="CF Network News home">
+      <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+        <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+        <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+      </svg>
+      <div class="logo__text">CF NETWORK<span>NEWS</span></div>
+    </a>
+
+    <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ===== PASSWORD GATE ===== -->
+<div class="admin-gate" id="adminGate">
+  <div class="admin-gate__title">Admin Access</div>
+  <p style="font-size:var(--text-sm);color:var(--color-text-muted);">Enter the admin password to manage ads.</p>
+  <form class="admin-gate__form" id="adminLoginForm">
+    <input type="password" class="admin-gate__input" id="adminPassword" placeholder="Password" autocomplete="off" required>
+    <button type="submit" class="admin-gate__btn">Enter</button>
+  </form>
+  <p class="admin-gate__error" id="adminError">Incorrect password</p>
+</div>
+
+<!-- ===== ADMIN DASHBOARD (hidden until auth) ===== -->
+<div class="admin-dash" id="adminDash">
+  <div class="container">
+    <section class="admin-section">
+      <div class="admin-section__title">Ad Management</div>
+      <div class="admin-section__count" id="adminCount">Loading...</div>
+
+      <div class="admin-tabs">
+        <button class="admin-tab admin-tab--active" data-admin-tab="pending">Pending</button>
+        <button class="admin-tab" data-admin-tab="active">Active</button>
+        <button class="admin-tab" data-admin-tab="rejected">Rejected</button>
+        <button class="admin-tab" data-admin-tab="all">All</button>
+      </div>
+
+      <div id="adminFeed"></div>
+    </section>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 CF Network News. Admin panel.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="./app.js" defer></script>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+  firebase.initializeApp({
+    apiKey: "AIzaSyD1JQffSvumRnn0x40V6hk4j3EdyyBrGig",
+    authDomain: "cf-network-news.firebaseapp.com",
+    databaseURL: "https://cf-network-news-default-rtdb.firebaseio.com",
+    projectId: "cf-network-news",
+    storageBucket: "cf-network-news.firebasestorage.app",
+    messagingSenderId: "637738242934",
+    appId: "1:637738242934:web:aede6dd97c6c6139d92057"
+  });
+  window.cfnnDb = firebase.firestore();
+</script>
+<script src="./admin.js"></script>
+</body>
+</html>
