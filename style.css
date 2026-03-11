@@ -436,7 +436,7 @@
    ================================ */
 .ticker {
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-bg);
   overflow: hidden;
   white-space: nowrap;
   padding-block: var(--space-2);
