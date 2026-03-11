@@ -128,13 +128,64 @@
   }
 
   /* ================================================
+     NESTED REPLY HELPERS
+     ================================================ */
+
+  /* Recursively count a comment + all nested replies */
+  function countNested(msg) {
+    var total = 1;
+    if (msg.replies && msg.replies.length > 0) {
+      for (var i = 0; i < msg.replies.length; i++) {
+        total += countNested(msg.replies[i]);
+      }
+    }
+    return total;
+  }
+
+  /* Deep clone a replies tree (needed for Firestore updates) */
+  function deepCloneReplies(replies) {
+    if (!replies) return [];
+    return replies.map(function (r) {
+      var clone = Object.assign({}, r);
+      if (clone.replies) {
+        clone.replies = deepCloneReplies(clone.replies);
+      }
+      return clone;
+    });
+  }
+
+  /* Find a reply node by ID anywhere in the nested tree.
+     Returns { node, parent, index } or null. */
+  function findReplyInTree(replies, targetId) {
+    for (var i = 0; i < replies.length; i++) {
+      if (replies[i].id === targetId) {
+        return { node: replies[i], parent: replies, index: i };
+      }
+      if (replies[i].replies && replies[i].replies.length > 0) {
+        var found = findReplyInTree(replies[i].replies, targetId);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+
+  /* Recursively search nested replies for text match */
+  function searchNested(replies, q) {
+    for (var i = 0; i < replies.length; i++) {
+      if (replies[i].name.toLowerCase().indexOf(q) !== -1) return true;
+      if (replies[i].text.toLowerCase().indexOf(q) !== -1) return true;
+      if (replies[i].replies && searchNested(replies[i].replies, q)) return true;
+    }
+    return false;
+  }
+
+  /* ================================================
      COUNT, SORT, FILTER
      ================================================ */
   function countAll(msgs) {
     var total = 0;
     msgs.forEach(function (m) {
-      total++;
-      if (m.replies) total += m.replies.length;
+      total += countNested(m);
     });
     return total;
   }
@@ -157,25 +208,28 @@
     return msgs.filter(function (m) {
       if (m.name.toLowerCase().indexOf(q) !== -1) return true;
       if (m.text.toLowerCase().indexOf(q) !== -1) return true;
-      if (m.replies) {
-        for (var i = 0; i < m.replies.length; i++) {
-          if (m.replies[i].name.toLowerCase().indexOf(q) !== -1) return true;
-          if (m.replies[i].text.toLowerCase().indexOf(q) !== -1) return true;
-        }
-      }
+      if (m.replies && searchNested(m.replies, q)) return true;
       return false;
     });
   }
 
   /* ================================================
-     RENDER
+     RENDER (recursive nested replies)
      ================================================ */
-  function renderComment(msg, isReply, parentId) {
+
+  /* Generate a unique form ID for any comment/reply */
+  function replyFormId(msgId) {
+    return "reply-form-" + msgId;
+  }
+
+  function renderComment(msg, depth, docId) {
+    /* depth 0 = top-level comment, 1+ = reply */
+    var isReply = depth > 0;
     var likes = getLikes();
-    var likeKey = isReply ? (parentId + ":" + msg.id) : msg.id;
+    var likeKey = isReply ? (docId + ":" + msg.id) : msg.id;
     var userLiked = likes[likeKey] ? true : false;
 
-    var html = '<div class="mb-comment' + (isReply ? " mb-comment--reply" : "") + '" data-id="' + msg.id + '">';
+    var html = '<div class="mb-comment' + (isReply ? " mb-comment--reply" : "") + '" data-id="' + msg.id + '" data-depth="' + depth + '">';
     html += '<div class="mb-comment__avatar" style="background:' + getAvatarColor(msg.name) + '">' + getInitial(msg.name) + '</div>';
     html += '<div class="mb-comment__body">';
     html += '<div class="mb-comment__header">';
@@ -184,34 +238,37 @@
     html += '</div>';
     html += '<div class="mb-comment__text">' + highlightText(msg.text, currentSearch) + '</div>';
     html += '<div class="mb-comment__actions">';
-    html += '<button class="mb-action mb-action--like' + (userLiked ? " mb-action--liked" : "") + '" data-like="' + likeKey + '" data-parent="' + (parentId || msg.id) + '" data-reply="' + (isReply ? msg.id : "") + '">';
+
+    /* Like button — always present */
+    html += '<button class="mb-action mb-action--like' + (userLiked ? " mb-action--liked" : "") + '" data-like="' + likeKey + '" data-doc="' + docId + '" data-target="' + msg.id + '">';
     html += '<svg width="14" height="14" viewBox="0 0 24 24" fill="' + (userLiked ? "currentColor" : "none") + '" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
     html += '<span>' + (msg.likes || 0) + '</span>';
     html += '</button>';
-    if (!isReply) {
-      html += '<button class="mb-action mb-action--reply" data-reply-to="' + msg.id + '">';
-      html += '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>';
-      html += '<span>Reply</span>';
-      html += '</button>';
-    }
+
+    /* Reply button — on every comment at every depth */
+    html += '<button class="mb-action mb-action--reply" data-reply-to="' + msg.id + '" data-doc="' + docId + '">';
+    html += '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>';
+    html += '<span>Reply</span>';
+    html += '</button>';
+
+    html += '</div>'; /* end actions */
+
+    /* Reply form (hidden by default) — on every comment */
+    html += '<div class="mb-reply-form" id="' + replyFormId(msg.id) + '" style="display:none">';
+    html += '<input type="text" class="mb-reply-form__name" placeholder="Your name" maxlength="40" value="' + escapeHtml(getSavedName()) + '">';
+    html += '<div class="mb-reply-form__row">';
+    html += '<textarea class="mb-reply-form__textarea" placeholder="Write a reply..." rows="2" maxlength="150"></textarea>';
+    html += '<button class="mb-reply-form__submit" data-submit-reply="' + msg.id + '" data-doc="' + docId + '">Reply</button>';
+    html += '</div>';
     html += '</div>';
 
-    if (!isReply) {
-      html += '<div class="mb-reply-form" id="reply-form-' + msg.id + '" style="display:none">';
-      html += '<input type="text" class="mb-reply-form__name" placeholder="Your name" maxlength="40" value="' + escapeHtml(getSavedName()) + '">';
-      html += '<div class="mb-reply-form__row">';
-      html += '<textarea class="mb-reply-form__textarea" placeholder="Write a reply..." rows="2" maxlength="150"></textarea>';
-      html += '<button class="mb-reply-form__submit" data-submit-reply="' + msg.id + '">Reply</button>';
-      html += '</div>';
-      html += '</div>';
-    }
+    html += '</div></div>'; /* end body, end comment */
 
-    html += '</div></div>';
-
-    if (!isReply && msg.replies && msg.replies.length > 0) {
+    /* Render nested replies recursively */
+    if (msg.replies && msg.replies.length > 0) {
       html += '<div class="mb-replies">';
       msg.replies.forEach(function (r) {
-        html += renderComment(r, true, msg.id);
+        html += renderComment(r, depth + 1, docId);
       });
       html += '</div>';
     }
@@ -252,7 +309,7 @@
 
     var html = "";
     sorted.forEach(function (msg) {
-      html += '<div class="mb-comment-wrapper">' + renderComment(msg, false, null) + '</div>';
+      html += '<div class="mb-comment-wrapper">' + renderComment(msg, 0, msg.id) + '</div>';
     });
 
     var oldWrappers = feed.querySelectorAll(".mb-comment-wrapper");
@@ -328,22 +385,22 @@
   });
 
   /* ================================================
-     EVENT DELEGATION: LIKES, REPLIES
+     EVENT DELEGATION: LIKES, REPLIES (nested)
      ================================================ */
   feed.addEventListener("click", function (e) {
+
     /* --- Like button --- */
     var likeBtn = e.target.closest("[data-like]");
     if (likeBtn) {
       var likeKey = likeBtn.getAttribute("data-like");
-      var parentId = likeBtn.getAttribute("data-parent");
-      var replyId = likeBtn.getAttribute("data-reply");
+      var docId = likeBtn.getAttribute("data-doc");
+      var targetId = likeBtn.getAttribute("data-target");
       var likes = getLikes();
 
-      /* Find the parent doc in liveComments */
-      var parentMsg = liveComments.find(function (m) { return m.id === parentId; });
-      if (!parentMsg) return;
+      /* Find the Firestore document */
+      var docMsg = liveComments.find(function (m) { return m.id === docId; });
+      if (!docMsg) return;
 
-      var target;
       var delta;
       if (likes[likeKey]) {
         delete likes[likeKey];
@@ -354,21 +411,17 @@
       }
       saveLikes(likes);
 
-      if (replyId && parentMsg.replies) {
-        /* Like on a reply — update the reply in the replies array */
-        var replyIndex = -1;
-        for (var ri = 0; ri < parentMsg.replies.length; ri++) {
-          if (parentMsg.replies[ri].id === replyId) { replyIndex = ri; break; }
-        }
-        if (replyIndex === -1) return;
-        var updatedReplies = parentMsg.replies.slice();
-        updatedReplies[replyIndex] = Object.assign({}, updatedReplies[replyIndex]);
-        updatedReplies[replyIndex].likes = Math.max(0, (updatedReplies[replyIndex].likes || 0) + delta);
-        commentsRef.doc(parentId).update({ replies: updatedReplies });
+      if (targetId === docId) {
+        /* Like on the top-level comment */
+        var newLikes = Math.max(0, (docMsg.likes || 0) + delta);
+        commentsRef.doc(docId).update({ likes: newLikes });
       } else {
-        /* Like on the parent comment */
-        var newLikes = Math.max(0, (parentMsg.likes || 0) + delta);
-        commentsRef.doc(parentId).update({ likes: newLikes });
+        /* Like on a nested reply — deep clone tree, find node, update */
+        var clonedReplies = deepCloneReplies(docMsg.replies);
+        var found = findReplyInTree(clonedReplies, targetId);
+        if (!found) return;
+        found.node.likes = Math.max(0, (found.node.likes || 0) + delta);
+        commentsRef.doc(docId).update({ replies: clonedReplies });
       }
       return;
     }
@@ -377,7 +430,7 @@
     var replyBtn = e.target.closest("[data-reply-to]");
     if (replyBtn) {
       var msgId = replyBtn.getAttribute("data-reply-to");
-      var replyForm = document.getElementById("reply-form-" + msgId);
+      var replyForm = document.getElementById(replyFormId(msgId));
       if (replyForm) {
         var isVisible = replyForm.style.display !== "none";
         replyForm.style.display = isVisible ? "none" : "block";
@@ -388,20 +441,21 @@
       return;
     }
 
-    /* --- Submit reply --- */
+    /* --- Submit reply (works at any nesting depth) --- */
     var submitBtn = e.target.closest("[data-submit-reply]");
     if (submitBtn) {
-      var parentMsgId = submitBtn.getAttribute("data-submit-reply");
-      var replyFormEl = document.getElementById("reply-form-" + parentMsgId);
+      var replyToId = submitBtn.getAttribute("data-submit-reply");
+      var docIdForReply = submitBtn.getAttribute("data-doc");
+      var replyFormEl = document.getElementById(replyFormId(replyToId));
       var replyName = replyFormEl.querySelector(".mb-reply-form__name").value.trim();
       var replyText = replyFormEl.querySelector(".mb-reply-form__textarea").value.trim();
 
       if (!replyName || !replyText) return;
       saveName(replyName);
 
-      /* Find parent in liveComments */
-      var parent = liveComments.find(function (m) { return m.id === parentMsgId; });
-      if (!parent) return;
+      /* Find the Firestore document */
+      var parentDoc = liveComments.find(function (m) { return m.id === docIdForReply; });
+      if (!parentDoc) return;
 
       var newReply = {
         id: Date.now().toString(36) + Math.random().toString(36).substr(2, 6),
@@ -409,13 +463,27 @@
         text: replyText,
         ts: Date.now(),
         likes: 0,
+        replies: [],
         uid: currentUserId
       };
 
-      var newReplies = (parent.replies || []).concat([newReply]);
-      commentsRef.doc(parentMsgId).update({ replies: newReplies }).catch(function (err) {
-        console.error("Error posting reply:", err);
-      });
+      if (replyToId === docIdForReply) {
+        /* Replying to the top-level comment — append to its replies */
+        var topReplies = deepCloneReplies(parentDoc.replies).concat([newReply]);
+        commentsRef.doc(docIdForReply).update({ replies: topReplies }).catch(function (err) {
+          console.error("Error posting reply:", err);
+        });
+      } else {
+        /* Replying to a nested reply — find it in the tree and append */
+        var cloned = deepCloneReplies(parentDoc.replies);
+        var target = findReplyInTree(cloned, replyToId);
+        if (!target) return;
+        if (!target.node.replies) target.node.replies = [];
+        target.node.replies.push(newReply);
+        commentsRef.doc(docIdForReply).update({ replies: cloned }).catch(function (err) {
+          console.error("Error posting nested reply:", err);
+        });
+      }
       return;
     }
   });
