@@ -28,18 +28,21 @@
   /* ================================================
      CONSTANTS & FIREBASE REFERENCE
      ================================================ */
-  var NAME_KEY = "cfnn_username";
   var LIKES_KEY = "cfnn_likes";
   var USER_ID_KEY = "cfnn_uid";
   var db = window.cfnnDb;
+  var auth = window.cfnnAuth;
   if (!db) {
     console.error("CFNN: Firestore not initialized — window.cfnnDb is", db);
     return;
   }
   var commentsRef = db.collection("comments");
 
+  /* Current authenticated user (null = anonymous) */
+  var currentAuthUser = null;
+
   /* Generate or retrieve a persistent anonymous user ID */
-  function getUserId() {
+  function getAnonId() {
     var uid = storeGet(USER_ID_KEY);
     if (!uid) {
       uid = Date.now().toString(36) + Math.random().toString(36).substr(2, 8);
@@ -47,7 +50,21 @@
     }
     return uid;
   }
-  var currentUserId = getUserId();
+  var anonId = getAnonId();
+
+  /* Get the current display name based on auth state */
+  function getCurrentName() {
+    if (currentAuthUser && currentAuthUser.displayName) {
+      return currentAuthUser.displayName;
+    }
+    return "Anonymous";
+  }
+
+  /* Get the current user ID (Firebase UID or anonymous fallback) */
+  function getCurrentUserId() {
+    if (currentAuthUser) return currentAuthUser.uid;
+    return anonId;
+  }
 
   /* ================================================
      DOM REFERENCES
@@ -55,7 +72,6 @@
   var feed = document.getElementById("mbFeed");
   var emptyState = document.getElementById("mbEmpty");
   var form = document.getElementById("mbForm");
-  var nameInput = document.getElementById("mbName");
   var msgInput = document.getElementById("mbMessage");
   var charCount = document.getElementById("charCount");
   var totalComments = document.getElementById("totalComments");
@@ -64,6 +80,14 @@
   var searchResults = document.getElementById("mbSearchResults");
   var sortBtns = document.querySelectorAll("[data-sort]");
   var composeAvatar = document.getElementById("composeAvatar");
+
+  /* Auth DOM references */
+  var signedOutEl = document.getElementById("mbSignedOut");
+  var signedInEl = document.getElementById("mbSignedIn");
+  var googleSignInBtn = document.getElementById("mbGoogleSignIn");
+  var signOutBtn = document.getElementById("mbSignOut");
+  var userPhotoEl = document.getElementById("mbUserPhoto");
+  var userNameEl = document.getElementById("mbUserName");
 
   var currentSort = "newest";
   var currentSearch = "";
@@ -74,8 +98,7 @@
   /* ================================================
      HELPERS
      ================================================ */
-  function getSavedName() { return storeGet(NAME_KEY) || ""; }
-  function saveName(name) { storeSet(NAME_KEY, name); }
+
 
   function getLikes() {
     try { return JSON.parse(storeGet(LIKES_KEY)) || {}; }
@@ -255,7 +278,6 @@
 
     /* Reply form (hidden by default) — on every comment */
     html += '<div class="mb-reply-form" id="' + replyFormId(msg.id) + '" style="display:none">';
-    html += '<input type="text" class="mb-reply-form__name" placeholder="Your name" maxlength="40" value="' + escapeHtml(getSavedName()) + '">';
     html += '<div class="mb-reply-form__row">';
     html += '<textarea class="mb-reply-form__textarea" placeholder="Write a reply..." rows="2" maxlength="150"></textarea>';
     html += '<button class="mb-reply-form__submit" data-submit-reply="' + msg.id + '" data-doc="' + docId + '">Reply</button>';
@@ -367,13 +389,9 @@
      ================================================ */
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    var name = nameInput.value.trim();
+    var name = getCurrentName();
     var text = msgInput.value.trim();
-    if (!name || !text) return;
-
-    saveName(name);
-    composeAvatar.textContent = getInitial(name);
-    composeAvatar.style.background = getAvatarColor(name);
+    if (!text) return;
 
     commentsRef.add({
       name: name,
@@ -381,7 +399,7 @@
       ts: Date.now(),
       likes: 0,
       replies: [],
-      uid: currentUserId
+      uid: getCurrentUserId()
     }).then(function () {
       msgInput.value = "";
       charCount.textContent = "0";
@@ -396,16 +414,6 @@
      ================================================ */
   msgInput.addEventListener("input", function () {
     charCount.textContent = msgInput.value.length;
-  });
-
-  nameInput.addEventListener("input", function () {
-    var n = nameInput.value.trim();
-    composeAvatar.textContent = getInitial(n);
-    if (n) {
-      composeAvatar.style.background = getAvatarColor(n);
-    } else {
-      composeAvatar.style.background = "var(--color-surface-offset)";
-    }
   });
 
   /* ================================================
@@ -488,11 +496,10 @@
       var replyToId = submitBtn.getAttribute("data-submit-reply");
       var docIdForReply = submitBtn.getAttribute("data-doc");
       var replyFormEl = document.getElementById(replyFormId(replyToId));
-      var replyName = replyFormEl.querySelector(".mb-reply-form__name").value.trim();
+      var replyName = getCurrentName();
       var replyText = replyFormEl.querySelector(".mb-reply-form__textarea").value.trim();
 
-      if (!replyName || !replyText) return;
-      saveName(replyName);
+      if (!replyText) return;
 
       /* Find the Firestore document */
       var parentDoc = liveComments.find(function (m) { return m.id === docIdForReply; });
@@ -505,7 +512,7 @@
         ts: Date.now(),
         likes: 0,
         replies: [],
-        uid: currentUserId
+        uid: getCurrentUserId()
       };
 
       if (replyToId === docIdForReply) {
@@ -564,13 +571,59 @@
   });
 
   /* ================================================
-     INIT: RESTORE SAVED NAME
+     AUTH: GOOGLE SIGN-IN / SIGN-OUT + STATE LISTENER
      ================================================ */
-  var savedName = getSavedName();
-  if (savedName) {
-    nameInput.value = savedName;
-    composeAvatar.textContent = getInitial(savedName);
-    composeAvatar.style.background = getAvatarColor(savedName);
+  function updateAuthUI(user) {
+    currentAuthUser = user;
+    var name = getCurrentName();
+    composeAvatar.textContent = getInitial(name);
+    composeAvatar.style.background = getAvatarColor(name);
+
+    if (user) {
+      signedOutEl.style.display = "none";
+      signedInEl.style.display = "flex";
+      userNameEl.textContent = user.displayName || user.email || "User";
+      if (user.photoURL) {
+        userPhotoEl.src = user.photoURL;
+        userPhotoEl.alt = user.displayName || "User";
+        userPhotoEl.style.display = "block";
+      } else {
+        userPhotoEl.style.display = "none";
+      }
+    } else {
+      signedOutEl.style.display = "flex";
+      signedInEl.style.display = "none";
+      composeAvatar.textContent = "?";
+      composeAvatar.style.background = "var(--color-surface-offset)";
+    }
+  }
+
+  /* Listen for auth state changes */
+  if (auth) {
+    auth.onAuthStateChanged(function (user) {
+      updateAuthUI(user);
+    });
+  }
+
+  /* Google sign-in */
+  if (googleSignInBtn) {
+    googleSignInBtn.addEventListener("click", function () {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider).catch(function (err) {
+        if (err.code !== "auth/popup-closed-by-user") {
+          console.error("Google sign-in error:", err);
+        }
+      });
+    });
+  }
+
+  /* Sign out */
+  if (signOutBtn) {
+    signOutBtn.addEventListener("click", function () {
+      auth.signOut().catch(function (err) {
+        console.error("Sign-out error:", err);
+      });
+    });
   }
 
   /* ================================================
