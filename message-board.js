@@ -266,7 +266,31 @@
 
     /* Render nested replies recursively */
     if (msg.replies && msg.replies.length > 0) {
-      html += '<div class="mb-replies">';
+      var replyCount = countNested({ replies: msg.replies }) - 1 + msg.replies.length;
+      /* Actually just count direct + nested */
+      var totalReplies = 0;
+      var countRepliesDeep = function (arr) {
+        for (var ci = 0; ci < arr.length; ci++) {
+          totalReplies++;
+          if (arr[ci].replies) countRepliesDeep(arr[ci].replies);
+        }
+      };
+      countRepliesDeep(msg.replies);
+
+      var label = totalReplies === 1 ? "See 1 reply" : "See " + totalReplies + " replies";
+      var hideLabel = totalReplies === 1 ? "Hide reply" : "Hide replies";
+
+      if (depth === 0) {
+        /* Top-level: replies are collapsed behind a toggle */
+        html += '<button class="mb-replies-toggle" data-toggle-replies="' + msg.id + '" data-label-show="' + label + '" data-label-hide="' + hideLabel + '">';
+        html += '<svg class="mb-replies-toggle__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+        html += '<span>' + label + '</span>';
+        html += '</button>';
+        html += '<div class="mb-replies" id="replies-' + msg.id + '" style="display:none">';
+      } else {
+        /* Nested: replies are always visible (already inside a collapsed section) */
+        html += '<div class="mb-replies">';
+      }
       msg.replies.forEach(function (r) {
         html += renderComment(r, depth + 1, docId);
       });
@@ -388,6 +412,23 @@
      EVENT DELEGATION: LIKES, REPLIES (nested)
      ================================================ */
   feed.addEventListener("click", function (e) {
+
+    /* --- Toggle replies visibility --- */
+    var toggleBtn = e.target.closest("[data-toggle-replies]");
+    if (toggleBtn) {
+      var toggleId = toggleBtn.getAttribute("data-toggle-replies");
+      var repliesDiv = document.getElementById("replies-" + toggleId);
+      if (repliesDiv) {
+        var isHidden = repliesDiv.style.display === "none";
+        repliesDiv.style.display = isHidden ? "block" : "none";
+        var labelSpan = toggleBtn.querySelector("span");
+        if (labelSpan) {
+          labelSpan.textContent = isHidden ? toggleBtn.getAttribute("data-label-hide") : toggleBtn.getAttribute("data-label-show");
+        }
+        toggleBtn.classList.toggle("mb-replies-toggle--open", isHidden);
+      }
+      return;
+    }
 
     /* --- Like button --- */
     var likeBtn = e.target.closest("[data-like]");

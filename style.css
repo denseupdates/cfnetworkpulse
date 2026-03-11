@@ -2246,6 +2246,38 @@ a.athlete-card:hover .athlete-card__ig {
   color: #be123c;
 }
 
+/* Replies toggle */
+.mb-replies-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: var(--space-2) 0;
+  margin-top: var(--space-1);
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: color 180ms ease;
+}
+
+.mb-replies-toggle:hover {
+  color: var(--color-text);
+}
+
+.mb-replies-toggle__icon {
+  transition: transform 200ms ease;
+}
+
+.mb-replies-toggle--open .mb-replies-toggle__icon {
+  transform: rotate(180deg);
+}
+
 /* Replies (nested unlimited depth) */
 .mb-replies {
   margin-left: 32px;
