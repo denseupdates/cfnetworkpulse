@@ -1,0 +1,10 @@
+.git
+node_modules
+pending-updates
+wrangler.jsonc
+eslint.config.mjs
+.gitignore
+.deploy-timestamp
+create_*.py
+qa_*.js
+*.md
