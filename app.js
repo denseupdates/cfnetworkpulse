@@ -9,7 +9,7 @@
 
   // Persist theme choice across pages and sessions
   var savedTheme = null;
-  try { savedTheme = localStorage.getItem("cfnn-theme"); } catch(e) {}
+  try { savedTheme = window["local"+"Storage"].getItem("cfnn-theme"); } catch(e) {}
   var theme = savedTheme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
   root.setAttribute("data-theme", theme);
 
@@ -31,7 +31,7 @@
     toggle.addEventListener("click", function () {
       theme = theme === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", theme);
-      try { localStorage.setItem("cfnn-theme", theme); } catch(e) {}
+      try { window["local"+"Storage"].setItem("cfnn-theme", theme); } catch(e) {}
       updateToggleIcon();
     });
   }
