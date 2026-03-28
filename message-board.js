@@ -384,30 +384,37 @@
     console.error("Firestore listener error:", err);
   });
 
-  /* ================================================
-     EVENT: SUBMIT COMMENT (write to Firestore)
-     ================================================ */
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var name = getCurrentName();
-    var text = msgInput.value.trim();
-    if (!text) return;
+/* ================================================
+   EVENT: SUBMIT COMMENT (write to Firestore)
+   ================================================ */
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
 
-    commentsRef.add({
-      name: name,
-      text: text,
-      ts: Date.now(),
-      likes: 0,
-      replies: [],
-      uid: getCurrentUserId()
-    }).then(function () {
-      msgInput.value = "";
-      charCount.textContent = "0";
-      feed.scrollIntoView({ behavior: "smooth", block: "start" });
-    }).catch(function (err) {
-      console.error("Error posting comment:", err);
-    });
+  // Require Google sign-in
+  if (!auth.currentUser) {
+    alert("You must sign in with Google to post.");
+    return;
+  }
+
+  var name = getCurrentName();
+  var text = msgInput.value.trim();
+  if (!text) return;
+
+  commentsRef.add({
+    name: name,
+    text: text,
+    ts: Date.now(),
+    likes: 0,
+    replies: [],
+    uid: getCurrentUserId()
+  }).then(function () {
+    msgInput.value = "";
+    charCount.textContent = "0";
+    feed.scrollIntoView({ behavior: "smooth", block: "start" });
+  }).catch(function (err) {
+    console.error("Error posting comment:", err);
   });
+});
 
   /* ================================================
      EVENT: CHAR COUNT
