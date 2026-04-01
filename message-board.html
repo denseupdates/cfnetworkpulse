@@ -363,5 +363,113 @@
   window.cfnnAuth = firebase.auth();
 </script>
 <script src="./message-board.js"></script>
+<script>
+  (function () {
+    const auth = window.cfnnAuth;
+    const db = window.cfnnDb;
+
+    const signInBtn   = document.getElementById('mbGoogleSignIn');
+    const signedOutEl = document.getElementById('mbSignedOut');
+    const signedInEl  = document.getElementById('mbSignedIn');
+    const userNameEl  = document.getElementById('mbUserName');
+    const userPhotoEl = document.getElementById('mbUserPhoto');
+    const signOutBtn  = document.getElementById('mbSignOut');
+    const form        = document.getElementById('mbForm');
+    const textarea    = document.getElementById('mbMessage');
+    const avatarEl    = document.getElementById('composeAvatar');
+
+    // Google provider
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    // Handle sign-in button
+    signInBtn.addEventListener('click', function () {
+      auth.signInWithPopup(provider).catch(function (err) {
+        console.error('Google sign-in failed', err);
+        alert('Google sign-in failed. Please try again.');
+      });
+    });
+
+    // Handle sign-out
+    signOutBtn.addEventListener('click', function () {
+      auth.signOut().catch(function (err) {
+        console.error('Sign-out failed', err);
+      });
+    });
+
+    // Auth state listener
+    auth.onAuthStateChanged(function (user) {
+      if (user) {
+        // Signed in
+        signedOutEl.style.display = 'none';
+        signedInEl.style.display  = 'flex';
+
+        userNameEl.textContent = user.displayName || user.email || 'User';
+        if (user.photoURL) {
+          userPhotoEl.src = user.photoURL;
+          userPhotoEl.alt = user.displayName || 'User photo';
+          avatarEl.textContent = '';
+          avatarEl.style.backgroundImage = `url("${user.photoURL}")`;
+          avatarEl.style.backgroundSize = 'cover';
+          avatarEl.style.backgroundPosition = 'center';
+        } else {
+          avatarEl.style.backgroundImage = 'none';
+          avatarEl.textContent = (user.displayName || 'U').charAt(0).toUpperCase();
+        }
+
+        // Enable posting
+        textarea.disabled = false;
+        form.classList.remove('mb-compose__form--disabled');
+      } else {
+        // Signed out
+        signedOutEl.style.display = 'flex';
+        signedInEl.style.display  = 'none';
+        userNameEl.textContent    = '';
+        userPhotoEl.src           = '';
+        avatarEl.style.backgroundImage = 'none';
+        avatarEl.textContent = '?';
+
+        // Disable posting if not signed in
+        textarea.disabled = true;
+        form.classList.add('mb-compose__form--disabled');
+      }
+    });
+
+    // Require Google sign-in before allowing submit
+    form.addEventListener('submit', function (e) {
+      const user = auth.currentUser;
+      if (!user) {
+        e.preventDefault();
+        alert('Please sign in with Google before posting a comment.');
+        return;
+      }
+
+      // If you already have message-board.js handling Firestore writes,
+      // just let that script pick up the form submit as usual.
+      // If not, you can add your Firestore write here.
+
+      // Example (adjust collection/fields to your existing schema):
+      /*
+      e.preventDefault();
+      const text = textarea.value.trim();
+      if (!text) return;
+
+      db.collection('messageBoard').add({
+        text,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        uid: user.uid,
+        name: user.displayName || user.email || 'User',
+        photoURL: user.photoURL || null,
+        likes: 0
+      }).then(() => {
+        textarea.value = '';
+        document.getElementById('charCount').textContent = '0';
+      }).catch(err => {
+        console.error('Error posting comment', err);
+        alert('Error posting comment. Please try again.');
+      });
+      */
+    });
+  })();
+</script>
 </body>
 </html>
