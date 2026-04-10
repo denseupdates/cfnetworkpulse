@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classifieds — CF Network News</title>
+<meta name="description" content="Buy, sell, hire, and find drop ins across the CrossFit community. Post your classified ad for free.">
+<meta property="og:title" content="Classifieds — CF Network News">
+<meta property="og:description" content="CrossFit community classifieds. Equipment for sale, coaching jobs, drop in recommendations, and more.">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+<link rel="stylesheet" href="./base.css">
+<link rel="stylesheet" href="./style.css">
+<style>
+/* ================================
+   CLASSIFIEDS PAGE STYLES
+   ================================ */
+
+/* Category Filter Pills */
+.cf-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+
+.cf-filter-btn {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-interactive);
+  white-space: nowrap;
+}
+
+.cf-filter-btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.cf-filter-btn--active {
+  background: var(--color-text);
+  color: var(--color-bg);
+  border-color: var(--color-text);
+}
+
+/* Category Colors */
+.cf-cat--selling      { --cat-color: #22c55e; }
+.cf-cat--buying       { --cat-color: #3b82f6; }
+.cf-cat--hiring       { --cat-color: #f59e0b; }
+.cf-cat--dropins      { --cat-color: #8b5cf6; }
+.cf-cat--services     { --cat-color: #ec4899; }
+.cf-cat--events       { --cat-color: #06b6d4; }
+.cf-cat--other        { --cat-color: #9a9894; }
+
+/* Classifieds Grid */
+.cf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-5);
+}
+
+@media (max-width: 640px) {
+  .cf-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Classified Card */
+.cf-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: transform var(--transition-interactive),
+              box-shadow var(--transition-interactive),
+              border-color var(--transition-interactive);
+}
+
+.cf-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--cat-color, var(--color-border));
+}
+
+.cf-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.cf-card__cat {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--cat-color, #9a9894);
+  color: #fff;
+  white-space: nowrap;
+}
+
+.cf-card__date {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  white-space: nowrap;
+}
+
+.cf-card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+.cf-card__body {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.cf-card__price {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  color: var(--color-text);
+  letter-spacing: 0.02em;
+}
+
+.cf-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-divider);
+}
+
+.cf-card__author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.cf-card__avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-offset);
+  display: grid;
+  place-items: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.cf-card__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cf-card__location {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  white-space: nowrap;
+}
+
+.cf-card__contact-btn {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-interactive);
+  text-decoration: none;
+}
+
+.cf-card__contact-btn:hover {
+  background: var(--color-text);
+  color: var(--color-bg);
+  border-color: var(--color-text);
+}
+
+/* Image in card */
+.cf-card__image {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-1);
+}
+
+.cf-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Post Form */
+.cf-compose {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.cf-compose__heading {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-5);
+}
+
+.cf-compose__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+@media (max-width: 640px) {
+  .cf-compose__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cf-compose__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.cf-compose__field--full {
+  grid-column: 1 / -1;
+}
+
+.cf-compose__label {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.cf-compose__input,
+.cf-compose__select,
+.cf-compose__textarea {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  color: var(--color-text);
+  transition: border-color var(--transition-interactive);
+  width: 100%;
+}
+
+.cf-compose__input:focus,
+.cf-compose__select:focus,
+.cf-compose__textarea:focus {
+  outline: none;
+  border-color: var(--color-text);
+}
+
+.cf-compose__textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.cf-compose__select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239a9894' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.cf-compose__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.cf-compose__submit {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--color-text);
+  color: var(--color-bg);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-interactive);
+}
+
+.cf-compose__submit:hover {
+  opacity: 0.85;
+}
+
+.cf-compose__submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cf-compose__note {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+}
+
+/* Auth Bar */
+.cf-auth {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+}
+
+.cf-auth__google-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all var(--transition-interactive);
+}
+
+.cf-auth__google-btn:hover {
+  border-color: var(--color-text);
+}
+
+.cf-auth__note {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+}
+
+.cf-auth__user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.cf-auth__photo {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+}
+
+.cf-auth__name {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.cf-auth__sign-out {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+}
+
+/* Empty State */
+.cf-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: var(--space-16) var(--space-6);
+  color: var(--color-text-faint);
+}
+
+.cf-empty svg {
+  margin: 0 auto var(--space-4);
+  opacity: 0.3;
+}
+
+.cf-empty p {
+  max-width: 100%;
+  font-size: var(--text-sm);
+}
+
+/* Sort Bar */
+.cf-sort {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.cf-sort__btn {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-faint);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-interactive);
+}
+
+.cf-sort__btn:hover {
+  color: var(--color-text);
+}
+
+.cf-sort__btn--active {
+  color: var(--color-text);
+  background: var(--color-accent-soft);
+}
+
+/* Stats */
+.cf-stats {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+}
+
+.cf-stats strong {
+  color: var(--color-text-muted);
+}
+
+/* Delete button for own posts */
+.cf-card__delete {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-interactive);
+}
+
+.cf-card__delete:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Contact modal */
+.cf-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 200;
+  display: none;
+  place-items: center;
+  backdrop-filter: blur(4px);
+}
+
+.cf-modal-overlay--open {
+  display: grid;
+}
+
+.cf-modal {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  max-width: 440px;
+  width: 90%;
+  position: relative;
+}
+
+.cf-modal__close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: var(--space-1);
+}
+
+.cf-modal__close:hover {
+  color: var(--color-text);
+}
+
+.cf-modal__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: var(--space-2);
+}
+
+.cf-modal__text {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-5);
+}
+
+.cf-modal__email-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--color-text);
+  color: var(--color-bg);
+  text-decoration: none;
+  transition: all var(--transition-interactive);
+}
+
+.cf-modal__email-link:hover {
+  opacity: 0.85;
+}
+
+/* Image upload preview */
+.cf-compose__image-preview {
+  margin-top: var(--space-2);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  max-height: 200px;
+  display: none;
+}
+
+.cf-compose__image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="./index.html" class="logo" aria-label="CF Network News home">
+      <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+        <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+        <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+      </svg>
+      <div class="logo__text">CF NETWORK<span>NEWS</span></div>
+    </a>
+
+    <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span class="ticker__item">CROSSFIT COMMUNITY MOURNING THE LOSS OF LEGEND ROB ORLANDO</span>
+    <span class="ticker__item">JAY CROUCH GETS MAJOR PENALTY ON EVENT 1</span>
+    <span class="ticker__item">MAYHEM REVEALS EVENT 1 IS 5K RUN</span>
+    <span class="ticker__item">CROSSFIT COMMUNITY MOURNING THE LOSS OF LEGEND ROB ORLANDO</span>
+    <span class="ticker__item">JAY CROUCH GETS MAJOR PENALTY ON EVENT 1</span>
+    <span class="ticker__item">MAYHEM REVEALS EVENT 1 IS 5K RUN</span>
+  </div>
+</div>
+
+<!-- ===== SECTION NAV ===== -->
+<nav class="section-nav" aria-label="Section navigation">
+  <div class="section-nav__track">
+    <a href="./news.html" class="section-nav__link">Top Stories</a>
+    <a href="./gossip.html" class="section-nav__link">Gossip</a>
+    <a href="./shows.html" class="section-nav__link">Podcasts/Shows</a>
+    <a href="./rankings.html" class="section-nav__link">Rankings</a>
+    <a href="./rogue.html" class="section-nav__link">Rogue</a>
+    <a href="./season-info.html" class="section-nav__link">Season Info</a>
+    <a href="./message-board.html" class="section-nav__link">Message Board</a>
+    <a href="./classifieds.html" class="section-nav__link section-nav__link--active">Classifieds</a>
+    <a href="./index.html#subscribe" class="section-nav__link">Subscribe</a>
+  </div>
+</nav>
+
+<div style="padding:var(--space-4) 0 0;">
+  <div class="container">
+    <a href="./index.html" style="font-size:var(--text-sm);color:var(--color-text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:var(--space-2);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Home
+    </a>
+  </div>
+</div>
+
+<!-- ===== CLASSIFIEDS SECTION ===== -->
+<section class="section" id="classifieds">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <div class="section__label" style="color:#8b5cf6">Community Marketplace</div>
+        <h2 class="section__title">Classifieds</h2>
+      </div>
+      <div class="cf-stats">
+        <span><strong id="cfTotalPosts">0</strong> listings</span>
+      </div>
+    </div>
+
+    <!-- Auth Bar -->
+    <div class="cf-auth" id="cfAuth">
+      <div id="cfSignedOut">
+        <button type="button" class="cf-auth__google-btn" id="cfGoogleSignIn">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.99 23.99 0 0 0 0 24c0 3.77.9 7.34 2.44 10.5l8.09-5.91z"/><path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Sign in with Google
+        </button>
+        <span class="cf-auth__note">Sign in to post a listing</span>
+      </div>
+      <div id="cfSignedIn" style="display:none">
+        <div class="cf-auth__user">
+          <img class="cf-auth__photo" id="cfUserPhoto" src="" alt="" width="28" height="28">
+          <span class="cf-auth__name" id="cfUserName"></span>
+          <button type="button" class="cf-auth__sign-out" id="cfSignOut">Sign Out</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post Form -->
+    <div class="cf-compose" id="cfCompose">
+      <h3 class="cf-compose__heading">Post a Listing</h3>
+      <form id="cfForm">
+        <div class="cf-compose__row">
+          <div class="cf-compose__field">
+            <label class="cf-compose__label" for="cfCategory">Category</label>
+            <select class="cf-compose__select" id="cfCategory" required>
+              <option value="">Select a category</option>
+              <option value="selling">Selling Equipment</option>
+              <option value="buying">Looking to Buy</option>
+              <option value="hiring">Hiring Coaches</option>
+              <option value="dropins">Drop In Recommendations</option>
+              <option value="services">Services</option>
+              <option value="events">Events</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="cf-compose__field">
+            <label class="cf-compose__label" for="cfLocation">Location</label>
+            <input type="text" class="cf-compose__input" id="cfLocation" placeholder="City, State" maxlength="60">
+          </div>
+        </div>
+        <div class="cf-compose__row">
+          <div class="cf-compose__field cf-compose__field--full">
+            <label class="cf-compose__label" for="cfTitle">Title</label>
+            <input type="text" class="cf-compose__input" id="cfTitle" placeholder="What are you posting about?" maxlength="100" required>
+          </div>
+        </div>
+        <div class="cf-compose__row">
+          <div class="cf-compose__field cf-compose__field--full">
+            <label class="cf-compose__label" for="cfDescription">Description</label>
+            <textarea class="cf-compose__textarea" id="cfDescription" placeholder="Add details about your listing..." maxlength="500" rows="4" required></textarea>
+          </div>
+        </div>
+        <div class="cf-compose__row">
+          <div class="cf-compose__field">
+            <label class="cf-compose__label" for="cfPrice">Price (optional)</label>
+            <input type="text" class="cf-compose__input" id="cfPrice" placeholder="$0.00 or Free">
+          </div>
+          <div class="cf-compose__field">
+            <label class="cf-compose__label" for="cfContact">Contact Email</label>
+            <input type="email" class="cf-compose__input" id="cfContact" placeholder="your@email.com" required>
+          </div>
+        </div>
+        <div class="cf-compose__footer">
+          <span class="cf-compose__note">Your listing will be visible to the entire CF community</span>
+          <button type="submit" class="cf-compose__submit" id="cfSubmitBtn" disabled>Post Listing</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Filter Pills -->
+    <div class="cf-filters" id="cfFilters">
+      <button class="cf-filter-btn cf-filter-btn--active" data-filter="all">All</button>
+      <button class="cf-filter-btn" data-filter="selling">Selling</button>
+      <button class="cf-filter-btn" data-filter="buying">Buying</button>
+      <button class="cf-filter-btn" data-filter="hiring">Hiring</button>
+      <button class="cf-filter-btn" data-filter="dropins">Drop Ins</button>
+      <button class="cf-filter-btn" data-filter="services">Services</button>
+      <button class="cf-filter-btn" data-filter="events">Events</button>
+      <button class="cf-filter-btn" data-filter="other">Other</button>
+    </div>
+
+    <!-- Sort Controls -->
+    <div class="cf-sort" id="cfSort">
+      <button class="cf-sort__btn cf-sort__btn--active" data-sort="newest">Newest</button>
+      <button class="cf-sort__btn" data-sort="oldest">Oldest</button>
+    </div>
+
+    <!-- Listings Feed -->
+    <div class="cf-grid" id="cfFeed">
+      <div class="cf-empty" id="cfEmpty">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 7h8M8 11h5"/></svg>
+        <p>No listings yet. Be the first to post something for the community.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== CONTACT MODAL ===== -->
+<div class="cf-modal-overlay" id="cfModal">
+  <div class="cf-modal">
+    <button class="cf-modal__close" id="cfModalClose" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <h3 class="cf-modal__title" id="cfModalTitle">Contact Seller</h3>
+    <p class="cf-modal__text" id="cfModalText">Send an email to get in touch about this listing.</p>
+    <a class="cf-modal__email-link" id="cfModalEmail" href="#">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Send Email
+    </a>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- ===== NEWSLETTER / ALERTS SIGNUP ===== -->
+<section class="section newsletter" id="subscribe">
+  <div class="container">
+    <div class="newsletter__inner">
+      <div>
+        <div class="newsletter__label">Stay in the Loop</div>
+        <h2 class="newsletter__title">Get Breaking News &amp; Alerts</h2>
+        <p class="newsletter__desc">Sign up to receive the CF Network News newsletter and breaking news alerts. Be the first to know when major stories drop.</p>
+      </div>
+      <form class="newsletter__form" id="newsletterForm" novalidate>
+        <div class="newsletter__row">
+          <div class="newsletter__field">
+            <label for="nl-email">Email Address</label>
+            <input type="email" id="nl-email" name="EMAIL" class="newsletter__input" placeholder="you@example.com" required>
+          </div>
+        </div>
+        <div style="position:absolute;left:-5000px" aria-hidden="true">
+          <input type="text" name="b_d40058698a0dbd5c27f2fa54c_8bda743e10" tabindex="-1" value="">
+        </div>
+        <button type="submit" class="newsletter__btn">Subscribe</button>
+        <div class="newsletter__error" id="newsletterError" style="display:none;color:var(--color-text-muted);margin-top:0.75rem;font-size:var(--text-sm);"></div>
+      </form>
+      <div class="newsletter__success" id="newsletterSuccess">Almost there! Check your inbox and click the confirmation link to complete your subscription.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div>
+        <a href="./index.html" class="logo" aria-label="CF Network News home" style="margin-bottom:var(--space-2)">
+          <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+            <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+            <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+          </svg>
+          <div class="logo__text">CF NETWORK<span>NEWS</span></div>
+        </a>
+        <p class="footer__brand-text">Your daily source for CrossFit news, athlete updates, competition schedules, and community insights. Not affiliated with CrossFit LLC.</p>
+      </div>
+      <div>
+        <h4 class="footer__heading">Sections</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="./news.html">Top Stories</a></li>
+          <li><a href="./gossip.html">Gossip &amp; Drama</a></li>
+          <li><a href="./shows.html">Podcasts/Shows</a></li>
+          <li><a href="./rankings.html">Channel Rankings</a></li>
+          <li><a href="./rogue.html">Rogue Fitness</a></li>
+          <li><a href="./season-info.html">Season Info</a></li>
+          <li><a href="./message-board.html">Message Board</a></li>
+          <li><a href="./classifieds.html">Classifieds</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__heading">Resources</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="https://games.crossfit.com" target="_blank" rel="noopener noreferrer">CrossFit Games</a></li>
+          <li><a href="https://morningchalkup.barbend.com" target="_blank" rel="noopener noreferrer">Morning Chalk Up</a></li>
+          <li><a href="https://thebarbellspin.com" target="_blank" rel="noopener noreferrer">The Barbell Spin</a></li>
+          <li><a href="https://www.roguefitness.com" target="_blank" rel="noopener noreferrer">Rogue Fitness</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__heading">Upcoming</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="https://wodapalooza.com" target="_blank" rel="noopener noreferrer">Wodapalooza</a></li>
+          <li><a href="https://games.crossfit.com/finals/overview" target="_blank" rel="noopener noreferrer">2026 Games</a></li>
+          <li><a href="https://www.roguefitness.com/invitational" target="_blank" rel="noopener noreferrer">Rogue Invitational</a></li>
+          <li><a href="https://games.crossfit.com/competitions" target="_blank" rel="noopener noreferrer">Licensed Events</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 CF Network News. Independent fan site. Not affiliated with CrossFit LLC.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== MOBILE FLOATING NAV ===== -->
+<div class="fab-nav" id="fabNav">
+  <div class="fab-nav__menu" id="fabMenu">
+    <a href="./news.html" class="fab-nav__item">Top Stories</a>
+    <a href="./gossip.html" class="fab-nav__item">Gossip</a>
+    <a href="./shows.html" class="fab-nav__item">Podcasts/Shows</a>
+    <a href="./rankings.html" class="fab-nav__item">Rankings</a>
+    <a href="./rogue.html" class="fab-nav__item">Rogue</a>
+    <a href="./season-info.html" class="fab-nav__item">Season Info</a>
+    <a href="./message-board.html" class="fab-nav__item">Message Board</a>
+    <a href="./classifieds.html" class="fab-nav__item">Classifieds</a>
+    <a href="./advertise.html" class="fab-nav__item">Advertise</a>
+    <a href="./index.html#subscribe" class="fab-nav__item">Subscribe</a>
+  </div>
+  <button class="fab-nav__btn" id="fabToggle" aria-label="Open navigation menu">
+    <svg class="fab-nav__icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    <svg class="fab-nav__icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+</div>
+
+<script src="./app.js" defer></script>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+  firebase.initializeApp({
+    apiKey: "AIzaSyD1JQffSvumRnn0x40V6hk4j3EdyyBrGig",
+    authDomain: "cf-network-news.firebaseapp.com",
+    databaseURL: "https://cf-network-news-default-rtdb.firebaseio.com",
+    projectId: "cf-network-news",
+    storageBucket: "cf-network-news.firebasestorage.app",
+    messagingSenderId: "637738242934",
+    appId: "1:637738242934:web:aede6dd97c6c6139d92057"
+  });
+  window.cfnnDb = firebase.firestore();
+  window.cfnnAuth = firebase.auth();
+</script>
+
+<script>
+(function () {
+  'use strict';
+
+  var auth = window.cfnnAuth;
+  var db = window.cfnnDb;
+  var provider = new firebase.auth.GoogleAuthProvider();
+
+  // DOM refs
+  var signInBtn   = document.getElementById('cfGoogleSignIn');
+  var signedOutEl = document.getElementById('cfSignedOut');
+  var signedInEl  = document.getElementById('cfSignedIn');
+  var userNameEl  = document.getElementById('cfUserName');
+  var userPhotoEl = document.getElementById('cfUserPhoto');
+  var signOutBtn  = document.getElementById('cfSignOut');
+  var form        = document.getElementById('cfForm');
+  var submitBtn   = document.getElementById('cfSubmitBtn');
+  var feedEl      = document.getElementById('cfFeed');
+  var emptyEl     = document.getElementById('cfEmpty');
+  var totalEl     = document.getElementById('cfTotalPosts');
+  var modalOverlay = document.getElementById('cfModal');
+  var modalClose  = document.getElementById('cfModalClose');
+  var modalTitle  = document.getElementById('cfModalTitle');
+  var modalText   = document.getElementById('cfModalText');
+  var modalEmail  = document.getElementById('cfModalEmail');
+
+  var CATEGORIES = {
+    selling:  'Selling',
+    buying:   'Buying',
+    hiring:   'Hiring',
+    dropins:  'Drop Ins',
+    services: 'Services',
+    events:   'Events',
+    other:    'Other'
+  };
+
+  var currentFilter = 'all';
+  var currentSort = 'newest';
+  var allListings = [];
+
+  // ===== Auth =====
+  signInBtn.addEventListener('click', function () {
+    auth.signInWithPopup(provider).catch(function (err) {
+      console.error('Sign in failed', err);
+      alert('Sign in failed. Please try again.');
+    });
+  });
+
+  signOutBtn.addEventListener('click', function () {
+    auth.signOut();
+  });
+
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      signedOutEl.style.display = 'none';
+      signedInEl.style.display = 'flex';
+      userNameEl.textContent = user.displayName || user.email || 'User';
+      if (user.photoURL) {
+        userPhotoEl.src = user.photoURL;
+        userPhotoEl.alt = user.displayName || 'User';
+      }
+      submitBtn.disabled = false;
+    } else {
+      signedOutEl.style.display = 'flex';
+      signedInEl.style.display = 'none';
+      userNameEl.textContent = '';
+      userPhotoEl.src = '';
+      submitBtn.disabled = true;
+    }
+  });
+
+  // ===== Submit Listing =====
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var user = auth.currentUser;
+    if (!user) {
+      alert('Please sign in with Google before posting.');
+      return;
+    }
+
+    var category    = document.getElementById('cfCategory').value;
+    var title       = document.getElementById('cfTitle').value.trim();
+    var description = document.getElementById('cfDescription').value.trim();
+    var price       = document.getElementById('cfPrice').value.trim();
+    var location    = document.getElementById('cfLocation').value.trim();
+    var contact     = document.getElementById('cfContact').value.trim();
+
+    if (!category || !title || !description || !contact) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Posting...';
+
+    db.collection('classifieds').add({
+      category: category,
+      title: title,
+      description: description,
+      price: price || '',
+      location: location || '',
+      contact: contact,
+      uid: user.uid,
+      authorName: user.displayName || user.email || 'User',
+      authorPhoto: user.photoURL || '',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function () {
+      form.reset();
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Post Listing';
+    }).catch(function (err) {
+      console.error('Error posting listing', err);
+      alert('Error posting listing. Please try again.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Post Listing';
+    });
+  });
+
+  // ===== Load Listings (real time) =====
+  db.collection('classifieds')
+    .orderBy('createdAt', 'desc')
+    .onSnapshot(function (snapshot) {
+      allListings = [];
+      snapshot.forEach(function (doc) {
+        var data = doc.data();
+        data.id = doc.id;
+        allListings.push(data);
+      });
+      totalEl.textContent = allListings.length;
+      renderListings();
+    }, function (err) {
+      console.error('Error loading listings', err);
+    });
+
+  // ===== Render =====
+  function renderListings() {
+    var filtered = allListings;
+
+    if (currentFilter !== 'all') {
+      filtered = filtered.filter(function (item) {
+        return item.category === currentFilter;
+      });
+    }
+
+    if (currentSort === 'oldest') {
+      filtered = filtered.slice().reverse();
+    }
+
+    if (filtered.length === 0) {
+      emptyEl.style.display = 'block';
+      // Remove all cards but keep the empty state
+      var cards = feedEl.querySelectorAll('.cf-card');
+      cards.forEach(function (c) { c.remove(); });
+      return;
+    }
+
+    emptyEl.style.display = 'none';
+
+    var html = filtered.map(function (item) {
+      var catLabel = CATEGORIES[item.category] || 'Other';
+      var catClass = 'cf-cat--' + (item.category || 'other');
+      var dateStr = '';
+      if (item.createdAt && item.createdAt.toDate) {
+        var d = item.createdAt.toDate();
+        dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      }
+
+      var priceHtml = item.price ? '<div class="cf-card__price">' + escHtml(item.price) + '</div>' : '';
+
+      var locationHtml = item.location
+        ? '<span class="cf-card__location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' + escHtml(item.location) + '</span>'
+        : '';
+
+      var avatarHtml = item.authorPhoto
+        ? '<div class="cf-card__avatar"><img src="' + escHtml(item.authorPhoto) + '" alt=""></div>'
+        : '<div class="cf-card__avatar">' + (item.authorName ? item.authorName.charAt(0).toUpperCase() : '?') + '</div>';
+
+      var currentUser = auth.currentUser;
+      var deleteHtml = '';
+      if (currentUser && currentUser.uid === item.uid) {
+        deleteHtml = '<button class="cf-card__delete" data-delete-id="' + item.id + '" title="Delete listing"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>';
+      }
+
+      return '<div class="cf-card ' + catClass + '">'
+        + '<div class="cf-card__top">'
+        +   '<span class="cf-card__cat">' + escHtml(catLabel) + '</span>'
+        +   '<span class="cf-card__date">' + escHtml(dateStr) + '</span>'
+        + '</div>'
+        + '<h3 class="cf-card__title">' + escHtml(item.title) + '</h3>'
+        + '<p class="cf-card__body">' + escHtml(item.description) + '</p>'
+        + priceHtml
+        + '<div class="cf-card__footer">'
+        +   '<div class="cf-card__author">'
+        +     avatarHtml
+        +     '<span>' + escHtml(item.authorName) + '</span>'
+        +     locationHtml
+        +   '</div>'
+        +   '<div style="display:flex;align-items:center;gap:var(--space-2);">'
+        +     '<button class="cf-card__contact-btn" data-contact="' + escHtml(item.contact) + '" data-title="' + escHtml(item.title) + '">Contact</button>'
+        +     deleteHtml
+        +   '</div>'
+        + '</div>'
+        + '</div>';
+    }).join('');
+
+    // Replace all cards
+    var oldCards = feedEl.querySelectorAll('.cf-card');
+    oldCards.forEach(function (c) { c.remove(); });
+    feedEl.insertAdjacentHTML('beforeend', html);
+  }
+
+  function escHtml(str) {
+    if (!str) return '';
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+
+  // ===== Filter Buttons =====
+  var filterBtns = document.querySelectorAll('.cf-filter-btn');
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      filterBtns.forEach(function (b) { b.classList.remove('cf-filter-btn--active'); });
+      btn.classList.add('cf-filter-btn--active');
+      currentFilter = btn.getAttribute('data-filter');
+      renderListings();
+    });
+  });
+
+  // ===== Sort Buttons =====
+  var sortBtns = document.querySelectorAll('.cf-sort__btn');
+  sortBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      sortBtns.forEach(function (b) { b.classList.remove('cf-sort__btn--active'); });
+      btn.classList.add('cf-sort__btn--active');
+      currentSort = btn.getAttribute('data-sort');
+      renderListings();
+    });
+  });
+
+  // ===== Contact Modal =====
+  feedEl.addEventListener('click', function (e) {
+    var contactBtn = e.target.closest('.cf-card__contact-btn');
+    if (contactBtn) {
+      var email = contactBtn.getAttribute('data-contact');
+      var title = contactBtn.getAttribute('data-title');
+      modalTitle.textContent = 'Contact About: ' + title;
+      modalText.textContent = 'Send an email to get in touch about this listing.';
+      modalEmail.href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent('CF Network Classifieds: ' + title);
+      modalEmail.textContent = 'Send Email';
+      modalOverlay.classList.add('cf-modal-overlay--open');
+      return;
+    }
+
+    var deleteBtn = e.target.closest('.cf-card__delete');
+    if (deleteBtn) {
+      var docId = deleteBtn.getAttribute('data-delete-id');
+      if (confirm('Are you sure you want to delete this listing?')) {
+        db.collection('classifieds').doc(docId).delete().catch(function (err) {
+          console.error('Error deleting', err);
+          alert('Error deleting listing.');
+        });
+      }
+    }
+  });
+
+  modalClose.addEventListener('click', function () {
+    modalOverlay.classList.remove('cf-modal-overlay--open');
+  });
+
+  modalOverlay.addEventListener('click', function (e) {
+    if (e.target === modalOverlay) {
+      modalOverlay.classList.remove('cf-modal-overlay--open');
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>
