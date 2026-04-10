@@ -596,10 +596,10 @@
 <!-- ===== TICKER ===== -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker__track">
-    <span class="ticker__item">CROSSFIT COMMUNITY MOURNING THE LOSS OF LEGEND ROB ORLANDO</span>
+    <span class="ticker__item">IBARRA, FOLO & NEELY WITHDRAW FROM MAYHEM</span>
     <span class="ticker__item">JAY CROUCH GETS MAJOR PENALTY ON EVENT 1</span>
     <span class="ticker__item">MAYHEM REVEALS EVENT 1 IS 5K RUN</span>
-    <span class="ticker__item">CROSSFIT COMMUNITY MOURNING THE LOSS OF LEGEND ROB ORLANDO</span>
+    <span class="ticker__item">IBARRA, FOLO & NEELY WITHDRAW FROM MAYHEM</span>
     <span class="ticker__item">JAY CROUCH GETS MAJOR PENALTY ON EVENT 1</span>
     <span class="ticker__item">MAYHEM REVEALS EVENT 1 IS 5K RUN</span>
   </div>
@@ -616,6 +616,7 @@
     <a href="./season-info.html" class="section-nav__link">Season Info</a>
     <a href="./message-board.html" class="section-nav__link">Message Board</a>
     <a href="./classifieds.html" class="section-nav__link section-nav__link--active">Classifieds</a>
+    <a href="./advertise.html" class="section-nav__link">Advertise</a>
     <a href="./index.html#subscribe" class="section-nav__link">Subscribe</a>
   </div>
 </nav>
@@ -667,7 +668,7 @@
         <div class="cf-compose__row">
           <div class="cf-compose__field">
             <label class="cf-compose__label" for="cfCategory">Category</label>
-            <select class="cf-compose__select" id="cfCategory" required>
+            <select class="cf-compose__select" id="cfCategory">
               <option value="">Select a category</option>
               <option value="selling">Selling Equipment</option>
               <option value="buying">Looking to Buy</option>
@@ -686,13 +687,13 @@
         <div class="cf-compose__row">
           <div class="cf-compose__field cf-compose__field--full">
             <label class="cf-compose__label" for="cfTitle">Title</label>
-            <input type="text" class="cf-compose__input" id="cfTitle" placeholder="What are you posting about?" maxlength="100" required>
+            <input type="text" class="cf-compose__input" id="cfTitle" placeholder="What are you posting about?" maxlength="100">
           </div>
         </div>
         <div class="cf-compose__row">
           <div class="cf-compose__field cf-compose__field--full">
             <label class="cf-compose__label" for="cfDescription">Description</label>
-            <textarea class="cf-compose__textarea" id="cfDescription" placeholder="Add details about your listing..." maxlength="500" rows="4" required></textarea>
+            <textarea class="cf-compose__textarea" id="cfDescription" placeholder="Add details about your listing..." maxlength="500" rows="4"></textarea>
           </div>
         </div>
         <div class="cf-compose__row">
@@ -702,7 +703,7 @@
           </div>
           <div class="cf-compose__field">
             <label class="cf-compose__label" for="cfContact">Contact Email</label>
-            <input type="email" class="cf-compose__input" id="cfContact" placeholder="your@email.com" required>
+            <input type="email" class="cf-compose__input" id="cfContact" placeholder="your@email.com">
           </div>
         </div>
         <div class="cf-compose__footer">
@@ -839,6 +840,8 @@
   </div>
 </footer>
 
+<script src="./app.js"></script>
+
 <!-- ===== MOBILE FLOATING NAV ===== -->
 <div class="fab-nav" id="fabNav">
   <div class="fab-nav__menu" id="fabMenu">
@@ -858,8 +861,6 @@
     <svg class="fab-nav__icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
   </button>
 </div>
-
-<script src="./app.js" defer></script>
 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -951,7 +952,7 @@
   });
 
   // ===== Submit Listing =====
-  form.addEventListener('submit', function (e) {
+  submitBtn.addEventListener('click', function (e) {
     e.preventDefault();
     var user = auth.currentUser;
     if (!user) {
@@ -967,7 +968,7 @@
     var contact     = document.getElementById('cfContact').value.trim();
 
     if (!category || !title || !description || !contact) {
-      alert('Please fill in all required fields.');
+      alert('Please fill in all required fields (category, title, description, and contact email).');
       return;
     }
 
