@@ -2,14 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Top Stories — CF Network News</title>
-<meta name="description" content="Breaking CrossFit news, leaderboard updates, and athlete stories.">
-<meta property="og:title" content="Top Stories — CF Network News">
-<meta property="og:description" content="Breaking CrossFit news, athlete gossip, Rogue Fitness updates, and competition schedules — all in one place.">
-<link rel="stylesheet" href="./base.css">
-<link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Stories — CF Network News</title>
+  <meta name="description" content="Breaking CrossFit news, leaderboard updates, and athlete stories.">
+  <meta property="og:title" content="Top Stories — CF Network News">
+  <meta property="og:description" content="Breaking CrossFit news, athlete gossip, Rogue Fitness updates, and competition schedules — all in one place.">
+  <link rel="stylesheet" href="./base.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
@@ -27,7 +27,9 @@
     </a>
 
     <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
     </button>
   </div>
 </header>
@@ -35,12 +37,12 @@
 <!-- ===== TICKER ===== -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker__track">
-       <span class="ticker__item">IBARRA, FOLO & NEELY WITHDRAW FROM MAYHEM</span>
-    <span class="ticker__item">AUSTIN HATFIELD YOUR MALE QUARTERFINAL WINNER</span>
-    <span class="ticker__item">MAYHEM REVEALS EVENT 3 IS THE DIRTY 30'S </span>
     <span class="ticker__item">IBARRA, FOLO & NEELY WITHDRAW FROM MAYHEM</span>
     <span class="ticker__item">AUSTIN HATFIELD YOUR MALE QUARTERFINAL WINNER</span>
-    <span class="ticker__item">MAYHEM REVEALS EVENT 3 IS THE DIRTY 30'S </span>
+    <span class="ticker__item">MAYHEM REVEALS EVENT 3 IS THE DIRTY 30'S</span>
+    <span class="ticker__item">IBARRA, FOLO & NEELY WITHDRAW FROM MAYHEM</span>
+    <span class="ticker__item">AUSTIN HATFIELD YOUR MALE QUARTERFINAL WINNER</span>
+    <span class="ticker__item">MAYHEM REVEALS EVENT 3 IS THE DIRTY 30'S</span>
   </div>
 </div>
 
@@ -62,7 +64,9 @@
 <div style="padding:var(--space-4) 0 0;">
   <div class="container">
     <a href="./index.html" style="font-size:var(--text-sm);color:var(--color-text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:var(--space-2);">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
       Back to Home
     </a>
   </div>
@@ -76,7 +80,7 @@
         <div class="section__label" style="color:#3b82f6">2025 CrossFit Games &bull; Top 20 Finishers</div>
         <h2 class="section__title">Athletes on Instagram</h2>
       </div>
-       <a href="https://games.crossfit.com/leaderboard/finals/2025?final=245&division=1&sort=0" target="_blank" rel="noopener noreferrer" class="section__link" style="color:#3b82f6">Full Leaderboard &rarr;</a>
+      <a href="https://games.crossfit.com/leaderboard/finals/2025?final=245&division=1&sort=0" target="_blank" rel="noopener noreferrer" class="section__link" style="color:#3b82f6">Full Leaderboard &rarr;</a>
     </div>
 
     <div class="athlete-reel fade-in">
@@ -87,7 +91,7 @@
   </div>
 </section>
 
-<!-- ===== BREAKING NEWS ===== -->
+<!-- ===== TOP STORIES ===== -->
 <section class="section" id="news" style="padding-top:var(--space-10)">
   <div class="container">
     <div class="section__header">
@@ -96,125 +100,163 @@
       </div>
     </div>
 
-<div id="mayhem-event-feature" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6)">
-  <div class="card__body">
-    <div class="card__image card__image--force">
-      <img src="./assets/img-dirty30s-header.png" alt="Mayhem Classic Event 3 Dirty 30s announcement graphic">
+    <!-- NEW: Leaderboard Closed / Hatfield Wins / Crouch Penalty -->
+    <div id="quarters-leaderboard-feature" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6)">
+      <div class="card__body">
+        <div class="card__image card__image--force">
+          <img src="./assets/img-quarters-leaderboard.png" alt="CrossFit Games Quarterfinals leaderboard image">
+        </div>
+
+        <div class="card__header">
+          <span class="card__tag" style="background:#0ea5e9;color:#fff;">Competition</span>
+          <span class="card__date">April 10, 2026</span>
+        </div>
+
+        <h3 class="card__title">Leaderboard Closed: Austin Hatfield Wins Quarterfinals</h3>
+
+        <p class="card__excerpt">
+          The CrossFit Games Quarterfinal leaderboard is now officially closed, and Austin Hatfield has been confirmed as the overall winner. With all scores reviewed and penalties applied, Hatfield finishes at the top of the leaderboard and secures the Quarterfinal crown.
+        </p>
+
+        <p class="card__excerpt">
+          One of the most impactful changes came from a penalty issued to Jay Crouch on Workout 1. Crouch was assessed a one minute penalty after being credited with only 19 of the required 20 overhead squats in one section of the workout, changing his score and placement on the event.
+        </p>
+
+        <p class="card__excerpt">
+          The adjustment dropped him from second place overall on Workout 1 to 284th, causing him to move out of first overall and down to 38th on the final leaderboard, and the missed rep ultimately cost him 5,000 dollars in prize money. Tia-Clair Toomey-Orr commented on an Instagram post that it was a single missed rep that resulted in the one minute penalty. Crouch also confirmed the situation in a recent Instagram post captioned, “One missed rep = 1 minute penalty. It is what it is. I'm still me. See you at Torian Pro in 6 weeks!”
+        </p>
+
+        <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2);">
+          Source: CrossFit Games Quarterfinals leaderboard and athlete social media posts
+        </p>
+      </div>
     </div>
 
-    <div class="card__header">
-      <span class="card__tag" style="background:#0ea5e9;color:#fff;">Competition</span>
-      <span class="card__date">April 9, 2026</span>
-    </div>
-
-    <h3 class="card__title">Mayhem Releases Event 3: The Dirty 30s</h3>
-
-    <p class="card__excerpt">
-      “The Dirty 30s” has been announced as Event 3 of the Mayhem Classic. This event will likely be the second workout on Day Two. The workout features 30/24 rep segments of ring & bar muscle ups, sandwhiched in between segments of sandbag squats, with 150 pounds for the men and 125 pounds for the women.
-    </p>
-
-    <p class="card__excerpt">
-      The exact weekend schedule is still yet to be confirmed, including whether Event 4 will close out Saturday or begin the final day, and whether the format will mirror last years with two workouts on Saturday and three on Sunday. With muscle ups & sandbag squats that are typically done with the bag racked on athletes back, that still leaves 30 workouts in play for the events still to be announced. 90 squats is not "too much" for these elites athletes so we are not ruling out thrusters or front squats to still show up in the programming. It also remains unknown how many total workouts will ultimately be programmed for the competition.
-    </p>
-
-    <p class="card__excerpt">
-      <a href="./assets/MAYHEM 2026 .pdf" target="_blank" rel="noopener">
-        View the workout PDF
-      </a>
-    </p>
-  </div>
-</div>
-
- <div id="jay-crouch-penalty" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6)">
-  <div class="card__body">
-    <div class="card__image card__image--force">
-      <img src="./assets/img-jay-crouch-leaderboard.png" alt="Jay Crouch CrossFit Quarterfinals leaderboard showing penalty impact">
-    </div>
-
-    <div class="card__header">
-      <span class="card__tag" style="background:#f59e0b;color:#000;">Leaderboard Shake Up</span>
-      <span class="card__date">April 8, 2026</span>
-    </div>
-
-    <h3 class="card__title">Jay Crouch Gets Major Penalty</h3>
-
-    <p class="card__excerpt">
-      Jay Crouch has received a one minute penalty on Event 1 of the CrossFit Quarterfinals, moving his score from 2nd on the workout all the way to 284th on that test. That single hit drops him to 38th overall on the mens leaderboard.
-    </p>
-
-    <p class="card__excerpt">
-      There is no word yet on whether more penalties are coming for the men, but CrossFit has said the leaderboard will be finalized no later than April 10, leaving athletes and fans refreshing the standings for the next two days. So far, there are no comparable major penalties showing up on the womens side.
-    </p>
-
-    <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2);">
-      Source: CrossFit Games Quarterfinals leaderboard
-    </p>
-  </div>
-</div>
-
-
-<div id="rob-orlando-feature" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6)">
-  <div class="card__body">
-    <div class="card__image card__image--force">
-      <img src="./assets/img-rob-orlando.png" alt="Rob Orlando tribute image">
-    </div>
-
-    <div class="card__header">
-      <span class="card__tag" style="background:#0ea5e9;color:#fff;">Community</span>
-      <span class="card__date">April 7, 2026</span>
-    </div>
-
-    <h3 class="card__title">CrossFit Community Mourns the loss of Legend Rob Orlando</h3>
-
-    <p class="card__excerpt">
-      Rob Orlando, one of CrossFit’s original legends, the “strongman of CrossFit,” has died after his battle with cancer. His passing was shared in a tribute post on his Instagram account that read, “April 28, 1975 - April 6, 2026. Yours in strength - Rob O.”
-    </p>
-
-    <p class="card__excerpt">
-      Orlando was a four time CrossFit Games athlete and the founder of Hybrid Athletics, he helped bring strongman movements like carries and odd object work into mainstream CrossFit programming. For many in the sport, he represented the toughness and personality of CrossFit’s early era.
-    </p>
-
-    <p class="card__excerpt">
-      Rob was first diagnosed in January of 2025, and underwent surgery to remove part of his jaw, and then went through radiation and chemotherapy, losing nearly 30 pounds in the process, weight he was determined to earn back. 
-    </p>
-
-    <p class="card__excerpt">
-      In the comments and across the community, athletes, coaches, and fans remembered Orlando as a generous coach, a larger than life presence, and a major influence on the way strength is trained in affiliates today. The overwhelming message was simple, CrossFit lost one of it's foundational figures.
-    </p>
-
-    <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2);">
-      Source: Instagram post on Rob Orlando’s account @crossfitrobo
-    </p>
-  </div>
-</div>
-</div>
-
+    <!-- Mayhem Event 3: Dirty 30s -->
     <div id="mayhem-event-feature" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6)">
-  <div class="card__body">
-    <div class="card__image card__image--force">
-      <img src="./assets/img-mayhem-event2.png" alt="Mayhem Classic Event 1 announcement graphic">
+      <div class="card__body">
+        <div class="card__image card__image--force">
+          <img src="./assets/img-dirty30s-header.png" alt="Mayhem Classic Event 3 Dirty 30s announcement graphic">
+        </div>
+
+        <div class="card__header">
+          <span class="card__tag" style="background:#0ea5e9;color:#fff;">Competition</span>
+          <span class="card__date">April 9, 2026</span>
+        </div>
+
+        <h3 class="card__title">Mayhem Releases Event 3: The Dirty 30s</h3>
+
+        <p class="card__excerpt">
+          “The Dirty 30s” has been announced as Event 3 of the Mayhem Classic. This event will likely be the second workout on Day Two. The workout features 30/24 rep segments of ring and bar muscle ups, sandwiched between segments of sandbag squats, with 150 pounds for the men and 125 pounds for the women.
+        </p>
+
+        <p class="card__excerpt">
+          The exact weekend schedule is still yet to be confirmed, including whether Event 4 will close out Saturday or begin the final day, and whether the format will mirror last year’s with two workouts on Saturday and three on Sunday. With muscle ups and sandbag squats that are typically done with the bag racked on athletes’ backs, that still leaves 30 workouts in play for the events still to be announced. Ninety squats is not “too much” for these elite athletes, so we are not ruling out thrusters or front squats still showing up in the programming. It also remains unknown how many total workouts will ultimately be programmed for the competition.
+        </p>
+
+        <p class="card__excerpt">
+          <a href="./assets/MAYHEM 2026 .pdf" target="_blank" rel="noopener">
+            View the workout PDF
+          </a>
+        </p>
+      </div>
     </div>
 
-    <div class="card__header">
-      <span class="card__tag" style="background:#0ea5e9;color:#fff;">Competition</span>
-      <span class="card__date">April 7, 2026</span>
+    <!-- Jay Crouch earlier penalty story -->
+    <div id="jay-crouch-penalty" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6)">
+      <div class="card__body">
+        <div class="card__image card__image--force">
+          <img src="./assets/img-jay-crouch-leaderboard.png" alt="Jay Crouch CrossFit Quarterfinals leaderboard showing penalty impact">
+        </div>
+
+        <div class="card__header">
+          <span class="card__tag" style="background:#f59e0b;color:#000;">Leaderboard Shake Up</span>
+          <span class="card__date">April 8, 2026</span>
+        </div>
+
+        <h3 class="card__title">Jay Crouch Gets Major Penalty</h3>
+
+        <p class="card__excerpt">
+          Jay Crouch has received a one minute penalty on Event 1 of the CrossFit Quarterfinals, moving his score from 2nd on the workout all the way to 284th on that test. That single hit drops him to 38th overall on the men's leaderboard.
+        </p>
+
+        <p class="card__excerpt">
+          There is no word yet on whether more penalties are coming for the men, but CrossFit has said the leaderboard will be finalized no later than April 10, leaving athletes and fans refreshing the standings for the next two days. So far, there are no comparable major penalties showing up on the women’s side.
+        </p>
+
+        <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2);">
+          Source: CrossFit Games Quarterfinals leaderboard
+        </p>
+      </div>
     </div>
 
-    <h3 class="card__title">Mayhem Releases Event</h3>
+    <!-- Rob Orlando feature -->
+    <div id="rob-orlando-feature" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6)">
+      <div class="card__body">
+        <div class="card__image card__image--force">
+          <img src="./assets/img-rob-orlando.png" alt="Rob Orlando tribute image">
+        </div>
 
-    <p class="card__excerpt">
-      Mayhem has announced Event 1 as a 5K run. Some of the details on the post are crossed out “to protect those involved,” including the location information. This removes the 5k and eight other events that included running. Assuming they will not program another event with running, that leaves 48 possible workouts still in play. Some media personalities in the space have suggested there will likely not be a swim event, but we are going to leave that in there just in case.
-    </p>
+        <div class="card__header">
+          <span class="card__tag" style="background:#0ea5e9;color:#fff;">Community</span>
+          <span class="card__date">April 7, 2026</span>
+        </div>
 
-    <p class="card__excerpt">
-      Given recent trends in CrossFit having Games athletes doing special events, like Randy with Nick Mathews, Fight Gone Bad with PRVN athletes, and Grace in Alaska with Boys Interrupted, it wouldn't be a surprise if the next announcement is a barbell workout, possibly a benchmark. But at this point it is still anyone’s guess. For a look at all the workouts announced, eliminated, and still on the table, click the link below.
-    </p>
-    <p class="card__excerpt">
-     <a href="./assets/MAYHEM 2026.pdf .pdf" target="_blank" rel="noopener">
-    View the workout PDF
-  </a>
-</p>
-    
+        <h3 class="card__title">CrossFit Community Mourns the loss of Legend Rob Orlando</h3>
+
+        <p class="card__excerpt">
+          Rob Orlando, one of CrossFit’s original legends, the “strongman of CrossFit,” has died after his battle with cancer. His passing was shared in a tribute post on his Instagram account that read, “April 28, 1975 - April 6, 2026. Yours in strength - Rob O.”
+        </p>
+
+        <p class="card__excerpt">
+          Orlando was a four time CrossFit Games athlete and the founder of Hybrid Athletics, he helped bring strongman movements like carries and odd object work into mainstream CrossFit programming. For many in the sport, he represented the toughness and personality of CrossFit’s early era.
+        </p>
+
+        <p class="card__excerpt">
+          Rob was first diagnosed in January of 2025, and underwent surgery to remove part of his jaw, and then went through radiation and chemotherapy, losing nearly 30 pounds in the process, weight he was determined to earn back.
+        </p>
+
+        <p class="card__excerpt">
+          In the comments and across the community, athletes, coaches, and fans remembered Orlando as a generous coach, a larger than life presence, and a major influence on the way strength is trained in affiliates today. The overwhelming message was simple, CrossFit lost one of its foundational figures.
+        </p>
+
+        <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2);">
+          Source: Instagram post on Rob Orlando’s account @crossfitrobo
+        </p>
+      </div>
+    </div>
+
+    <!-- Mayhem Event 1 article -->
+    <div id="mayhem-event-1-5k-feature" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6)">
+      <div class="card__body">
+        <div class="card__image card__image--force">
+          <img src="./assets/img-mayhem-event2.png" alt="Mayhem Classic Event 1 announcement graphic">
+        </div>
+
+        <div class="card__header">
+          <span class="card__tag" style="background:#0ea5e9;color:#fff;">Competition</span>
+          <span class="card__date">April 7, 2026</span>
+        </div>
+
+        <h3 class="card__title">Mayhem Releases Event</h3>
+
+        <p class="card__excerpt">
+          Mayhem has announced Event 1 as a 5K run. Some of the details on the post are crossed out “to protect those involved,” including the location information. This removes the 5k and eight other events that included running. Assuming they will not program another event with running, that leaves 48 possible workouts still in play. Some media personalities in the space have suggested there will likely not be a swim event, but we are going to leave that in there just in case.
+        </p>
+
+        <p class="card__excerpt">
+          Given recent trends in CrossFit having Games athletes doing special events, like Randy with Nick Mathews, Fight Gone Bad with PRVN athletes, and Grace in Alaska with Boys Interrupted, it wouldn't be a surprise if the next announcement is a barbell workout, possibly a benchmark. But at this point it is still anyone’s guess. For a look at all the workouts announced, eliminated, and still on the table, click the link below.
+        </p>
+
+        <p class="card__excerpt">
+          <a href="./assets/MAYHEM 2026.pdf" target="_blank" rel="noopener">
+            View the workout PDF
+          </a>
+        </p>
+      </div>
+    </div>
+
+  </div>
 </section>
 
 <!-- ===== NEWSLETTER / ALERTS SIGNUP ===== -->
@@ -313,8 +355,12 @@
     <a href="./index.html#subscribe" class="fab-nav__item">Subscribe</a>
   </div>
   <button class="fab-nav__btn" id="fabToggle" aria-label="Open navigation menu">
-    <svg class="fab-nav__icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
-    <svg class="fab-nav__icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    <svg class="fab-nav__icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <path d="M3 12h18M3 6h18M3 18h18"/>
+    </svg>
+    <svg class="fab-nav__icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <path d="M18 6L6 18M6 6l12 12"/>
+    </svg>
   </button>
 </div>
 
