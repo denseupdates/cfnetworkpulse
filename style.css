@@ -1,7 +1,7 @@
-/* Art direction: CrossFit News Hub → Bold, high-energy, athletic editorial
+/* Art direction: CrossFit News Hub â†’ Bold, high-energy, athletic editorial
    Palette: Dark/moody with clean black & white design
    Typography: Bebas Neue (display, condensed impact) + Space Grotesk (body, modern geometric)
-   Density: balanced — editorial sections breathe, news cards dense */
+   Density: balanced â€” editorial sections breathe, news cards dense */
 
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
@@ -465,7 +465,7 @@
 }
 
 .ticker__item::after {
-  content: '◆';
+  content: 'â—†';
   font-size: 0.5em;
   opacity: 0.6;
 }
@@ -1713,7 +1713,7 @@ a.athlete-card:hover .athlete-card__ig {
   border-bottom: 1px solid var(--color-divider);
 }
 
-/* FAB always uses flex — visibility controlled by .fab-nav--visible via JS */
+/* FAB always uses flex â€” visibility controlled by .fab-nav--visible via JS */
 
 /* ===== CHANNEL RANKINGS ===== */
 .rankings-intro {
@@ -2746,7 +2746,7 @@ a.athlete-card:hover .athlete-card__ig {
    MOBILE-RESPONSIVE GRID OVERRIDES
    ================================ */
 
-/* Gossip grid: 3 columns desktop → 1 column mobile */
+/* Gossip grid: 3 columns desktop â†’ 1 column mobile */
 .gossip-grid--3col {
   grid-template-columns: repeat(3, 1fr);
 }
@@ -2761,7 +2761,7 @@ a.athlete-card:hover .athlete-card__ig {
   }
 }
 
-/* News/Rogue grid: 2 columns desktop → 1 column mobile */
+/* News/Rogue grid: 2 columns desktop â†’ 1 column mobile */
 .news-grid--2col {
   grid-template-columns: 1fr 1fr;
 }
@@ -2775,7 +2775,7 @@ a.athlete-card:hover .athlete-card__ig {
   }
 }
 
-/* Leaderboard split: 2 columns → stacked on very small screens */
+/* Leaderboard split: 2 columns â†’ stacked on very small screens */
 .leaderboard-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2991,5 +2991,33 @@ a.athlete-card:hover .athlete-card__ig {
 
   .athlete-reel__fade {
     width: 36px;
+  }
+}/* ================================
+   NEWS GRID CORRECTION ONLY
+   Keep original file intact
+   ================================ */
+
+.section--news {
+  padding-top: var(--space-10);
+}
+
+.news-rail {
+  width: min(100% - 48px, 1280px);
+  margin: 0 auto var(--space-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.card--article .card__excerpt,
+#news .card__excerpt {
+  max-width: none;
+  width: 100%;
+  line-height: 1.68;
+}
+
+@media (max-width: 900px) {
+  .news-rail {
+    width: min(100% - 32px, 1280px);
   }
 }
