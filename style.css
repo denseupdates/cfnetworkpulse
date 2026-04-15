@@ -465,9 +465,12 @@
 }
 
 .ticker__item::after {
-  content: 'â—†';
-  font-size: 0.5em;
-  opacity: 0.6;
+  content: '•';
+  display: inline-block;
+  margin-left: 0.75rem;
+  font-size: 0.65em;
+  line-height: 1;
+  opacity: 0.75;
 }
 
 @keyframes ticker-scroll {
