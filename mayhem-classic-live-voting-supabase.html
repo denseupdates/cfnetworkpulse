@@ -220,8 +220,8 @@
         return;
       }
       state.votes = result.data || [];
-      document.getElementById('statusTitle').textContent = 'Supabase connected';
-      document.getElementById('statusSub').textContent = 'Votes are loading from the database and realtime updates are enabled.';
+      document.getElementById('statusTitle').textContent = 'Live fan voting';
+      document.getElementById('statusSub').textContent = 'Vote totals update as picks come in.';
       document.getElementById('statusDot').classList.add('live');
       refreshUI();
     }
