@@ -1,0 +1,779 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Daily Source for CrossFit News, Gossip & Events — CF Network News</title>
+  <meta name="description" content="Stay on top of the CrossFit world. Breaking news, Open updates, athlete gossip, Rogue Fitness gear, local competitions, and 2026 Games coverage.">
+  <meta property="og:title" content="CF Network News — CrossFit News Hub">
+  <meta property="og:description" content="Breaking CrossFit news, athlete gossip, Rogue Fitness updates, and competition schedules — all in one place.">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="./base.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="./index.html" class="logo" aria-label="CF Network News home">
+      <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+        <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+        <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+      </svg>
+      <div class="logo__text">CF NETWORK<span>NEWS</span></div>
+    </a>
+
+    <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+    <!-- ===== TICKER ===== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span class="ticker__item">VICTOR HOFFER & PAIGE RODGERS WIN MAYHEM CLASSIC </span>
+    <span class="ticker__item">ROMAN KHRENNIKOV & JEFF ADLER EARN THE OTHER TWO MALE GAMES TICKETS  </span>
+    <span class="ticker__item">EMMA LAWSON & LUCY CAMPBELL EARN THE OTHER TWO FEMALE GAMES TICKETS</span>
+    <span class="ticker__item">VICTOR HOFFER & PAIGE RODGERS WIN MAYHEM CLASSIC  </span>
+    <span class="ticker__item">ROMAN KHRENNIKOV & JEFF ADLER EARN THE OTHER TWO MALE GAMES TICKETS </span>
+    <span class="ticker__item">EMMA LAWSON & LUCY CAMPBELL EARN THE OTHER TWO FEMALE GAMES TICKETS</span>
+  </div>
+</div>
+
+<!-- ===== SECTION NAV ===== -->
+<nav class="section-nav" aria-label="Section navigation">
+  <div class="section-nav__track">
+    <a href="./news.html" class="section-nav__link">Top Stories</a>
+  <a href="./mayhem-classic.html" class="section-nav__link">Mayhem Classic</a>
+    <a href="./gossip.html" class="section-nav__link">Gossip</a>
+    <a href="./shows.html" class="section-nav__link">Podcasts/Shows</a>
+    <a href="./rankings.html" class="section-nav__link">Rankings</a>
+    <a href="./rogue.html" class="section-nav__link">Rogue</a>
+    <a href="./season-info.html" class="section-nav__link">Season Info</a>
+    <a href="./message-board.html" class="section-nav__link">Message Board</a>
+    <a href="./classifieds.html" class="section-nav__link">Classifieds</a>
+    <a href="./index.html#subscribe" class="section-nav__link">Subscribe</a>
+  </div>
+</nav>
+
+<!-- ===== ATHLETES ON INSTAGRAM ===== -->
+<section class="section athletes-section" id="athletes" style="padding-top:var(--space-8);padding-bottom:var(--space-12)">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <div class="section__label" style="color:#3b82f6">2025 CrossFit Games &bull; Top 20 Finishers</div>
+        <h2 class="section__title">Athletes on Instagram</h2>
+      </div>
+      <a href="https://games.crossfit.com/leaderboard/quarterfinals/2026?quarterfinal=263&amp;division=1&amp;region=0&amp;sort=0" target="_blank" rel="noopener noreferrer" class="section__link" style="color:#3b82f6;">
+        Full Leaderboard &rarr;
+      </a>
+    </div>
+
+    <div class="athlete-reel fade-in">
+      <div class="athlete-reel__fade athlete-reel__fade--left" aria-hidden="true"></div>
+      <div class="athlete-reel__fade athlete-reel__fade--right" aria-hidden="true"></div>
+      <div class="athlete-reel__track" id="athleteFloatTrack"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TOP STORIES ===== -->
+<section class="section" id="news" style="padding-top:var(--space-10);">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <h2 class="section__title">Top Stories</h2>
+      </div>
+      <a href="./news.html" class="section__link" style="color:#0ea5e9">See All &rarr;</a>
+    </div>
+
+<div id="mayhem-classic-final-home" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6);">
+  <div class="card__body">
+    <div class="card__image card__image--force">
+      <img src="./assets/img-mayhempodium.png" alt="Athletes celebrating on the podium at the Mayhem Classic">
+    </div>
+
+    <div class="card__header">
+      <span class="card__tag" style="background:#22c55e;color:#fff;">Top Story</span>
+      <span class="card__date">April 19, 2026</span>
+    </div>
+
+    <h3 class="card__title">Rodgers and Hoffer Secure Mayhem Classic Crowns</h3>
+
+    <p class="card__excerpt">
+      Paige Rodgers and Victor Hoffer emerged as the big winners at the 2026 Mayhem Classic in Cookeville, Tennessee, capping the three day test and locking up their spots at the 2026 CrossFit Games.
+    </p>
+
+    <a href="./news.html#mayhem-classic-final-feature" style="display:inline-block;margin-top:var(--space-2);font-weight:700;font-size:var(--text-sm);color:var(--color-primary);text-decoration:none;">
+      Read Full Article &rarr;
+    </a>
+  </div>
+</div>
+
+    <div id="mayhem-classic-day1-home" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6);">
+  <div class="card__body">
+    <div class="card__image card__image--force">
+      <img src="./assets/img-day2winners.png" alt="Athletes competing at the Mayhem Classic during barbell and gymnastics events">
+    </div>
+
+    <div class="card__header">
+      <span class="card__tag" style="background:#22c55e;color:#fff;">Top Story</span>
+      <span class="card__date">April 18, 2026</span>
+    </div>
+
+    <h3 class="card__title">Mayhem Classic Day Two Delivers Tight Races And Leaderboard Shifts</h3>
+
+    <p class="card__excerpt">
+      Mayhem Classic Day One delivered tight races and a leaderboard shakeup driven by three very different tests, a grip draining barbell benchmark, a sandbag squat grind, and an interval style gymnastics closer.
+    </p>
+
+    <a href="./news.html#mayhem-classic-day1-feature" style="display:inline-block;margin-top:var(--space-2);font-weight:700;font-size:var(--text-sm);color:var(--color-primary);text-decoration:none;">
+      Read Full Article &rarr;
+    </a>
+  </div>
+</div>
+
+    <div id="mayhem-classic-event1-home" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6);">
+  <div class="card__body">
+    <div class="card__image card__image--force">
+      <img src="./assets/img-eventone-winners.png" alt="Athletes running at the Mayhem Classic during Event 1 with the burpee log obstacle">
+    </div>
+
+    <div class="card__header">
+      <span class="card__tag" style="background:#22c55e;color:#fff;">Top Story</span>
+      <span class="card__date">April 17, 2026</span>
+    </div>
+
+    <h3 class="card__title">Mayhem Classic Opens The 5K Run With A Twist</h3>
+
+    <p class="card__excerpt">
+      Event 1 at the 2026 Mayhem Classic started as a published 5K run, but athletes learned Friday morning there would also be 50 burpees over a 42 inch log on Rich Froning’s property, adding a twist to the opening test.
+    </p>
+
+    <a href="./news.html#mayhem-classic-event1-feature" style="display:inline-block;margin-top:var(--space-2);font-weight:700;font-size:var(--text-sm);color:var(--color-primary);text-decoration:none;">
+      Read Full Article &rarr;
+    </a>
+  </div>
+</div>
+
+    <div id="legends-medeiros-torian-home" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6);">
+  <div class="card__body">
+    <div class="card__image card__image--force">
+      <img src="./assets/img-ellie-justin.png" alt="Justin Medeiros and Ellie Turner with Australian crowd in background">
+    </div>
+
+    <div class="card__header">
+      <span class="card__tag" style="background:#0ea5e9;color:#fff;">Top Story</span>
+      <span class="card__date">April 16, 2026</span>
+    </div>
+
+    <h3 class="card__title">Justin Medeiros Withdraws From Legends, Sets Sights on Australia With Ellie Turner</h3>
+
+    <p class="card__excerpt">
+      Justin Medeiros has withdrawn from the Legends Championship, and at around the 22:18 mark on Andrew Hiller’s show Brian Friend shared that Medeiros and Ellie Turner are planning to compete at the Torian Pro in Australia instead.
+    </p>
+
+    <a href="./news.html#legends-medeiros-torian-feature" style="display:inline-block;margin-top:var(--space-2);font-weight:700;font-size:var(--text-sm);color:var(--color-primary);text-decoration:none;">
+      Read Full Article &rarr;
+    </a>
+  </div>
+</div>
+
+    <div id="mayhem-hopper-withdraws-home" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6);">
+  <div class="card__body">
+    <div class="card__image card__image--force">
+      <img src="./assets/img-hopper-out.png" alt="Jayson Hopper during competition">
+    </div>
+
+    <div class="card__header">
+      <span class="card__tag" style="background:#0ea5e9;color:#fff;">Injury Update</span>
+      <span class="card__date">April 15, 2026</span>
+    </div>
+
+    <h3 class="card__title">Jayson Hopper Withdraws From Mayhem Classic Due to Groin Injury</h3>
+
+    <p class="card__excerpt">
+      Jayson Hopper has withdrawn from the Mayhem Classic due to a groin injury.
+    </p>
+
+    <a href="./news.html#mayhem-hopper-withdraws-feature" style="display:inline-block;margin-top:var(--space-2);font-weight:700;font-size:var(--text-sm);color:var(--color-primary);text-decoration:none;">
+      Read Full Article &rarr;
+    </a>
+  </div>
+</div>
+  </div>
+</section>
+
+<!-- ===== GOSSIP & DRAMA ===== -->
+<section class="section" style="padding-bottom:var(--space-12)">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <div class="section__label" style="color:#7f0fe8">Via Dense Updates &bull; CF Network</div>
+        <h2 class="section__title">Gossip &amp; Drama</h2>
+      </div>
+      <a href="./gossip.html" class="section__link" style="color:#7f0fe8; position: relative; z-index: 9999; pointer-events: auto;">
+        See All &rarr;
+      </a>
+    </div>
+
+    <div class="gossip-grid gossip-grid--3col fade-in">
+
+  <a href="./gossip.html#danielle-brandon-austin-gooch-breakup" class="gossip-card">
+  <div class="gossip-card__icon">&#128163;</div>
+  <div class="gossip-card__image">
+    <img src="./assets/img-dbe-breakup.png" alt="Danielle Brandon and Austin Gooch CrossFit gossip story graphic">
+  </div>
+  <div class="gossip-card__label" style="color:#9333ea;">Athlete Drama</div>
+  <h3 class="gossip-card__title">Danielle Brandon And Austin Gooch Call It Quits</h3>
+  <p class="gossip-card__text">
+    After weeks of cryptic Instagram stories and fan speculation, it has now been confirmed that controversial CrossFit star Danielle Brandon and Austin Gooch have ended their relationship, with his CrossFit Hyde Park membership reportedly cancelled.
+  </p>
+</a>
+
+<a href="./gossip.html#mertens-hopper-gossip" class="gossip-card">
+ <div class="gossip-card__icon">&#128163;</div>
+  <div class="gossip-card__image">
+    <img src="./assets/img-colten-hopper.png" alt="Colten Mertens and Jayson Hopper CrossFit gossip story graphic">
+  </div>
+  <div class="gossip-card__label" style="color:#9333ea;">Athlete Drama</div>
+  <h3 class="gossip-card__title">Colten Mertens Puts Jayson Hopper On Blast</h3>
+  <p class="gossip-card__text">
+    In a podcast clip now circulating as an Instagram reel, Colten Mertens says he does not vibe with the Boys Interrupted crew and jokes they will probably never invite him on their podcast because they do not want their ego hurt when he turns them down.
+  </p>
+</a>
+
+      <a href="./gossip.html#kerstetter-ibarra" class="gossip-card">
+        <div class="gossip-card__icon">&#128140;</div>
+       <div class="gossip-card__image">
+         <img src="./assets/img-kerstetter-ibarra-easter.png" alt="Olivia Kerstetter and Chris Ibarra on Easter weekend">
+      </div>
+       <div class="gossip-card__label" style="color:#9333ea;">Relationship Rumor</div>
+       <h3 class="gossip-card__title">Olivia Kerstetter &amp; Chris Ibarra Are Official?</h3>
+       <p class="gossip-card__text">
+        Kerstetter posted couple pics with Ibarra all over her Easter story weeks after denying she had a boyfriend. Guess the rumor Sevan heard was right.
+       </p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PODCASTS / SHOWS ===== -->
+<section class="section" style="padding-bottom:var(--space-12)">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <h2 class="section__title">Podcasts/Shows</h2>
+      </div>
+      <a href="./shows.html"
+         class="section__link"
+         style="color:#f00303;position:relative;z-index:9999;pointer-events:auto">
+        See All &rarr;
+      </a>
+    </div>
+
+      <!-- CARD 2 -->
+       <a href="https://youtube.com/@cf-network?si=8m3nprOHkGKc8Pny"
+          target="_blank" rel="noopener noreferrer"
+          class="show-card" style="border-left:3px solid #ef4444;">
+      <div class="show-card__icon" style="color:#ef4444;font-size:1.8rem;line-height:.8;">&#9679;</div>
+        <div class="show-card__info">
+          <span class="show-card__channel">CF Network</span>
+          <span class="show-card__title">Mayhem Class Final Day  Pre Show</span>
+          <span class="show-card__meta">Upcoming &bull; April 19, 2026 10:45 AM CST</span>
+       </div>
+       <span class="show-card__badge" style="background:#fee2e2;color:#991b1b;">Upcoming</span>
+    </a>
+
+        <!-- CARD 2 -->
+      <a href="https://www.youtube.com/watch?v=KU_uVyF8G64"
+         target="_blank" rel="noopener noreferrer"
+          class="show-card" style="border-left:3px solid #360bf5;">
+      <div class="show-card__icon">&#9654;</div>
+        <div class="show-card__info">
+          <span class="show-card__channel">CF Network</span>
+          <span class="show-card__title">Mayhem Classic Day 2 Recap</span>
+          <span class="show-card__meta">New &bull; April 18, 2026 
+        </div>
+        <span class="show-card__badge" style="background:#454bf4;color:#000;">New</span>
+      </a>
+
+              <!-- CARD 2 -->
+      <a href="https://www.youtube.com/watch?v=v5V2JkH8COg"
+         target="_blank" rel="noopener noreferrer"
+          class="show-card" style="border-left:3px solid #360bf5;">
+      <div class="show-card__icon">&#9654;</div>
+        <div class="show-card__info">
+          <span class="show-card__channel">CrossFit Mayhem</span>
+          <span class="show-card__title">Mayhem Classic is Back | Day 1 BTS</span>
+          <span class="show-card__meta">New &bull; April 18, 2026 
+        </div>
+        <span class="show-card__badge" style="background:#454bf4;color:#000;">New</span>
+      </a>
+  </div>
+</section>
+
+<!-- ===== HOME RANKINGS ===== -->
+<section class="section" id="home-rankings">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <div class="section__label" style="color:#ec9602">Monthly Views</div>
+        <h2 class="section__title">Top 5 Channels</h2>
+      </div>
+      <a href="./rankings.html" class="section__link" style="color:#c78305 !important; position:relative; z-index:9999; pointer-events:auto; display:inline-block; text-decoration:none;">
+        Full Rankings &rarr;
+      </a>
+    </div>
+
+    <p class="rankings-intro">
+      Top 5 CrossFit YouTube channels ranked by estimated monthly views.
+    </p>
+
+    <div class="rankings-grid fade-in" id="homeRankingsGrid"></div>
+  </div>
+</section>
+
+<!-- ===== ROGUE FITNESS ===== -->
+<section class="section" style="padding-bottom:var(--space-12)">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <div class="section__label" style="color:#d97706">Gear &amp; Events</div>
+        <h2 class="section__title">Rogue Fitness</h2>
+      </div>
+      <a href="./rogue.html" class="section__link" style="color:#bd4804; position: relative; z-index: 9999; pointer-events: auto;">
+        See All &rarr;
+      </a>
+    </div>
+
+    <div class="rogue-grid rogue-grid--2col fade-in">
+      <a href="https://www.roguefitness.com/invitational" target="_blank" rel="noopener noreferrer" class="rogue-card">
+        <div class="rogue-card__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="rogue-card__label">Event</div>
+        <div class="rogue-card__image">
+          <img src="./assets/img-rogue-invitational.jpg" alt="Rogue Invitational Aberdeen Scotland">
+        </div>
+        <h3 class="rogue-card__title">2026 Rogue Invitational Returns to Scotland</h3>
+        <p class="rogue-card__text">
+          The 8th annual Rogue Invitational heads back to P&amp;J Live in Aberdeen for a third consecutive year, October 23-25.
+        </p>
+      </a>
+
+      <a href="https://www.roguefitness.com/arnold-strongman-classic/events" target="_blank" rel="noopener noreferrer" class="rogue-card">
+        <div class="rogue-card__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+            <line x1="9" y1="9" x2="9.01" y2="9"/>
+            <line x1="15" y1="9" x2="15.01" y2="9"/>
+          </svg>
+        </div>
+        <div class="rogue-card__label">Just Happened</div>
+        <div class="rogue-card__image">
+          <img src="./assets/thumb-arnold.jpg" alt="Arnold Strongman Classic 2026">
+        </div>
+        <h3 class="rogue-card__title">Arnold Strongman Classic 2026 Recap</h3>
+        <p class="rogue-card__text">
+          The event wrapped March 6-7 in Columbus, Ohio, with the Rogue Elephant Bar Deadlift, Stone to Shoulder, and Ramp Rage finale headlining the weekend.
+        </p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEASON INFO ===== -->
+<section class="section" style="padding-bottom:var(--space-12)">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <h2 class="section__title">Season Info</h2>
+      </div>
+      <a href="./season-info.html" class="section__link" style="color:#09bd09 !important; position: relative; z-index: 9999; pointer-events: auto; text-decoration:none;">
+        See All &rarr;
+      </a>
+    </div>
+
+    <div class="comp-list fade-in">
+      <a href="https://mayhemclassic.com/" target="_blank" rel="noopener noreferrer" class="comp-item">
+        <div class="comp-item__date">
+          <span class="comp-item__date-month">Apr</span>
+          <span class="comp-item__date-day">17</span>
+        </div>
+        <div class="comp-item__info">
+          <div class="comp-item__title">Mayhem Classic</div>
+          <div class="comp-item__location">Cookeville, TN — Apr 17–19</div>
+        </div>
+        <div class="comp-item__arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="https://legendscomp.com/" target="_blank" rel="noopener noreferrer" class="comp-item">
+        <div class="comp-item__date">
+          <span class="comp-item__date-month">Apr</span>
+          <span class="comp-item__date-day">24</span>
+        </div>
+        <div class="comp-item__info">
+          <div class="comp-item__title">Legends Championship</div>
+          <div class="comp-item__location">Del Mar, CA — Apr 24–26</div>
+        </div>
+        <div class="comp-item__arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="https://www.crossfitcrash.com/crescendo" target="_blank" rel="noopener noreferrer" class="comp-item">
+        <div class="comp-item__date">
+          <span class="comp-item__date-month">Apr</span>
+          <span class="comp-item__date-day">24</span>
+        </div>
+        <div class="comp-item__info">
+          <div class="comp-item__title">CRASH Crescendo</div>
+          <div class="comp-item__location">Spartanburg, SC — Apr 24–26</div>
+        </div>
+        <div class="comp-item__arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 2026 CROSSFIT GAMES ===== -->
+<section class="section" style="padding-bottom:var(--space-12)">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <div class="section__label">The Main Event</div>
+        <h2 class="section__title">2026 CrossFit Games</h2>
+      </div>
+      <a href="./competitions.html" class="section__link" style="color:#f1f2f5; position: relative; z-index: 9999; pointer-events: auto;">
+        See All &rarr;
+      </a>
+    </div>
+
+    <div class="news-grid news-grid--2col fade-in">
+      <div class="card">
+        <div class="card__image">
+          <img src="./assets/games.png" alt="CrossFit Games arena with competition equipment">
+          <span class="card__badge">20th Anniversary</span>
+        </div>
+        <div class="card__body">
+          <span class="card__meta">July 24-26, 2026</span>
+          <h3 class="card__title">Games Return to California — SAP Center, San Jose</h3>
+          <p class="card__excerpt">
+            Celebrating 20 years of the CrossFit Games, the top 30 men and 30 women plus the top 20 teams will compete to be crowned Fittest on Earth.
+          </p>
+        </div>
+      </div>
+
+      <div class="card" style="padding:var(--space-6);justify-content:center;gap:var(--space-4)">
+        <div class="section__label">Season Roadmap</div>
+        <h3 style="font-family:var(--font-display);font-size:var(--text-xl);text-transform:uppercase;letter-spacing:0.02em;">Road to the Games</h3>
+        <div class="timeline">
+          <div class="timeline__item">
+            <div class="timeline__dot timeline__dot--active"></div>
+            <div class="timeline__date">Feb 26 — Mar 16</div>
+            <div class="timeline__title">The Open</div>
+            <div class="timeline__desc">3 workouts. Everyone competes.</div>
+          </div>
+          <div class="timeline__item">
+            <div class="timeline__dot timeline__dot--upcoming"></div>
+            <div class="timeline__date">Mar 26 — 30</div>
+            <div class="timeline__title">Quarterfinals</div>
+            <div class="timeline__desc">Top 25% advance. Online.</div>
+          </div>
+          <div class="timeline__item">
+            <div class="timeline__dot timeline__dot--upcoming"></div>
+            <div class="timeline__date">Jul 24 — 26</div>
+            <div class="timeline__title">The CrossFit Games</div>
+            <div class="timeline__desc">SAP Center, San Jose, CA.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MESSAGE BOARD PREVIEW ===== -->
+<section class="section" id="message-board-preview">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <div class="section__label" style="color:#10b981">Community</div>
+        <h2 class="section__title">Message Board</h2>
+      </div>
+      <a href="./message-board.html" class="section__link" style="color:#4d18c0; position: relative; z-index: 9999; pointer-events: auto;">
+        See All &rarr;
+      </a>
+    </div>
+
+    <div class="mb-preview">
+      <div class="mb-preview__icon">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      </div>
+      <p class="mb-preview__text">
+        Share your takes on the Open, debate athlete rankings, discuss the latest gossip, and connect with the CrossFit community.
+      </p>
+      <a href="./message-board.html" class="mb-preview__btn">Go to Message Board</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NEWSLETTER / ALERTS SIGNUP ===== -->
+<section class="section newsletter" id="subscribe">
+  <div class="container">
+    <div class="newsletter__inner">
+      <div>
+        <div class="newsletter__label">Stay in the Loop</div>
+        <h2 class="newsletter__title">Get Breaking News &amp; Alerts</h2>
+        <p class="newsletter__desc">
+          Sign up to receive the CF Network News newsletter and breaking news alerts. Be the first to know when major stories drop — CEO changes, Open workouts, athlete injuries, and everything in between.
+        </p>
+      </div>
+      <form class="newsletter__form" id="newsletterForm" novalidate>
+        <div class="newsletter__row">
+          <div class="newsletter__field">
+            <label for="nl-email">Email Address</label>
+            <input type="email" id="nl-email" name="EMAIL" class="newsletter__input" placeholder="you@example.com" required>
+          </div>
+        </div>
+        <div style="position:absolute;left:-5000px" aria-hidden="true">
+          <input type="text" name="b_d40058698a0dbd5c27f2fa54c_8bda743e10" tabindex="-1" value="">
+        </div>
+        <button type="submit" class="newsletter__btn">Subscribe</button>
+        <div class="newsletter__error" id="newsletterError" style="display:none;color:var(--color-text-muted);margin-top:0.75rem;font-size:var(--text-sm);"></div>
+      </form>
+      <div class="newsletter__success" id="newsletterSuccess">
+        Almost there! Check your inbox and click the confirmation link to complete your subscription.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div>
+        <a href="./index.html" class="logo" aria-label="CF Network News home" style="margin-bottom:var(--space-2)">
+          <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+            <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+            <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+          </svg>
+          <div class="logo__text">CF NETWORK<span>NEWS</span></div>
+        </a>
+        <p class="footer__brand-text">
+          Your daily source for CrossFit news, athlete updates, competition schedules, and community insights. Not affiliated with CrossFit LLC.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="footer__heading">Sections</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="./news.html">Top Stories</a></li>
+          <li><a href="./gossip.html">Gossip &amp; Drama</a></li>
+          <li><a href="./shows.html">Podcasts/Shows</a></li>
+          <li><a href="./rankings.html">Channel Rankings</a></li>
+          <li><a href="./rogue.html">Rogue Fitness</a></li>
+          <li><a href="./season-info.html">Season Info</a></li>
+          <li><a href="https://competitioncorner.net/events/19193/schedule" target="_blank" rel="noopener noreferrer">WZA Schedule</a></li>
+          <li><a href="./message-board.html">Message Board</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer__heading">Resources</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="https://games.crossfit.com" target="_blank" rel="noopener noreferrer">CrossFit Games</a></li>
+          <li><a href="https://morningchalkup.barbend.com" target="_blank" rel="noopener noreferrer">Morning Chalk Up</a></li>
+          <li><a href="https://thebarbellspin.com" target="_blank" rel="noopener noreferrer">The Barbell Spin</a></li>
+          <li><a href="https://www.roguefitness.com" target="_blank" rel="noopener noreferrer">Rogue Fitness</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer__heading">Upcoming</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="https://wodapalooza.com" target="_blank" rel="noopener noreferrer">Wodapalooza</a></li>
+          <li><a href="https://games.crossfit.com/finals/overview" target="_blank" rel="noopener noreferrer">2026 Games</a></li>
+          <li><a href="https://www.roguefitness.com/invitational" target="_blank" rel="noopener noreferrer">Rogue Invitational</a></li>
+          <li><a href="https://games.crossfit.com/competitions" target="_blank" rel="noopener noreferrer">Licensed Events</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 CF Network News. Independent fan site. Not affiliated with CrossFit LLC.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== MOBILE FLOATING NAV ===== -->
+<div class="fab-nav" id="fabNav">
+  <div class="fab-nav__menu" id="fabMenu">
+    <a href="./news.html" class="fab-nav__item">Top Stories</a>
+    <a href="./gossip.html" class="fab-nav__item">Gossip</a>
+    <a href="./shows.html" class="fab-nav__item">Podcasts/Shows</a>
+    <a href="./rankings.html" class="fab-nav__item">Rankings</a>
+    <a href="./rogue.html" class="fab-nav__item">Rogue</a>
+    <a href="./season-info.html" class="fab-nav__item">Season Info</a>
+    <a href="./message-board.html" class="fab-nav__item">Message Board</a>
+    <a href="./index.html#subscribe" class="fab-nav__item">Subscribe</a>
+  </div>
+  <button class="fab-nav__btn" id="fabToggle" aria-label="Open navigation menu">
+    <svg class="fab-nav__icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <path d="M3 12h18M3 6h18M3 18h18"/>
+    </svg>
+    <svg class="fab-nav__icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <path d="M18 6L6 18M6 6l12 12"/>
+    </svg>
+  </button>
+</div>
+
+<script src="./app.js" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const ATHLETES = [
+    { rank: "1st",  name: "Jayson Hopper",      handle: "@jhopper3",         url: "https://www.instagram.com/jhopper3/",         image: "./assets/Jayson Hopper.jpg" },
+    { rank: "2nd",  name: "Ricky Garard",       handle: "@rickygarard",      url: "https://www.instagram.com/rickygarard/",      image: "./assets/Ricky Garard.jpg" },
+    { rank: "3rd",  name: "James Sprague",      handle: "@spraguerrrr",      url: "https://www.instagram.com/spraguerrrr/",      image: "./assets/James Sprague.jpg" },
+    { rank: "4th",  name: "Dallin Pepper",      handle: "@dallinpepper",     url: "https://www.instagram.com/dallinpepper/",     image: "./assets/Dallin Pepper.jpg" },
+    { rank: "5th",  name: "Austin Hatfield",    handle: "@austinhatfield_1", url: "https://www.instagram.com/austinhatfield_1/", image: "./assets/Austin Hatfield.jpg" },
+    { rank: "6th",  name: "Jay Crouch",         handle: "@jaycrouch_",       url: "https://www.instagram.com/jaycrouch_/",       image: "./assets/Jay Crouch.jpg" },
+    { rank: "7th",  name: "Justin Medeiros",    handle: "@justinmedeiros34", url: "https://www.instagram.com/justinmedeiros34/", image: "./assets/Justin Medeiros.jpg" },
+    { rank: "8th",  name: "Jeffrey Adler",      handle: "@adlerjeff",        url: "https://www.instagram.com/adlerjeff/",        image: "./assets/Jeffrey Adler.jpg" },
+    { rank: "9th",  name: "Roman Khrennikov",   handle: "@roman_khrennikov", url: "https://www.instagram.com/roman_khrennikov/", image: "./assets/Roman Khrennikov.jpg" },
+    { rank: "10th", name: "Tudor Magda",        handle: "@tmagda1",          url: "https://www.instagram.com/tmagda1/",          image: "./assets/Tudor Magda.jpg" },
+    { rank: "11th", name: "Harry Lightfoot",    handle: "@harrylightfoot_",  url: "https://www.instagram.com/harrylightfoot_/",  image: "./assets/Harry Lightfoot.jpg" },
+    { rank: "12th", name: "Colten Mertens",     handle: "@colten_mertens",   url: "https://www.instagram.com/colten_mertens/",   image: "./assets/Colten Mertens.jpg" },
+    { rank: "13th", name: "Chris Ibarra",       handle: "@chrisibarra5",     url: "https://www.instagram.com/chrisibarra5/",     image: "./assets/Chris Ibarra.jpg" },
+    { rank: "14th", name: "Kalyan Souza",       handle: "@kalyancf",         url: "https://www.instagram.com/kalyancf/",         image: "./assets/Kalyan Souza.jpg" },
+    { rank: "15th", name: "Ty Jenkins",         handle: "@tyjenkins75",      url: "https://www.instagram.com/tyjenkins75/",      image: "./assets/Ty Jenkins.jpg" },
+    { rank: "16th", name: "Calum Clements",     handle: "@calum_clements",   url: "https://www.instagram.com/calum_clements/",   image: "./assets/Calum Clements.jpg" },
+    { rank: "17th", name: "Colin Bosshard",     handle: "@colinbosshard",    url: "https://www.instagram.com/colinbosshard/",    image: "./assets/Colin Bosshard.jpg" },
+    { rank: "18th", name: "Jack Rozema",        handle: "@jackrozema7",      url: "https://www.instagram.com/jackrozema7/",      image: "./assets/Jack Rozema.jpg" },
+    { rank: "19th", name: "Moritz Fiebig",      handle: "@moritz_fiebig",    url: "https://www.instagram.com/moritz_fiebig/",    image: "./assets/Moritz Fiebig.jpg" },
+    { rank: "20th", name: "Nick Mathew",        handle: "@coachnmathew",     url: "https://www.instagram.com/coachnmathew/",     image: "./assets/Nick Mathew.jpg" },
+
+    { rank: "1st",  name: "Tia-Clair Toomey",   handle: "@tiaclair1",        url: "https://www.instagram.com/tiaclair1/",        image: "./assets/Tia-Clair Toomey.jpg" },
+    { rank: "2nd",  name: "Lucy Campbell",      handle: "@lucycampbell5",    url: "https://www.instagram.com/lucycampbell5/",    image: "./assets/Lucy Campbell.jpg" },
+    { rank: "3rd",  name: "Olivia Kerstetter",  handle: "@oliviakerstetter", url: "https://www.instagram.com/oliviakerstetter/", image: "./assets/Olivia Kerstetter.jpg" },
+    { rank: "4th",  name: "Danielle Brandon",   handle: "@daniellebrandon7", url: "https://www.instagram.com/daniellebrandon7/", image: "./assets/Danielle Brandon.jpg" },
+    { rank: "5th",  name: "Arielle Loewen",     handle: "@arielleloewen",    url: "https://www.instagram.com/arielleloewen/",    image: "./assets/Arielle Loewen.jpg" },
+    { rank: "6th",  name: "Madeline Sturt",     handle: "@maddiesturt",      url: "https://www.instagram.com/maddiesturt/",      image: "./assets/Madeline Sturt.jpg" },
+    { rank: "7th",  name: "Mirjam von Rohr",    handle: "@mirjam_v.r",       url: "https://www.instagram.com/mirjam_v.r/",       image: "./assets/Mirjam von Rohr.jpg" },
+    { rank: "8th",  name: "Aimee Cringle",      handle: "@aimee_cringle",    url: "https://www.instagram.com/aimee_cringle/",    image: "./assets/Aimee Cringle.jpg" },
+    { rank: "9th",  name: "Anikha Greer",       handle: "@anikhagreer",      url: "https://www.instagram.com/anikhagreer/",      image: "./assets/Anikha Greer.jpg" },
+    { rank: "10th", name: "Alexis Raptis",      handle: "@alexis_raptis",    url: "https://www.instagram.com/alexis_raptis/",    image: "./assets/Alexis Raptis.jpg" },
+    { rank: "11th", name: "Lucy McGonigle",     handle: "@lucy.mcgonigle",   url: "https://www.instagram.com/lucy.mcgonigle/",   image: "./assets/Lucy McGonigle.jpg" },
+    { rank: "12th", name: "Abigail Domit",      handle: "@abbiedomit",       url: "https://www.instagram.com/abbiedomit/",       image: "./assets/Abigail Domit.jpg" },
+    { rank: "13th", name: "Lydia Fish",         handle: "@fish_lydia",       url: "https://www.instagram.com/fish_lydia/",       image: "./assets/Lydia Fish.jpg" },
+    { rank: "14th", name: "Claudia Gluck",      handle: "@claudia_glk",      url: "https://www.instagram.com/claudia_glk/",      image: "./assets/Claudia Gluck.jpg" },
+    { rank: "15th", name: "Grace Walton",       handle: "@graciewaltonn_",   url: "https://www.instagram.com/graciewaltonn_/",   image: "./assets/Grace Walton.jpg" },
+    { rank: "16th", name: "Brooke Wells",       handle: "@brookewellss",     url: "https://www.instagram.com/brookewellss/",     image: "./assets/Brooke Wells.jpg" },
+    { rank: "17th", name: "Fee Saghafi",        handle: "@fee.saghafi",      url: "https://www.instagram.com/fee.saghafi/",      image: "./assets/Fee Saghafi.jpg" },
+    { rank: "18th", name: "Lexi Neely",         handle: "@lexi_neely_",      url: "https://www.instagram.com/lexi_neely_/",      image: "./assets/Lexi Neely.jpg" },
+    { rank: "19th", name: "Haley Adams",        handle: "@haleyadamssss",    url: "https://www.instagram.com/haleyadamssss/",    image: "./assets/Haley Adams.jpg" },
+    { rank: "20th", name: "Jennifer Muir",      handle: "@jennifermuir99",   url: "https://www.instagram.com/jennifermuir99/",   image: "./assets/Jennifer Muir.jpg" }
+  ];
+
+  const track = document.getElementById("athleteFloatTrack");
+  if (track) {
+    const loopedAthletes = [...ATHLETES, ...ATHLETES];
+    track.innerHTML = loopedAthletes.map((athlete) => `
+      <a href="${athlete.url}" target="_blank" rel="noopener noreferrer" class="athlete-poster" aria-label="${athlete.name} on Instagram">
+        <img src="${athlete.image}" alt="${athlete.name}" width="180" height="320" loading="lazy">
+        <div class="athlete-poster__overlay">
+          <span class="athlete-poster__rank">${athlete.rank}</span>
+          <span class="athlete-poster__name">${athlete.name}</span>
+          <span class="athlete-poster__handle">${athlete.handle}</span>
+        </div>
+      </a>
+    `).join("");
+  }
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const CHANNELS = [
+    { rank: 1,  name: "Rogue Fitness",       url: "https://www.youtube.com/@Roguefitness",          subsLabel: "1.02M subs", monthlyViewsLabel: "7.21M", barWidth: "100%" },
+    { rank: 2,  name: "CrossFit Games",      url: "https://www.youtube.com/@CrossFitGamesTV",       subsLabel: "1.16M subs", monthlyViewsLabel: "4.38M", barWidth: "61%" },
+    { rank: 3,  name: "CrossFit",            url: "https://www.youtube.com/@crossfit",              subsLabel: "1.79M subs", monthlyViewsLabel: "2.03M", barWidth: "28%" },
+    { rank: 4,  name: "CrossFit Mayhem",     url: "https://www.youtube.com/@CFProjectMayhem",       subsLabel: "333K subs",  monthlyViewsLabel: "997K",  barWidth: "14%" },
+    { rank: 5,  name: "Andrew Hiller",       url: "https://www.youtube.com/@hillerfit",             subsLabel: "69K subs",   monthlyViewsLabel: "752K",  barWidth: "10%" },
+    { rank: 6,  name: "CF Network",          url: "https://www.youtube.com/@CF-Network",            subsLabel: "8K subs",    monthlyViewsLabel: "689K",  barWidth: "10%" },
+    { rank: 7,  name: "Training Think Tank", url: "https://www.youtube.com/@TrainingThinkTank",     subsLabel: "54K subs",   monthlyViewsLabel: "337K",  barWidth: "5%"  },
+    { rank: 8,  name: "HillerFit Training",  url: "https://www.youtube.com/@hillerfit2.0",          subsLabel: "8K subs",    monthlyViewsLabel: "200K",  barWidth: "3%"  },
+    { rank: 9,  name: "Boys Interrupted",    url: "https://www.youtube.com/@theboysinterrupted",    subsLabel: "11K subs",   monthlyViewsLabel: "243K",  barWidth: "3%"  },
+    { rank: 10, name: "Amanda Hari",         url: "https://www.youtube.com/@AmandaHari",            subsLabel: "9K subs",    monthlyViewsLabel: "104K",  barWidth: "1%"  },
+    { rank: 11, name: "PRVN Fitness",        url: "https://www.youtube.com/@prvnfitness",           subsLabel: "41K subs",   monthlyViewsLabel: "82K",   barWidth: "1%"  },
+    { rank: 12, name: "Kipping It Real",     url: "https://www.youtube.com/@KippingItRealcrossfit", subsLabel: "3K subs",    monthlyViewsLabel: "61K",   barWidth: "1%"  },
+    { rank: 13, name: "The Barbell Spin",    url: "https://www.youtube.com/@thebarbellspin",        subsLabel: "11K subs",   monthlyViewsLabel: "42K",   barWidth: "1%"  },
+    { rank: 14, name: "Coffee Pods Wods",    url: "https://www.youtube.com/@coffeepodsandwods",     subsLabel: "8K subs",    monthlyViewsLabel: "27K",   barWidth: "0%"  },
+    { rank: 15, name: "Clydesdale Media",    url: "https://www.youtube.com/@clydesdalemedia",       subsLabel: "3K subs",    monthlyViewsLabel: "13K",   barWidth: "0%"  }
+  ];
+
+  const homeGrid = document.getElementById("homeRankingsGrid");
+  if (!homeGrid) return;
+
+  const topFive = CHANNELS.slice(0, 5);
+
+  homeGrid.innerHTML = topFive.map(ch => {
+    const rankClass =
+      ch.rank === 1 ? "rank-card__rank rank-card__rank--top1" :
+      ch.rank === 2 ? "rank-card__rank rank-card__rank--top2" :
+      ch.rank === 3 ? "rank-card__rank rank-card__rank--top3" :
+      "rank-card__rank";
+
+    const barClass =
+      ch.rank <= 3 ? "rank-card__bar rank-card__bar--accent" :
+      "rank-card__bar";
+
+    return `
+      <a href="${ch.url}" target="_blank" rel="noopener noreferrer" class="rank-card">
+        <div class="${rankClass}">${ch.rank}</div>
+        <div class="rank-card__info">
+          <div class="rank-card__header">
+            <span class="rank-card__name">${ch.name}</span>
+            <span class="rank-card__subs">${ch.subsLabel}</span>
+          </div>
+          <div class="rank-card__bar-wrap">
+            <div class="${barClass}" style="width:${ch.barWidth}"></div>
+          </div>
+        </div>
+        <div class="rank-card__views">${ch.monthlyViewsLabel}</div>
+      </a>
+    `;
+  }).join("");
+});
+</script>
+
+</body>
+</html>

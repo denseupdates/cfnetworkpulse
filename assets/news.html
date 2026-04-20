@@ -1,0 +1,503 @@
+<!-- Multi-page CF Network News -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Stories — CF Network News</title>
+  <meta name="description" content="Breaking CrossFit news, leaderboard updates, and athlete stories.">
+  <meta property="og:title" content="Top Stories — CF Network News">
+  <meta property="og:description" content="Breaking CrossFit news, athlete gossip, Rogue Fitness updates, and competition schedules — all in one place.">
+  <link rel="stylesheet" href="./base.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="./index.html" class="logo" aria-label="CF Network News home">
+      <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+        <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+        <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+      </svg>
+      <div class="logo__text">CF NETWORK<span>NEWS</span></div>
+    </a>
+
+    <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span class="ticker__item">VICTOR HOFFER & PAIGE RODGERS WIN MAYHEM CLASSIC </span>
+    <span class="ticker__item">ROMAN KHRENNIKOV & JEFF ADLER EARN THE OTHER TWO MALE GAMES TICKETS  </span>
+    <span class="ticker__item">EMMA LAWSON & LUCY CAMPBELL EARN THE OTHER TWO FEMALE GAMES TICKETS</span>
+    <span class="ticker__item">VICTOR HOFFER & PAIGE RODGERS WIN MAYHEM CLASSIC  </span>
+    <span class="ticker__item">ROMAN KHRENNIKOV & JEFF ADLER EARN THE OTHER TWO MALE GAMES TICKETS </span>
+    <span class="ticker__item">EMMA LAWSON & LUCY CAMPBELL EARN THE OTHER TWO FEMALE GAMES TICKETS</span>
+  </div>
+</div>
+
+<!-- ===== SECTION NAV ===== -->
+<nav class="section-nav" aria-label="Section navigation">
+  <div class="section-nav__track">
+    <a href="./news.html" class="section-nav__link">Top Stories</a>
+  <a href="./mayhem-classic.html" class="section-nav__link">Mayhem Classic</a>
+    <a href="./gossip.html" class="section-nav__link">Gossip</a>
+    <a href="./shows.html" class="section-nav__link">Podcasts/Shows</a>
+    <a href="./rankings.html" class="section-nav__link">Rankings</a>
+    <a href="./rogue.html" class="section-nav__link">Rogue</a>
+    <a href="./season-info.html" class="section-nav__link">Season Info</a>
+    <a href="./message-board.html" class="section-nav__link">Message Board</a>
+    <a href="./classifieds.html" class="section-nav__link">Classifieds</a>
+    <a href="./index.html#subscribe" class="section-nav__link">Subscribe</a>
+  </div>
+</nav>
+
+<div style="padding:var(--space-4) 0 0;">
+  <div class="container">
+    <a href="./index.html" style="font-size:var(--text-sm);color:var(--color-text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:var(--space-2);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Back to Home
+    </a>
+  </div>
+</div>
+
+<!-- ===== 2025 CROSSFIT GAMES ATHLETES — FLOATING REEL ===== -->
+<section class="section athletes-section" id="athletes" style="padding-top:var(--space-6);padding-bottom:var(--space-10);">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <div class="section__label" style="color:#3b82f6">2025 CrossFit Games &bull; Top 20 Finishers</div>
+        <h2 class="section__title">Athletes on Instagram</h2>
+      </div>
+      <a href="https://games.crossfit.com/leaderboard/finals/2025?final=245&division=1&sort=0" target="_blank" rel="noopener noreferrer" class="section__link" style="color:#3b82f6">Full Leaderboard &rarr;</a>
+    </div>
+
+    <div class="athlete-reel fade-in">
+      <div class="athlete-reel__fade athlete-reel__fade--left" aria-hidden="true"></div>
+      <div class="athlete-reel__fade athlete-reel__fade--right" aria-hidden="true"></div>
+      <div class="athlete-reel__track" id="athleteFloatTrack"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TOP STORIES ===== -->
+<section class="section" id="news" style="padding-top:var(--space-10);">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <h2 class="section__title">Top Stories</h2>
+      </div>
+    </div>
+
+
+<!-- Mayhem Classic // Final Recap -->
+<div id="mayhem-classic-final-feature" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6);">
+  <div class="card__body">
+
+
+    <div class="card__image card__image--force">
+      <img
+        src="./assets/img-mayhempodium.png"
+        alt="Athletes celebrating on the podium at the Mayhem Classic"
+        loading="lazy"
+        width="1200"
+        height="675">
+    </div>
+
+
+    <div class="card__header">
+      <span class="card__tag" style="background:#22c55e;color:#fff;">Final Recap</span>
+      <span class="card__date">April 19, 2026</span>
+    </div>
+
+
+    <h3 class="card__title">Rodgers and Hoffer Secure Mayhem Classic Crowns</h3>
+
+
+    <p class="card__excerpt">
+      Paige Rodgers and Victor Hoffer won the 2026 Mayhem Classic in Cookeville, Tennessee, after six events across three days. Rodgers used consistent top finishes on the heavier and technical events to beat a women’s field that included Emma Lawson, Lucy Campbell, Gabriela Migala, Abigail Domit, and Olivia Kerstetter. She closed the competition by finishing inside the top three on the final workout of dumbbell bench, double-unders, and a dumbbell farmers lunge to secure the overall title and a 2026 CrossFit Games berth.
+    </p>
+
+
+    <p class="card__excerpt">
+      On the men’s side, Hoffer climbed steadily up the leaderboard and moved into first overall with an event win on Froning’s Benchmark, a rope climb, handstand walk, and heavy front squat test. He then held his lead through the final workout to finish ahead of Roman Khrennikov and Jeffrey Adler and claim the Mayhem Classic title. Hoffer’s win, along with his consistency across all six events, secured his qualification for the 2026 CrossFit Games.
+    </p>
+
+
+    <p class="card__excerpt">
+      The final podium featured Rodgers, Lawson, and Campbell for the women, and Hoffer, Khrennikov, and Adler for the men. All six athletes earned direct qualification spots to the 2026 CrossFit Games, with Mayhem Classic serving as the first individual Semifinal of the season and setting the early competitive order heading into the remaining Semifinals.
+    </p>
+
+
+  </div>
+</div>
+
+
+    <!-- Mayhem Classic // Day 1 Recap -->
+<div id="mayhem-classic-day1-feature" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6);">
+  <div class="card__body">
+
+    <div class="card__image card__image--force">
+      <img
+        src="./assets/img-day2winners.png"
+        alt="Athletes competing at the Mayhem Classic during barbell and gymnastics events"
+        loading="lazy"
+        width="1200"
+        height="675">
+    </div>
+
+    <div class="card__header">
+      <span class="card__tag" style="background:#22c55e;color:#fff;">Day 1 Recap</span>
+      <span class="card__date">April 18, 2026</span>
+    </div>
+
+    <h3 class="card__title">Mayhem Classic Day Two Delivers Tight Races And Leaderboard Shifts</h3>
+
+    <p class="card__excerpt">
+      Mayhem Classic Day One delivered tight races and a leaderboard shakeup driven by three very different tests, a grip draining barbell benchmark, a sandbag squat grind, and an interval style gymnastics closer.
+    </p>
+
+    <p class="card__excerpt">
+      The second event of the weekend, “Gwen,” turned into a pure grip test on the mens side, with multiple athletes failing reps in the critical set of 9 as barbell cycling under fatigue caught up with them. Calum Clements handled the pacing and breaks best, taking the mens event win in 4:09.14. On the womens side, Abigail Domit claimed the victory with a time of 2:48.25, one of only two women to finish under three minutes on the day.
+    </p>
+
+    <p class="card__excerpt">
+      Event 3 shifted the focus to volume squatting and gymnastics, with athletes tackling 90 total reps of a moderately heavy sandbags as the primary squat test for the weekend. There were no major mishaps on this piece; instead, the difference came down to ring and bar muscle up strategy, how efficiently athletes managed transitions, and how well they maintained their sandbag squat cycle speed as fatigue built up. In the womens field, Lucy Campbell executed best, taking the event win in 10:19.94 and reinforcing her place near the top of the standings. On the mens side, Colten Mertens put on a strong performance, winning in 9:10.66 and continuing to trend upward after a solid start to the day.
+    </p>
+
+    <p class="card__excerpt">
+      The final test of Day One, Event 4, was an interval style workout that rewarded those who could hang on to high volume toes to bar sets in the first two intervals of the workout. The winners in both divisions finished in the third interval. For the men, Roman Khrennikov opening with 49 unbroken toes to bar and then sneaking in one more rep before the first interval ended, establishing a lead he would not relinquish. He went on to win the event in 10:21, capping his day with a strong push that tightened the race for the overall lead. On the womens side, Claudia Gluck took the Event 4 victory in 10:29, to close her day on a high note.
+    </p>
+
+    <p class="card__excerpt">
+      On the womens leaderboard after four events, Paige Rodgers leads with 340 points, followed by Emma Lawson with 310 and Lucinda Campbell with 305, with Gabriela Migala and Emily Rolfe rounding out the top five. On the mens side, Jeffrey Adler sits first overall with 355 points, with Khrennikov close behind at 340 and Mertens and Victor Hoffer tied at 335, ahead of fifth placed Austin Hatfield at 295.
+    </p>
+
+    <p class="card__excerpt">
+      There is still one more day of competition left, with two more workouts to determine who will punch their ticket to this years CrossFit Games.
+    </p>
+
+  </div>
+</div>
+
+    <!-- Mayhem Classic // Event 1: 5K Log Run -->
+<div id="mayhem-classic-event1-feature" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6);">
+  <div class="card__body">
+
+    <div class="card__image card__image--force">
+      <img
+        src="./assets/img-eventone-winners.png"
+        alt="Athletes running a 5K trail at Mayhem Classic with a long log obstacle for burpees"
+        loading="lazy"
+        width="1200"
+        height="675">
+    </div>
+
+    <div class="card__header">
+      <span class="card__tag" style="background:#22c55e;color:#fff;">Event 1 Recap</span>
+      <span class="card__date">April 17, 2026</span>
+    </div>
+
+    <h3 class="card__title">Mayhem Classic Opens The 5K Run With A Twist</h3>
+
+    <p class="card__excerpt">
+      Event 1 at the 2026 Mayhem Classic was a 5K run with a surprise added on site Friday morning. The workout had already been released as a straight 5K, but Rich Froning revealed to athletes that at some point on the course they would turn onto his private property and complete 50 burpees over a 42 inch log.
+    </p>
+
+    <p class="card__excerpt">
+      The run opened with climbing that included a section at a 17% grade before athletes ever reached the burpee station, forcing them to manage early leg and lung fatigue. The log itself ran at least 80 feet to provide 20 four foot wide lanes, one for each athlete, and was built specifically for this event by Rich’s dad and members of the CrossFit Mayhem crew. After finishing their 50 burpees over the log, athletes headed back onto the course to complete the rest of the 5K under mostly sunny skies and very little shade.
+    </p>
+
+    <p class="card__excerpt">
+      Haley Adams took the win in Event 1, clocking 30:20, with Emily Rolfe finishing 44 seconds behind her. On the men’s side, Austin Hatfield led most of the event before Jeffrey Adler surged past him late to take the win, with Hatfield holding on for second and Saxon Panchik rounding out the top three. With only this single test on Friday, athletes now have just under 24 hours to recover before tackling “Gwen” as Event 2 on Saturday, when the first women’s heat takes the floor at noon and kicks off a three event day.
+    </p>
+
+    <p class="card__excerpt">
+  There was live coverage on CF Network throughout the event with Sevan Matossian and Jenny Hull, with help from people on the ground including coach Taylor Self, Bryson Delmonte,  Jonathan Ortega, Melissa @dropin_crossfitgirl on Instgram and special guest Rich Froning himself. You can check out the full video coverage
+  <a
+    href="https://www.youtube.com/live/lcLI6qBDViM?si=GR5-3AASfYEWtnRz"
+    target="_blank"
+    rel="noopener noreferrer"
+    style="color:inherit;text-decoration:underline;">
+    Here on YouTube
+  </a>
+</p>
+  </div>
+</div>
+
+    <!-- Legends Championship // Justin Medeiros Withdraws, Heads to Australia with Ellie Turner -->
+<div id="legends-medeiros-torian-feature" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6);">
+  <div class="card__body">
+    <div class="card__image card__image--force">
+      <img src="./assets/img-ellie-justin.png" alt="Justin Medeiros and Ellie Turner with Australian crowd in background">
+    </div>
+
+    <div class="card__header">
+      <span class="card__tag" style="background:#0ea5e9;color:#fff;">Top Story</span>
+      <span class="card__date">April 16, 2026</span>
+    </div>
+
+    <h3 class="card__title">Justin Medeiros Withdraws From Legends, Sets Sights on Australia With Ellie Turner</h3>
+
+    <p class="card__excerpt">
+      Justin Medeiros has withdrawn from the Legends Championship. During an appearance on Andrew Hiller’s show, at around the 22:18 mark, Brian Friend mentioned that Medeiros and Ellie Turner are planning to compete at the Torian Pro in Australia.
+    </p>
+
+    <p class="card__excerpt">
+      Neither athlete appears to have come through the public Torian qualifying route, so if they are on the roster it is likely via some form of invite, backfill, or discretionary placement rather than the standard qualification.
+    </p>
+
+    <p class="card__excerpt">
+      Ellie Turner last competed in Australia in 2023, when she won the Oceania Semifinal, and she has not returned to the competition floor there since. Since then she has mostly competed in the United States, including events where she ultimately had to withdraw from before finishing out the weekend, so her recent live competition resume is thin despite a solid Open result this season.
+    </p>
+
+    <p class="card__excerpt">
+      Turner placed 38th worldwide in the Open but then struggled badly in Quarterfinals, finishing 696th. She did not complete the Torian Pro qualifier and, based on the available information, would almost certainly not be in line for a Torian Pro spot if it were not for Justin Medeiros reaching out to ask for the invite and the event extending a corresponding opportunity to her as well.
+    </p>
+
+    <p class="card__excerpt">
+      The real question now is how the Australian fans back home will feel about seeing her return to the Torian floor under these circumstances.
+    </p>
+
+<p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2);">
+  Source: Legends Championship update,
+  <a href="https://youtu.be/NbEfJrUuE60?si=EgGJegQUvjrOZa0H" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">
+    Brian Friend on Andrew Hiller YouTube show (~22:18)
+  </a>,
+  Torian Pro qualification info
+</p>
+  </div>
+</div>
+
+<!-- Mayhem Classic // Jayson Hopper Withdraws -->
+<div id="mayhem-hopper-withdraws-feature" class="card card--article card--featured fade-in" style="margin-bottom:var(--space-6);">
+  <div class="card__body">
+    <div class="card__image card__image--force">
+      <img src="./assets/img-hopper-out.png" alt="Jayson Hopper during competition">
+    </div>
+
+    <div class="card__header">
+      <span class="card__tag" style="background:#0ea5e9;color:#fff;">Injury Update</span>
+      <span class="card__date">April 15, 2026</span>
+    </div>
+
+    <h3 class="card__title">Jayson Hopper Withdraws From Mayhem Classic Due to Groin Injury</h3>
+
+    <p class="card__excerpt">
+      Jayson Hopper has withdrawn from the Mayhem Classic due to a groin injury. The Mayhem Classic posted to their story his name card and custom recovery mat for the event suggesting he is no longer competing this weekend. CF Network News has confirmed that he is still not healed from the groin injury that Hopper shared on his Instagram story, and at this time it is unclear whether he will be healthy in time to compete at any in person semifinals this season.
+    </p>
+
+    <p class="card__excerpt">
+      Given the nature of the injury and the current timeline, the safest option for Hopper is to prioritize recovery and target the online semifinals beginning June 11th. Focusing on healing rather than rushing back to the competition floor should give him the best chance at qualifying for the CrossFit Games to defend his title.
+    </p>
+
+    <p class="card__excerpt">
+      We will keep you updated as more information about his recovery and competition plans becomes available.
+    </p>
+
+    <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2);">
+      Source: Mayhem Classic Instagram story, CF Network News 
+    </p>
+  </div>
+<section
+
+<!-- ===== NEWSLETTER / ALERTS SIGNUP ===== -->
+<section class="section newsletter" id="subscribe">
+  <div class="container">
+    <div class="newsletter__inner">
+      <div>
+        <div class="newsletter__label">Stay in the Loop</div>
+        <h2 class="newsletter__title">Get Breaking News &amp; Alerts</h2>
+        <p class="newsletter__desc">
+          Sign up to receive the CF Network News newsletter and breaking news alerts. Be the first to know when major stories drop — CEO changes, Open workouts, athlete injuries, and everything in between.
+        </p>
+      </div>
+      <form class="newsletter__form" id="newsletterForm" novalidate>
+        <div class="newsletter__row">
+          <div class="newsletter__field">
+            <label for="nl-email">Email Address</label>
+            <input type="email" id="nl-email" name="EMAIL" class="newsletter__input" placeholder="you@example.com" required>
+          </div>
+        </div>
+        <div style="position:absolute;left:-5000px" aria-hidden="true">
+          <input type="text" name="b_d40058698a0dbd5c27f2fa54c_8bda743e10" tabindex="-1" value="">
+        </div>
+        <button type="submit" class="newsletter__btn">Subscribe</button>
+        <div class="newsletter__error" id="newsletterError" style="display:none;color:var(--color-text-muted);margin-top:0.75rem;font-size:var(--text-sm);"></div>
+      </form>
+      <div class="newsletter__success" id="newsletterSuccess">
+        Almost there! Check your inbox and click the confirmation link to complete your subscription.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div>
+        <a href="./index.html" class="logo" aria-label="CF Network News home" style="margin-bottom:var(--space-2);">
+          <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+            <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+            <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+          </svg>
+          <div class="logo__text">CF NETWORK<span>NEWS</span></div>
+        </a>
+        <p class="footer__brand-text">
+          Your daily source for CrossFit news, athlete updates, competition schedules, and community insights. Not affiliated with CrossFit LLC.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer__heading">Sections</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="./news.html">Top Stories</a></li>
+          <li><a href="./gossip.html">Gossip &amp; Drama</a></li>
+          <li></li>
+          <li><a href="./shows.html">Podcasts/Shows</a></li>
+          <li><a href="./rankings.html">Channel Rankings</a></li>
+          <li><a href="./rogue.html">Rogue Fitness</a></li>
+          <li><a href="./season-info.html">Season Info</a></li>
+          <li><a href="https://competitioncorner.net/events/19193/schedule" target="_blank" rel="noopener noreferrer">WZA Schedule</a></li>
+          <li><a href="./message-board.html">Message Board</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__heading">Resources</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="https://games.crossfit.com" target="_blank" rel="noopener noreferrer">CrossFit Games</a></li>
+          <li><a href="https://morningchalkup.barbend.com" target="_blank" rel="noopener noreferrer">Morning Chalk Up</a></li>
+          <li><a href="https://thebarbellspin.com" target="_blank" rel="noopener noreferrer">The Barbell Spin</a></li>
+          <li><a href="https://www.roguefitness.com" target="_blank" rel="noopener noreferrer">Rogue Fitness</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__heading">Upcoming</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="https://wodapalooza.com" target="_blank" rel="noopener noreferrer">Wodapalooza</a></li>
+          <li><a href="https://games.crossfit.com/finals/overview" target="_blank" rel="noopener noreferrer">2026 Games</a></li>
+          <li><a href="https://www.roguefitness.com/invitational" target="_blank" rel="noopener noreferrer">Rogue Invitational</a></li>
+          <li><a href="https://games.crossfit.com/competitions" target="_blank" rel="noopener noreferrer">Licensed Events</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 CF Network News. Independent fan site. Not affiliated with CrossFit LLC.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== MOBILE FLOATING NAV ===== -->
+<div class="fab-nav" id="fabNav">
+  <div class="fab-nav__menu" id="fabMenu">
+    <a href="./news.html" class="fab-nav__item">Top Stories</a>
+    <a href="./gossip.html" class="fab-nav__item">Gossip</a>
+    <a href="./shows.html" class="fab-nav__item">Podcasts/Shows</a>
+    <a href="./rankings.html" class="fab-nav__item">Rankings</a>
+    <a href="./rogue.html" class="fab-nav__item">Rogue</a>
+    <a href="./season-info.html" class="fab-nav__item">Season Info</a>
+    <a href="./message-board.html" class="fab-nav__item">Message Board</a>
+    <a href="./index.html#subscribe" class="fab-nav__item">Subscribe</a>
+  </div>
+  <button class="fab-nav__btn" id="fabToggle" aria-label="Open navigation menu">
+    <svg class="fab-nav__icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <path d="M3 12h18M3 6h18M3 18h18"/>
+    </svg>
+    <svg class="fab-nav__icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <path d="M18 6L6 18M6 6l12 12"/>
+    </svg>
+  </button>
+</div>
+
+<script src="./app.js" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const ATHLETES = [
+    { rank: "1st",  name: "Jayson Hopper",      handle: "@jhopper3",         url: "https://www.instagram.com/jhopper3/",         image: "./assets/Jayson Hopper.jpg" },
+    { rank: "2nd",  name: "Ricky Garard",       handle: "@rickygarard",      url: "https://www.instagram.com/rickygarard/",      image: "./assets/Ricky Garard.jpg" },
+    { rank: "3rd",  name: "James Sprague",      handle: "@spraguerrrr",      url: "https://www.instagram.com/spraguerrrr/",      image: "./assets/James Sprague.jpg" },
+    { rank: "4th",  name: "Dallin Pepper",      handle: "@dallinpepper",     url: "https://www.instagram.com/dallinpepper/",     image: "./assets/Dallin Pepper.jpg" },
+    { rank: "5th",  name: "Austin Hatfield",    handle: "@austinhatfield_1", url: "https://www.instagram.com/austinhatfield_1/", image: "./assets/Austin Hatfield.jpg" },
+    { rank: "6th",  name: "Jay Crouch",         handle: "@jaycrouch_",       url: "https://www.instagram.com/jaycrouch_/",       image: "./assets/Jay Crouch.jpg" },
+    { rank: "7th",  name: "Justin Medeiros",    handle: "@justinmedeiros34", url: "https://www.instagram.com/justinmedeiros34/", image: "./assets/Justin Medeiros.jpg" },
+    { rank: "8th",  name: "Jeffrey Adler",      handle: "@adlerjeff",        url: "https://www.instagram.com/adlerjeff/",        image: "./assets/Jeffrey Adler.jpg" },
+    { rank: "9th",  name: "Roman Khrennikov",   handle: "@roman_khrennikov", url: "https://www.instagram.com/roman_khrennikov/", image: "./assets/Roman Khrennikov.jpg" },
+    { rank: "10th", name: "Tudor Magda",        handle: "@tmagda1",          url: "https://www.instagram.com/tmagda1/",          image: "./assets/Tudor Magda.jpg" },
+    { rank: "11th", name: "Harry Lightfoot",    handle: "@harrylightfoot_",  url: "https://www.instagram.com/harrylightfoot_/",  image: "./assets/Harry Lightfoot.jpg" },
+    { rank: "12th", name: "Colten Mertens",     handle: "@colten_mertens",   url: "https://www.instagram.com/colten_mertens/",   image: "./assets/Colten Mertens.jpg" },
+    { rank: "13th", name: "Chris Ibarra",       handle: "@chrisibarra5",     url: "https://www.instagram.com/chrisibarra5/",     image: "./assets/Chris Ibarra.jpg" },
+    { rank: "14th", name: "Kalyan Souza",       handle: "@kalyancf",         url: "https://www.instagram.com/kalyancf/",         image: "./assets/Kalyan Souza.jpg" },
+    { rank: "15th", name: "Ty Jenkins",         handle: "@tyjenkins75",      url: "https://www.instagram.com/tyjenkins75/",      image: "./assets/Ty Jenkins.jpg" },
+    { rank: "16th", name: "Calum Clements",     handle: "@calum_clements",   url: "https://www.instagram.com/calum_clements/",   image: "./assets/Calum Clements.jpg" },
+    { rank: "17th", name: "Colin Bosshard",     handle: "@colinbosshard",    url: "https://www.instagram.com/colinbosshard/",    image: "./assets/Colin Bosshard.jpg" },
+    { rank: "18th", name: "Jack Rozema",        handle: "@jackrozema7",      url: "https://www.instagram.com/jackrozema7/",      image: "./assets/Jack Rozema.jpg" },
+    { rank: "19th", name: "Moritz Fiebig",      handle: "@moritz_fiebig",    url: "https://www.instagram.com/moritz_fiebig/",    image: "./assets/Moritz Fiebig.jpg" },
+    { rank: "20th", name: "Nick Mathew",        handle: "@coachnmathew",     url: "https://www.instagram.com/coachnmathew/",     image: "./assets/Nick Mathew.jpg" },
+
+    { rank: "1st",  name: "Tia-Clair Toomey",   handle: "@tiaclair1",        url: "https://www.instagram.com/tiaclair1/",        image: "./assets/Tia-Clair Toomey.jpg" },
+    { rank: "2nd",  name: "Lucy Campbell",      handle: "@lucycampbell5",    url: "https://www.instagram.com/lucycampbell5/",    image: "./assets/Lucy Campbell.jpg" },
+    { rank: "3rd",  name: "Olivia Kerstetter",  handle: "@oliviakerstetter", url: "https://www.instagram.com/oliviakerstetter/", image: "./assets/Olivia Kerstetter.jpg" },
+    { rank: "4th",  name: "Danielle Brandon",   handle: "@daniellebrandon7", url: "https://www.instagram.com/daniellebrandon7/", image: "./assets/Danielle Brandon.jpg" },
+    { rank: "5th",  name: "Arielle Loewen",     handle: "@arielleloewen",    url: "https://www.instagram.com/arielleloewen/",    image: "./assets/Arielle Loewen.jpg" },
+    { rank: "6th",  name: "Madeline Sturt",     handle: "@maddiesturt",      url: "https://www.instagram.com/maddiesturt/",      image: "./assets/Madeline Sturt.jpg" },
+    { rank: "7th",  name: "Mirjam von Rohr",    handle: "@mirjam_v.r",       url: "https://www.instagram.com/mirjam_v.r/",       image: "./assets/Mirjam von Rohr.jpg" },
+    { rank: "8th",  name: "Aimee Cringle",      handle: "@aimee_cringle",    url: "https://www.instagram.com/aimee_cringle/",    image: "./assets/Aimee Cringle.jpg" },
+    { rank: "9th",  name: "Anikha Greer",       handle: "@anikhagreer",      url: "https://www.instagram.com/anikhagreer/",      image: "./assets/Anikha Greer.jpg" },
+    { rank: "10th", name: "Alexis Raptis",      handle: "@alexis_raptis",    url: "https://www.instagram.com/alexis_raptis/",    image: "./assets/Alexis Raptis.jpg" },
+    { rank: "11th", name: "Lucy McGonigle",     handle: "@lucy.mcgonigle",   url: "https://www.instagram.com/lucy.mcgonigle/",   image: "./assets/Lucy McGonigle.jpg" },
+    { rank: "12th", name: "Abigail Domit",      handle: "@abbiedomit",       url: "https://www.instagram.com/abbiedomit/",       image: "./assets/Abigail Domit.jpg" },
+    { rank: "13th", name: "Lydia Fish",         handle: "@fish_lydia",       url: "https://www.instagram.com/fish_lydia/",       image: "./assets/Lydia Fish.jpg" },
+    { rank: "14th", name: "Claudia Gluck",      handle: "@claudia_glk",      url: "https://www.instagram.com/claudia_glk/",      image: "./assets/Claudia Gluck.jpg" },
+    { rank: "15th", name: "Grace Walton",       handle: "@graciewaltonn_",   url: "https://www.instagram.com/graciewaltonn_/",   image: "./assets/Grace Walton.jpg" },
+    { rank: "16th", name: "Brooke Wells",       handle: "@brookewellss",     url: "https://www.instagram.com/brookewellss/",     image: "./assets/Brooke Wells.jpg" },
+    { rank: "17th", name: "Fee Saghafi",        handle: "@fee.saghafi",      url: "https://www.instagram.com/fee.saghafi/",      image: "./assets/Fee Saghafi.jpg" },
+    { rank: "18th", name: "Lexi Neely",         handle: "@lexi_neely_",      url: "https://www.instagram.com/lexi_neely_/",      image: "./assets/Lexi Neely.jpg" },
+    { rank: "19th", name: "Haley Adams",        handle: "@haleyadamssss",    url: "https://www.instagram.com/haleyadamssss/",    image: "./assets/Haley Adams.jpg" },
+    { rank: "20th", name: "Jennifer Muir",      handle: "@jennifermuir99",   url: "https://www.instagram.com/jennifermuir99/",   image: "./assets/Jennifer Muir.jpg" }
+  ];
+
+  const track = document.getElementById("athleteFloatTrack");
+  if (!track) return;
+
+  const loopedAthletes = [...ATHLETES, ...ATHLETES];
+
+  track.innerHTML = loopedAthletes.map((athlete) => `
+    <a href="${athlete.url}"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="athlete-poster"
+       aria-label="${athlete.name} on Instagram">
+      <img
+        src="${athlete.image}"
+        alt="${athlete.name}"
+        width="180"
+        height="320"
+        loading="lazy">
+      <div class="athlete-poster__overlay">
+        <span class="athlete-poster__rank">${athlete.rank}</span>
+        <span class="athlete-poster__name">${athlete.name}</span>
+        <span class="athlete-poster__handle">${athlete.handle}</span>
+      </div>
+    </a>
+  `).join("");
+});
+</script>
+
+</body>
+</html>
