@@ -1032,7 +1032,9 @@
 
         // Reset to default then override if this voter has already picked
         statusEl.textContent = 'Choose an athlete and click vote.';
-        submitEl.textContent = 'Vote';
+        submitEl.innerHTML = 'Vote';
+        submitEl.disabled = false;
+        selectEl.disabled = false;
 
         if (state.voter) {
           const myVote = state.votes.find(v =>
@@ -1042,9 +1044,11 @@
           );
 
           if (myVote) {
-            statusEl.textContent = `Your pick: ${myVote.athlete_name} · click Update to change.`;
+            statusEl.textContent = `Your pick: ${myVote.athlete_name} · locked in.`;
             selectEl.value = myVote.athlete_name;
-            submitEl.textContent = 'Update';
+            selectEl.disabled = true;
+            submitEl.innerHTML = 'Done &#10003;';
+            submitEl.disabled = true;
           }
         }
 
@@ -1086,6 +1090,17 @@
             return;
           }
 
+          // Block if they already voted in this event/division
+          const already = state.votes.find(v =>
+            v.event_id === section.dataset.eventId &&
+            v.division === section.dataset.division &&
+            v.voter_id === state.voter.email
+          );
+          if (already) {
+            alert('You have already voted in this category. Votes are final.');
+            return;
+          }
+
           if (!select.value) {
             alert('Choose an athlete first.');
             return;
@@ -1108,15 +1123,23 @@
               voter_email: state.voter.email
             };
 
+            // Plain insert — not upsert — so a second vote is rejected by the unique index
             const result = await state.supabase
               .from('delmar_votes')
-              .upsert(payload, { onConflict: 'event_id,division,voter_id' });
+              .insert(payload);
 
-            if (result.error) throw result.error;
+            if (result.error) {
+              // Duplicate-key error means they already voted
+              if (result.error.code === '23505' || /duplicate/i.test(result.error.message || '')) {
+                alert('You have already voted in this category. Votes are final.');
+              } else {
+                throw result.error;
+              }
+            }
             await loadVotes();
           } catch (error) {
             console.error(error);
-            alert('Vote failed. Make sure the votes table exists and the policies are active in Supabase.');
+            alert('Vote failed. Please try again.');
           } finally {
             button.disabled = false;
           }
