@@ -397,6 +397,46 @@
       margin-top: 0.35rem;
     }
 
+    .workout {
+      margin-top: var(--space-3);
+      padding-top: var(--space-3);
+      border-top: 1px dashed var(--color-divider);
+    }
+
+    .workout-format {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: 0.35rem;
+    }
+
+    .workout-list {
+      list-style: none;
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      display: grid;
+      gap: 0.2rem;
+    }
+
+    .workout-list li {
+      position: relative;
+      padding-left: 0.85rem;
+    }
+
+    .workout-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 0.35rem;
+      height: 0.35rem;
+      border-radius: 999px;
+      background: var(--color-primary);
+      opacity: 0.7;
+    }
+
     .event-pill {
       padding: 0.45rem 0.7rem;
       border-radius: 999px;
@@ -827,11 +867,64 @@
     ];
 
     const EVENTS = [
-      { id: 'event-1', tag: 'Event 1', title: 'PushPress' },
-      { id: 'event-2', tag: 'Event 2', title: 'PWR' },
-      { id: 'event-3', tag: 'Event 3', title: 'YETI' },
-      { id: 'event-4', tag: 'Event 4', title: 'STEPR' },
-      { id: 'event-5', tag: 'Event 5', title: 'To Be Determined' }
+      {
+        id: 'event-1',
+        tag: 'Event 1',
+        title: 'PushPress',
+        format: 'For Time · 22:00 cap',
+        movements: [
+          'Bike (calories TBD)',
+          'Ski (calories TBD)',
+          '200 Double Unders (beaded rope)'
+        ]
+      },
+      {
+        id: 'event-2',
+        tag: 'Event 2',
+        title: 'PWR',
+        format: 'For Time · 6:00 cap',
+        movements: [
+          '30 Chest-to-Bar Pull-Ups',
+          '30 Sandbag Cleans (150 / 100 lb)',
+          '30 Chest-to-Bar Pull-Ups'
+        ]
+      },
+      {
+        id: 'event-3',
+        tag: 'Event 3',
+        title: 'YETI',
+        format: '6 Rounds For Time · 12:00 cap',
+        movements: [
+          '9 Deadlifts',
+          '6 Power Cleans',
+          '3 Shoulder-to-Overhead',
+          '255 / 155 lb'
+        ]
+      },
+      {
+        id: 'event-4',
+        tag: 'Event 4',
+        title: 'STEPR',
+        format: '5 Rounds For Time · 10:00 cap',
+        movements: [
+          '8 Bar Muscle-Ups',
+          '4-6-8-10-12 Overhead Squats (185 / 135 lb)',
+          '50 ft Handstand Walk'
+        ]
+      },
+      {
+        id: 'event-5',
+        tag: 'Event 5',
+        title: 'Final',
+        format: 'For Time · 14:00 cap',
+        movements: [
+          '60 Toes-to-Bar',
+          '50 Wall Balls',
+          '40 Box Jump Overs',
+          '30 Devil Press',
+          'Double DB Lunge to Finish'
+        ]
+      }
     ];
 
     const STORAGE_KEY = 'delmar-voter-v1';
@@ -976,12 +1069,20 @@
     }
 
     function eventMarkup(event) {
+      const movementsList = (event.movements || []).map(m => `<li>${m}</li>`).join('');
+      const workoutBlock = (event.format || movementsList) ? `
+              <div class="workout">
+                ${event.format ? `<div class="workout-format">${event.format}</div>` : ''}
+                ${movementsList ? `<ul class="workout-list">${movementsList}</ul>` : ''}
+              </div>
+            ` : '';
       return `
         <article class="event-card" data-event-card data-title="${event.title.toLowerCase()}">
           <div class="event-head">
             <div>
               <div class="event-tag">${event.tag}</div>
               <h2 class="event-title">${event.title}</h2>
+              ${workoutBlock}
             </div>
             <div class="event-pill">Live fan vote</div>
           </div>
