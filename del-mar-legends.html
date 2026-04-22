@@ -80,7 +80,77 @@
         grid-template-columns:1fr;
       }
     }
-    </style>
+
+.delmar-ticket-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1rem;
+  flex-wrap:wrap;
+  text-align:center;
+  padding:var(--space-4) 0;
+}
+
+.delmar-ticket-title{
+  margin:0;
+  color:#ef4444;
+  font-size:clamp(2rem, 3vw, 2.75rem);
+  line-height:1.1;
+}
+
+.delmar-tickets-link {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.75rem;
+  padding:0;
+  border-radius:0;
+  background:transparent;
+  color:#ef4444;
+  font-weight:700;
+  font-size:clamp(1.5rem, 2.4vw, 2rem);
+  text-decoration:none;
+  white-space:nowrap;
+  border:none;
+  box-shadow:none;
+}
+
+.delmar-tickets-link img {
+  display:block;
+  width:52px;
+  height:52px;
+  object-fit:contain;
+  flex:0 0 auto;
+}
+
+.delmar-tickets-link:hover {
+  color:#f97373;
+  text-decoration:underline;
+  background:transparent;
+  border:none;
+}
+
+[data-theme="dark"] .delmar-ticket-title,
+[data-theme="dark"] .delmar-tickets-link {
+  color:#ef4444;
+}
+
+[data-theme="dark"] .delmar-tickets-link:hover {
+  color:#f97373;
+}
+
+@media (max-width:640px){
+  .delmar-ticket-row{
+    gap:0.75rem;
+  }
+
+  .delmar-tickets-link img{
+    width:44px;
+    height:44px;
+  }
+
+    }
+  </style>
 </head>
 <body>
 
@@ -132,20 +202,23 @@
 
 <div style="padding:var(--space-4) 0 0;">
   <div class="container">
-    <div class="card fade-in" style="background:var(--color-primary);color:#fff;">
-      <div class="card__body" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3);">
-        <div>
-          <h2 style="margin:0;font-size:var(--text-lg);color:#fff;">Buy Del Mar Legends Tickets</h2>
-        </div>
+    <div class="fade-in delmar-ticket-row">
+      <h2 class="delmar-ticket-title">Buy Del Mar Legends Tickets</h2>
 
-        <a
-          href="https://competitioncorner.net/events/20036/merchandise?ticketsOnly=true"
-          target="_blank"
-          rel="noopener noreferrer"
-          style="display:inline-flex;align-items:center;justify-content:center;padding:var(--space-2) var(--space-4);border-radius:var(--radius-sm);background:#fff;color:var(--color-primary);font-weight:700;text-decoration:none;white-space:nowrap;">
-          Buy Tickets
-        </a>
-      </div>
+      <a
+        href="https://competitioncorner.net/events/20036/merchandise?ticketsOnly=true"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="delmar-tickets-link">
+        <img
+          src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/40f74bdb04722d26b52dd278b750103be8e93faf.jpg"
+          alt="Ticket icon"
+          width="52"
+          height="52"
+          loading="lazy"
+        >
+        Buy Tickets
+      </a>
     </div>
   </div>
 </div>
@@ -221,61 +294,61 @@
 </section>
 
 <section class="section" id="events" style="padding-top:0;padding-bottom:var(--space-8);">
-      <div class="container">
-        <div class="sectionheader">
-          <div>
-            <div class="sectionlabel" style="color:#ef4444;">Del Mar Legends Event List</div>
-            <h2 class="sectiontitle">Events</h2>
-          </div>
-        </div>
-<div class="delmar-vote-card">
-  <h3>VOTE HER FOR EVENT WINNERS</h3>
-  <a href="Delmar-live-voting-supabase.html">VOTE HERE</a>
-</div>
-
-        <div class="mayhem-events-grid">
-          <article class="card card--article fade-in">
-            <div class="cardbody">
-              <div class="mayhem-event-thumb"><img src="assets/img-e1-delmar.jpg" alt="Del Mar Legends Event 1 workout card" loading="lazy" width="1320" height="1656"></div>
-              <span class="cardtag">Event 1</span>
-              <h3 class="cardtitle" style="font-size:var(--text-lg);">Throttle</h3>
-            </div>
-          </article>
-
-          <article class="card card--article fade-in">
-            <div class="cardbody">
-              <div class="mayhem-event-thumb"><img src="assets/img-e2-delmar.jpg" alt="Del Mar Legends Event 2 workout card" loading="lazy" width="1320" height="1656"></div>
-              <span class="cardtag">Event 2</span>
-              <h3 class="cardtitle" style="font-size:var(--text-lg);">Tone</h3>
-            </div>
-          </article>
-
-          <article class="card card--article fade-in">
-            <div class="cardbody">
-              <div class="mayhem-event-thumb"><img src="assets/img-e3-delmar.jpg" alt="Del Mar Legends Event 3 workout card" loading="lazy" width="1320" height="1656"></div>
-              <span class="cardtag">Event 3</span>
-              <h3 class="cardtitle" style="font-size:var(--text-lg);">Roar</h3>
-            </div>
-          </article>
-
-          <article class="card card--article fade-in">
-            <div class="cardbody">
-              <div class="mayhem-event-thumb"><img src="assets/img-e4-delmar.jpg" alt="Del Mar Legends Event 4 workout card" loading="lazy" width="1320" height="1656"></div>
-              <span class="cardtag">Event 4</span>
-              <h3 class="cardtitle" style="font-size:var(--text-lg);">Zone</h3>
-            </div>
-          </article>
-
-          <article class="card card--article fade-in">
-            <div class="cardbody">
-              <div class="mayhem-event-thumb"><img src="assets/img-final-delmar.jpg" alt="Del Mar Legends final event placeholder card" loading="lazy" width="1320" height="1656"></div>
-              <span class="cardtag">Event 5</span>
-              <h3 class="cardtitle" style="font-size:var(--text-lg);">Final Event</h3>
-            </div>
-          </article>
-        </div>
+  <div class="container">
+    <div class="sectionheader">
+      <div>
+        <div class="sectionlabel" style="color:#ef4444;">Del Mar Legends Event List</div>
+        <h2 class="sectiontitle">Events</h2>
       </div>
-    </section>
+    </div>
+    <div class="delmar-vote-card">
+      <h3>VOTE HER FOR EVENT WINNERS</h3>
+      <a href="Delmar-live-voting-supabase.html">VOTE HERE</a>
+    </div>
+
+    <div class="mayhem-events-grid">
+      <article class="card card--article fade-in">
+        <div class="cardbody">
+          <div class="mayhem-event-thumb"><img src="assets/img-e1-delmar.jpg" alt="Del Mar Legends Event 1 workout card" loading="lazy" width="1320" height="1656"></div>
+          <span class="cardtag">Event 1</span>
+          <h3 class="cardtitle" style="font-size:var(--text-lg);">Throttle</h3>
+        </div>
+      </article>
+
+      <article class="card card--article fade-in">
+        <div class="cardbody">
+          <div class="mayhem-event-thumb"><img src="assets/img-e2-delmar.jpg" alt="Del Mar Legends Event 2 workout card" loading="lazy" width="1320" height="1656"></div>
+          <span class="cardtag">Event 2</span>
+          <h3 class="cardtitle" style="font-size:var(--text-lg);">Tone</h3>
+        </div>
+      </article>
+
+      <article class="card card--article fade-in">
+        <div class="cardbody">
+          <div class="mayhem-event-thumb"><img src="assets/img-e3-delmar.jpg" alt="Del Mar Legends Event 3 workout card" loading="lazy" width="1320" height="1656"></div>
+          <span class="cardtag">Event 3</span>
+          <h3 class="cardtitle" style="font-size:var(--text-lg);">Roar</h3>
+        </div>
+      </article>
+
+      <article class="card card--article fade-in">
+        <div class="cardbody">
+          <div class="mayhem-event-thumb"><img src="assets/img-e4-delmar.jpg" alt="Del Mar Legends Event 4 workout card" loading="lazy" width="1320" height="1656"></div>
+          <span class="cardtag">Event 4</span>
+          <h3 class="cardtitle" style="font-size:var(--text-lg);">Zone</h3>
+        </div>
+      </article>
+
+      <article class="card card--article fade-in">
+        <div class="cardbody">
+          <div class="mayhem-event-thumb"><img src="assets/img-final-delmar.jpg" alt="Del Mar Legends final event placeholder card" loading="lazy" width="1320" height="1656"></div>
+          <span class="cardtag">Event 5</span>
+          <h3 class="cardtitle" style="font-size:var(--text-lg);">Final Event</h3>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
 
 <section class="section" id="schedule" style="padding-top:var(--space-10);padding-bottom:var(--space-10);">
   <div class="container">
@@ -283,97 +356,212 @@
       <div>
         <div class="section__label" style="color:#22c55e">Schedule Subject to Change</div>
         <h2 class="section__title">Anticipated Weekend Schedule</h2>
-        <p class="section__subtitle" style="max-width:60ch;color:var(--color-text-muted);font-size:var(--text-sm);">
+        <p class="section__subtitle" style="max-width:60ch;color:var(--color-text-muted);font-size:var(--text-sm);"></p>
       </div>
     </div>
 
-            <article class="card card--article fade-in">
-        <div class="card__body">
-          <div class="card__header">
-            <span class="card__tag" style="background:#111827;color:#fff;">Thursday</span>
-          </div>
-          <h3 class="card__title">Athlete Check-in &amp; Briefing</h3>
-          <ul style="margin-top:var(--space-3);list-style:none;display:grid;gap:var(--space-3);">
-            <li>
-              <strong>Ages 18-49: Athletes and Coaches Only</strong>
-              <p class="card__excerpt">Check-in: 12:00 PM-2:00 PM<br>Briefing: 2:15 PM<br>Location: Del Mar Arena</p>
-            </li>
-            <li>
-              <strong>Ages 50+: Athletes and Coaches Only</strong>
-              <p class="card__excerpt">Check-in: 3:00 PM-5:00 PM<br>Briefing: 5:15 PM<br>Location: Del Mar Arena</p>
-            </li>
-          </ul>
+    <article class="card card--article fade-in">
+      <div class="card__body">
+        <div class="card__header">
+          <span class="card__tag" style="background:#111827;color:#fff;">Thursday</span>
         </div>
-      </article>
+        <h3 class="card__title">Athlete Check-in &amp; Briefing</h3>
+        <ul style="margin-top:var(--space-3);list-style:none;display:grid;gap:var(--space-3);">
+          <li>
+            <strong>Ages 18-49: Athletes and Coaches Only</strong>
+            <p class="card__excerpt">Check-in: 12:00 PM-2:00 PM<br>Briefing: 2:15 PM<br>Location: Del Mar Arena</p>
+          </li>
+          <li>
+            <strong>Ages 50+: Athletes and Coaches Only</strong>
+            <p class="card__excerpt">Check-in: 3:00 PM-5:00 PM<br>Briefing: 5:15 PM<br>Location: Del Mar Arena</p>
+          </li>
+        </ul>
+      </div>
+    </article>
 
-      <article class="card card--article fade-in">
-        <div class="card__body">
-          <div class="card__header">
-            <span class="card__tag" style="background:#111827;color:#fff;">Friday</span>
-          </div>
-          <h3 class="card__title">Competition Day 1</h3>
-          <ul style="margin-top:var(--space-3);list-style:none;display:grid;gap:var(--space-3);">
-            <li>
-              <strong>8:00 a.m.</strong>
-              <p class="card__excerpt">First heat begins.</p>
-            </li>
-          </ul>
+    <article class="card card--article fade-in">
+      <div class="card__body">
+        <div class="card__header">
+          <span class="card__tag" style="background:#111827;color:#fff;">Friday</span>
         </div>
-      </article>
+        <h3 class="card__title">Competition Day 1</h3>
+        <ul style="margin-top:var(--space-3);list-style:none;display:grid;gap:var(--space-3);">
+          <li>
+            <strong>8:00 a.m.</strong>
+            <p class="card__excerpt">First heat begins.</p>
+          </li>
+        </ul>
+      </div>
+    </article>
 
-      <article class="card card--article fade-in">
-        <div class="card__body">
-          <div class="card__header">
-            <span class="card__tag" style="background:#111827;color:#fff;">Saturday</span>
-          </div>
-          <h3 class="card__title">Competition Day 2</h3>
-          <ul style="margin-top:var(--space-3);list-style:none;display:grid;gap:var(--space-3);">
-            <li>
-              <strong>8:00 a.m.</strong>
-              <p class="card__excerpt">First heat begins.</p>
-            </li>
-          </ul>
+    <article class="card card--article fade-in">
+      <div class="card__body">
+        <div class="card__header">
+          <span class="card__tag" style="background:#111827;color:#fff;">Saturday</span>
         </div>
-      </article>
+        <h3 class="card__title">Competition Day 2</h3>
+        <ul style="margin-top:var(--space-3);list-style:none;display:grid;gap:var(--space-3);">
+          <li>
+            <strong>8:00 a.m.</strong>
+            <p class="card__excerpt">First heat begins.</p>
+          </li>
+        </ul>
+      </div>
+    </article>
 
-      <article class="card card--article fade-in">
-        <div class="card__body">
-          <div class="card__header">
-            <span class="card__tag" style="background:#111827;color:#fff;">Sunday</span>
-          </div>
-          <h3 class="card__title">Competition Day 3</h3>
-          <ul style="margin-top:var(--space-3);list-style:none;display:grid;gap:var(--space-3);">
-            <li>
-              <strong>8:00 a.m.</strong>
-              <p class="card__excerpt">First heat begins.</p>
-            </li>
-            <li>
-              <strong>5:00 p.m.</strong>
-              <p class="card__excerpt">Awards ceremony.</p>
-            </li>
-          </ul>
+    <article class="card card--article fade-in">
+      <div class="card__body">
+        <div class="card__header">
+          <span class="card__tag" style="background:#111827;color:#fff;">Sunday</span>
         </div>
-      </article>
-    </div>
+        <h3 class="card__title">Competition Day 3</h3>
+        <ul style="margin-top:var(--space-3);list-style:none;display:grid;gap:var(--space-3);">
+          <li>
+            <strong>8:00 a.m.</strong>
+            <p class="card__excerpt">First heat begins.</p>
+          </li>
+          <li>
+            <strong>5:00 p.m.</strong>
+            <p class="card__excerpt">Awards ceremony.</p>
+          </li>
+        </ul>
+      </div>
+    </article>
+  </div>
 </section>
 
 <section class="section" id="streams" style="padding-top:0;padding-bottom:var(--space-10);">
-  <div class="container"><div class="sectionheader"><div><div class="sectionlabel" style="color:#ef4444;">Watch Live</div><h2 class="sectiontitle">Livestreams</h2></div></div>
+  <div class="container">
+    <div class="sectionheader">
+      <div>
+        <div class="sectionlabel" style="color:#ef4444;">Watch Live</div>
+        <h2 class="sectiontitle">Livestreams</h2>
+      </div>
+    </div>
     <div class="grid" style="display:grid;gap:var(--space-4);grid-template-columns:repeat(auto-fit,minmax(320px,1fr));">
-      <article class="card card--article card--featured fade-in"><div class="cardbody"><div class="cardheader"><span class="cardtag" style="background:#ef4444;color:#fff;">Livestream Placeholder</span></div><h3 class="cardtitle">Day One Livestream</h3><p class="cardexcerpt">Official Day One Del Mar Legends stream link will be added here once it is available.</p><div style="display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-3);"><span class="sectionlink" style="opacity:.6;pointer-events:none;">Link coming soon</span></div></div></article>
-      <article class="card card--article card--featured fade-in"><div class="cardbody"><div class="cardheader"><span class="cardtag" style="background:#ef4444;color:#fff;">Livestream Placeholder</span></div><h3 class="cardtitle">Day Two Livestream</h3><p class="cardexcerpt">Official Day Two Del Mar Legends stream link will be added here once it is available.</p><div style="display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-3);"><span class="sectionlink" style="opacity:.6;pointer-events:none;">Link coming soon</span></div></div></article>
-      <article class="card card--article card--featured fade-in"><div class="cardbody"><div class="cardheader"><span class="cardtag" style="background:#ef4444;color:#fff;">Livestream Placeholder</span></div><h3 class="cardtitle">Day Three Livestream</h3><p class="cardexcerpt">Official Day Three Del Mar Legends stream link will be added here once it is available.</p><div style="display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-3);"><span class="sectionlink" style="opacity:.6;pointer-events:none;">Link coming soon</span></div></div></article>
+      <article class="card card--article card--featured fade-in">
+        <div class="cardbody">
+          <div class="cardheader"><span class="cardtag" style="background:#ef4444;color:#fff;">Livestream Placeholder</span></div>
+          <h3 class="cardtitle">Day One Livestream</h3>
+          <p class="cardexcerpt">Official Day One Del Mar Legends stream link will be added here once it is available.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-3);">
+            <span class="sectionlink" style="opacity:.6;pointer-events:none;">Link coming soon</span>
+          </div>
+        </div>
+      </article>
+      <article class="card card--article card--featured fade-in">
+        <div class="cardbody">
+          <div class="cardheader"><span class="cardtag" style="background:#ef4444;color:#fff;">Livestream Placeholder</span></div>
+          <h3 class="cardtitle">Day Two Livestream</h3>
+          <p class="cardexcerpt">Official Day Two Del Mar Legends stream link will be added here once it is available.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-3);">
+            <span class="sectionlink" style="opacity:.6;pointer-events:none;">Link coming soon</span>
+          </div>
+        </div>
+      </article>
+      <article class="card card--article card--featured fade-in">
+        <div class="cardbody">
+          <div class="cardheader"><span class="cardtag" style="background:#ef4444;color:#fff;">Livestream Placeholder</span></div>
+          <h3 class="cardtitle">Day Three Livestream</h3>
+          <p class="cardexcerpt">Official Day Three Del Mar Legends stream link will be added here once it is available.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-3);">
+            <span class="sectionlink" style="opacity:.6;pointer-events:none;">Link coming soon</span>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
+
 <section class="section" id="roster" style="padding-top:0;padding-bottom:var(--space-10);">
-  <div class="container"><div class="sectionheader"><div><div class="sectionlabel" style="color:#6366f1;">Field</div><h2 class="sectiontitle">Athlete Roster</h2><p class="sectionsubtitle" style="max-width:60ch;color:var(--color-text-muted);font-size:var(--text-sm);">Current Del Mar Legends CrossFit Semifinal field as provided.</p></div></div>
+  <div class="container">
+    <div class="sectionheader">
+      <div>
+        <div class="sectionlabel" style="color:#6366f1;">Field</div>
+        <h2 class="sectiontitle">Athlete Roster</h2>
+        <p class="sectionsubtitle" style="max-width:60ch;color:var(--color-text-muted);font-size:var(--text-sm);">Current Del Mar Legends CrossFit Semifinal field as provided.</p>
+      </div>
+    </div>
     <div class="grid" style="display:grid;gap:var(--space-4);grid-template-columns:repeat(auto-fit,minmax(320px,1fr));">
-      <article class="card card--article fade-in"><div class="cardbody"><h3 class="cardtitle">Men</h3><div class="table-wrapper" style="margin-top:var(--space-3);overflow:auto;"><table class="mayhem-roster-table"><thead><tr><th>Name</th></tr></thead><tbody><tr><td>ALESSANDRO ZANET</td></tr><tr><td>ALEX BOZENHARD</td></tr><tr><td>ALEXANDER MAJORS</td></tr><tr><td>BRIAN HUYNH</td></tr><tr><td>BRILEY SMITH</td></tr><tr><td>CHRISTIAN RAMON</td></tr><tr><td>CJ GERALD</td></tr><tr><td>DALLIN PEPPER</td></tr><tr><td>DAN HARDIMAN</td></tr><tr><td>DYLAN HAMMING</td></tr><tr><td>EJ HEIN</td></tr><tr><td>ELIJAH SUBIONO</td></tr><tr><td>GRANT GRIFFIN</td></tr><tr><td>ILLIA MOSKALENKO</td></tr><tr><td>JAMES LEWIS</td></tr><tr><td>JAMES SPRAGUE</td></tr><tr><td>JORDAN LUNDIN</td></tr><tr><td>LUCAS PURDY</td></tr><tr><td>MATEUS FERRO</td></tr><tr><td>ROMAN KHRENNIKOV</td></tr><tr><td>SCOTT COTTRILL</td></tr><tr><td>TRAVIS MOORE</td></tr><tr><td>TUDOR MAGDA</td></tr></tbody></table></div></div></article>
-      <article class="card card--article fade-in"><div class="cardbody"><h3 class="cardtitle">Women</h3><div class="table-wrapper" style="margin-top:var(--space-3);overflow:auto;"><table class="mayhem-roster-table"><thead><tr><th>Name</th></tr></thead><tbody><tr><td>ABIGAIL DOMIT</td></tr><tr><td>ALEX DEGARMO</td></tr><tr><td>ALEXIS TURPIN</td></tr><tr><td>ASHLYNNE SLOVEK</td></tr><tr><td>CAITLIN BERNARDIN</td></tr><tr><td>DANIELLE BRANDON</td></tr><tr><td>ELIZABETH WISHART</td></tr><tr><td>EMILY RETHWILL</td></tr><tr><td>EMILY ROLFE</td></tr><tr><td>GRACE LOCHNER</td></tr><tr><td>HALEY ADAMS</td></tr><tr><td>KYRA MILLIGAN</td></tr><tr><td>LAURA DRISKILL</td></tr><tr><td>LAUREN STALLWOOD</td></tr><tr><td>LEXI NEELY</td></tr><tr><td>LYDIA FISH</td></tr><tr><td>MADDIE KRESEVIC</td></tr><tr><td>NICOLE HANCHES</td></tr><tr><td>OLIVIA KERSTETTER</td></tr><tr><td>OLIVIA RAYMOND</td></tr><tr><td>SAMANTHA BROWN</td></tr><tr><td>SAMANTHA CHIU</td></tr><tr><td>SELENE GONZALEZ</td></tr><tr><td>SYDNEY SMITH</td></tr></tbody></table></div></div></article>
+      <article class="card card--article fade-in">
+        <div class="cardbody">
+          <h3 class="cardtitle">Men</h3>
+          <div class="table-wrapper" style="margin-top:var(--space-3);overflow:auto;">
+            <table class="mayhem-roster-table">
+              <thead>
+                <tr><th>Name</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>ALESSANDRO ZANET</td></tr>
+                <tr><td>ALEX BOZENHARD</td></tr>
+                <tr><td>ALEXANDER MAJORS</td></tr>
+                <tr><td>BRIAN HUYNH</td></tr>
+                <tr><td>BRILEY SMITH</td></tr>
+                <tr><td>CHRISTIAN RAMON</td></tr>
+                <tr><td>CJ GERALD</td></tr>
+                <tr><td>DALLIN PEPPER</td></tr>
+                <tr><td>DAN HARDIMAN</td></tr>
+                <tr><td>DYLAN HAMMING</td></tr>
+                <tr><td>EJ HEIN</td></tr>
+                <tr><td>ELIJAH SUBIONO</td></tr>
+                <tr><td>GRANT GRIFFIN</td></tr>
+                <tr><td>ILLIA MOSKALENKO</td></tr>
+                <tr><td>JAMES LEWIS</td></tr>
+                <tr><td>JAMES SPRAGUE</td></tr>
+                <tr><td>JORDAN LUNDIN</td></tr>
+                <tr><td>LUCAS PURDY</td></tr>
+                <tr><td>MATEUS FERRO</td></tr>
+                <tr><td>ROMAN KHRENNIKOV</td></tr>
+                <tr><td>SCOTT COTTRILL</td></tr>
+                <tr><td>TRAVIS MOORE</td></tr>
+                <tr><td>TUDOR MAGDA</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </article>
+      <article class="card card--article fade-in">
+        <div class="cardbody">
+          <h3 class="cardtitle">Women</h3>
+          <div class="table-wrapper" style="margin-top:var(--space-3);overflow:auto;">
+            <table class="mayhem-roster-table">
+              <thead>
+                <tr><th>Name</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>ABIGAIL DOMIT</td></tr>
+                <tr><td>ALEX DEGARMO</td></tr>
+                <tr><td>ALEXIS TURPIN</td></tr>
+                <tr><td>ASHLYNNE SLOVEK</td></tr>
+                <tr><td>CAITLIN BERNARDIN</td></tr>
+                <tr><td>DANIELLE BRANDON</td></tr>
+                <tr><td>ELIZABETH WISHART</td></tr>
+                <tr><td>EMILY RETHWILL</td></tr>
+                <tr><td>EMILY ROLFE</td></tr>
+                <tr><td>GRACE LOCHNER</td></tr>
+                <tr><td>HALEY ADAMS</td></tr>
+                <tr><td>KYRA MILLIGAN</td></tr>
+                <tr><td>LAURA DRISKILL</td></tr>
+                <tr><td>LAUREN STALLWOOD</td></tr>
+                <tr><td>LEXI NEELY</td></tr>
+                <tr><td>LYDIA FISH</td></tr>
+                <tr><td>MADDIE KRESEVIC</td></tr>
+                <tr><td>NICOLE HANCHES</td></tr>
+                <tr><td>OLIVIA KERSTETTER</td></tr>
+                <tr><td>OLIVIA RAYMOND</td></tr>
+                <tr><td>SAMANTHA BROWN</td></tr>
+                <tr><td>SAMANTHA CHIU</td></tr>
+                <tr><td>SELENE GONZALEZ</td></tr>
+                <tr><td>SYDNEY SMITH</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
+
 <section class="section newsletter" id="subscribe">
   <div class="container">
     <div class="newsletter__inner">
