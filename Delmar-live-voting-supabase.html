@@ -931,6 +931,7 @@
 
     const state = {
       votes: [],
+      locks: {},   // { "event-1:men": true, ... }
       voter: null, // { name, email } once registered
       supabase: null
     };
@@ -1123,6 +1124,7 @@
         const counts = countVotes(eventId, division);
         const entries = Object.entries(counts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
         const total = entries.reduce((sum, item) => sum + item[1], 0);
+        const isLocked = !!state.locks[`${eventId}:${division}`];
 
         totalVotes += total;
         section.querySelector('[data-total]').textContent = `${total} vote${total === 1 ? '' : 's'}`;
@@ -1150,6 +1152,21 @@
             selectEl.disabled = true;
             submitEl.innerHTML = 'Done &#10003;';
             submitEl.disabled = true;
+          }
+        }
+
+        // Lock overrides everything except an existing personal pick
+        if (isLocked) {
+          const myVote = state.voter && state.votes.find(v =>
+            v.event_id === eventId &&
+            v.division === division &&
+            v.voter_id === state.voter.email
+          );
+          selectEl.disabled = true;
+          submitEl.disabled = true;
+          if (!myVote) {
+            statusEl.textContent = 'Voting closed for this category.';
+            submitEl.innerHTML = 'Closed';
           }
         }
 
@@ -1188,6 +1205,12 @@
           // If no voter yet, prompt first
           if (!state.voter) {
             openRegisterModal();
+            return;
+          }
+
+          // Block if voting is locked for this category
+          if (state.locks[`${section.dataset.eventId}:${section.dataset.division}`]) {
+            alert('Voting is closed for this category.');
             return;
           }
 
@@ -1248,6 +1271,20 @@
       });
     }
 
+    async function loadLocks() {
+      if (!state.supabase) return;
+      const res = await state.supabase
+        .from('delmar_locks')
+        .select('event_id,division,locked');
+      if (res.error) { console.error(res.error); return; }
+      const map = {};
+      (res.data || []).forEach(r => {
+        if (r.locked) map[`${r.event_id}:${r.division}`] = true;
+      });
+      state.locks = map;
+      refreshUI();
+    }
+
     async function loadVotes() {
       if (!state.supabase) return;
 
@@ -1277,11 +1314,15 @@
         try {
           state.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
           await loadVotes();
+          await loadLocks();
 
           state.supabase
             .channel('delmar-votes-live')
             .on('postgres_changes', { event: '*', schema: 'public', table: 'delmar_votes' }, function () {
               loadVotes();
+            })
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'delmar_locks' }, function () {
+              loadLocks();
             })
             .subscribe();
         } catch (error) {
