@@ -101,7 +101,7 @@
       </div>
     </div>
 
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-1);">Last Updated: March 30, 2026</p>
+    <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-1);">Last Updated: April 30, 2026</p>
     <p class="rankings-intro">Data sourced from Social Blade.</p>
 
     <div class="rankings-grid fade-in" id="rankings-grid"></div>
@@ -160,7 +160,6 @@
         <ul class="footer__links" role="list">
           <li><a href="./news.html">Top Stories</a></li>
           <li><a href="./gossip.html">Gossip &amp; Drama</a></li>
-          <li></li>
           <li><a href="./shows.html">Podcasts/Shows</a></li>
           <li><a href="./rankings.html">Channel Rankings</a></li>
           <li><a href="./rogue.html">Rogue Fitness</a></li>
@@ -218,21 +217,21 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const CHANNELS = [
-    { rank: 1,  name: "Rogue Fitness",        url: "https://www.youtube.com/@Roguefitness",              subsLabel: "1.02M subs", monthlyViewsLabel: "7.21M", barWidth: "100%" },
-    { rank: 2,  name: "CrossFit Games",       url: "https://www.youtube.com/@CrossFitGamesTV",           subsLabel: "1.16M subs", monthlyViewsLabel: "4.38M", barWidth: "61%" },
-    { rank: 3,  name: "CrossFit",             url: "https://www.youtube.com/@crossfit",                  subsLabel: "1.79M subs", monthlyViewsLabel: "2.03M", barWidth: "28%" },
-    { rank: 4,  name: "CrossFit Mayhem",      url: "https://www.youtube.com/@CFProjectMayhem",           subsLabel: "333K subs", monthlyViewsLabel: "997K",  barWidth: "14%" },
-    { rank: 5,  name: "Andrew Hiller",        url: "https://www.youtube.com/@hillerfit",                 subsLabel: "69K subs",  monthlyViewsLabel: "752K",  barWidth: "10%" },
-    { rank: 6,  name: "CF Network",           url: "https://www.youtube.com/@CF-Network",                subsLabel: "8K subs",   monthlyViewsLabel: "689K",  barWidth: "10%" },
-    { rank: 7,  name: "Training Think Tank",  url: "https://www.youtube.com/@TrainingThinkTank",         subsLabel: "54K subs",  monthlyViewsLabel: "337K",  barWidth: "5%" },
-    { rank: 8,  name: "Boys Interrupted",     url: "https://www.youtube.com/@theboysinterrupted",        subsLabel: "11K subs",  monthlyViewsLabel: "243K",  barWidth: "3%" },
-    { rank: 9,  name: "HillerFit Training",   url: "https://www.youtube.com/@hillerfit2.0",              subsLabel: "8K subs",   monthlyViewsLabel: "200K",  barWidth: "3%" },
-    { rank: 10, name: "Amanda Hari",          url: "https://www.youtube.com/@Amanda_Hari",               subsLabel: "9K subs",   monthlyViewsLabel: "104K",  barWidth: "1%" },
-    { rank: 11, name: "PRVN Fitness",         url: "https://www.youtube.com/@prvnfitness",               subsLabel: "41K subs",  monthlyViewsLabel: "82K",   barWidth: "1%" },
-    { rank: 12, name: "Kipping It Real",      url: "https://www.youtube.com/@KippingItRealcrossfit",     subsLabel: "3K subs",   monthlyViewsLabel: "61K",   barWidth: "1%" },
-    { rank: 13, name: "The Barbell Spin",     url: "https://www.youtube.com/@thebarbellspin",            subsLabel: "11K subs",  monthlyViewsLabel: "42K",   barWidth: "1%" },
-    { rank: 14, name: "Coffee Pods & Wods",   url: "https://www.youtube.com/@coffeepodsandwods",         subsLabel: "8K subs",   monthlyViewsLabel: "27K",   barWidth: "0%" },
-    { rank: 15, name: "Clydesdale Media",     url: "https://www.youtube.com/@clydesdalemedia",           subsLabel: "3K subs",   monthlyViewsLabel: "13K",   barWidth: "0%" }
+    { rank: 1,  name: "Rogue Fitness",        url: "https://www.youtube.com/@Roguefitness",              subsLabel: "1.02M subs", monthlyViewsLabel: "8.44M", barWidth: "100%" },
+    { rank: 2,  name: "CrossFit",             url: "https://www.youtube.com/@crossfit",                  subsLabel: "1.79M subs", monthlyViewsLabel: "1.84M", barWidth: "22%" },
+    { rank: 3,  name: "CrossFit Games",       url: "https://www.youtube.com/@CrossFitGamesTV",           subsLabel: "1.16M subs", monthlyViewsLabel: "1.63M", barWidth: "19%" },
+    { rank: 4,  name: "CrossFit Mayhem",      url: "https://www.youtube.com/@CFProjectMayhem",           subsLabel: "336K subs", monthlyViewsLabel: "1.29M", barWidth: "15%" },
+    { rank: 5,  name: "Andrew Hiller",        url: "https://www.youtube.com/@hillerfit",                 subsLabel: "70K subs",  monthlyViewsLabel: "614K",  barWidth: "7%" },
+    { rank: 6,  name: "CF Network",           url: "https://www.youtube.com/@CF-Network",                subsLabel: "9K subs",   monthlyViewsLabel: "385K",  barWidth: "5%" },
+    { rank: 7,  name: "Boys Interrupted",     url: "https://www.youtube.com/@theboysinterrupted",        subsLabel: "12K subs",  monthlyViewsLabel: "148K",  barWidth: "2%" },
+    { rank: 8,  name: "Training Think Tank",  url: "https://www.youtube.com/@TrainingThinkTank",         subsLabel: "55K subs",  monthlyViewsLabel: "125K",  barWidth: "1%" },
+    { rank: 9,  name: "HillerFit Training",   url: "https://www.youtube.com/@hillerfit2.0",              subsLabel: "8K subs",   monthlyViewsLabel: "101K",  barWidth: "1%" },
+    { rank: 10, name: "The Barbell Spin",     url: "https://www.youtube.com/@thebarbellspin",            subsLabel: "11K subs",  monthlyViewsLabel: "98K",   barWidth: "1%" },
+    { rank: 11, name: "PRVN Fitness",         url: "https://www.youtube.com/@prvnfitness",               subsLabel: "41K subs",  monthlyViewsLabel: "60K",   barWidth: "1%" },
+    { rank: 12, name: "Amanda Hari",          url: "https://www.youtube.com/@Amanda_Hari",               subsLabel: "9K subs",   monthlyViewsLabel: "35K",   barWidth: "0%" },
+    { rank: 13, name: "Coffee Pods & Wods",   url: "https://www.youtube.com/@coffeepodsandwods",         subsLabel: "8K subs",   monthlyViewsLabel: "31K",   barWidth: "0%" },
+    { rank: 14, name: "Clydesdale Media",     url: "https://www.youtube.com/@clydesdalemedia",           subsLabel: "3K subs",   monthlyViewsLabel: "17K",   barWidth: "0%" },
+    { rank: 15, name: "Kipping It Real",      url: "https://www.youtube.com/@KippingItRealcrossfit",     subsLabel: "3K subs",   monthlyViewsLabel: "14K",   barWidth: "0%" }
   ];
 
   const ATHLETES = [
