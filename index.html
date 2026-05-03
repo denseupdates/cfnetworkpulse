@@ -242,70 +242,93 @@
       </a>
     </div>
 
-       <!-- CARD 1 -->
-      <a href="https://www.youtube.com/live/hFLLZADZHz4?si=-yNKJdDtGLrzZ4l8"
-       target="_blank" rel="noopener noreferrer"
-      class="show-card" style="border-left:3px solid #360bf5;">
-      <div class="show-card__icon">🔴</div>
-   <div class="show-card__info">
-    <span class="show-card__channel">CrossFit Copa Sur </span>
-    <span class="show-card__title">Day One </span>
-    <span class="show-card__meta">Upcoming &bull; May 1, 2026 7:30 AM CST</span>
-  </div>
-  <span class="show-card__badge" style="background:#d60000;color:#fff;">Upcoming</span>
-<a>
+    <div id="homeShowsGrid">
+      <div style="padding:var(--space-4);color:var(--color-text-muted);">
+        Loading latest shows…
+      </div>
+    </div>
 
-       <!-- CARD 1 -->
-      <a href="https://www.youtube.com/live/f4OM-L92b6s?si=n7aHYFDp2Bf-bP0-"
-       target="_blank" rel="noopener noreferrer"
-      class="show-card" style="border-left:3px solid #360bf5;">
-      <div class="show-card__icon">🔴</div>
-   <div class="show-card__info">
-    <span class="show-card__channel">The Sevan Podcast </span>
-    <span class="show-card__title">Meeting of the Minds </span>
-    <span class="show-card__meta">Upcoming &bull; May 1, 2026 9:00 AM CST</span>
-  </div>
-  <span class="show-card__badge" style="background:#d60000;color:#fff;">Upcoming</span>
-<a>
+    <script>
+    (async function () {
+      const FEED_URL = "https://cf-shows-feed.denseupdates.workers.dev/api/shows";
+      const MAX = 4;
 
-           <!-- CARD 1 -->
-      <a href="https://www.youtube.com/watch?v=fNYbSHDe3Rk"
-       target="_blank" rel="noopener noreferrer"
-      class="show-card" style="border-left:3px solid #360bf5;">
-      <div class="show-card__icon">🔴</div>
-   <div class="show-card__info">
-    <span class="show-card__channel">Clydesdale Media </span>
-    <span class="show-card__title">Lunch with the Clydesdale - Friday Show </span>
-    <span class="show-card__meta">Upcoming &bull; May 1, 2026 11:15 AM CST</span>
-  </div>
-  <span class="show-card__badge" style="background:#d60000;color:#fff;">Upcoming</span>
-<a>
+      const grid = document.getElementById("homeShowsGrid");
+      if (!grid) return;
 
-       <!-- CARD 2 -->
-      <a href="https://youtu.be/ahDe5w-aJ8Q"
-         target="_blank" rel="noopener noreferrer"
-          class="show-card" style="border-left:3px solid #360bf5;">
-      <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">CF Network</span>
-          <span class="show-card__title">DENSE UPDATES | HQ LEAKS | GAMES EVENT TEASERS | PEPPER DRAMA</span>
-          <span class="show-card__meta">New &bull; May 1st, 2026 
-        </div>
-        <span class="show-card__badge" style="background:#454bf4;color:#000;">New</span>
-      <a>
+      function fmtUpcoming(iso) {
+        const d = new Date(iso);
+        const date = d.toLocaleDateString("en-US", {
+          month: "short", day: "numeric", year: "numeric",
+          timeZone: "America/Chicago",
+        });
+        const time = d.toLocaleTimeString("en-US", {
+          hour: "numeric", minute: "2-digit",
+          timeZone: "America/Chicago", timeZoneName: "short",
+        });
+        return `${date} ${time}`;
+      }
 
-       <!-- CARD 3 -->
-      <a href="https://www.youtube.com/live/bWtMF4CTWs0?si=ocJ0sosfiAu2lmFH"
-         target="_blank" rel="noopener noreferrer"
-          class="show-card" style="border-left:3px solid #360bf5;">
-      <div class="show-card__icon">&#9654;</div>
-        <div class="show-card__info">
-          <span class="show-card__channel">CF Network</span>
-          <span class="show-card__title">Journal Review Ep 2: "The Garage Gym"</span>
-          <span class="show-card__meta">New &bull; April 29, 2026 
-        </div>
-        <span class="show-card__badge" style="background:#454bf4;color:#000;">New</span>
-      <a>
+      function fmtRecent(iso) {
+        const d = new Date(iso);
+        return d.toLocaleDateString("en-US", {
+          month: "long", day: "numeric", year: "numeric",
+          timeZone: "America/Chicago",
+        });
+      }
+
+      function escapeHTML(s) {
+        return String(s).replace(/[&<>"']/g, (c) => ({
+          "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+        }[c]));
+      }
+
+      function cardHTML(card) {
+        const isUpcoming = card.kind === "upcoming";
+        const icon = isUpcoming ? "🔴" : "&#9654;";
+        const badge = isUpcoming ? "Upcoming" : "New";
+        const badgeBG = isUpcoming ? "#d60000" : "#454bf4";
+        const badgeFG = isUpcoming ? "#fff" : "#000";
+        const meta = isUpcoming
+          ? `Upcoming &bull; ${fmtUpcoming(card.scheduledAt)}`
+          : `New &bull; ${fmtRecent(card.publishedAt)}`;
+
+        return `
+          <a href="${escapeHTML(card.url)}"
+             target="_blank" rel="noopener noreferrer"
+             class="show-card" style="border-left:3px solid #360bf5;">
+            <div class="show-card__icon">${icon}</div>
+            <div class="show-card__info">
+              <span class="show-card__channel">${escapeHTML(card.channel)}</span>
+              <span class="show-card__title">${escapeHTML(card.title)}</span>
+              <span class="show-card__meta">${meta}</span>
+            </div>
+            <span class="show-card__badge" style="background:${badgeBG};color:${badgeFG};">${badge}</span>
+          </a>
+        `;
+      }
+
+      try {
+        const res = await fetch(FEED_URL, { cache: "no-store" });
+        let data = await res.json();
+        if (typeof data === "string") {
+          try { data = JSON.parse(data); } catch (e) {}
+        }
+        if (!data || !data.cards || data.cards.length === 0) {
+          grid.innerHTML = `<div style="padding:var(--space-4);color:var(--color-text-muted);">
+            No shows scheduled right now. Check back soon.
+          </div>`;
+          return;
+        }
+        grid.innerHTML = data.cards.slice(0, MAX).map(cardHTML).join("");
+      } catch (err) {
+        console.error("home shows feed failed", err);
+        grid.innerHTML = `<div style="padding:var(--space-4);color:var(--color-text-muted);">
+          Couldn't load shows feed. Refresh in a minute.
+        </div>`;
+      }
+    })();
+    </script>
   </div>
 </section>
 
