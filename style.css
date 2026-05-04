@@ -3129,7 +3129,7 @@ a.athlete-card:hover .athlete-card__ig {
 
 .spot-group {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
   padding: 10px 12px;
@@ -3144,6 +3144,8 @@ a.athlete-card:hover .athlete-card__ig {
   text-transform: uppercase;
   color: var(--color-text-muted);
   flex-shrink: 0;
+  /* Match the line-height of .spot-name so label aligns with first name */
+  line-height: 1.35;
 }
 
 .spot-value {
@@ -3151,6 +3153,30 @@ a.athlete-card:hover .athlete-card__ig {
   font-weight: 700;
   color: var(--color-text);
   text-align: right;
+  line-height: 1.35;
+}
+
+/* When the row holds a list of athlete names, stack them so each name
+   sits on its own line and never breaks mid-name. */
+.spot-value--list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  min-width: 0;
+}
+
+.spot-name {
+  display: block;
+  white-space: nowrap;
+}
+
+/* Safety net: if a single name is longer than the available width
+   (very narrow cards), allow it to wrap rather than overflow. */
+@media (max-width: 380px) {
+  .spot-name {
+    white-space: normal;
+  }
 }
 
 .qualifying-bracket-arrow {
