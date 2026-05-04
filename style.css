@@ -3038,3 +3038,211 @@ a.athlete-card:hover .athlete-card__ig {
     width: min(100% - 32px, 1280px);
   }
 }
+
+.qualifying-bracket-section {
+  margin-top: 56px;
+  padding: 32px 0 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.qualifying-bracket-header {
+  max-width: 760px;
+  margin-bottom: 28px;
+}
+
+.qualifying-kicker {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #f97316;
+}
+
+.qualifying-bracket-header h2 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.05;
+  color: #ffffff;
+}
+
+.qualifying-subtext {
+  margin: 0;
+  max-width: 640px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.qualifying-bracket-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.qualifier-event-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 188px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.qualifier-event-card--online {
+  border-color: rgba(249, 115, 22, 0.3);
+  background: linear-gradient(180deg, rgba(249, 115, 22, 0.12), rgba(255, 255, 255, 0.04));
+}
+
+.event-phase {
+  display: inline-flex;
+  margin-bottom: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.qualifier-event-card h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.event-date {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f97316;
+}
+
+.event-spots {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.spot-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.spot-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.spot-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.qualifying-bracket-arrow {
+  display: flex;
+  justify-content: center;
+  padding: 18px 0;
+}
+
+.qualifying-bracket-arrow span {
+  position: relative;
+  display: block;
+  width: 2px;
+  height: 42px;
+  background: linear-gradient(to bottom, rgba(249, 115, 22, 0.1), rgba(249, 115, 22, 0.9));
+}
+
+.qualifying-bracket-arrow span::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid #f97316;
+  border-bottom: 2px solid #f97316;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.games-destination-card {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 26px 22px;
+  text-align: center;
+  border: 1px solid rgba(249, 115, 22, 0.35);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(249, 115, 22, 0.16), rgba(255, 255, 255, 0.04));
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.2);
+}
+
+.games-kicker {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.games-destination-card h3 {
+  margin: 0 0 8px;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.05;
+  color: #ffffff;
+}
+
+.games-date {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #f97316;
+}
+
+.games-location {
+  margin: 0;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+@media (max-width: 1024px) {
+  .qualifying-bracket-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .qualifying-bracket-section {
+    margin-top: 40px;
+    padding-top: 24px;
+  }
+
+  .qualifying-bracket-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .qualifier-event-card {
+    min-height: auto;
+  }
+
+  .qualifier-event-card h3 {
+    font-size: 20px;
+  }
+
+  .games-destination-card h3 {
+    font-size: 30px;
+  }
+}
