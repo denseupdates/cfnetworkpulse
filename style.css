@@ -3134,7 +3134,7 @@ a.athlete-card:hover .athlete-card__ig {
   gap: 12px;
   padding: 10px 12px;
   border-radius: 12px;
-  background: var(--color-surface-offset);
+  background: #ffffff;
 }
 
 .spot-label {
