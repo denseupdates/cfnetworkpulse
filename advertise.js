@@ -88,9 +88,16 @@
     });
   }
 
+  /* Tier durations (must match admin.js / message-board.js) */
+  var TIER_DURATION = {
+    weekly: 7 * 24 * 60 * 60 * 1000,
+    monthly: 30 * 24 * 60 * 60 * 1000
+  };
+
   if (adForm) {
     adForm.addEventListener("submit", function (e) {
       e.preventDefault();
+      var submitBtn = adForm.querySelector(".ad-form__submit");
       var adName = document.getElementById("adName").value.trim();
       var adEmail = document.getElementById("adEmail").value.trim();
       var adTier = document.getElementById("adTier").value;
@@ -99,7 +106,10 @@
 
       if (!adName || !adEmail || !adMessage) return;
 
-      /* Save pending ad to local storage before Stripe redirect */
+      var now = Date.now();
+      var stripeUrl = STRIPE_LINKS[adTier] || STRIPE_LINKS.weekly;
+
+      /* Build the ad record */
       var pendingAd = {
         name: adName,
         email: adEmail,
@@ -107,13 +117,47 @@
         text: adMessage,
         link: adLink || "",
         image: adImageData || "",
-        ts: Date.now(),
-        status: "pending_payment"
+        ts: now,
+        paidAt: now,
+        expiresAt: now + (TIER_DURATION[adTier] || TIER_DURATION.weekly),
+        status: "pending"
       };
-      storeSet(AD_PENDING_KEY, JSON.stringify(pendingAd));
 
-      var stripeUrl = STRIPE_LINKS[adTier] || STRIPE_LINKS.weekly;
-      window.location.href = stripeUrl;
+      /* Clear the local-storage handoff so message-board.js does NOT
+         create a duplicate Firestore record on Stripe return. */
+      storeSet(AD_PENDING_KEY, "");
+
+      function goToStripe() {
+        window.location.href = stripeUrl;
+      }
+
+      /* Write the ad to Firestore as 'pending' BEFORE redirecting to Stripe.
+         This guarantees it shows up in the admin panel for approval, even if
+         the user abandons checkout. */
+      try {
+        if (window.cfnnDb && typeof window.cfnnDb.collection === "function") {
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Submitting...";
+          }
+          window.cfnnDb.collection("ads").add(pendingAd)
+            .then(goToStripe)
+            .catch(function (err) {
+              console.error("CFNN: Firestore write failed, falling back to local-storage handoff.", err);
+              /* Fallback: keep the old behaviour so the ad isn't lost */
+              storeSet(AD_PENDING_KEY, JSON.stringify(pendingAd));
+              goToStripe();
+            });
+        } else {
+          console.warn("CFNN: Firestore not available on advertise page — using local-storage handoff.");
+          storeSet(AD_PENDING_KEY, JSON.stringify(pendingAd));
+          goToStripe();
+        }
+      } catch (err) {
+        console.error("CFNN: Unexpected error submitting ad:", err);
+        storeSet(AD_PENDING_KEY, JSON.stringify(pendingAd));
+        goToStripe();
+      }
     });
   }
 })();
