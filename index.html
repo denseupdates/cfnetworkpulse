@@ -394,7 +394,14 @@
       return;
     }
 
-    grid.innerHTML = data.cards.slice(0, 4).map(cardHTML).join("");
+    // Dedupe by videoId in case the feed contains both upcoming + recent for same video
+    const seen = new Set();
+    const deduped = data.cards.filter((c) => {
+      if (seen.has(c.videoId)) return false;
+      seen.add(c.videoId);
+      return true;
+    });
+    grid.innerHTML = deduped.slice(0, 4).map(cardHTML).join("");
   } catch (err) {
     console.error("home shows feed failed", err);
     grid.innerHTML = `<div style="padding:var(--space-4);color:var(--color-text-muted);">
