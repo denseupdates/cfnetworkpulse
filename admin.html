@@ -240,15 +240,12 @@
   </div>
 </header>
 
-<!-- ===== PASSWORD GATE ===== -->
+<!-- ===== AUTH GATE ===== -->
 <div class="admin-gate" id="adminGate">
   <div class="admin-gate__title">Admin Access</div>
-  <p style="font-size:var(--text-sm);color:var(--color-text-muted);">Enter the admin password to manage ads.</p>
-  <form class="admin-gate__form" id="adminLoginForm">
-    <input type="password" class="admin-gate__input" id="adminPassword" placeholder="Password" autocomplete="off" required>
-    <button type="submit" class="admin-gate__btn">Enter</button>
-  </form>
-  <p class="admin-gate__error" id="adminError">Incorrect password</p>
+  <p style="font-size:var(--text-sm);color:var(--color-text-muted);max-width:360px;">Sign in with the CF Network News admin Google account to manage ads.</p>
+  <button type="button" class="admin-gate__btn" id="adminSignInBtn" style="min-height:44px;padding:var(--space-2) var(--space-5);">Sign in with Google</button>
+  <p class="admin-gate__error" id="adminError">Access denied. This Google account is not an admin.</p>
 </div>
 
 <!-- ===== ADMIN DASHBOARD (hidden until auth) ===== -->
@@ -283,6 +280,7 @@
 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>
   firebase.initializeApp({
@@ -295,6 +293,7 @@
     appId: "1:637738242934:web:aede6dd97c6c6139d92057"
   });
   window.cfnnDb = firebase.firestore();
+  window.cfnnAuth = firebase.auth();
 </script>
 <script src="./admin.js"></script>
 </body>

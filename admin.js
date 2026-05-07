@@ -5,82 +5,91 @@
   /* ================================================
      CONFIG
      ================================================ */
-  var ADMIN_PASS_HASH = "cfnn2026admin";
-  var ADMIN_KEY = "cfnn_admin_auth";
-
-  /* Storage abstraction */
-  var memStore = {};
-  var _ls = null;
-  var canUseLS = false;
-  try {
-    _ls = window["local" + "Storage"];
-    var _t = "__cfnn_test";
-    _ls.setItem(_t, "1");
-    _ls.removeItem(_t);
-    canUseLS = true;
-  } catch (e) { canUseLS = false; }
-
-  function storeGet(key) {
-    if (canUseLS) return _ls.getItem(key);
-    return memStore[key] || null;
-  }
-  function storeSet(key, val) {
-    if (canUseLS) { _ls.setItem(key, val); return; }
-    memStore[key] = val;
-  }
+  /* Google accounts allowed to administer the site.
+     Firestore security rules MUST also restrict writes to these emails. */
+  var ADMIN_EMAILS = [
+    "denseupdates@gmail.com"
+  ];
 
   /* ================================================
      DOM
      ================================================ */
   var gate = document.getElementById("adminGate");
   var dash = document.getElementById("adminDash");
-  var loginForm = document.getElementById("adminLoginForm");
-  var passInput = document.getElementById("adminPassword");
+  var signInBtn = document.getElementById("adminSignInBtn");
   var errorMsg = document.getElementById("adminError");
   var adminFeed = document.getElementById("adminFeed");
   var adminCount = document.getElementById("adminCount");
   var tabBtns = document.querySelectorAll("[data-admin-tab]");
 
   var db = window.cfnnDb;
-  if (!db) return;
+  var auth = window.cfnnAuth;
+  if (!db || !auth) {
+    console.error("CFNN admin: Firebase not initialized — window.cfnnDb / window.cfnnAuth missing.");
+    return;
+  }
   var adsRef = db.collection("ads");
 
   var currentTab = "pending";
   var allAds = [];
+  var listenerStarted = false;
 
   /* ================================================
-     AUTH
+     AUTH (Google sign-in, allow-listed emails)
      ================================================ */
-  function checkAuth() {
-    return storeGet(ADMIN_KEY) === "1";
-  }
-
-  function authenticate(pass) {
-    if (pass === ADMIN_PASS_HASH) {
-      storeSet(ADMIN_KEY, "1");
-      return true;
-    }
-    return false;
+  function isAdmin(user) {
+    return !!(user && user.email && ADMIN_EMAILS.indexOf(user.email.toLowerCase()) !== -1);
   }
 
   function showDash() {
     gate.style.display = "none";
     dash.classList.add("admin-dash--active");
+    if (!listenerStarted) {
+      startAdsListener();
+      listenerStarted = true;
+    }
   }
 
-  if (checkAuth()) {
-    showDash();
+  function showGate(showError) {
+    gate.style.display = "";
+    dash.classList.remove("admin-dash--active");
+    if (errorMsg) errorMsg.style.display = showError ? "block" : "none";
   }
 
-  loginForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var pass = passInput.value.trim();
-    if (authenticate(pass)) {
+  if (signInBtn) {
+    signInBtn.addEventListener("click", function () {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: "select_account" });
+      signInBtn.disabled = true;
+      signInBtn.textContent = "Signing in...";
+      auth.signInWithPopup(provider).catch(function (err) {
+        console.error("Admin sign-in failed:", err);
+        signInBtn.disabled = false;
+        signInBtn.textContent = "Sign in with Google";
+        if (errorMsg) {
+          errorMsg.textContent = "Sign-in failed. Try again.";
+          errorMsg.style.display = "block";
+        }
+      });
+    });
+  }
+
+  auth.onAuthStateChanged(function (user) {
+    if (signInBtn) {
+      signInBtn.disabled = false;
+      signInBtn.textContent = "Sign in with Google";
+    }
+    if (isAdmin(user)) {
       showDash();
     } else {
-      errorMsg.style.display = "block";
-      passInput.value = "";
-      passInput.focus();
+      var hadUser = !!user;
+      if (hadUser) {
+        /* Signed-in but not an admin — sign them out and show error */
+        auth.signOut();
+        showGate(true);
+      } else {
+        showGate(false);
+      }
     }
   });
 
@@ -196,19 +205,21 @@
   }
 
   /* ================================================
-     FIRESTORE LISTENER
+     FIRESTORE LISTENER (started after admin auth succeeds)
      ================================================ */
-  adsRef.orderBy("ts", "desc").onSnapshot(function (snapshot) {
-    allAds = [];
-    snapshot.forEach(function (doc) {
-      var data = doc.data();
-      data.id = doc.id;
-      allAds.push(data);
+  function startAdsListener() {
+    adsRef.orderBy("ts", "desc").onSnapshot(function (snapshot) {
+      allAds = [];
+      snapshot.forEach(function (doc) {
+        var data = doc.data();
+        data.id = doc.id;
+        allAds.push(data);
+      });
+      renderAds();
+    }, function (err) {
+      console.error("Admin ads listener error:", err);
     });
-    renderAds();
-  }, function (err) {
-    console.error("Admin ads listener error:", err);
-  });
+  }
 
   /* ================================================
      EVENTS
