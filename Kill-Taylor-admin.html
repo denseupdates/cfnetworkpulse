@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Kill Taylor Admin</title>
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070708;
+      --surface: #121316;
+      --surface-2: #191b1f;
+      --border: rgba(255,255,255,0.1);
+      --divider: rgba(255,255,255,0.15);
+      --text: #f4f1ea;
+      --text-muted: rgba(244,241,234,0.72);
+      --primary: #d71920;
+      --primary-hover: #f02a32;
+      --accent: #ffd166;
+      --good: #57d497;
+      --bad: #ff7b72;
+      --radius-md: 0.95rem;
+      --radius-lg: 1.35rem;
+      --shadow: 0 18px 50px rgba(0,0,0,0.38);
+      --font-display: 'Cabinet Grotesk', Inter, sans-serif;
+      --font-body: 'Satoshi', Inter, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100dvh;
+      background:
+        radial-gradient(circle at top center, rgba(215,25,32,0.2), transparent 34%),
+        linear-gradient(180deg, #101114 0%, #070708 40%, #070708 100%);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.55;
+      padding: 1.25rem;
+    }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; border: 0; }
+    .wrap { max-width: 1360px; margin: 0 auto; }
+    .header-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+    h1, h2, h3, .value, .score, .rank, .promo-big { font-family: var(--font-display); text-transform: uppercase; }
+    h1 { font-size: clamp(2rem, 1.2rem + 2vw, 3.3rem); line-height: 0.95; letter-spacing: -0.04em; }
+    .sub { color: var(--text-muted); }
+    .chip {
+      display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.32rem 0.7rem; border-radius: 999px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border); font-size: 0.75rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);
+    }
+    .chip .dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--accent); }
+    .chip.live .dot { background: var(--good); }
+
+    .summary {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin: 1rem 0 1.25rem;
+    }
+    .stat-box, .card, .promo-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
+      border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .stat-box { padding: 0.9rem 1rem; }
+    .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 800; }
+    .value { font-size: 1.7rem; margin-top: 0.12rem; line-height: 0.95; }
+
+    .promo-card {
+      padding: 1rem 1.1rem; margin-bottom: 1.25rem; display: grid; gap: 0.45rem;
+      border-left: 4px solid var(--primary);
+    }
+    .promo-kicker { color: var(--primary); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 900; }
+    .promo-big { font-size: clamp(1.8rem, 1.3rem + 1.5vw, 3rem); line-height: 0.9; }
+    .promo-copy { color: var(--text-muted); max-width: 72ch; }
+
+    .grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 1.25rem; }
+    .card { padding: 1.15rem; margin-bottom: 1.25rem; }
+    .card h2 { font-size: 1.25rem; line-height: 0.95; margin-bottom: 0.2rem; }
+    .card .desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+
+    input, select, textarea {
+      width: 100%; padding: 0.7rem 0.8rem; background: rgba(255,255,255,0.04); color: var(--text);
+      border: 1px solid var(--border); border-radius: var(--radius-md);
+    }
+    textarea { resize: vertical; min-height: 124px; }
+    label {
+      display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--text-muted); font-weight: 800; margin-bottom: 0.3rem;
+    }
+    .field { margin-bottom: 0.8rem; }
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .actions { display: flex; gap: 0.55rem; flex-wrap: wrap; margin-top: 0.35rem; }
+    button {
+      padding: 0.66rem 0.95rem; border-radius: var(--radius-md); background: var(--primary); color: white;
+      font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    button:hover { background: var(--primary-hover); }
+    button.ghost { background: rgba(255,255,255,0.04); color: var(--text); border: 1px solid var(--border); }
+    button.ghost:hover { background: rgba(255,255,255,0.08); }
+    button.small { padding: 0.48rem 0.72rem; font-size: 0.76rem; }
+    button.good { background: var(--good); color: #08130d; }
+    button.bad { background: var(--bad); color: #170707; }
+    button:disabled { opacity: 0.65; cursor: not-allowed; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+    th, td { text-align: left; padding: 0.58rem 0.45rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 800; }
+    tbody tr:hover { background: rgba(255,255,255,0.03); }
+    .rank { width: 36px; color: var(--text-muted); }
+    .rank.top { color: var(--accent); }
+    .email { color: var(--text-muted); font-size: 0.82rem; }
+    .score { font-size: 1.05rem; }
+    .empty {
+      padding: 1.25rem; text-align: center; color: var(--text-muted); border: 1px dashed var(--border);
+      border-radius: var(--radius-md); font-size: 0.88rem;
+    }
+    .caller-row {
+      display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; padding: 0.9rem; border: 1px solid var(--border);
+      border-radius: var(--radius-md); background: rgba(255,255,255,0.035); margin-bottom: 0.7rem;
+    }
+    .caller-row.finished { opacity: 0.82; }
+    .caller-row .name { font-weight: 800; font-size: 1.05rem; }
+    .caller-row .meta { color: var(--text-muted); font-size: 0.78rem; margin-top: 0.15rem; }
+    .status-pill {
+      display: inline-block; padding: 0.18rem 0.48rem; border-radius: 999px; font-size: 0.68rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.08em; margin-left: 0.4rem;
+    }
+    .status-pill.upcoming { background: rgba(255,209,102,0.14); color: #ffd166; }
+    .status-pill.live { background: rgba(255,123,114,0.14); color: var(--bad); }
+    .status-pill.finished { background: rgba(87,212,151,0.14); color: var(--good); }
+    .caller-controls { display: flex; gap: 0.35rem; flex-wrap: wrap; align-items: center; justify-content: flex-end; }
+    .finish-block {
+      display: grid; grid-template-columns: 140px auto auto auto; gap: 0.45rem; align-items: end;
+      margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--border);
+    }
+    .tab-bar { display: flex; gap: 0.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); }
+    .tab-bar button { background: transparent; color: var(--text-muted); border-radius: 0; padding: 0.55rem 0.85rem; border-bottom: 2px solid transparent; }
+    .tab-bar button.active { color: var(--text); border-bottom-color: var(--primary); }
+    .tab-bar button:hover { background: transparent; color: var(--text); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .pill-good { color: var(--good); font-weight: 800; }
+    .pill-bad { color: var(--bad); font-weight: 800; }
+    .muted { color: var(--text-muted); }
+    .save-note { color: var(--text-muted); font-size: 0.84rem; margin-top: 0.55rem; min-height: 1.15em; }
+
+    @media (max-width: 1024px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      body { padding: 0.8rem; }
+      .summary { grid-template-columns: repeat(2, 1fr); }
+      .field-grid, .finish-block { grid-template-columns: 1fr; }
+      .caller-row { grid-template-columns: 1fr; }
+      .caller-controls { justify-content: flex-start; }
+      .tab-bar { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header-row">
+      <div>
+        <h1>Kill Taylor Admin</h1>
+        <div class="sub">Manage the workout promo content, caller lineup, Taylor's time, and the live leaderboards from one place.</div>
+      </div>
+      <div><span class="chip" id="connStatus"><span class="dot"></span>Connecting</span></div>
+    </div>
+
+    <div class="promo-card">
+      <div class="promo-kicker">Live Page Style Sync</div>
+      <div class="promo-big">Black · Red · Poster Layout</div>
+      <div class="promo-copy">This admin now controls the same promo content shown on the voting page, including the workout, season line, date, prize copy, and sponsor name.</div>
+    </div>
+
+    <div class="summary">
+      <div class="stat-box"><div class="label">Taylor guesses</div><div class="value" id="statGuesses">0</div></div>
+      <div class="stat-box"><div class="label">Caller predictions</div><div class="value" id="statPredictions">0</div></div>
+      <div class="stat-box"><div class="label">Callers</div><div class="value" id="statCallers">0</div></div>
+      <div class="stat-box"><div class="label">Taylor's time</div><div class="value" id="statTaylor">—</div></div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <div class="card">
+          <div class="header-row">
+            <div>
+              <h2>Leaderboards</h2>
+              <div class="desc">Two rankings: closest Taylor-time guess, and most correct caller predictions.</div>
+            </div>
+            <div class="actions" style="margin:0;">
+              <button class="ghost" id="refreshBtn">Refresh</button>
+              <button class="ghost" id="exportBtn">Export CSV</button>
+            </div>
+          </div>
+          <div class="tab-bar">
+            <button class="active" data-tab="time">Closest Taylor time</button>
+            <button data-tab="predictions">Best caller predictor</button>
+            <button data-tab="raw">Raw data</button>
+          </div>
+          <div class="tab-panel active" data-panel="time" id="timePanel"><div class="empty">Loading…</div></div>
+          <div class="tab-panel" data-panel="predictions" id="predictionsPanel"><div class="empty">Loading…</div></div>
+          <div class="tab-panel" data-panel="raw" id="rawPanel"><div class="empty">Loading…</div></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h2>Live Page Promo Content</h2>
+          <div class="desc">These fields update the public voting page workout section and side promo block.</div>
+          <div class="field-grid">
+            <div class="field">
+              <label for="seasonLine">Season line</label>
+              <input type="text" id="seasonLine" maxlength="80" placeholder="Season 2 | Week 33" />
+            </div>
+            <div class="field">
+              <label for="showDateLine">Date / time</label>
+              <input type="text" id="showDateLine" maxlength="80" placeholder="May 9 · 11AM ET" />
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label for="prizeLine">Prize line</label>
+              <input type="text" id="prizeLine" maxlength="80" placeholder="Win $1,500" />
+            </div>
+            <div class="field">
+              <label for="sponsorLine">Sponsor line</label>
+              <input type="text" id="sponsorLine" maxlength="80" placeholder="Rugged Tallow" />
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label for="workoutFormat">Workout label</label>
+              <input type="text" id="workoutFormat" maxlength="80" placeholder="For Time" />
+            </div>
+            <div class="field">
+              <label for="scaledTitle">Scaled title</label>
+              <input type="text" id="scaledTitle" maxlength="80" placeholder="Scaled Version" />
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label for="workoutMovements">Main workout, one line per movement</label>
+              <textarea id="workoutMovements" placeholder="100 wall-ball shots, 20/14 lb to 10'&#10;100 burpee box jump-overs, 24\""></textarea>
+            </div>
+            <div class="field">
+              <label for="scaledMovements">Scaled workout, one line per movement</label>
+              <textarea id="scaledMovements" placeholder="70 wall-ball shots, 10/9 lb&#10;70 burpee box jump-overs, 24/20\""></textarea>
+            </div>
+          </div>
+          <div class="actions">
+            <button id="saveWorkoutBtn">Save live page content</button>
+            <button class="ghost" id="resetWorkoutBtn">Reset defaults</button>
+          </div>
+          <div class="save-note" id="workoutSaveNote"></div>
+        </div>
+
+        <div class="card">
+          <h2>Taylor's Actual Time</h2>
+          <div class="desc">Once Taylor finishes, enter his time here. The closest-guess leaderboard updates instantly.</div>
+          <div class="field-grid" style="align-items:end;">
+            <div class="field" style="margin:0;">
+              <label for="taylorTime">Time mm:ss</label>
+              <input type="text" id="taylorTime" placeholder="08:42" maxlength="5" />
+            </div>
+            <div class="actions" style="margin:0;">
+              <button id="saveTaylorBtn">Save</button>
+              <button class="ghost" id="clearTaylorBtn">Clear</button>
+            </div>
+          </div>
+          <div class="save-note" id="taylorSavedNote"></div>
+        </div>
+
+        <div class="card">
+          <h2>Add a Caller</h2>
+          <div class="desc">Add the name as they come on air. They appear on the public page immediately with voting open.</div>
+          <div class="field">
+            <label for="newCallerName">Caller name</label>
+            <input type="text" id="newCallerName" placeholder="First Last or handle" maxlength="80" />
+          </div>
+          <div class="actions"><button id="addCallerBtn">Add caller</button></div>
+        </div>
+
+        <div class="card">
+          <h2>Caller Lineup</h2>
+          <div class="desc">Move callers from Upcoming to Live to lock voting, then finish them with the result.</div>
+          <div id="callersRoot"><div class="empty">No callers yet.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://nkpdyyonpgmupwajhhfp.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5rcGR5eW9ucGdtdXB3YWpoaGZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyOTE3NzIsImV4cCI6MjA5MTg2Nzc3Mn0.9HoQaQzxkGhNrfIHTp9ksgqrNl8WcRjCKL5ffezgM';
+    const TAYLOR_KEY = 'kt-admin-taylor-time-v1';
+    const DEFAULT_EVENT = {
+      seasonLine: 'Season 2 | Week 33',
+      showDateLine: 'May 9 · 11AM ET',
+      prizeLine: 'Win $1,500',
+      sponsorLine: 'Rugged Tallow',
+      workout: {
+        format: 'For Time',
+        movements: [
+          "100 wall-ball shots, 20/14 lb to 10'",
+          '100 burpee box jump-overs, 24"'
+        ],
+        scaledTitle: 'Scaled Version',
+        scaledMovements: [
+          "70 wall-ball shots, 10/9 lb",
+          '70 burpee box jump-overs, 24/20"'
+        ]
+      }
+    };
+
+    const state = {
+      supabase: null,
+      callers: [],
+      guesses: [],
+      callerVotes: [],
+      taylorSeconds: null,
+      taylorDisplay: null,
+      eventSettings: structuredClone(DEFAULT_EVENT)
+    };
+
+    function escapeHtml(str) {
+      return String(str ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+    }
+    function parseMMSS(value) {
+      const m = String(value || '').trim().match(/^(\d{1,2}):(\d{2})$/);
+      if (!m) return null;
+      const mins = parseInt(m[1], 10);
+      const secs = parseInt(m[2], 10);
+      if (secs >= 60) return null;
+      return mins * 60 + secs;
+    }
+    function formatSeconds(total) {
+      if (total == null || isNaN(total)) return '';
+      const m = Math.floor(total / 60);
+      const s = total % 60;
+      return m + ':' + String(s).padStart(2, '0');
+    }
+    function setConn(ok, msg) {
+      const el = document.getElementById('connStatus');
+      el.classList.toggle('live', !!ok);
+      el.innerHTML = '<span class="dot"></span>' + (ok ? 'Live' : ('Error' + (msg ? ': ' + msg : '')));
+    }
+    function csvEscape(v) {
+      const s = String(v == null ? '' : v);
+      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    }
+
+    function linesToArray(text) {
+      return String(text || '').split('\n').map(v => v.trim()).filter(Boolean);
+    }
+
+    function loadTaylor() {
+      try {
+        const raw = localStorage.getItem(TAYLOR_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (parsed && parsed.seconds != null) {
+          state.taylorSeconds = parsed.seconds;
+          state.taylorDisplay = parsed.display || formatSeconds(parsed.seconds);
+        }
+      } catch (e) {}
+    }
+    function saveTaylor() {
+      if (state.taylorSeconds == null) localStorage.removeItem(TAYLOR_KEY);
+      else localStorage.setItem(TAYLOR_KEY, JSON.stringify({ seconds: state.taylorSeconds, display: state.taylorDisplay }));
+    }
+
+    function fillEventForm() {
+      const s = state.eventSettings;
+      document.getElementById('seasonLine').value = s.seasonLine || '';
+      document.getElementById('showDateLine').value = s.showDateLine || '';
+      document.getElementById('prizeLine').value = s.prizeLine || '';
+      document.getElementById('sponsorLine').value = s.sponsorLine || '';
+      document.getElementById('workoutFormat').value = s.workout?.format || '';
+      document.getElementById('scaledTitle').value = s.workout?.scaledTitle || '';
+      document.getElementById('workoutMovements').value = (s.workout?.movements || []).join('\n');
+      document.getElementById('scaledMovements').value = (s.workout?.scaledMovements || []).join('\n');
+    }
+
+    async function loadEventSettings() {
+      try {
+        const { data, error } = await state.supabase.from('ktsettings').select('key, value_json').eq('key', 'live_event').maybeSingle();
+        if (!error && data?.value_json) {
+          state.eventSettings = {
+            ...structuredClone(DEFAULT_EVENT),
+            ...data.value_json,
+            workout: {
+              ...structuredClone(DEFAULT_EVENT.workout),
+              ...(data.value_json.workout || {})
+            }
+          };
+        } else {
+          state.eventSettings = structuredClone(DEFAULT_EVENT);
+        }
+      } catch (e) {
+        console.error(e);
+        state.eventSettings = structuredClone(DEFAULT_EVENT);
+      }
+      fillEventForm();
+    }
+
+    async function saveEventSettings(payload) {
+      const note = document.getElementById('workoutSaveNote');
+      note.textContent = 'Saving…';
+      const { error } = await state.supabase.from('ktsettings').upsert({
+        key: 'live_event',
+        value_json: payload,
+        updated_at: new Date().toISOString()
+      }, { onConflict: 'key' });
+      if (error) {
+        console.error(error);
+        note.textContent = 'Could not save. Make sure the ktsettings table exists.';
+        return;
+      }
+      state.eventSettings = payload;
+      note.textContent = 'Saved to live page settings.';
+    }
+
+    function wireWorkoutEditor() {
+      document.getElementById('saveWorkoutBtn').addEventListener('click', async function () {
+        const payload = {
+          seasonLine: document.getElementById('seasonLine').value.trim() || DEFAULT_EVENT.seasonLine,
+          showDateLine: document.getElementById('showDateLine').value.trim() || DEFAULT_EVENT.showDateLine,
+          prizeLine: document.getElementById('prizeLine').value.trim() || DEFAULT_EVENT.prizeLine,
+          sponsorLine: document.getElementById('sponsorLine').value.trim() || DEFAULT_EVENT.sponsorLine,
+          workout: {
+            format: document.getElementById('workoutFormat').value.trim() || DEFAULT_EVENT.workout.format,
+            movements: linesToArray(document.getElementById('workoutMovements').value),
+            scaledTitle: document.getElementById('scaledTitle').value.trim() || DEFAULT_EVENT.workout.scaledTitle,
+            scaledMovements: linesToArray(document.getElementById('scaledMovements').value)
+          }
+        };
+        await saveEventSettings(payload);
+      });
+
+      document.getElementById('resetWorkoutBtn').addEventListener('click', function () {
+        if (!confirm('Reset the live page content fields to the default example?')) return;
+        state.eventSettings = structuredClone(DEFAULT_EVENT);
+        fillEventForm();
+        document.getElementById('workoutSaveNote').textContent = 'Defaults loaded into the form. Save to push them live.';
+      });
+    }
+
+    function wireTaylor() {
+      const input = document.getElementById('taylorTime');
+      input.addEventListener('input', function () {
+        let v = input.value.replace(/[^0-9]/g, '');
+        if (v.length >= 3) v = v.slice(0, v.length - 2) + ':' + v.slice(-2);
+        input.value = v.slice(0, 5);
+      });
+      document.getElementById('saveTaylorBtn').addEventListener('click', function () {
+        const secs = parseMMSS(input.value);
+        if (secs == null) return alert('Use format mm:ss.');
+        state.taylorSeconds = secs;
+        state.taylorDisplay = input.value.trim();
+        saveTaylor();
+        renderAll();
+      });
+      document.getElementById('clearTaylorBtn').addEventListener('click', function () {
+        if (!confirm('Clear Taylor\'s saved time?')) return;
+        state.taylorSeconds = null;
+        state.taylorDisplay = null;
+        input.value = '';
+        saveTaylor();
+        renderAll();
+      });
+    }
+
+    async function loadCallers() {
+      const { data, error } = await state.supabase.from('ktcallers').select('id, callername, status, actualtime, beattaylor, position, insertedat');
+      if (error) throw error;
+      state.callers = data || [];
+    }
+    async function loadGuesses() {
+      const { data, error } = await state.supabase.from('kttaylorguesses').select('voterid, votername, voteremail, guessseconds, guessdisplay, insertedat');
+      if (error) throw error;
+      state.guesses = data || [];
+    }
+    async function loadCallerVotes() {
+      const { data, error } = await state.supabase.from('ktcallervotes').select('callerid, voterid, votername, voteremail, prediction, insertedat');
+      if (error) throw error;
+      state.callerVotes = data || [];
+    }
+    async function loadAll() {
+      try {
+        await Promise.all([loadEventSettings(), loadCallers(), loadGuesses(), loadCallerVotes()]);
+        setConn(true);
+      } catch (e) {
+        console.error(e);
+        setConn(false, e.message || 'failed');
+      }
+      renderAll();
+    }
+
+    async function addCaller() {
+      const input = document.getElementById('newCallerName');
+      const name = input.value.trim();
+      if (!name) return alert('Enter a name.');
+      const maxPos = state.callers.reduce((m, c) => Math.max(m, c.position || 0), 0);
+      const { error } = await state.supabase.from('ktcallers').insert({ callername: name, status: 'upcoming', position: maxPos + 1 });
+      if (error) {
+        console.error(error);
+        return alert('Failed to add caller.');
+      }
+      input.value = '';
+      await loadCallers();
+      renderAll();
+    }
+    async function setCallerStatus(id, newStatus) {
+      const { error } = await state.supabase.from('ktcallers').update({ status: newStatus, updatedat: new Date().toISOString() }).eq('id', id);
+      if (error) { console.error(error); return alert('Update failed.'); }
+      await loadCallers();
+      renderAll();
+    }
+    async function finishCaller(id, timeStr, beats) {
+      const { error } = await state.supabase.from('ktcallers').update({ status: 'finished', actualtime: timeStr || null, beattaylor: beats, updatedat: new Date().toISOString() }).eq('id', id);
+      if (error) { console.error(error); return alert('Update failed.'); }
+      await loadCallers();
+      renderAll();
+    }
+    async function deleteCaller(id) {
+      if (!confirm('Delete this caller and all votes on them?')) return;
+      const { error } = await state.supabase.from('ktcallers').delete().eq('id', id);
+      if (error) { console.error(error); return alert('Delete failed.'); }
+      await Promise.all([loadCallers(), loadCallerVotes()]);
+      renderAll();
+    }
+
+    function renderCallers() {
+      const host = document.getElementById('callersRoot');
+      if (!state.callers.length) {
+        host.innerHTML = '<div class="empty">No callers yet.</div>';
+        return;
+      }
+      const sorted = state.callers.slice().sort((a, b) => {
+        const rank = s => ({ upcoming: 0, live: 1, finished: 2 }[s] ?? 3);
+        if (rank(a.status) !== rank(b.status)) return rank(a.status) - rank(b.status);
+        if ((a.position ?? 0) !== (b.position ?? 0)) return (a.position ?? 0) - (b.position ?? 0);
+        return String(a.insertedat || '').localeCompare(String(b.insertedat || ''));
+      });
+      host.innerHTML = sorted.map(c => {
+        const votes = state.callerVotes.filter(v => v.callerid == c.id);
+        const yesCt = votes.filter(v => v.prediction === true).length;
+        const noCt = votes.filter(v => v.prediction === false).length;
+        const controls = [];
+        if (c.status === 'upcoming') controls.push(`<button class="small" data-action="live" data-id="${c.id}">Start · lock votes</button>`);
+        else if (c.status === 'live') controls.push(`<button class="small ghost" data-action="upcoming" data-id="${c.id}">Back to upcoming</button>`);
+        else controls.push(`<button class="small ghost" data-action="reopen" data-id="${c.id}">Reopen upcoming</button>`);
+        controls.push(`<button class="small ghost" data-action="delete" data-id="${c.id}">Delete</button>`);
+
+        let finishBlock = '';
+        if (c.status === 'live' || (c.status === 'finished' && c.beattaylor == null)) {
+          finishBlock = `
+            <div class="finish-block">
+              <div class="field" style="margin:0;">
+                <label>Their time</label>
+                <input type="text" class="finish-time" data-id="${c.id}" placeholder="mm:ss or blank" maxlength="5" value="${escapeHtml(c.actualtime || '')}" />
+              </div>
+              <button class="small good" data-action="finish-beat" data-id="${c.id}">Beat Taylor</button>
+              <button class="small bad" data-action="finish-lost" data-id="${c.id}">Didn't beat</button>
+              <button class="small ghost" data-action="finish-noscore" data-id="${c.id}">No score</button>
+            </div>`;
+        } else if (c.status === 'finished') {
+          const label = c.beattaylor ? `<span class="pill-good">Beat Taylor${c.actualtime ? ' · ' + escapeHtml(c.actualtime) : ''}</span>` : `<span class="pill-bad">Didn't beat${c.actualtime ? ' · ' + escapeHtml(c.actualtime) : ''}</span>`;
+          finishBlock = `<div class="finish-block"><div style="grid-column:1/-1">Result: ${label}</div></div>`;
+        }
+
+        return `
+          <div class="caller-row ${c.status === 'finished' ? 'finished' : ''}">
+            <div>
+              <div class="name">${escapeHtml(c.callername)}<span class="status-pill ${c.status}">${c.status}</span></div>
+              <div class="meta">${yesCt} beats · ${noCt} won't · ${yesCt + noCt} total votes</div>
+              ${finishBlock}
+            </div>
+            <div class="caller-controls">${controls.join('')}</div>
+          </div>`;
+      }).join('');
+
+      host.querySelectorAll('button[data-action]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          const action = btn.dataset.action;
+          if (action === 'live') setCallerStatus(id, 'live');
+          else if (action === 'upcoming' || action === 'reopen') setCallerStatus(id, 'upcoming');
+          else if (action === 'delete') deleteCaller(id);
+          else if (action === 'finish-beat' || action === 'finish-lost' || action === 'finish-noscore') {
+            const timeInput = host.querySelector(`input.finish-time[data-id="${id}"]`);
+            const t = timeInput ? timeInput.value.trim() : '';
+            const beats = action === 'finish-beat' ? true : false;
+            finishCaller(id, t || null, beats);
+          }
+        });
+      });
+    }
+
+    function renderSummary() {
+      document.getElementById('statGuesses').textContent = state.guesses.length;
+      document.getElementById('statPredictions').textContent = state.callerVotes.length;
+      document.getElementById('statCallers').textContent = state.callers.length;
+      document.getElementById('statTaylor').textContent = state.taylorSeconds != null ? state.taylorDisplay || formatSeconds(state.taylorSeconds) : '—';
+      const note = document.getElementById('taylorSavedNote');
+      note.textContent = state.taylorSeconds != null ? `Saved ${state.taylorDisplay || formatSeconds(state.taylorSeconds)} and used to score guesses.` : 'Not set yet.';
+      const inp = document.getElementById('taylorTime');
+      if (document.activeElement !== inp) inp.value = state.taylorDisplay || '';
+    }
+
+    function renderTimeLeaderboard() {
+      const host = document.getElementById('timePanel');
+      if (!state.guesses.length) {
+        host.innerHTML = '<div class="empty">No Taylor-time guesses yet.</div>';
+        return;
+      }
+      const t = state.taylorSeconds;
+      const rows = state.guesses.map(g => ({
+        name: g.votername,
+        email: g.voteremail,
+        guess: g.guessseconds,
+        display: g.guessdisplay,
+        diff: t != null ? Math.abs(g.guessseconds - t) : null
+      }));
+      if (t != null) rows.sort((a, b) => a.diff - b.diff || a.name.localeCompare(b.name));
+      else rows.sort((a, b) => a.name.localeCompare(b.name));
+      host.innerHTML = `
+        <table>
+          <thead><tr><th>#</th><th>Guesser</th><th>Guess</th><th>Off by</th></tr></thead>
+          <tbody>${rows.map((r, i) => `
+            <tr>
+              <td class="rank ${i === 0 && t != null ? 'top' : ''}">${i + 1}</td>
+              <td><div>${escapeHtml(r.name)}</div><div class="email">${escapeHtml(r.email)}</div></td>
+              <td class="score">${escapeHtml(r.display)}</td>
+              <td>${t != null ? (r.diff === 0 ? '<span class="pill-good">Exact</span>' : `${r.diff}s`) : '<span class="muted">Awaiting Taylor time</span>'}</td>
+            </tr>`).join('')}</tbody>
+        </table>`;
+    }
+
+    function renderPredictionLeaderboard() {
+      const host = document.getElementById('predictionsPanel');
+      if (!state.callerVotes.length) {
+        host.innerHTML = '<div class="empty">No caller predictions yet.</div>';
+        return;
+      }
+      const byVoter = new Map();
+      state.callerVotes.forEach(v => {
+        if (!byVoter.has(v.voterid)) byVoter.set(v.voterid, { id: v.voterid, name: v.votername, email: v.voteremail, picks: [] });
+        byVoter.get(v.voterid).picks.push(v);
+      });
+      const rows = [...byVoter.values()].map(voter => {
+        let correct = 0, wrong = 0, pending = 0;
+        voter.picks.forEach(p => {
+          const caller = state.callers.find(c => c.id == p.callerid);
+          if (!caller || caller.status !== 'finished' || caller.beattaylor == null) pending++;
+          else if (caller.beattaylor === p.prediction) correct++;
+          else wrong++;
+        });
+        return { ...voter, correct, wrong, pending, total: voter.picks.length };
+      }).sort((a, b) => b.correct - a.correct || a.wrong - b.wrong || b.total - a.total || a.name.localeCompare(b.name));
+      host.innerHTML = `
+        <table>
+          <thead><tr><th>#</th><th>Voter</th><th>Correct</th><th>Wrong</th><th>Pending</th><th>Picks</th></tr></thead>
+          <tbody>${rows.map((r, i) => `
+            <tr>
+              <td class="rank ${i === 0 ? 'top' : ''}">${i + 1}</td>
+              <td><div>${escapeHtml(r.name)}</div><div class="email">${escapeHtml(r.email)}</div></td>
+              <td class="score">${r.correct}</td>
+              <td>${r.wrong}</td>
+              <td>${r.pending}</td>
+              <td>${r.total}</td>
+            </tr>`).join('')}</tbody>
+        </table>`;
+    }
+
+    function renderRaw() {
+      const host = document.getElementById('rawPanel');
+      const guessRows = state.guesses.slice().sort((a, b) => String(a.insertedat || '').localeCompare(String(b.insertedat || ''))).map(g => `
+        <tr><td>${escapeHtml(g.votername)}</td><td class="email">${escapeHtml(g.voteremail)}</td><td class="score">${escapeHtml(g.guessdisplay)}</td></tr>`).join('');
+      const voteRows = state.callerVotes.slice().sort((a, b) => String(a.insertedat || '').localeCompare(String(b.insertedat || ''))).map(v => {
+        const caller = state.callers.find(c => c.id == v.callerid);
+        return `<tr><td>${escapeHtml(caller ? caller.callername : v.callerid)}</td><td>${escapeHtml(v.votername)}</td><td class="email">${escapeHtml(v.voteremail)}</td><td>${v.prediction ? '<span class="pill-good">Beats</span>' : '<span class="pill-bad">Does not</span>'}</td></tr>`;
+      }).join('');
+      host.innerHTML = `
+        <h3 style="font-size:1rem; margin-bottom:0.35rem;">All Taylor guesses</h3>
+        ${guessRows ? `<table><thead><tr><th>Name</th><th>Email</th><th>Guess</th></tr></thead><tbody>${guessRows}</tbody></table>` : '<div class="empty">No guesses yet.</div>'}
+        <h3 style="font-size:1rem; margin:1rem 0 0.35rem;">All caller predictions</h3>
+        ${voteRows ? `<table><thead><tr><th>Caller</th><th>Voter</th><th>Email</th><th>Pick</th></tr></thead><tbody>${voteRows}</tbody></table>` : '<div class="empty">No predictions yet.</div>'}`;
+    }
+
+    function exportCsv() {
+      const lines = [];
+      lines.push('Section,Rank,Name,Email,Value,Detail');
+      const t = state.taylorSeconds;
+      const timeRows = state.guesses.map(g => ({ name: g.votername, email: g.voteremail, display: g.guessdisplay, guess: g.guessseconds, diff: t != null ? Math.abs(g.guessseconds - t) : null }));
+      if (t != null) timeRows.sort((a, b) => a.diff - b.diff);
+      timeRows.forEach((r, i) => lines.push(['Closest Taylor time', i + 1, r.name, r.email, r.display, r.diff != null ? `${r.diff}s off` : 'Awaiting Taylor time'].map(csvEscape).join(',')));
+      const byVoter = new Map();
+      state.callerVotes.forEach(v => {
+        if (!byVoter.has(v.voterid)) byVoter.set(v.voterid, { name: v.votername, email: v.voteremail, picks: [] });
+        byVoter.get(v.voterid).picks.push(v);
+      });
+      const predRows = [...byVoter.values()].map(voter => {
+        let correct = 0, wrong = 0, pending = 0;
+        voter.picks.forEach(p => {
+          const caller = state.callers.find(c => c.id == p.callerid);
+          if (!caller || caller.status !== 'finished' || caller.beattaylor == null) pending++;
+          else if (caller.beattaylor === p.prediction) correct++;
+          else wrong++;
+        });
+        return { ...voter, correct, wrong, pending, total: voter.picks.length };
+      }).sort((a, b) => b.correct - a.correct || a.wrong - b.wrong);
+      predRows.forEach((r, i) => lines.push(['Best caller predictor', i + 1, r.name, r.email, `${r.correct} correct`, `${r.wrong} wrong · ${r.pending} pending · ${r.total} total`].map(csvEscape).join(',')));
+      const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const dt = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+      a.href = url;
+      a.download = `kill-taylor-leaderboards-${dt}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function wireTabs() {
+      document.querySelectorAll('.tab-bar button').forEach(btn => btn.addEventListener('click', function () {
+        document.querySelectorAll('.tab-bar button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelector(`[data-panel="${btn.dataset.tab}"]`).classList.add('active');
+      }));
+    }
+    function wireButtons() {
+      document.getElementById('refreshBtn').addEventListener('click', loadAll);
+      document.getElementById('exportBtn').addEventListener('click', exportCsv);
+      document.getElementById('addCallerBtn').addEventListener('click', addCaller);
+      document.getElementById('newCallerName').addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); addCaller(); }
+      });
+    }
+
+    function renderAll() {
+      renderSummary();
+      renderCallers();
+      renderTimeLeaderboard();
+      renderPredictionLeaderboard();
+      renderRaw();
+    }
+
+    function loadScript(src) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.body.appendChild(s);
+      });
+    }
+
+    async function boot() {
+      loadTaylor();
+      wireTabs();
+      wireButtons();
+      wireTaylor();
+      wireWorkoutEditor();
+      renderAll();
+      try {
+        await loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2');
+        state.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        await loadAll();
+        state.supabase
+          .channel('kt-admin-live')
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'ktcallers' }, loadAll)
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'kttaylorguesses' }, loadAll)
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'ktcallervotes' }, loadAll)
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'ktsettings' }, loadAll)
+          .subscribe();
+      } catch (e) {
+        console.error(e);
+        setConn(false, 'Supabase load failed');
+      }
+    }
+    boot();
+  </script>
+</body>
+</html>
