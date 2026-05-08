@@ -89,15 +89,17 @@
   <div class="container">
     <div class="section__header">
       <div>
-        <div class="section__label" style="color:#f59e0b">Monthly Views &bull; April 30, 2026</div>
+        <div class="section__label" style="color:#f59e0b">Monthly Views &bull; <span id="rankings-date-label">—</span></div>
         <h2 class="section__title">Channel Rankings</h2>
       </div>
     </div>
 
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-1);">Last Updated: April 30, 2026</p>
-    <p class="rankings-intro">Data sourced from Social Blade.</p>
+    <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-1);">Last Updated: <span id="rankings-updated">—</span></p>
+    <p class="rankings-intro">Data sourced from the YouTube Data API. Refreshed automatically on the last day of each month.</p>
 
-    <div class="rankings-grid fade-in" id="rankings-grid"></div>
+    <div class="rankings-grid fade-in" id="rankings-grid">
+      <p style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-4) 0;">Loading rankings…</p>
+    </div>
 
     <p class="shows-note">If you would like your channel added to this list, email <a href="mailto:cfnetworknews@gmail.com">cfnetworknews@gmail.com</a> with your request. Please include a link to your channel. Thank you.</p>
   </div>
@@ -209,144 +211,6 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-const CHANNELS = [
-  {
-    "rank": 2,
-    "name": "CrossFit",
-    "url": "https://www.youtube.com/@crossfit",
-    "subsLabel": "1.79M subs",
-    "monthlyViewsLabel": "1.84M",
-    "barWidth": "100%",
-    "topClass": "rank-card__rank--top2"
-  },
-  {
-    "rank": 5,
-    "name": "Andrew Hiller",
-    "url": "https://www.youtube.com/@hillerfit",
-    "subsLabel": "71K subs",
-    "monthlyViewsLabel": "645K",
-    "barWidth": "35%",
-    "topClass": ""
-  },
-  {
-    "rank": 15,
-    "name": "WODprep",
-    "url": "https://www.youtube.com/@wodprep",
-    "subsLabel": "190K subs",
-    "monthlyViewsLabel": "171K",
-    "barWidth": "9%",
-    "topClass": ""
-  },
-  {
-    "rank": 7,
-    "name": "Boys Interrupted",
-    "url": "https://www.youtube.com/@theboysinterrupted",
-    "subsLabel": "12K subs",
-    "monthlyViewsLabel": "153K",
-    "barWidth": "8%",
-    "topClass": ""
-  },
-  {
-    "rank": 10,
-    "name": "The Barbell Spin",
-    "url": "https://www.youtube.com/@thebarbellspin",
-    "subsLabel": "11K subs",
-    "monthlyViewsLabel": "94K",
-    "barWidth": "5%",
-    "topClass": ""
-  },
-  {
-    "rank": 11,
-    "name": "PRVN Fitness",
-    "url": "https://www.youtube.com/@prvnfitness",
-    "subsLabel": "41K subs",
-    "monthlyViewsLabel": "91K",
-    "barWidth": "5%",
-    "topClass": ""
-  },
-  {
-    "rank": 9,
-    "name": "HillerFit Training",
-    "url": "https://www.youtube.com/@hillerfit2.0",
-    "subsLabel": "8K subs",
-    "monthlyViewsLabel": "86K",
-    "barWidth": "5%",
-    "topClass": ""
-  },
-  {
-    "rank": 13,
-    "name": "Coffee Pods & Wods",
-    "url": "https://www.youtube.com/@coffeepodsandwods",
-    "subsLabel": "8K subs",
-    "monthlyViewsLabel": "35K",
-    "barWidth": "2%",
-    "topClass": ""
-  },
-  {
-    "rank": 14,
-    "name": "Clydesdale Media",
-    "url": "https://www.youtube.com/@clydesdalemedia",
-    "subsLabel": "3K subs",
-    "monthlyViewsLabel": "18K",
-    "barWidth": "1%",
-    "topClass": ""
-  },
-  {
-    "rank": 1,
-    "name": "Rogue Fitness",
-    "url": "https://www.youtube.com/@Roguefitness",
-    "subsLabel": "0 subs",
-    "monthlyViewsLabel": "0",
-    "barWidth": "0%",
-    "topClass": "rank-card__rank--top1"
-  },
-  {
-    "rank": 3,
-    "name": "CrossFit Games",
-    "url": "https://www.youtube.com/@CrossFitGamesTV",
-    "subsLabel": "0 subs",
-    "monthlyViewsLabel": "0",
-    "barWidth": "0%",
-    "topClass": "rank-card__rank--top3"
-  },
-  {
-    "rank": 4,
-    "name": "CrossFit Mayhem",
-    "url": "https://www.youtube.com/@CFProjectMayhem",
-    "subsLabel": "0 subs",
-    "monthlyViewsLabel": "0",
-    "barWidth": "0%",
-    "topClass": ""
-  },
-  {
-    "rank": 6,
-    "name": "CF Network",
-    "url": "https://www.youtube.com/@CF-Network",
-    "subsLabel": "0 subs",
-    "monthlyViewsLabel": "0",
-    "barWidth": "0%",
-    "topClass": ""
-  },
-  {
-    "rank": 8,
-    "name": "Training Think Tank",
-    "url": "https://www.youtube.com/@TrainingThinkTank",
-    "subsLabel": "0 subs",
-    "monthlyViewsLabel": "0",
-    "barWidth": "0%",
-    "topClass": ""
-  },
-  {
-    "rank": 12,
-    "name": "Amanda Hari",
-    "url": "https://www.youtube.com/@Amanda_Hari",
-    "subsLabel": "0 subs",
-    "monthlyViewsLabel": "0",
-    "barWidth": "0%",
-    "topClass": ""
-  }
-];
-
   const ATHLETES = [
     { rank: "1st",  name: "Jayson Hopper",      handle: "@jhopper3",         url: "https://www.instagram.com/jhopper3/",         image: "./assets/Jayson Hopper.jpg" },
     { rank: "2nd",  name: "Ricky Garard",       handle: "@rickygarard",      url: "https://www.instagram.com/rickygarard/",      image: "./assets/Ricky Garard.jpg" },
@@ -391,38 +255,75 @@ const CHANNELS = [
     { rank: "20th", name: "Jennifer Muir",      handle: "@jennifermuir99",   url: "https://www.instagram.com/jennifermuir99/",   image: "./assets/Jennifer Muir.jpg" }
   ];
 
+  // ===== Channel rankings: fetch JSON, sort by monthly views, render =====
   const grid = document.getElementById("rankings-grid");
+  const dateEl = document.getElementById("rankings-date-label");
+  const updatedEl = document.getElementById("rankings-updated");
 
-  CHANNELS.forEach((ch) => {
-    const a = document.createElement("a");
-    a.href = ch.url;
-    a.target = "_blank";
-    a.rel = "noopener noreferrer";
-    a.className = "rank-card";
+  function renderRankings(data) {
+    if (!grid) return;
+    grid.innerHTML = "";
 
-    const rankClass =
-      ch.rank === 1 ? "rank-card__rank--top1" :
-      ch.rank === 2 ? "rank-card__rank--top2" :
-      ch.rank === 3 ? "rank-card__rank--top3" : "";
+    const channels = (data.channels || []).slice().sort((a, b) => {
+      // Always sort by monthly views desc — defends against stale/edited data
+      const av = Number(a.monthlyViews) || 0;
+      const bv = Number(b.monthlyViews) || 0;
+      if (bv !== av) return bv - av;
+      return (Number(b.subscribers) || 0) - (Number(a.subscribers) || 0);
+    });
 
-    const barAccentClass = ch.rank <= 3 ? "rank-card__bar--accent" : "";
+    if (dateEl) dateEl.textContent = data.updatedAtLabel || "—";
+    if (updatedEl) updatedEl.textContent = data.updatedAtLabel || "—";
 
-    a.innerHTML = `
-      <div class="rank-card__rank ${rankClass}">${ch.rank}</div>
-      <div class="rank-card__info">
-        <div class="rank-card__header">
-          <span class="rank-card__name">${ch.name}</span>
-          <span class="rank-card__subs">${ch.subsLabel}</span>
+    channels.forEach((ch, i) => {
+      const rank = i + 1;
+      const a = document.createElement("a");
+      a.href = ch.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.className = "rank-card";
+
+      const rankClass =
+        rank === 1 ? "rank-card__rank--top1" :
+        rank === 2 ? "rank-card__rank--top2" :
+        rank === 3 ? "rank-card__rank--top3" : "";
+
+      const barAccentClass = rank <= 3 ? "rank-card__bar--accent" : "";
+      const subsLabel = ch.subsLabel || "—";
+      const viewsLabel = ch.monthlyViewsLabel || "—";
+      const barWidth = ch.barWidth || "1%";
+
+      a.innerHTML = `
+        <div class="rank-card__rank ${rankClass}">${rank}</div>
+        <div class="rank-card__info">
+          <div class="rank-card__header">
+            <span class="rank-card__name">${ch.name}</span>
+            <span class="rank-card__subs">${subsLabel}</span>
+          </div>
+          <div class="rank-card__bar-wrap">
+            <div class="rank-card__bar ${barAccentClass}" style="width:${barWidth}"></div>
+          </div>
         </div>
-        <div class="rank-card__bar-wrap">
-          <div class="rank-card__bar ${barAccentClass}" style="width:${ch.barWidth}"></div>
-        </div>
-      </div>
-      <div class="rank-card__views">${ch.monthlyViewsLabel}</div>
-    `;
+        <div class="rank-card__views">${viewsLabel}</div>
+      `;
 
-    grid.appendChild(a);
-  });
+      grid.appendChild(a);
+    });
+  }
+
+  // Cache-bust so updates show up immediately after the cron commit
+  fetch("./rankings.json?t=" + Date.now())
+    .then((r) => {
+      if (!r.ok) throw new Error("rankings.json HTTP " + r.status);
+      return r.json();
+    })
+    .then(renderRankings)
+    .catch((err) => {
+      console.warn("Could not load rankings.json:", err);
+      if (grid) {
+        grid.innerHTML = '<p style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-4) 0;">Rankings are being refreshed. Please check back shortly.</p>';
+      }
+    });
 
   const track = document.getElementById("athleteFloatTrack");
   if (!track) return;
