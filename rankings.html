@@ -209,24 +209,143 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const CHANNELS = [
-    { rank: 1,  name: "Rogue Fitness",        url: "https://www.youtube.com/@Roguefitness",              subsLabel: "1.02M subs", monthlyViewsLabel: "8.44M", barWidth: "100%" },
-    { rank: 2,  name: "CrossFit",             url: "https://www.youtube.com/@crossfit",                  subsLabel: "1.79M subs", monthlyViewsLabel: "1.84M", barWidth: "22%" },
-    { rank: 3,  name: "CrossFit Games",       url: "https://www.youtube.com/@CrossFitGamesTV",           subsLabel: "1.16M subs", monthlyViewsLabel: "1.63M", barWidth: "19%" },
-    { rank: 4,  name: "CrossFit Mayhem",      url: "https://www.youtube.com/@CFProjectMayhem",           subsLabel: "336K subs", monthlyViewsLabel: "1.29M", barWidth: "15%" },
-    { rank: 5,  name: "Andrew Hiller",        url: "https://www.youtube.com/@hillerfit",                 subsLabel: "70K subs",  monthlyViewsLabel: "614K",  barWidth: "7%" },
-    { rank: 6,  name: "CF Network",           url: "https://www.youtube.com/@CF-Network",                subsLabel: "9K subs",   monthlyViewsLabel: "385K",  barWidth: "5%" },
-    { rank: 7,  name: "WODPrep",               url: "https://www.youtube.com/@WODprep",                   subsLabel: "190K subs", monthlyViewsLabel: "171K",   barWidth: "0%" }   
-    { rank: 8,  name: "Boys Interrupted",     url: "https://www.youtube.com/@theboysinterrupted",        subsLabel: "12K subs",  monthlyViewsLabel: "148K",  barWidth: "2%" },
-    { rank: 9,  name: "Training Think Tank",  url: "https://www.youtube.com/@TrainingThinkTank",         subsLabel: "55K subs",  monthlyViewsLabel: "125K",  barWidth: "1%" },
-    { rank: 10, name: "HillerFit Training",   url: "https://www.youtube.com/@hillerfit2.0",              subsLabel: "8K subs",   monthlyViewsLabel: "101K",  barWidth: "1%" },
-    { rank: 11, name: "The Barbell Spin",     url: "https://www.youtube.com/@thebarbellspin",            subsLabel: "11K subs",  monthlyViewsLabel: "98K",   barWidth: "1%" },
-    { rank: 12, name: "PRVN Fitness",         url: "https://www.youtube.com/@prvnfitness",               subsLabel: "41K subs",  monthlyViewsLabel: "60K",   barWidth: "1%" },
-    { rank: 13, name: "Amanda Hari",          url: "https://www.youtube.com/@Amanda_Hari",               subsLabel: "9K subs",   monthlyViewsLabel: "35K",   barWidth: "0%" },
-    { rank: 14, name: "Coffee Pods & Wods",   url: "https://www.youtube.com/@coffeepodsandwods",         subsLabel: "8K subs",   monthlyViewsLabel: "31K",   barWidth: "0%" },
-    { rank: 15, name: "Clydesdale Media",     url: "https://www.youtube.com/@clydesdalemedia",           subsLabel: "3K subs",   monthlyViewsLabel: "17K",   barWidth: "0%" },
-
-  ];
+const CHANNELS = [
+  {
+    "rank": 2,
+    "name": "CrossFit",
+    "url": "https://www.youtube.com/@crossfit",
+    "subsLabel": "1.79M subs",
+    "monthlyViewsLabel": "1.84M",
+    "barWidth": "100%",
+    "topClass": "rank-card__rank--top2"
+  },
+  {
+    "rank": 5,
+    "name": "Andrew Hiller",
+    "url": "https://www.youtube.com/@hillerfit",
+    "subsLabel": "71K subs",
+    "monthlyViewsLabel": "645K",
+    "barWidth": "35%",
+    "topClass": ""
+  },
+  {
+    "rank": 15,
+    "name": "WODprep",
+    "url": "https://www.youtube.com/@wodprep",
+    "subsLabel": "190K subs",
+    "monthlyViewsLabel": "171K",
+    "barWidth": "9%",
+    "topClass": ""
+  },
+  {
+    "rank": 7,
+    "name": "Boys Interrupted",
+    "url": "https://www.youtube.com/@theboysinterrupted",
+    "subsLabel": "12K subs",
+    "monthlyViewsLabel": "153K",
+    "barWidth": "8%",
+    "topClass": ""
+  },
+  {
+    "rank": 10,
+    "name": "The Barbell Spin",
+    "url": "https://www.youtube.com/@thebarbellspin",
+    "subsLabel": "11K subs",
+    "monthlyViewsLabel": "94K",
+    "barWidth": "5%",
+    "topClass": ""
+  },
+  {
+    "rank": 11,
+    "name": "PRVN Fitness",
+    "url": "https://www.youtube.com/@prvnfitness",
+    "subsLabel": "41K subs",
+    "monthlyViewsLabel": "91K",
+    "barWidth": "5%",
+    "topClass": ""
+  },
+  {
+    "rank": 9,
+    "name": "HillerFit Training",
+    "url": "https://www.youtube.com/@hillerfit2.0",
+    "subsLabel": "8K subs",
+    "monthlyViewsLabel": "86K",
+    "barWidth": "5%",
+    "topClass": ""
+  },
+  {
+    "rank": 13,
+    "name": "Coffee Pods & Wods",
+    "url": "https://www.youtube.com/@coffeepodsandwods",
+    "subsLabel": "8K subs",
+    "monthlyViewsLabel": "35K",
+    "barWidth": "2%",
+    "topClass": ""
+  },
+  {
+    "rank": 14,
+    "name": "Clydesdale Media",
+    "url": "https://www.youtube.com/@clydesdalemedia",
+    "subsLabel": "3K subs",
+    "monthlyViewsLabel": "18K",
+    "barWidth": "1%",
+    "topClass": ""
+  },
+  {
+    "rank": 1,
+    "name": "Rogue Fitness",
+    "url": "https://www.youtube.com/@Roguefitness",
+    "subsLabel": "0 subs",
+    "monthlyViewsLabel": "0",
+    "barWidth": "0%",
+    "topClass": "rank-card__rank--top1"
+  },
+  {
+    "rank": 3,
+    "name": "CrossFit Games",
+    "url": "https://www.youtube.com/@CrossFitGamesTV",
+    "subsLabel": "0 subs",
+    "monthlyViewsLabel": "0",
+    "barWidth": "0%",
+    "topClass": "rank-card__rank--top3"
+  },
+  {
+    "rank": 4,
+    "name": "CrossFit Mayhem",
+    "url": "https://www.youtube.com/@CFProjectMayhem",
+    "subsLabel": "0 subs",
+    "monthlyViewsLabel": "0",
+    "barWidth": "0%",
+    "topClass": ""
+  },
+  {
+    "rank": 6,
+    "name": "CF Network",
+    "url": "https://www.youtube.com/@CF-Network",
+    "subsLabel": "0 subs",
+    "monthlyViewsLabel": "0",
+    "barWidth": "0%",
+    "topClass": ""
+  },
+  {
+    "rank": 8,
+    "name": "Training Think Tank",
+    "url": "https://www.youtube.com/@TrainingThinkTank",
+    "subsLabel": "0 subs",
+    "monthlyViewsLabel": "0",
+    "barWidth": "0%",
+    "topClass": ""
+  },
+  {
+    "rank": 12,
+    "name": "Amanda Hari",
+    "url": "https://www.youtube.com/@Amanda_Hari",
+    "subsLabel": "0 subs",
+    "monthlyViewsLabel": "0",
+    "barWidth": "0%",
+    "topClass": ""
+  }
+];
 
   const ATHLETES = [
     { rank: "1st",  name: "Jayson Hopper",      handle: "@jhopper3",         url: "https://www.instagram.com/jhopper3/",         image: "./assets/Jayson Hopper.jpg" },
