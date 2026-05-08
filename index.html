@@ -847,56 +847,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const CHANNELS = [
-    { rank: 1,  name: "Rogue Fitness",       url: "https://www.youtube.com/@Roguefitness",          subsLabel: "1.02M subs", monthlyViewsLabel: "7.21M", barWidth: "100%" },
-    { rank: 2,  name: "CrossFit Games",      url: "https://www.youtube.com/@CrossFitGamesTV",       subsLabel: "1.16M subs", monthlyViewsLabel: "4.38M", barWidth: "61%" },
-    { rank: 3,  name: "CrossFit",            url: "https://www.youtube.com/@crossfit",              subsLabel: "1.79M subs", monthlyViewsLabel: "2.03M", barWidth: "28%" },
-    { rank: 4,  name: "CrossFit Mayhem",     url: "https://www.youtube.com/@CFProjectMayhem",       subsLabel: "333K subs",  monthlyViewsLabel: "997K",  barWidth: "14%" },
-    { rank: 5,  name: "Andrew Hiller",       url: "https://www.youtube.com/@hillerfit",             subsLabel: "69K subs",   monthlyViewsLabel: "752K",  barWidth: "10%" },
-    { rank: 6,  name: "CF Network",          url: "https://www.youtube.com/@CF-Network",            subsLabel: "8K subs",    monthlyViewsLabel: "689K",  barWidth: "10%" },
-    { rank: 7,  name: "Training Think Tank", url: "https://www.youtube.com/@TrainingThinkTank",     subsLabel: "54K subs",   monthlyViewsLabel: "337K",  barWidth: "5%"  },
-    { rank: 8,  name: "HillerFit Training",  url: "https://www.youtube.com/@hillerfit2.0",          subsLabel: "8K subs",    monthlyViewsLabel: "200K",  barWidth: "3%"  },
-    { rank: 9,  name: "Boys Interrupted",    url: "https://www.youtube.com/@theboysinterrupted",    subsLabel: "11K subs",   monthlyViewsLabel: "243K",  barWidth: "3%"  },
-    { rank: 10, name: "Amanda Hari",         url: "https://www.youtube.com/@AmandaHari",            subsLabel: "9K subs",    monthlyViewsLabel: "104K",  barWidth: "1%"  },
-    { rank: 11, name: "PRVN Fitness",        url: "https://www.youtube.com/@prvnfitness",           subsLabel: "41K subs",   monthlyViewsLabel: "82K",   barWidth: "1%"  },
-    { rank: 12, name: "Kipping It Real",     url: "https://www.youtube.com/@KippingItRealcrossfit", subsLabel: "3K subs",    monthlyViewsLabel: "61K",   barWidth: "1%"  },
-    { rank: 13, name: "The Barbell Spin",    url: "https://www.youtube.com/@thebarbellspin",        subsLabel: "11K subs",   monthlyViewsLabel: "42K",   barWidth: "1%"  },
-    { rank: 14, name: "Coffee Pods Wods",    url: "https://www.youtube.com/@coffeepodsandwods",     subsLabel: "8K subs",    monthlyViewsLabel: "27K",   barWidth: "0%"  },
-    { rank: 15, name: "Clydesdale Media",    url: "https://www.youtube.com/@clydesdalemedia",       subsLabel: "3K subs",    monthlyViewsLabel: "13K",   barWidth: "0%"  }
-  ];
-
   const homeGrid = document.getElementById("homeRankingsGrid");
   if (!homeGrid) return;
 
-  const topFive = CHANNELS.slice(0, 5);
+  homeGrid.innerHTML = '<p style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-4) 0;">Loading rankings…</p>';
 
-  homeGrid.innerHTML = topFive.map(ch => {
-    const rankClass =
-      ch.rank === 1 ? "rank-card__rank rank-card__rank--top1" :
-      ch.rank === 2 ? "rank-card__rank rank-card__rank--top2" :
-      ch.rank === 3 ? "rank-card__rank rank-card__rank--top3" :
-      "rank-card__rank";
+  function renderTopFive(data) {
+    const channels = (data.channels || []).slice().sort((a, b) => {
+      const av = Number(a.monthlyViews) || 0;
+      const bv = Number(b.monthlyViews) || 0;
+      if (bv !== av) return bv - av;
+      return (Number(b.subscribers) || 0) - (Number(a.subscribers) || 0);
+    }).slice(0, 5);
 
-    const barClass =
-      ch.rank <= 3 ? "rank-card__bar rank-card__bar--accent" :
-      "rank-card__bar";
+    if (channels.length === 0) {
+      homeGrid.innerHTML = '<p style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-4) 0;">Rankings are being refreshed. Please check back shortly.</p>';
+      return;
+    }
 
-    return `
-      <a href="${ch.url}" target="_blank" rel="noopener noreferrer" class="rank-card">
-        <div class="${rankClass}">${ch.rank}</div>
-        <div class="rank-card__info">
-          <div class="rank-card__header">
-            <span class="rank-card__name">${ch.name}</span>
-            <span class="rank-card__subs">${ch.subsLabel}</span>
+    homeGrid.innerHTML = channels.map((ch, i) => {
+      const rank = i + 1;
+      const rankClass =
+        rank === 1 ? "rank-card__rank rank-card__rank--top1" :
+        rank === 2 ? "rank-card__rank rank-card__rank--top2" :
+        rank === 3 ? "rank-card__rank rank-card__rank--top3" :
+        "rank-card__rank";
+      const barClass = rank <= 3 ? "rank-card__bar rank-card__bar--accent" : "rank-card__bar";
+      const subsLabel = ch.subsLabel || "—";
+      const viewsLabel = ch.monthlyViewsLabel || "—";
+      const barWidth = ch.barWidth || "1%";
+
+      return `
+        <a href="${ch.url}" target="_blank" rel="noopener noreferrer" class="rank-card">
+          <div class="${rankClass}">${rank}</div>
+          <div class="rank-card__info">
+            <div class="rank-card__header">
+              <span class="rank-card__name">${ch.name}</span>
+              <span class="rank-card__subs">${subsLabel}</span>
+            </div>
+            <div class="rank-card__bar-wrap">
+              <div class="${barClass}" style="width:${barWidth}"></div>
+            </div>
           </div>
-          <div class="rank-card__bar-wrap">
-            <div class="${barClass}" style="width:${ch.barWidth}"></div>
-          </div>
-        </div>
-        <div class="rank-card__views">${ch.monthlyViewsLabel}</div>
-      </a>
-    `;
-  }).join("");
+          <div class="rank-card__views">${viewsLabel}</div>
+        </a>
+      `;
+    }).join("");
+  }
+
+  fetch("./rankings.json?t=" + Date.now())
+    .then((r) => {
+      if (!r.ok) throw new Error("rankings.json HTTP " + r.status);
+      return r.json();
+    })
+    .then(renderTopFive)
+    .catch((err) => {
+      console.warn("Could not load rankings.json:", err);
+      homeGrid.innerHTML = '<p style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-4) 0;">Rankings are being refreshed. Please check back shortly.</p>';
+    });
 });
 </script>
 
