@@ -86,22 +86,10 @@
 
 <!-- ===== CHANNEL RANKINGS ===== -->
 <section class="section" id="rankings">
-  <div class="container">
-    <div class="section__header">
-      <div>
-        <div class="section__label" style="color:#f59e0b">Monthly Views &bull; <span id="rankings-date-label">—</span></div>
-        <h2 class="section__title">Channel Rankings</h2>
-      </div>
-    </div>
-
-    <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-1);">Last Updated: <span id="rankings-updated">—</span></p>
-    <p class="rankings-intro">Data sourced from the YouTube Data API. Refreshed automatically on the last day of each month.</p>
-
-    <div class="rankings-grid fade-in" id="rankings-grid">
-      <p style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-4) 0;">Loading rankings…</p>
-    </div>
-
-    <p class="shows-note">If you would like your channel added to this list, email <a href="mailto:cfnetworknews@gmail.com">cfnetworknews@gmail.com</a> with your request. Please include a link to your channel. Thank you.</p>
+  <div class="container" style="text-align:center;padding:var(--space-10) 0;">
+    <div class="section__label" style="color:#f59e0b">Channel Rankings</div>
+    <h2 class="section__title" style="margin-bottom:var(--space-4);">Under Construction</h2>
+    <p style="color:var(--color-text-muted);max-width:600px;margin:0 auto;">We're upgrading our ranking system to give you better, more accurate monthly view data. Check back soon.</p>
   </div>
 </section>
 
@@ -311,19 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Cache-bust so updates show up immediately after the cron commit
-  fetch("https://cf-rankings-refresh.denseupdates.workers.dev/rankings?t=" + Date.now())
-    .then((r) => {
-      if (!r.ok) throw new Error("rankings.json HTTP " + r.status);
-      return r.json();
-    })
-    .then(renderRankings)
-    .catch((err) => {
-      console.warn("Could not load rankings.json:", err);
-      if (grid) {
-        grid.innerHTML = '<p style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-4) 0;">Rankings are being refreshed. Please check back shortly.</p>';
-      }
-    });
+  // Rankings under construction — fetch disabled.
 
   const track = document.getElementById("athleteFloatTrack");
   if (!track) return;
