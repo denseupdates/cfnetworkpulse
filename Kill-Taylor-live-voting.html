@@ -833,8 +833,61 @@ const SUPABASE_ANON_KEY = 'sb_publishable_CuyFoVzB5qH_g5KgOPPOow_HNAyDz9S';
         .on('postgres_changes', { event: '*', schema: 'public', table: 'ktcallers' }, async () => { await loadCallers(); renderCallers(); })
         .on('postgres_changes', { event: '*', schema: 'public', table: 'kttaylorguesses' }, async () => { await loadGuesses(); renderGuess(); })
         .on('postgres_changes', { event: '*', schema: 'public', table: 'ktcallervotes' }, async () => { await loadCallerVotes(); renderCallers(); })
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'ktsettings' }, async () => { await loadEventSettings(); renderEventChrome(); renderWorkout(); })
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'ktsettings' }, async () => { await loadEventSettings(); renderEventChrome(); renderWorkout(); renderGuess(); })
         .subscribe();
+    }
+
+    // Polling fallback: works even if Supabase Realtime isn't enabled on these tables.
+    // Only refetches data when something has actually changed (cheap timestamp check).
+    const pollState = { settingsUpdatedAt: null, guessCount: null, callerCount: null, voteCount: null, callerSig: null };
+    async function pollOnce() {
+      if (!state.supabase || document.hidden) return;
+      try {
+        // Settings (Taylor time, workout, promo)
+        const { data: s } = await state.supabase
+          .from('ktsettings').select('updated_at').eq('key', 'live_event').maybeSingle();
+        if (s && s.updated_at && s.updated_at !== pollState.settingsUpdatedAt) {
+          if (pollState.settingsUpdatedAt !== null) {
+            await loadEventSettings();
+            renderEventChrome(); renderWorkout(); renderGuess();
+          }
+          pollState.settingsUpdatedAt = s.updated_at;
+        }
+
+        // Guesses (count change is enough to trigger a refresh; sufficient for insert-only table)
+        const { count: gCount } = await state.supabase
+          .from('kttaylorguesses').select('voterid', { count: 'exact', head: true });
+        if (gCount != null && gCount !== pollState.guessCount) {
+          if (pollState.guessCount !== null) { await loadGuesses(); renderGuess(); }
+          pollState.guessCount = gCount;
+        }
+
+        // Caller votes (insert-only)
+        const { count: vCount } = await state.supabase
+          .from('ktcallervotes').select('callerid', { count: 'exact', head: true });
+        if (vCount != null && vCount !== pollState.voteCount) {
+          if (pollState.voteCount !== null) { await loadCallerVotes(); renderCallers(); }
+          pollState.voteCount = vCount;
+        }
+
+        // Callers (status updates matter, not just count) - cheap signature
+        const { data: cRows } = await state.supabase
+          .from('ktcallers').select('id, status, beattaylor, actualtime, position');
+        if (cRows) {
+          const sig = cRows.map(r => `${r.id}:${r.status}:${r.beattaylor}:${r.actualtime}:${r.position}`).sort().join('|');
+          if (sig !== pollState.callerSig) {
+            if (pollState.callerSig !== null) { await loadCallers(); renderCallers(); }
+            pollState.callerSig = sig;
+            pollState.callerCount = cRows.length;
+          }
+        }
+      } catch (e) { /* swallow polling errors */ }
+    }
+    function startPolling() {
+      pollOnce();
+      setInterval(pollOnce, 5000);
+      // Refresh immediately when tab regains focus
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) pollOnce(); });
     }
 
     function loadScript(src) {
@@ -860,6 +913,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_CuyFoVzB5qH_g5KgOPPOow_HNAyDz9S';
         await Promise.all([loadEventSettings(), loadCallers(), loadGuesses(), loadCallerVotes()]);
         renderAll();
         subscribe();
+        startPolling();
       } catch (e) {
         console.error(e);
       }
