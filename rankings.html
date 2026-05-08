@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Cache-bust so updates show up immediately after the cron commit
-  fetch("./rankings.json?t=" + Date.now())
+  fetch("https://cf-rankings-refresh.denseupdates.workers.dev/rankings?t=" + Date.now())
     .then((r) => {
       if (!r.ok) throw new Error("rankings.json HTTP " + r.status);
       return r.json();
