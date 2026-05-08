@@ -356,6 +356,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_CuyFoVzB5qH_g5KgOPPOow_HNAyDz9S';
     }
 
     function loadTaylor() {
+      // Local fallback only — the real source of truth is ktsettings (loaded via loadEventSettings).
       try {
         const raw = localStorage.getItem(TAYLOR_KEY);
         if (!raw) return;
@@ -366,9 +367,34 @@ const SUPABASE_ANON_KEY = 'sb_publishable_CuyFoVzB5qH_g5KgOPPOow_HNAyDz9S';
         }
       } catch (e) {}
     }
-    function saveTaylor() {
+    async function saveTaylor() {
+      // Mirror to localStorage for instant local feedback
       if (state.taylorSeconds == null) localStorage.removeItem(TAYLOR_KEY);
       else localStorage.setItem(TAYLOR_KEY, JSON.stringify({ seconds: state.taylorSeconds, display: state.taylorDisplay }));
+      // Persist to Supabase so the live page (and other devices) see Taylor's time
+      const payload = {
+        ...state.eventSettings,
+        taylor: state.taylorSeconds == null
+          ? null
+          : { seconds: state.taylorSeconds, display: state.taylorDisplay }
+      };
+      const note = document.getElementById('taylorSavedNote');
+      try {
+        const { error } = await state.supabase.from('ktsettings').upsert({
+          key: 'live_event',
+          value_json: payload,
+          updated_at: new Date().toISOString()
+        }, { onConflict: 'key' });
+        if (error) {
+          console.error(error);
+          if (note) note.textContent = 'Saved locally, but could not sync to Supabase.';
+          return;
+        }
+        state.eventSettings = payload;
+      } catch (e) {
+        console.error(e);
+        if (note) note.textContent = 'Saved locally, but could not sync to Supabase.';
+      }
     }
 
     function fillEventForm() {
@@ -402,6 +428,14 @@ const SUPABASE_ANON_KEY = 'sb_publishable_CuyFoVzB5qH_g5KgOPPOow_HNAyDz9S';
         console.error(e);
         state.eventSettings = structuredClone(DEFAULT_EVENT);
       }
+      // Hydrate Taylor's time from Supabase (overrides any localStorage value)
+      const t = state.eventSettings && state.eventSettings.taylor;
+      if (t && typeof t.seconds === 'number') {
+        state.taylorSeconds = t.seconds;
+        state.taylorDisplay = t.display || formatSeconds(t.seconds);
+        const input = document.getElementById('taylorTime');
+        if (input && !input.value) input.value = state.taylorDisplay;
+      }
       fillEventForm();
     }
 
@@ -425,6 +459,8 @@ const SUPABASE_ANON_KEY = 'sb_publishable_CuyFoVzB5qH_g5KgOPPOow_HNAyDz9S';
     function wireWorkoutEditor() {
       document.getElementById('saveWorkoutBtn').addEventListener('click', async function () {
         const payload = {
+          // Preserve any existing keys we don't manage in this form (e.g. taylor)
+          ...state.eventSettings,
           seasonLine: document.getElementById('seasonLine').value.trim() || DEFAULT_EVENT.seasonLine,
           showDateLine: document.getElementById('showDateLine').value.trim() || DEFAULT_EVENT.showDateLine,
           prizeLine: document.getElementById('prizeLine').value.trim() || DEFAULT_EVENT.prizeLine,
@@ -454,20 +490,29 @@ const SUPABASE_ANON_KEY = 'sb_publishable_CuyFoVzB5qH_g5KgOPPOow_HNAyDz9S';
         if (v.length >= 3) v = v.slice(0, v.length - 2) + ':' + v.slice(-2);
         input.value = v.slice(0, 5);
       });
-      document.getElementById('saveTaylorBtn').addEventListener('click', function () {
+      document.getElementById('saveTaylorBtn').addEventListener('click', async function () {
+        const btn = this;
         const secs = parseMMSS(input.value);
         if (secs == null) return alert('Use format mm:ss.');
         state.taylorSeconds = secs;
         state.taylorDisplay = input.value.trim();
-        saveTaylor();
-        renderAll();
+        btn.disabled = true;
+        const oldLabel = btn.textContent;
+        btn.textContent = 'Saving…';
+        try {
+          await saveTaylor();
+          renderAll();
+        } finally {
+          btn.disabled = false;
+          btn.textContent = oldLabel;
+        }
       });
-      document.getElementById('clearTaylorBtn').addEventListener('click', function () {
+      document.getElementById('clearTaylorBtn').addEventListener('click', async function () {
         if (!confirm('Clear Taylor\'s saved time?')) return;
         state.taylorSeconds = null;
         state.taylorDisplay = null;
         input.value = '';
-        saveTaylor();
+        await saveTaylor();
         renderAll();
       });
     }

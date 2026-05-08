@@ -214,6 +214,35 @@
     }
     .guess-stat strong { display: block; font-family: var(--font-display); font-size: var(--text-lg); }
 
+    .taylor-actual {
+      display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+      margin-top: var(--space-4); padding: 0.85rem 1rem; border-radius: var(--radius-md);
+      background: rgba(215,25,32,0.14); border: 1px solid rgba(215,25,32,0.55);
+      font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; font-size: var(--text-sm);
+    }
+    .taylor-actual strong { font-family: var(--font-display); font-size: var(--text-lg); letter-spacing: 0.02em; }
+
+    .guess-leaderboard { margin-top: var(--space-5); }
+    .guess-leaderboard h3 {
+      font-family: var(--font-display); font-size: var(--text-md); text-transform: uppercase;
+      letter-spacing: 0.1em; margin: 0 0 var(--space-3); color: var(--color-text-muted);
+    }
+    .guess-rows { display: grid; gap: 0.45rem; }
+    .guess-row {
+      display: grid; grid-template-columns: 2.2rem 1fr auto auto; gap: var(--space-3);
+      align-items: center; padding: 0.6rem 0.85rem; border-radius: var(--radius-md);
+      border: 1px solid var(--color-border); background: rgba(255,255,255,0.035);
+      font-size: var(--text-sm);
+    }
+    .guess-row.is-me { border-color: var(--color-primary); background: rgba(215,25,32,0.10); }
+    .guess-row.is-leader { border-color: rgba(241,203,107,0.6); background: rgba(241,203,107,0.08); }
+    .guess-rank { font-family: var(--font-display); color: var(--color-text-muted); }
+    .guess-row.is-leader .guess-rank { color: #f1cb6b; }
+    .guess-name { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .guess-time { font-family: var(--font-display); font-weight: 800; }
+    .guess-diff { color: var(--color-text-muted); font-size: var(--text-xs); white-space: nowrap; }
+    .guess-row.is-leader .guess-diff { color: #f1cb6b; font-weight: 700; }
+
     .callers-empty {
       padding: var(--space-5); border: 1px dashed var(--color-border); border-radius: var(--radius-lg);
       text-align: center; color: var(--color-text-muted); font-size: var(--text-sm);
@@ -361,7 +390,12 @@
       </form>
       <div class="guess-status" id="guessStatus"></div>
       <div class="guess-locked" id="guessLocked" style="display:none;"></div>
+      <div class="taylor-actual" id="taylorActual" style="display:none;"></div>
       <div class="guess-stats" id="guessStats"></div>
+      <div class="guess-leaderboard" id="guessLeaderboard" style="display:none;">
+        <h3 id="guessLeaderboardTitle">All Guesses</h3>
+        <div class="guess-rows" id="guessRows"></div>
+      </div>
     </section>
 
     <section class="card" id="callersCard">
@@ -417,7 +451,9 @@ const SUPABASE_ANON_KEY = 'sb_publishable_CuyFoVzB5qH_g5KgOPPOow_HNAyDz9S';
       myGuess: null,
       allGuesses: [],
       callerVotes: [],
-      eventSettings: structuredClone(DEFAULT_EVENT)
+      eventSettings: structuredClone(DEFAULT_EVENT),
+      taylorSeconds: null,
+      taylorDisplay: null
     };
 
     function normalizeEmail(email) { return String(email || '').trim().toLowerCase(); }
@@ -578,6 +614,11 @@ const SUPABASE_ANON_KEY = 'sb_publishable_CuyFoVzB5qH_g5KgOPPOow_HNAyDz9S';
       const form = document.getElementById('guessForm');
       const locked = document.getElementById('guessLocked');
       const stats = document.getElementById('guessStats');
+      const taylorBox = document.getElementById('taylorActual');
+      const board = document.getElementById('guessLeaderboard');
+      const boardTitle = document.getElementById('guessLeaderboardTitle');
+      const rowsRoot = document.getElementById('guessRows');
+
       if (state.myGuess) {
         form.style.display = 'none';
         locked.style.display = 'block';
@@ -586,9 +627,20 @@ const SUPABASE_ANON_KEY = 'sb_publishable_CuyFoVzB5qH_g5KgOPPOow_HNAyDz9S';
         form.style.display = 'grid';
         locked.style.display = 'none';
       }
+
+      // Taylor's actual time banner
+      const taylorSet = state.taylorSeconds != null;
+      if (taylorSet) {
+        taylorBox.style.display = 'flex';
+        taylorBox.innerHTML = `<span>Taylor's Actual Time</span><strong>${escapeHtml(state.taylorDisplay || formatSeconds(state.taylorSeconds))}</strong>`;
+      } else {
+        taylorBox.style.display = 'none';
+      }
+
       const total = state.allGuesses.length;
       if (!total) {
         stats.innerHTML = '<div class="guess-stat"><strong>0</strong>No guesses yet</div>';
+        board.style.display = 'none';
         return;
       }
       const avg = Math.round(state.allGuesses.reduce((s, g) => s + g.guessseconds, 0) / total);
@@ -600,6 +652,38 @@ const SUPABASE_ANON_KEY = 'sb_publishable_CuyFoVzB5qH_g5KgOPPOow_HNAyDz9S';
         <div class="guess-stat"><strong>${formatSeconds(min)}</strong>Fastest</div>
         <div class="guess-stat"><strong>${formatSeconds(max)}</strong>Slowest</div>
       `;
+
+      // Voter guesses leaderboard / list
+      const myEmail = state.voter && state.voter.email;
+      const sorted = state.allGuesses.slice().sort((a, b) => {
+        if (taylorSet) {
+          return Math.abs(a.guessseconds - state.taylorSeconds) - Math.abs(b.guessseconds - state.taylorSeconds);
+        }
+        return a.guessseconds - b.guessseconds;
+      });
+      boardTitle.textContent = taylorSet ? `Closest Guesses${total > 12 ? ' \u00b7 Top 12' : ''}` : 'All Guesses';
+      const visible = taylorSet ? sorted.slice(0, 12) : sorted;
+      rowsRoot.innerHTML = visible.map((g, i) => {
+        const isMe = myEmail && g.voterid === myEmail;
+        const isLeader = taylorSet && i === 0;
+        const display = g.guessdisplay || formatSeconds(g.guessseconds);
+        let diff = '';
+        if (taylorSet) {
+          const d = g.guessseconds - state.taylorSeconds;
+          const sign = d > 0 ? '+' : (d < 0 ? '-' : '');
+          diff = `<span class="guess-diff">${sign}${formatSeconds(Math.abs(d))}</span>`;
+        }
+        const cls = ['guess-row'];
+        if (isMe) cls.push('is-me');
+        if (isLeader) cls.push('is-leader');
+        return `<div class="${cls.join(' ')}">
+          <span class="guess-rank">${i + 1}</span>
+          <span class="guess-name">${escapeHtml(g.votername || 'Anonymous')}${isMe ? ' <small style="color:var(--color-text-muted);font-weight:500;">(you)</small>' : ''}</span>
+          <span class="guess-time">${escapeHtml(display)}</span>
+          ${diff}
+        </div>`;
+      }).join('');
+      board.style.display = 'block';
     }
 
     async function submitPrediction(callerId, beats) {
@@ -715,6 +799,9 @@ const SUPABASE_ANON_KEY = 'sb_publishable_CuyFoVzB5qH_g5KgOPPOow_HNAyDz9S';
         console.error(e);
         state.eventSettings = structuredClone(DEFAULT_EVENT);
       }
+      const t = state.eventSettings && state.eventSettings.taylor;
+      state.taylorSeconds = t && typeof t.seconds === 'number' ? t.seconds : null;
+      state.taylorDisplay = t && t.display ? t.display : (state.taylorSeconds != null ? formatSeconds(state.taylorSeconds) : null);
     }
     async function loadCallers() {
       const { data, error } = await state.supabase.from('ktcallers').select('id, callername, status, actualtime, beattaylor, position, insertedat');
