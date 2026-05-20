@@ -54,57 +54,61 @@
   </div>
 </nav>
 
-<section class="torian-pro-banner" aria-label="Torian Pro leaderboard banner">
-  <a
-    class="torian-pro-banner__link"
-    href="https://competitioncorner.net/events/20228/details"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Open the Torian Pro leaderboard"
-  >
-    <div class="torian-pro-banner__overlay"></div>
+<section class="torian-pro-banner-wrap" aria-label="Torian Pro leaderboard banner">
+  <div class="torian-pro-banner">
+    <a
+      class="torian-pro-banner__link"
+      href="https://competitioncorner.net/events/20696/details"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Open the Torian Pro leaderboard"
+    >
+      <div class="torian-pro-banner__overlay"></div>
 
-    <div class="torian-pro-banner__content">
-      <div class="torian-pro-banner__eyebrow">Oceania’s Premier CrossFit Event</div>
+      <div class="torian-pro-banner__content">
+        <div class="torian-pro-banner__eyebrow">Oceania’s Premier CrossFit Event</div>
 
-      <h2 class="torian-pro-banner__title">TYR Torian Pro 2026 Leaderboard</h2>
+        <h2 class="torian-pro-banner__title">TYR Torian Pro 2026 Leaderboard</h2>
 
-      <p class="torian-pro-banner__meta">
-        Brisbane, Queensland • May 22–24, 2026
-      </p>
+        <p class="torian-pro-banner__meta">Brisbane • May 22–24, 2026</p>
 
-      <p class="torian-pro-banner__desc">
-        Track qualifying athletes, divisions, and event standings from the Torian Pro competition.
-      </p>
-
-      <span class="torian-pro-banner__cta">
-        View leaderboard
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M13 5l7 7-7 7M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </span>
-    </div>
-  </a>
+        <span class="torian-pro-banner__cta">
+          View leaderboard
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M13 5l7 7-7 7M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+  </div>
 </section>
 
 <style>
+  .torian-pro-banner-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 18px 0 24px;
+    padding: 0 14px;
+  }
+
   .torian-pro-banner {
-    margin: 0 0 24px;
+    width: 100%;
+    max-width: 860px;
   }
 
   .torian-pro-banner__link {
     position: relative;
     display: block;
     overflow: hidden;
-    border-radius: 18px;
-    min-height: 320px;
+    min-height: 220px;
+    border-radius: 16px;
     text-decoration: none;
-    color: #ffffff;
+    color: #fff;
     background:
-      linear-gradient(135deg, rgba(0,0,0,.76) 0%, rgba(0,0,0,.38) 45%, rgba(0,0,0,.68) 100%),
-      linear-gradient(120deg, #0c0c0c 0%, #1b1b1b 35%, #2c2c2c 100%);
-    box-shadow: 0 18px 48px rgba(0,0,0,.28);
+      linear-gradient(135deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.45) 48%, rgba(0,0,0,.72) 100%),
+      linear-gradient(120deg, #0d0d0d 0%, #1a1a1a 38%, #2a2a2a 100%);
     border: 1px solid rgba(255,255,255,.08);
+    box-shadow: 0 14px 34px rgba(0,0,0,.22);
     isolation: isolate;
   }
 
@@ -113,10 +117,8 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(circle at 78% 22%, rgba(255,255,255,.14), transparent 28%),
-      radial-gradient(circle at 18% 80%, rgba(229,57,53,.18), transparent 26%),
-      linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
-    mix-blend-mode: screen;
+      radial-gradient(circle at 82% 20%, rgba(255,255,255,.10), transparent 24%),
+      radial-gradient(circle at 14% 78%, rgba(210,40,40,.16), transparent 24%);
     pointer-events: none;
   }
 
@@ -124,124 +126,108 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
-    background-size: 32px 32px;
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,.12), rgba(0,0,0,.8));
+      linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: .16;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,.18), rgba(0,0,0,.9));
     pointer-events: none;
-    opacity: .22;
   }
 
   .torian-pro-banner__content {
     position: relative;
     z-index: 2;
-    max-width: 760px;
-    padding: 36px 32px;
+    min-height: 220px;
+    padding: 24px 26px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     justify-content: center;
-    min-height: 320px;
+    align-items: flex-start;
   }
 
   .torian-pro-banner__eyebrow {
     display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 14px;
-    padding: 8px 12px;
+    margin-bottom: 10px;
+    padding: 6px 10px;
     border-radius: 999px;
     background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.12);
-    font-size: 12px;
+    border: 1px solid rgba(255,255,255,.10);
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: .12em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.82);
-    backdrop-filter: blur(8px);
+    color: rgba(255,255,255,.80);
   }
 
   .torian-pro-banner__title {
-    margin: 0 0 10px;
-    font-size: clamp(2rem, 4vw, 3.75rem);
+    margin: 0 0 8px;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
     line-height: .95;
     font-weight: 900;
     letter-spacing: -.03em;
     text-transform: uppercase;
-    max-width: 10ch;
-    text-shadow: 0 4px 20px rgba(0,0,0,.35);
+    max-width: 11ch;
   }
 
   .torian-pro-banner__meta {
-    margin: 0 0 14px;
-    font-size: 1rem;
+    margin: 0 0 16px;
+    font-size: .95rem;
     font-weight: 700;
     letter-spacing: .06em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.78);
-  }
-
-  .torian-pro-banner__desc {
-    margin: 0 0 24px;
-    max-width: 52ch;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: rgba(255,255,255,.88);
+    color: rgba(255,255,255,.76);
   }
 
   .torian-pro-banner__cta {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 14px 20px;
+    padding: 12px 18px;
     border-radius: 999px;
     background: #ffffff;
     color: #111111;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
-    letter-spacing: .04em;
+    letter-spacing: .05em;
     text-transform: uppercase;
-    transition: transform .22s ease, box-shadow .22s ease, background-color .22s ease;
-    box-shadow: 0 12px 24px rgba(0,0,0,.22);
+    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,.20);
   }
 
   .torian-pro-banner__cta svg {
-    width: 18px;
-    height: 18px;
-    flex: 0 0 18px;
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
   }
 
   .torian-pro-banner__link:hover .torian-pro-banner__cta,
   .torian-pro-banner__link:focus-visible .torian-pro-banner__cta {
     transform: translateY(-2px);
-    box-shadow: 0 16px 30px rgba(0,0,0,.28);
-    background: #f1f1f1;
+    background: #f2f2f2;
   }
 
-  .torian-pro-banner__link:hover,
-  .torian-pro-banner__link:focus-visible {
-    border-color: rgba(255,255,255,.16);
-  }
+  @media (max-width: 640px) {
+    .torian-pro-banner-wrap {
+      padding: 0 10px;
+      margin: 14px 0 20px;
+    }
 
-  @media (max-width: 767px) {
-    .torian-pro-banner__link {
-      min-height: 280px;
-      border-radius: 14px;
+    .torian-pro-banner {
+      max-width: 100%;
+    }
+
+    .torian-pro-banner__link,
+    .torian-pro-banner__content {
+      min-height: 190px;
     }
 
     .torian-pro-banner__content {
-      min-height: 280px;
-      padding: 24px 20px;
+      padding: 20px 18px;
     }
 
     .torian-pro-banner__title {
       max-width: none;
-      font-size: clamp(1.8rem, 9vw, 2.8rem);
-    }
-
-    .torian-pro-banner__meta,
-    .torian-pro-banner__desc {
-      font-size: .95rem;
+      font-size: clamp(1.45rem, 7vw, 2.15rem);
     }
 
     .torian-pro-banner__cta {
