@@ -1,0 +1,69 @@
+name: Ingest articles to CF Newsletter Archive
+
+# Fires on every push to main that touches news.html or gossip.html.
+# Parses the current month's articles out of those files, dedupes against
+# git history for the same month, and POSTs the merged set to the
+# cf-archive-api worker, which upserts them into D1.
+#
+# Required secrets (Settings → Secrets and variables → Actions):
+#   INGEST_TOKEN   — same value as the worker's INGEST_TOKEN secret
+#
+# Idempotent: re-running an ingest with the same articles updates them in
+# place via slug-based UPSERT. Safe to re-run / re-deploy.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'news.html'
+      - 'gossip.html'
+  workflow_dispatch:
+    inputs:
+      month:
+        description: 'Month to ingest (YYYY-MM). Defaults to current month.'
+        required: false
+        default: ''
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # we walk commits below
+
+      - name: Use Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install ingest-script deps
+        working-directory: scripts
+        run: |
+          if [ ! -f package.json ]; then
+            npm init -y >/dev/null
+          fi
+          npm install --no-audit --no-fund node-html-parser@^7
+
+      - name: Pick target month
+        id: month
+        run: |
+          MONTH="${{ inputs.month }}"
+          if [ -z "$MONTH" ]; then MONTH=$(date -u +"%Y-%m"); fi
+          echo "month=$MONTH" >> "$GITHUB_OUTPUT"
+          echo "Target month: $MONTH"
+
+      - name: Ingest articles for ${{ steps.month.outputs.month }}
+        env:
+          INGEST_URL: https://cf-archive-api.denseupdates.workers.dev/api/articles/bulk
+          INGEST_TOKEN: ${{ secrets.INGEST_TOKEN }}
+          REPO_PATH: ${{ github.workspace }}
+          MONTH: ${{ steps.month.outputs.month }}
+        run: |
+          if [ -z "$INGEST_TOKEN" ]; then
+            echo "::error::INGEST_TOKEN secret is not set. Add it under Settings → Secrets → Actions."
+            exit 1
+          fi
+          node scripts/backfill-from-git.mjs
