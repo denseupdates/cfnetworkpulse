@@ -54,25 +54,22 @@
   </div>
 </nav>
 
-<section class="torian-pro-banner-wrap" aria-label="Torian Pro leaderboard banner">
-  <div class="torian-pro-banner">
-    <div class="torian-pro-banner__link">
-      <div class="torian-pro-banner__overlay"></div>
+<section class="cf-split-banner-wrap" aria-label="Torian Pro and Rebel Renegade Games event banner">
+  <div class="cf-split-banner">
+    <!-- LEFT: TORIAN PRO -->
+    <div class="cf-split-card cf-split-card--torian">
+      <div class="cf-split-card__overlay"></div>
 
+      <div class="cf-split-card__content">
+        <div class="cf-split-card__eyebrow">Oceania’s Premier CrossFit Event</div>
 
-      <div class="torian-pro-banner__content">
-        <div class="torian-pro-banner__eyebrow">Oceania’s Premier CrossFit Event</div>
+        <h2 class="cf-split-card__title">TYR Torian Pro 2026</h2>
 
+        <p class="cf-split-card__meta">Brisbane • May 22–24, 2026</p>
 
-        <h2 class="torian-pro-banner__title">TYR Torian Pro 2026</h2>
-
-
-        <p class="torian-pro-banner__meta">Brisbane • May 22–24, 2026</p>
-
-
-        <div class="torian-pro-banner__actions">
+        <div class="cf-split-card__actions">
           <a
-            class="torian-pro-banner__cta torian-pro-banner__cta--light"
+            class="cf-split-card__cta cf-split-card__cta--light"
             href="https://competitioncorner.net/events/20696/details"
             target="_blank"
             rel="noopener noreferrer"
@@ -84,15 +81,59 @@
             </svg>
           </a>
 
-
           <a
-            class="torian-pro-banner__cta torian-pro-banner__cta--dark"
-            href="./torian-times.html"
-            aria-label="View the Torian Pro 2026 schedule with North American time zone conversions"
+            class="cf-split-card__cta cf-split-card__cta--dark"
+            href="https://drive.google.com/file/d/1GnvdbLMyQ9PurpwgoGSZkgX1_s80AVAJ/view?usp=share_link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open the Torian Pro North America schedule presentation"
           >
-            North American time zones schedule conversion
+            View NA schedule
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: REBEL RENEGADE GAMES -->
+    <div class="cf-split-card cf-split-card--rebel">
+      <div class="cf-split-card__overlay"></div>
+
+      <div class="cf-split-card__content">
+        <div class="cf-split-card__eyebrow">2026 CrossFit Semifinal Event</div>
+
+        <h2 class="cf-split-card__title">REBEL Renegade Games 2026</h2>
+
+        <p class="cf-split-card__meta">Sandton • South Africa</p>
+
+        <div class="cf-split-card__actions">
+          <a
+            class="cf-split-card__cta cf-split-card__cta--light"
+            href="https://scoreit.co.za/leaderboard/a6abdd53-c3d8-11f0-ac5f-001dd8e74eca/The%20REBEL%20Renegade%20Games%202026%20%28Individual%29"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open the Rebel Renegade Games leaderboard"
+          >
+            View leaderboard
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M13 5l7 7-7 7M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <a
+            class="cf-split-card__cta cf-split-card__cta--dark"
+            href="https://www.youtube.com/@rebelrenegadegames"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open the Rebel Renegade Games YouTube channel"
+          >
+            Watch on YouTube
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M23 12s0-3.6-.46-5.33a2.92 2.92 0 0 0-2.06-2.06C18.74 4.15 12 4.15 12 4.15s-6.74 0-8.48.46A2.92 2.92 0 0 0 1.46 6.67C1 8.4 1 12 1 12s0 3.6.46 5.33a2.92 2.92 0 0 0 2.06 2.06c1.74.46 8.48.46 8.48.46s6.74 0 8.48-.46a2.92 2.92 0 0 0 2.06-2.06C23 15.6 23 12 23 12Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M10 15.5v-7l6 3.5-6 3.5Z" fill="currentColor" stroke="none"/>
             </svg>
           </a>
         </div>
@@ -100,6 +141,215 @@
     </div>
   </div>
 </section>
+
+<style>
+  .cf-split-banner-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 18px 0 24px;
+    padding: 0 14px;
+  }
+
+  .cf-split-banner {
+    width: 100%;
+    max-width: 1120px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .cf-split-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 235px;
+    border-radius: 16px;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow: 0 14px 34px rgba(0,0,0,.22);
+    isolation: isolate;
+  }
+
+  .cf-split-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .cf-split-card--torian {
+    background:
+      linear-gradient(135deg, rgba(0,0,0,.80) 0%, rgba(0,0,0,.46) 48%, rgba(0,0,0,.72) 100%),
+      linear-gradient(120deg, #0d0d0d 0%, #1a1a1a 38%, #2a2a2a 100%);
+  }
+
+  .cf-split-card--torian::before {
+    background:
+      radial-gradient(circle at 82% 20%, rgba(255,255,255,.10), transparent 24%),
+      radial-gradient(circle at 14% 78%, rgba(210,40,40,.16), transparent 24%);
+  }
+
+  .cf-split-card--rebel {
+    background:
+      linear-gradient(135deg, rgba(11,11,11,.84) 0%, rgba(28,14,14,.54) 50%, rgba(15,15,15,.80) 100%),
+      linear-gradient(120deg, #111111 0%, #1c1212 35%, #311515 100%);
+  }
+
+  .cf-split-card--rebel::before {
+    background:
+      radial-gradient(circle at 85% 18%, rgba(255,255,255,.10), transparent 24%),
+      radial-gradient(circle at 18% 82%, rgba(230,0,0,.20), transparent 28%);
+  }
+
+  .cf-split-card__overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: .16;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,.18), rgba(0,0,0,.9));
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .cf-split-card__content {
+    position: relative;
+    z-index: 2;
+    min-height: 235px;
+    padding: 24px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .cf-split-card__eyebrow {
+    display: inline-flex;
+    margin-bottom: 10px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.10);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.80);
+  }
+
+  .cf-split-card__title {
+    margin: 0 0 8px;
+    font-size: clamp(1.55rem, 2.3vw, 2.5rem);
+    line-height: .95;
+    font-weight: 900;
+    letter-spacing: -.03em;
+    text-transform: uppercase;
+    max-width: 11ch;
+  }
+
+  .cf-split-card__meta {
+    margin: 0 0 18px;
+    font-size: .95rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.76);
+  }
+
+  .cf-split-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .cf-split-card__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,.20);
+  }
+
+  .cf-split-card__cta svg {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+  }
+
+  .cf-split-card__cta--light {
+    background: #ffffff;
+    color: #111111;
+  }
+
+  .cf-split-card__cta--dark {
+    background: rgba(255,255,255,.08);
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,.14);
+    backdrop-filter: blur(8px);
+  }
+
+  .cf-split-card__cta:hover,
+  .cf-split-card__cta:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  .cf-split-card__cta--light:hover,
+  .cf-split-card__cta--light:focus-visible {
+    background: #f2f2f2;
+  }
+
+  .cf-split-card__cta--dark:hover,
+  .cf-split-card__cta--dark:focus-visible {
+    background: rgba(255,255,255,.14);
+    border-color: rgba(255,255,255,.22);
+  }
+
+  @media (max-width: 900px) {
+    .cf-split-banner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .cf-split-banner-wrap {
+      padding: 0 10px;
+      margin: 14px 0 20px;
+    }
+
+    .cf-split-card,
+    .cf-split-card__content {
+      min-height: 205px;
+    }
+
+    .cf-split-card__content {
+      padding: 20px 18px;
+    }
+
+    .cf-split-card__title {
+      max-width: none;
+      font-size: clamp(1.35rem, 7vw, 2rem);
+    }
+
+    .cf-split-card__actions {
+      width: 100%;
+      flex-direction: column;
+    }
+
+    .cf-split-card__cta {
+      width: 100%;
+    }
+  }
+</style>
 
 <style>
   .torian-pro-banner-wrap {
