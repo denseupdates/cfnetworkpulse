@@ -56,30 +56,47 @@
 
 <section class="torian-pro-banner-wrap" aria-label="Torian Pro leaderboard banner">
   <div class="torian-pro-banner">
-    <a
-      class="torian-pro-banner__link"
-      href="https://competitioncorner.net/events/20696/details"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Open the Torian Pro leaderboard"
-    >
+    <div class="torian-pro-banner__link">
       <div class="torian-pro-banner__overlay"></div>
 
       <div class="torian-pro-banner__content">
         <div class="torian-pro-banner__eyebrow">Oceania’s Premier CrossFit Event</div>
 
-        <h2 class="torian-pro-banner__title">TYR Torian Pro 2026 Leaderboard</h2>
+        <h2 class="torian-pro-banner__title">TYR Torian Pro 2026</h2>
 
         <p class="torian-pro-banner__meta">Brisbane • May 22–24, 2026</p>
 
-        <span class="torian-pro-banner__cta">
-          View leaderboard
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M13 5l7 7-7 7M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
+        <div class="torian-pro-banner__actions">
+          <a
+            class="torian-pro-banner__cta torian-pro-banner__cta--light"
+            href="https://competitioncorner.net/events/20696/details"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open the Torian Pro leaderboard"
+          >
+            View leaderboard
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M13 5l7 7-7 7M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <a
+            class="torian-pro-banner__cta torian-pro-banner__cta--dark"
+            href="https://drive.google.com/uc?export=download&id=1GnvdbLMyQ9PurpwgoGSZkgX1_s80AVAJ"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Download the Torian Pro North America schedule PowerPoint"
+          >
+            Download NA schedule
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5 20h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </a>
+        </div>
       </div>
-    </a>
+    </div>
   </div>
 </section>
 
@@ -102,7 +119,6 @@
     overflow: hidden;
     min-height: 220px;
     border-radius: 16px;
-    text-decoration: none;
     color: #fff;
     background:
       linear-gradient(135deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.45) 48%, rgba(0,0,0,.72) 100%),
@@ -170,7 +186,7 @@
   }
 
   .torian-pro-banner__meta {
-    margin: 0 0 16px;
+    margin: 0 0 18px;
     font-size: .95rem;
     font-weight: 700;
     letter-spacing: .06em;
@@ -178,19 +194,25 @@
     color: rgba(255,255,255,.76);
   }
 
+  .torian-pro-banner__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
   .torian-pro-banner__cta {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     padding: 12px 18px;
     border-radius: 999px;
-    background: #ffffff;
-    color: #111111;
+    text-decoration: none;
     font-size: 13px;
     font-weight: 800;
     letter-spacing: .05em;
     text-transform: uppercase;
-    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease;
     box-shadow: 0 10px 20px rgba(0,0,0,.20);
   }
 
@@ -200,10 +222,32 @@
     flex: 0 0 17px;
   }
 
-  .torian-pro-banner__link:hover .torian-pro-banner__cta,
-  .torian-pro-banner__link:focus-visible .torian-pro-banner__cta {
+  .torian-pro-banner__cta--light {
+    background: #ffffff;
+    color: #111111;
+  }
+
+  .torian-pro-banner__cta--dark {
+    background: rgba(255,255,255,.08);
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,.14);
+    backdrop-filter: blur(8px);
+  }
+
+  .torian-pro-banner__cta:hover,
+  .torian-pro-banner__cta:focus-visible {
     transform: translateY(-2px);
+  }
+
+  .torian-pro-banner__cta--light:hover,
+  .torian-pro-banner__cta--light:focus-visible {
     background: #f2f2f2;
+  }
+
+  .torian-pro-banner__cta--dark:hover,
+  .torian-pro-banner__cta--dark:focus-visible {
+    background: rgba(255,255,255,.14);
+    border-color: rgba(255,255,255,.22);
   }
 
   @media (max-width: 640px) {
@@ -230,9 +274,13 @@
       font-size: clamp(1.45rem, 7vw, 2.15rem);
     }
 
+    .torian-pro-banner__actions {
+      width: 100%;
+      flex-direction: column;
+    }
+
     .torian-pro-banner__cta {
       width: 100%;
-      justify-content: center;
     }
   }
 </style>
