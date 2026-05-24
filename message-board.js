@@ -55,9 +55,10 @@
   /* Get the current display name based on auth state */
   function getCurrentName() {
     if (currentAuthUser && currentAuthUser.displayName) {
-      return currentAuthUser.displayName;
+      var dn = String(currentAuthUser.displayName).trim();
+      if (dn) return dn;
     }
-    return "Anonymous";
+    return "Guest";
   }
 
   /* Get the current user ID (Firebase UID or anonymous fallback) */
