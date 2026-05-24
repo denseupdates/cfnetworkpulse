@@ -116,9 +116,10 @@
   ];
 
   function getAvatarColor(name) {
+    var safe = (typeof name === "string" && name.length > 0) ? name : "?";
     var hash = 0;
-    for (var i = 0; i < name.length; i++) {
-      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    for (var i = 0; i < safe.length; i++) {
+      hash = safe.charCodeAt(i) + ((hash << 5) - hash);
     }
     return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length];
   }
