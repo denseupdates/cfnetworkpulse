@@ -612,16 +612,37 @@ form.addEventListener("submit", function (e) {
     auth.onAuthStateChanged(function (user) {
       updateAuthUI(user);
     });
+
+    /* Handle the redirect result from signInWithRedirect (no-op if popup worked) */
+    auth.getRedirectResult().catch(function (err) {
+      if (err && err.code && err.code !== "auth/popup-closed-by-user") {
+        console.error("Google redirect sign-in error:", err);
+      }
+    });
   }
 
-  /* Google sign-in */
+  /* Google sign-in: try popup first, fall back to redirect if blocked */
   if (googleSignInBtn) {
     googleSignInBtn.addEventListener("click", function () {
       var provider = new firebase.auth.GoogleAuthProvider();
       auth.signInWithPopup(provider).catch(function (err) {
-        if (err.code !== "auth/popup-closed-by-user") {
-          console.error("Google sign-in error:", err);
+        if (!err || !err.code) return;
+        if (err.code === "auth/popup-closed-by-user") return;
+        // Popup blocked / closed by browser / unsupported environment -> full-page redirect
+        if (
+          err.code === "auth/popup-blocked" ||
+          err.code === "auth/cancelled-popup-request" ||
+          err.code === "auth/popup-closed-by-user" ||
+          err.code === "auth/operation-not-supported-in-this-environment" ||
+          err.code === "auth/internal-error" ||
+          err.code === "auth/web-storage-unsupported"
+        ) {
+          auth.signInWithRedirect(provider).catch(function (e2) {
+            console.error("Google redirect sign-in error:", e2);
+          });
+          return;
         }
+        console.error("Google sign-in error:", err);
       });
     });
   }
