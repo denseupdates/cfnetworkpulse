@@ -2819,7 +2819,10 @@ a.athlete-card:hover .athlete-card__ig {
 .card__image--force {
   width: 100%;
   background-color: transparent;
-  overflow: hidden;
+  overflow: visible !important;
+  aspect-ratio: auto !important;
+  height: auto !important;
+  max-height: none !important;
 }
 
 .card__image--force img {
