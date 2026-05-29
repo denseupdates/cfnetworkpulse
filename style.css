@@ -2833,6 +2833,42 @@ a.athlete-card:hover .athlete-card__ig {
   object-position: center;
 }
 
+/* NorCal event card grid: 4 on top row, 3 on bottom row */
+.norcal-events-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+.norcal-events-grid > .card__image--force {
+  margin: 0;
+}
+/* Top row: first 4 images span 3 columns each => 4 per row */
+.norcal-events-grid > .card__image--force:nth-child(-n+4) {
+  grid-column: span 3;
+}
+/* Bottom row: last 3 images span 4 columns each => 3 per row */
+.norcal-events-grid > .card__image--force:nth-child(n+5) {
+  grid-column: span 4;
+}
+/* Tablet: 2 per row */
+@media (max-width: 768px) {
+  .norcal-events-grid > .card__image--force:nth-child(-n+4),
+  .norcal-events-grid > .card__image--force:nth-child(n+5) {
+    grid-column: span 6;
+  }
+}
+/* Phone: 1 per row */
+@media (max-width: 480px) {
+  .norcal-events-grid {
+    grid-template-columns: 1fr;
+  }
+  .norcal-events-grid > .card__image--force:nth-child(-n+4),
+  .norcal-events-grid > .card__image--force:nth-child(n+5) {
+    grid-column: 1 / -1;
+  }
+}
+
 /* Tighten spacing on Mertens featured card only */
 #mertens-quarterfinals-ai-slop {
   padding-bottom: 0;
