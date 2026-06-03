@@ -570,6 +570,111 @@
   height: 100%;
   object-fit: cover;
 }
+
+/* ================================
+   HOST A GAMES ATHLETE SECTION
+   ================================ */
+.host-section {
+  --host-color: #e11d48;
+}
+
+.host-section__intro {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--host-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.host-section__intro p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.host-section__intro p + p {
+  margin-top: var(--space-3);
+}
+
+.host-section__intro strong {
+  color: var(--color-text);
+}
+
+.host-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--host-color);
+  color: #fff;
+  margin-bottom: var(--space-3);
+}
+
+/* Accommodation pill on host cards */
+.host-card__accom {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.host-card__accom--free {
+  background: #22c55e;
+  color: #fff;
+}
+
+.host-card__accom--paid {
+  background: var(--host-color);
+  color: #fff;
+}
+
+/* Meta rows on host cards */
+.host-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.host-card__meta-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  line-height: 1.4;
+}
+
+.host-card__meta-row svg {
+  flex-shrink: 0;
+  color: var(--color-text-faint);
+}
+
+.host-card__meta-row a {
+  color: var(--color-text);
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.host-card__meta-row a:hover {
+  text-decoration: underline;
+}
+
+/* Host feed reuses .cf-grid; cards highlight with host color */
+.host-card:hover {
+  border-color: var(--host-color);
+}
 </style>
 </head>
 <body>
@@ -621,6 +726,108 @@
     </a>
   </div>
 </div>
+
+<!-- ===== HOST A GAMES ATHLETE SECTION ===== -->
+<section class="section host-section" id="host-athlete">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <div class="section__label" style="color:#e11d48">San Jose Bay Area</div>
+        <h2 class="section__title">Host a CrossFit Games Athlete</h2>
+      </div>
+      <div class="cf-stats">
+        <span><strong id="hostTotalPosts">0</strong> hosts</span>
+      </div>
+    </div>
+
+    <!-- Intro -->
+    <div class="host-section__intro">
+      <span class="host-badge">Local Hosts Wanted</span>
+      <p>The 2026 CrossFit Games are coming to the <strong>San Jose Bay Area</strong>, and athletes are looking for places to stay. If you live locally and have room to host a competing athlete, list yourself below so athletes can reach out directly.</p>
+      <p>Add your <strong>name and email</strong>, the <strong>gym you're affiliated with</strong>, an <strong>Instagram handle or social profile</strong> for reference, and whether your accommodations are <strong>free</strong> or available at a <strong>set price</strong>. Athletes will browse the listings and contact you directly.</p>
+    </div>
+
+    <!-- Auth Bar -->
+    <div class="cf-auth" id="hostAuth">
+      <div id="hostSignedOut">
+        <button type="button" class="cf-auth__google-btn" id="hostGoogleSignIn">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.99 23.99 0 0 0 0 24c0 3.77.9 7.34 2.44 10.5l8.09-5.91z"/><path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Sign in with Google
+        </button>
+        <span class="cf-auth__note">Sign in to list yourself as a host</span>
+      </div>
+      <div id="hostSignedIn" style="display:none">
+        <div class="cf-auth__user">
+          <img class="cf-auth__photo" id="hostUserPhoto" src="" alt="" width="28" height="28">
+          <span class="cf-auth__name" id="hostUserName"></span>
+          <button type="button" class="cf-auth__sign-out" id="hostSignOut">Sign Out</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Host Form -->
+    <div class="cf-compose" id="hostCompose">
+      <h3 class="cf-compose__heading">List Yourself as a Host</h3>
+      <form id="hostForm">
+        <div class="cf-compose__row">
+          <div class="cf-compose__field">
+            <label class="cf-compose__label" for="hostName">Your Name</label>
+            <input type="text" class="cf-compose__input" id="hostName" placeholder="First &amp; last name" maxlength="80">
+          </div>
+          <div class="cf-compose__field">
+            <label class="cf-compose__label" for="hostEmail">Contact Email</label>
+            <input type="email" class="cf-compose__input" id="hostEmail" placeholder="your@email.com">
+          </div>
+        </div>
+        <div class="cf-compose__row">
+          <div class="cf-compose__field">
+            <label class="cf-compose__label" for="hostGym">Gym Affiliation</label>
+            <input type="text" class="cf-compose__input" id="hostGym" placeholder="e.g. NorCal CrossFit, San Jose" maxlength="100">
+          </div>
+          <div class="cf-compose__field">
+            <label class="cf-compose__label" for="hostSocial">Instagram / Social Profile</label>
+            <input type="text" class="cf-compose__input" id="hostSocial" placeholder="@handle or profile URL" maxlength="120">
+          </div>
+        </div>
+        <div class="cf-compose__row">
+          <div class="cf-compose__field">
+            <label class="cf-compose__label" for="hostAccomType">Accommodation Type</label>
+            <select class="cf-compose__select" id="hostAccomType">
+              <option value="">Select an option</option>
+              <option value="free">Free</option>
+              <option value="paid">Set Price</option>
+            </select>
+          </div>
+          <div class="cf-compose__field">
+            <label class="cf-compose__label" for="hostPrice">Price (if set price)</label>
+            <input type="text" class="cf-compose__input" id="hostPrice" placeholder="e.g. $75/night" maxlength="60">
+          </div>
+        </div>
+        <div class="cf-compose__row">
+          <div class="cf-compose__field cf-compose__field--full">
+            <label class="cf-compose__label" for="hostDescription">Accommodation Details</label>
+            <textarea class="cf-compose__textarea" id="hostDescription" placeholder="Describe what you're offering — private room, distance to the venue, dates available, parking, dietary-friendly kitchen, etc." maxlength="600" rows="4"></textarea>
+          </div>
+        </div>
+        <div class="cf-compose__footer">
+          <span class="cf-compose__note">Your listing will be visible to athletes browsing for a place to stay</span>
+          <button type="submit" class="cf-compose__submit" id="hostSubmitBtn" disabled>List as Host</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Host Listings Feed -->
+    <div class="cf-grid" id="hostFeed">
+      <div class="cf-empty" id="hostEmpty">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <p>No hosts listed yet. Be the first to open your home to a Games athlete.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-divider">
 
 <!-- ===== CLASSIFIEDS SECTION ===== -->
 <section class="section" id="classifieds">
@@ -1145,6 +1352,253 @@
   modalOverlay.addEventListener('click', function (e) {
     if (e.target === modalOverlay) {
       modalOverlay.classList.remove('cf-modal-overlay--open');
+    }
+  });
+
+})();
+</script>
+
+<!-- ===== HOST A GAMES ATHLETE LOGIC ===== -->
+<script>
+(function () {
+  'use strict';
+
+  var auth = window.cfnnAuth;
+  var db = window.cfnnDb;
+  var provider = new firebase.auth.GoogleAuthProvider();
+
+  // DOM refs
+  var signInBtn   = document.getElementById('hostGoogleSignIn');
+  var signedOutEl = document.getElementById('hostSignedOut');
+  var signedInEl  = document.getElementById('hostSignedIn');
+  var userNameEl  = document.getElementById('hostUserName');
+  var userPhotoEl = document.getElementById('hostUserPhoto');
+  var signOutBtn  = document.getElementById('hostSignOut');
+  var form        = document.getElementById('hostForm');
+  var submitBtn   = document.getElementById('hostSubmitBtn');
+  var feedEl      = document.getElementById('hostFeed');
+  var emptyEl     = document.getElementById('hostEmpty');
+  var totalEl     = document.getElementById('hostTotalPosts');
+
+  // Reuse the existing contact modal
+  var modalOverlay = document.getElementById('cfModal');
+  var modalTitle   = document.getElementById('cfModalTitle');
+  var modalText    = document.getElementById('cfModalText');
+  var modalEmail   = document.getElementById('cfModalEmail');
+
+  var allHosts = [];
+
+  // ===== Auth =====
+  signInBtn.addEventListener('click', function () {
+    auth.signInWithPopup(provider).catch(function (err) {
+      console.error('Sign in failed', err);
+      alert('Sign in failed. Please try again.');
+    });
+  });
+
+  signOutBtn.addEventListener('click', function () {
+    auth.signOut();
+  });
+
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      signedOutEl.style.display = 'none';
+      signedInEl.style.display = 'flex';
+      userNameEl.textContent = user.displayName || user.email || 'User';
+      if (user.photoURL) {
+        userPhotoEl.src = user.photoURL;
+        userPhotoEl.alt = user.displayName || 'User';
+      }
+      submitBtn.disabled = false;
+      // Prefill name/email for convenience if empty
+      var nameInput = document.getElementById('hostName');
+      var emailInput = document.getElementById('hostEmail');
+      if (nameInput && !nameInput.value && user.displayName) nameInput.value = user.displayName;
+      if (emailInput && !emailInput.value && user.email) emailInput.value = user.email;
+    } else {
+      signedOutEl.style.display = 'flex';
+      signedInEl.style.display = 'none';
+      userNameEl.textContent = '';
+      userPhotoEl.src = '';
+      submitBtn.disabled = true;
+    }
+  });
+
+  // ===== Submit Host Listing =====
+  submitBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    var user = auth.currentUser;
+    if (!user) {
+      alert('Please sign in with Google before listing yourself.');
+      return;
+    }
+
+    var name        = document.getElementById('hostName').value.trim();
+    var email       = document.getElementById('hostEmail').value.trim();
+    var gym         = document.getElementById('hostGym').value.trim();
+    var social      = document.getElementById('hostSocial').value.trim();
+    var accomType   = document.getElementById('hostAccomType').value;
+    var price       = document.getElementById('hostPrice').value.trim();
+    var description = document.getElementById('hostDescription').value.trim();
+
+    if (!name || !email || !gym || !accomType || !description) {
+      alert('Please fill in your name, email, gym, accommodation type, and details.');
+      return;
+    }
+    if (accomType === 'paid' && !price) {
+      alert('Please enter your price, or change the accommodation type to Free.');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Listing...';
+
+    db.collection('hostListings').add({
+      name: name,
+      email: email,
+      gym: gym,
+      social: social || '',
+      accomType: accomType,
+      price: accomType === 'paid' ? price : '',
+      description: description,
+      uid: user.uid,
+      authorPhoto: user.photoURL || '',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function () {
+      form.reset();
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'List as Host';
+    }).catch(function (err) {
+      console.error('Error posting host listing', err);
+      alert('Error posting your listing. Please try again.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'List as Host';
+    });
+  });
+
+  // ===== Load Host Listings (real time) =====
+  db.collection('hostListings')
+    .orderBy('createdAt', 'desc')
+    .onSnapshot(function (snapshot) {
+      allHosts = [];
+      snapshot.forEach(function (doc) {
+        var data = doc.data();
+        data.id = doc.id;
+        allHosts.push(data);
+      });
+      totalEl.textContent = allHosts.length;
+      renderHosts();
+    }, function (err) {
+      console.error('Error loading host listings', err);
+    });
+
+  // ===== Render =====
+  function renderHosts() {
+    var oldCards = feedEl.querySelectorAll('.cf-card');
+    oldCards.forEach(function (c) { c.remove(); });
+
+    if (allHosts.length === 0) {
+      emptyEl.style.display = 'block';
+      return;
+    }
+    emptyEl.style.display = 'none';
+
+    var html = allHosts.map(function (item) {
+      var dateStr = '';
+      if (item.createdAt && item.createdAt.toDate) {
+        var d = item.createdAt.toDate();
+        dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      }
+
+      var isFree = item.accomType === 'free';
+      var accomLabel = isFree ? 'Free' : (item.price ? escHtml(item.price) : 'Set Price');
+      var accomClass = isFree ? 'host-card__accom--free' : 'host-card__accom--paid';
+
+      var socialHtml = '';
+      if (item.social) {
+        var raw = item.social.trim();
+        var href, label;
+        if (/^https?:\/\//i.test(raw)) {
+          href = raw;
+          label = raw.replace(/^https?:\/\//i, '').replace(/\/$/, '');
+        } else {
+          var handle = raw.replace(/^@/, '');
+          href = 'https://instagram.com/' + encodeURIComponent(handle);
+          label = '@' + handle;
+        }
+        socialHtml = '<div class="host-card__meta-row">'
+          + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>'
+          + '<a href="' + escHtml(href) + '" target="_blank" rel="noopener noreferrer">' + escHtml(label) + '</a>'
+          + '</div>';
+      }
+
+      var avatarHtml = item.authorPhoto
+        ? '<div class="cf-card__avatar"><img src="' + escHtml(item.authorPhoto) + '" alt=""></div>'
+        : '<div class="cf-card__avatar">' + (item.name ? escHtml(item.name.charAt(0).toUpperCase()) : '?') + '</div>';
+
+      var currentUser = auth.currentUser;
+      var deleteHtml = '';
+      if (currentUser && currentUser.uid === item.uid) {
+        deleteHtml = '<button class="cf-card__delete" data-host-delete-id="' + item.id + '" title="Delete listing"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>';
+      }
+
+      return '<div class="cf-card host-card">'
+        + '<div class="cf-card__top">'
+        +   '<span class="host-card__accom ' + accomClass + '">' + accomLabel + '</span>'
+        +   '<span class="cf-card__date">' + escHtml(dateStr) + '</span>'
+        + '</div>'
+        + '<h3 class="cf-card__title">' + escHtml(item.name) + '</h3>'
+        + '<div class="host-card__meta">'
+        +   '<div class="host-card__meta-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg><span>' + escHtml(item.gym) + '</span></div>'
+        +   socialHtml
+        + '</div>'
+        + '<p class="cf-card__body">' + escHtml(item.description) + '</p>'
+        + '<div class="cf-card__footer">'
+        +   '<div class="cf-card__author">'
+        +     avatarHtml
+        +     '<span>' + escHtml(item.name) + '</span>'
+        +   '</div>'
+        +   '<div style="display:flex;align-items:center;gap:var(--space-2);">'
+        +     '<button class="cf-card__contact-btn" data-host-contact="' + escHtml(item.email) + '" data-host-name="' + escHtml(item.name) + '">Contact</button>'
+        +     deleteHtml
+        +   '</div>'
+        + '</div>'
+        + '</div>';
+    }).join('');
+
+    feedEl.insertAdjacentHTML('beforeend', html);
+  }
+
+  function escHtml(str) {
+    if (!str) return '';
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+
+  // ===== Contact + Delete (delegated) =====
+  feedEl.addEventListener('click', function (e) {
+    var contactBtn = e.target.closest('.cf-card__contact-btn');
+    if (contactBtn && contactBtn.hasAttribute('data-host-contact')) {
+      var email = contactBtn.getAttribute('data-host-contact');
+      var name = contactBtn.getAttribute('data-host-name');
+      modalTitle.textContent = 'Contact Host: ' + name;
+      modalText.textContent = 'Send an email to ask about hosting for the CrossFit Games.';
+      modalEmail.href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent('CF Network: Host a Games Athlete — ' + name);
+      modalEmail.textContent = 'Send Email';
+      modalOverlay.classList.add('cf-modal-overlay--open');
+      return;
+    }
+
+    var deleteBtn = e.target.closest('.cf-card__delete');
+    if (deleteBtn && deleteBtn.hasAttribute('data-host-delete-id')) {
+      var docId = deleteBtn.getAttribute('data-host-delete-id');
+      if (confirm('Are you sure you want to delete your host listing?')) {
+        db.collection('hostListings').doc(docId).delete().catch(function (err) {
+          console.error('Error deleting host listing', err);
+          alert('Error deleting listing.');
+        });
+      }
     }
   });
 
