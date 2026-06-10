@@ -75,39 +75,14 @@
       <span class="wotw-date" id="wotwDate">Week of June 10, 2026</span>
     </div>
 
-    <div class="wotw-layout">
-      <!-- ===== WORKOUT IMAGE =====
-           EDIT EACH WEEK: replace img-wotw-current.jpg with the new screenshot
-           (keep the same filename to avoid editing this line). -->
-      <figure class="wotw-figure">
-        <img class="wotw-figure__img" id="wotwImage" src="./img-wotw-current.jpg"
-             alt="Workout of the Week" loading="eager">
-      </figure>
-
-      <!-- ===== WORKOUT DETAILS =====
-           EDIT EACH WEEK: update the title, format, and movement list below. -->
-      <div class="wotw-details" id="wotwDetails">
-        <div class="wotw-card">
-          <div class="wotw-card__tag" id="wotwTag">10 Min EMOM</div>
-          <h3 class="wotw-card__title" id="wotwTitle">Sentinel Training</h3>
-          <p class="wotw-card__weight" id="wotwWeight">135 / 95 lbs &nbsp;(61 / 43 kg)</p>
-          <p class="wotw-card__source" id="wotwSource">Sentinel Training Compete track &middot; 6.16.26 &middot; Strivee App</p>
-
-          <ul class="wotw-list" id="wotwList">
-            <li><span class="wotw-list__min">Min 1</span> 20 GHD sit-ups + 1 clean &amp; jerk</li>
-            <li><span class="wotw-list__min">Min 2</span> 18 GHD sit-ups + 2 clean &amp; jerks</li>
-            <li><span class="wotw-list__min">Min 3</span> 16 GHD sit-ups + 3 clean &amp; jerks</li>
-            <li><span class="wotw-list__min">Min 4</span> 14 GHD sit-ups + 4 clean &amp; jerks</li>
-            <li><span class="wotw-list__min">Min 5</span> 12 GHD sit-ups + 5 clean &amp; jerks</li>
-            <li><span class="wotw-list__min">Min 6</span> 10 GHD sit-ups + 6 clean &amp; jerks</li>
-            <li><span class="wotw-list__min">Min 7</span> 8 GHD sit-ups + 7 clean &amp; jerks</li>
-            <li><span class="wotw-list__min">Min 8</span> 6 GHD sit-ups + 8 clean &amp; jerks</li>
-            <li><span class="wotw-list__min">Min 9</span> 4 GHD sit-ups + 9 clean &amp; jerks</li>
-            <li><span class="wotw-list__min">Min 10</span> 2 GHD sit-ups + 10 clean &amp; jerks</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <!-- ===== WORKOUT IMAGE =====
+         The image contains the full workout (title, format, weight, movements).
+         EDIT EACH WEEK: replace img-wotw-current.jpg with the new screenshot
+         (keep the same filename), or set an Image URL in the admin editor. -->
+    <figure class="wotw-figure wotw-figure--solo">
+      <img class="wotw-figure__img" id="wotwImage" src="./img-wotw-current.jpg"
+           alt="Workout of the Week" loading="eager">
+    </figure>
 
     <!-- ===== SUPPLEMENT: WARM-UP / COOL-DOWN / SCALING NOTES =====
          Full-width responsive grid below the workout hero. -->

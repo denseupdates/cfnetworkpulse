@@ -392,42 +392,17 @@
         <div class="admin-section__count">Edit the workout shown on <a class="wotw-preview-link" href="./wotw.html" target="_blank" rel="noopener">wotw.html</a>. Changes go live the moment you save.</div>
 
         <form class="wotw-form" id="wotwForm">
-          <div class="wotw-row">
-            <div class="wotw-field">
-              <label for="wotwDate">Date label <span class="wotw-field__hint">(shown top-right)</span></label>
-              <input type="text" id="wotwDate" class="wotw-input" placeholder="Week of June 10, 2026">
-            </div>
-            <div class="wotw-field">
-              <label for="wotwTag">Format tag <span class="wotw-field__hint">(blue badge)</span></label>
-              <input type="text" id="wotwTag" class="wotw-input" placeholder="10 Min EMOM">
-            </div>
-          </div>
+          <p class="wotw-field__hint" style="margin:0 0 var(--space-2);">The workout image holds the full workout (title, format, weight, movements). Update the image each week, plus the warm-up, cool-down, and scaling notes below.</p>
 
-          <div class="wotw-row">
-            <div class="wotw-field">
-              <label for="wotwTitle">Workout title</label>
-              <input type="text" id="wotwTitle" class="wotw-input" placeholder="Sentinel Training">
-            </div>
-            <div class="wotw-field">
-              <label for="wotwWeight">Weight / loading line</label>
-              <input type="text" id="wotwWeight" class="wotw-input" placeholder="135 / 95 lbs  (61 / 43 kg)">
-            </div>
+          <div class="wotw-field">
+            <label for="wotwDate">Date label <span class="wotw-field__hint">(shown top-right of the page)</span></label>
+            <input type="text" id="wotwDate" class="wotw-input" placeholder="Week of June 10, 2026">
           </div>
 
           <div class="wotw-field">
-            <label for="wotwImage">Image URL <span class="wotw-field__hint">(leave blank to use the repo image img-wotw-current.jpg)</span></label>
+            <label for="wotwImage">Workout image URL <span class="wotw-field__hint">(paste a direct image link, or leave blank to use the repo image img-wotw-current.jpg)</span></label>
             <input type="text" id="wotwImage" class="wotw-input" placeholder="https://... (optional override)">
             <img class="wotw-thumb" id="wotwThumb" alt="Image preview">
-          </div>
-
-          <div class="wotw-field">
-            <label for="wotwSource">Source line <span class="wotw-field__hint">(small italic credit under the title, e.g. “Sentinel Training Compete track · 6.16.26 · Strivee App”. Leave blank to hide.)</span></label>
-            <input type="text" id="wotwSource" class="wotw-input" placeholder="Sentinel Training Compete track · 6.16.26 · Strivee App">
-          </div>
-
-          <div class="wotw-field">
-            <label for="wotwMovements">Workout breakdown <span class="wotw-field__hint">(one line per row — use “Label | text”, e.g. “Min 1 | 20 GHD sit-ups + 1 clean &amp; jerk”. A plain line with no “|” just shows as text.)</span></label>
-            <textarea id="wotwMovements" class="wotw-textarea" rows="11" placeholder="Min 1 | 20 GHD sit-ups + 1 clean & jerk&#10;Min 2 | 18 GHD sit-ups + 2 clean & jerks"></textarea>
           </div>
 
           <div class="wotw-field">

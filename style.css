@@ -3342,6 +3342,11 @@ a.athlete-card:hover .athlete-card__ig {
   background: var(--color-surface-2);
   border: 1px solid var(--color-border, rgba(128,128,128,0.18));
 }
+/* Solo image (no side text card): centered, capped width so it doesn't get huge */
+.wotw-figure--solo {
+  max-width: 720px;
+  margin: var(--space-4, 1rem) auto 0;
+}
 .wotw-figure__img {
   display: block;
   width: 100%;

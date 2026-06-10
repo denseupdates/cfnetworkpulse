@@ -307,13 +307,8 @@
   var wf = {
     form:       document.getElementById("wotwForm"),
     date:       document.getElementById("wotwDate"),
-    tag:        document.getElementById("wotwTag"),
-    title:      document.getElementById("wotwTitle"),
-    weight:     document.getElementById("wotwWeight"),
-    source:     document.getElementById("wotwSource"),
     image:      document.getElementById("wotwImage"),
     thumb:      document.getElementById("wotwThumb"),
-    movements:  document.getElementById("wotwMovements"),
     warmup:     document.getElementById("wotwWarmup"),
     cooldown:   document.getElementById("wotwCooldown"),
     notes:      document.getElementById("wotwNotes"),
@@ -340,15 +335,6 @@
   if (wf.image) wf.image.addEventListener("input", updateThumb);
 
   /* Convert stored arrays back into the textarea formats */
-  function movementsToText(arr) {
-    if (!arr || !arr.length) return "";
-    return arr.map(function (m) {
-      if (m && typeof m === "object") {
-        return (m.label ? m.label + " | " : "") + (m.text || "");
-      }
-      return String(m);
-    }).join("\n");
-  }
   function notesToText(arr) {
     if (!arr || !arr.length) return "";
     return arr.map(function (n) {
@@ -359,16 +345,7 @@
     }).join("\n");
   }
 
-  /* Parse textareas into structured arrays for storage */
-  function parseMovements(text) {
-    return text.split("\n").map(function (line) { return line.trim(); })
-      .filter(function (line) { return line.length > 0; })
-      .map(function (line) {
-        var idx = line.indexOf("|");
-        if (idx === -1) return { label: "", text: line };
-        return { label: line.slice(0, idx).trim(), text: line.slice(idx + 1).trim() };
-      });
-  }
+  /* Parse textarea into structured array for storage */
   function parseNotes(text) {
     return text.split("\n").map(function (line) { return line.trim(); })
       .filter(function (line) { return line.length > 0; })
@@ -386,12 +363,7 @@
       if (doc.exists) {
         var d = doc.data();
         wf.date.value = d.date || "";
-        wf.tag.value = d.tag || "";
-        wf.title.value = d.title || "";
-        wf.weight.value = d.weight || "";
-        wf.source.value = d.source || "";
         wf.image.value = d.image || "";
-        wf.movements.value = movementsToText(d.movements);
         wf.warmup.value = d.warmup || "";
         wf.cooldown.value = d.cooldown || "";
         wf.notes.value = notesToText(d.notes);
@@ -417,12 +389,7 @@
 
       var payload = {
         date: wf.date.value.trim(),
-        tag: wf.tag.value.trim(),
-        title: wf.title.value.trim(),
-        weight: wf.weight.value.trim(),
-        source: wf.source.value.trim(),
         image: wf.image.value.trim(),
-        movements: parseMovements(wf.movements.value),
         warmup: wf.warmup.value.replace(/^\n+|\n+$/g, ""),
         cooldown: wf.cooldown.value.replace(/^\n+|\n+$/g, ""),
         notes: parseNotes(wf.notes.value),
