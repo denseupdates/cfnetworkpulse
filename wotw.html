@@ -71,8 +71,8 @@
         <div class="section__label" style="color:#3b82f6">Train With Us</div>
         <h2 class="section__title">Workout of the Week</h2>
       </div>
-      <!-- EDIT EACH WEEK: update the date below -->
-      <span class="wotw-date">Week of June 10, 2026</span>
+      <!-- Date label (admin-editable; falls back to this default) -->
+      <span class="wotw-date" id="wotwDate">Week of June 10, 2026</span>
     </div>
 
     <div class="wotw-layout">
@@ -80,19 +80,20 @@
            EDIT EACH WEEK: replace img-wotw-current.jpg with the new screenshot
            (keep the same filename to avoid editing this line). -->
       <figure class="wotw-figure">
-        <img class="wotw-figure__img" src="./img-wotw-current.jpg"
-             alt="Sentinel Training Workout of the Week" loading="eager">
+        <img class="wotw-figure__img" id="wotwImage" src="./img-wotw-current.jpg"
+             alt="Workout of the Week" loading="eager">
       </figure>
 
       <!-- ===== WORKOUT DETAILS =====
            EDIT EACH WEEK: update the title, format, and movement list below. -->
-      <div class="wotw-details">
+      <div class="wotw-details" id="wotwDetails">
         <div class="wotw-card">
-          <div class="wotw-card__tag">10 Min EMOM</div>
-          <h3 class="wotw-card__title">Sentinel Training</h3>
-          <p class="wotw-card__weight">135 / 95 lbs &nbsp;(61 / 43 kg)</p>
+          <div class="wotw-card__tag" id="wotwTag">10 Min EMOM</div>
+          <h3 class="wotw-card__title" id="wotwTitle">Sentinel Training</h3>
+          <p class="wotw-card__weight" id="wotwWeight">135 / 95 lbs &nbsp;(61 / 43 kg)</p>
+          <p class="wotw-card__source" id="wotwSource">Sentinel Training Compete track &middot; 6.16.26 &middot; Strivee App</p>
 
-          <ul class="wotw-list">
+          <ul class="wotw-list" id="wotwList">
             <li><span class="wotw-list__min">Min 1</span> 20 GHD sit-ups + 1 clean &amp; jerk</li>
             <li><span class="wotw-list__min">Min 2</span> 18 GHD sit-ups + 2 clean &amp; jerks</li>
             <li><span class="wotw-list__min">Min 3</span> 16 GHD sit-ups + 3 clean &amp; jerks</li>
@@ -106,6 +107,43 @@
           </ul>
         </div>
 
+        <!-- ===== WARM-UP =====
+             EDIT EACH WEEK: text only, one item per line. -->
+        <div class="wotw-card wotw-card--block" id="wotwWarmupCard">
+          <h4 class="wotw-notes__heading">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Warm-up
+          </h4>
+          <p class="wotw-block__text" id="wotwWarmup">2 rounds:
+2 minute bike erg
+1 minute ski erg
+1 minute of supine scorpion leg swings
+Then&hellip;
+2 rounds:
+15 russian kettlebell swings
+10 push-ups
+Then&hellip;
+2 rounds at a warm-up loading:
+30 second sandbag bearhug hold
+5 sandbag bearhug deadlift
+30 ft sandbag bearhug carry
+Then&hellip;
+Build to starting bearhug hold loading</p>
+        </div>
+
+        <!-- ===== COOL-DOWN =====
+             EDIT EACH WEEK: text only, one item per line. -->
+        <div class="wotw-card wotw-card--block" id="wotwCooldownCard">
+          <h4 class="wotw-notes__heading">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+            Cool-down
+          </h4>
+          <p class="wotw-block__text" id="wotwCooldown">2 minute couch stretch, each side
+2 minute cobra stretch
+1 minute calf stretch, each side
+1 minute banded lat stretch, each side</p>
+        </div>
+
         <!-- ===== SCALING NOTES =====
              EDIT EACH WEEK: update the scaling guidance below. -->
         <div class="wotw-card wotw-card--notes">
@@ -113,7 +151,7 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
             Scaling Notes
           </h4>
-          <ul class="wotw-notes__list">
+          <ul class="wotw-notes__list" id="wotwNotesList">
             <li><strong>Intermediate:</strong> 115 / 75 lbs, sub abmat sit-ups for GHD if needed.</li>
             <li><strong>Beginner:</strong> 95 / 65 lbs, reduce GHD reps by half, full ROM over speed.</li>
             <li><strong>Stimulus:</strong> Each minute should be challenging but completable &mdash; the load and sit-up volume shift as the round count climbs.</li>

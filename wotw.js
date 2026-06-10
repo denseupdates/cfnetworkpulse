@@ -42,6 +42,84 @@
   /* Dedicated collection so WOTW scores stay separate from the Message Board */
   var commentsRef = db.collection("wotw_comments");
 
+  /* ================================================
+     WORKOUT CONTENT (admin-editable, from content/wotw)
+     The HTML ships with a hard-coded default; if an admin has saved a
+     workout in Firestore, we replace the on-page content with it.
+     ================================================ */
+  (function loadWorkoutContent() {
+    function esc(text) {
+      var div = document.createElement("div");
+      div.textContent = text == null ? "" : String(text);
+      return div.innerHTML;
+    }
+
+    function renderWorkout(d) {
+      if (!d) return;
+
+      var dateEl = document.getElementById("wotwDate");
+      var tagEl = document.getElementById("wotwTag");
+      var titleEl = document.getElementById("wotwTitle");
+      var weightEl = document.getElementById("wotwWeight");
+      var sourceEl = document.getElementById("wotwSource");
+      var imgEl = document.getElementById("wotwImage");
+      var listEl = document.getElementById("wotwList");
+      var notesEl = document.getElementById("wotwNotesList");
+      var warmupEl = document.getElementById("wotwWarmup");
+      var cooldownEl = document.getElementById("wotwCooldown");
+
+      if (dateEl && d.date) dateEl.textContent = d.date;
+      if (tagEl && d.tag) tagEl.textContent = d.tag;
+      if (titleEl && d.title) titleEl.textContent = d.title;
+      if (weightEl && d.weight) weightEl.textContent = d.weight;
+      /* Source attribution (optional) — empty string hides it via CSS :empty */
+      if (sourceEl && typeof d.source === "string") sourceEl.textContent = d.source;
+      /* Warm-up & cool-down are plain text; line breaks preserved by CSS white-space: pre-line.
+         textContent is XSS-safe. Empty string collapses the block via CSS :empty. */
+      if (warmupEl && typeof d.warmup === "string") warmupEl.textContent = d.warmup;
+      if (cooldownEl && typeof d.cooldown === "string") cooldownEl.textContent = d.cooldown;
+
+      /* Image: only override if a non-empty URL was provided; otherwise keep repo image */
+      if (imgEl && d.image && String(d.image).trim()) {
+        imgEl.src = String(d.image).trim();
+      }
+      if (imgEl && d.title) imgEl.alt = d.title + " \u2014 Workout of the Week";
+
+      /* Movement breakdown */
+      if (listEl && Array.isArray(d.movements) && d.movements.length) {
+        var lhtml = "";
+        d.movements.forEach(function (m) {
+          var label = (m && m.label) ? esc(m.label) : "";
+          var text = (m && m.text != null) ? esc(m.text) : esc(m);
+          lhtml += "<li>";
+          if (label) lhtml += '<span class="wotw-list__min">' + label + "</span> ";
+          lhtml += text + "</li>";
+        });
+        listEl.innerHTML = lhtml;
+      }
+
+      /* Scaling notes */
+      if (notesEl && Array.isArray(d.notes) && d.notes.length) {
+        var nhtml = "";
+        d.notes.forEach(function (n) {
+          var label = (n && n.label) ? esc(n.label) : "";
+          var text = (n && n.text != null) ? esc(n.text) : esc(n);
+          nhtml += "<li>";
+          if (label) nhtml += "<strong>" + label + ":</strong> ";
+          nhtml += text + "</li>";
+        });
+        notesEl.innerHTML = nhtml;
+      }
+    }
+
+    db.collection("content").doc("wotw").get().then(function (doc) {
+      if (doc.exists) renderWorkout(doc.data());
+    }).catch(function (err) {
+      /* On any error, the hard-coded default stays visible */
+      console.error("WOTW content load error:", err);
+    });
+  })();
+
   /* Current authenticated user (null = signed out) */
   var currentAuthUser = null;
 

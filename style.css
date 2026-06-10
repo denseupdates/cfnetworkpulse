@@ -3386,8 +3386,16 @@ a.athlete-card:hover .athlete-card__ig {
   font-size: var(--text-md, 1rem);
   font-weight: 700;
   color: var(--color-text-muted);
-  margin: 0 0 var(--space-4) 0;
+  margin: 0 0 var(--space-2, 0.5rem) 0;
 }
+.wotw-card__source {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin: 0 0 var(--space-4) 0;
+  opacity: 0.85;
+}
+.wotw-card__source:empty { display: none; }
 
 .wotw-list {
   list-style: none;
@@ -3443,6 +3451,19 @@ a.athlete-card:hover .athlete-card__ig {
   line-height: 1.55;
 }
 .wotw-notes__list strong { color: var(--color-text); }
+
+.wotw-card--block {
+  background: var(--color-surface);
+}
+.wotw-block__text {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  white-space: pre-line;
+}
+.wotw-card--block:empty,
+.wotw-block__text:empty { display: none; }
 
 @media (max-width: 860px) {
   .wotw-layout {

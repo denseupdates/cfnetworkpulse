@@ -274,4 +274,173 @@
     }
   });
 
+  /* ================================================
+     TOP-LEVEL PANEL SWITCH (Ads <-> Workout of the Week)
+     ================================================ */
+  var panelBtns = document.querySelectorAll("[data-admin-panel]");
+  var panels = {
+    ads: document.getElementById("panelAds"),
+    wotw: document.getElementById("panelWotw")
+  };
+  panelBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var target = btn.getAttribute("data-admin-panel");
+      panelBtns.forEach(function (b) { b.classList.remove("admin-nav__btn--active"); });
+      btn.classList.add("admin-nav__btn--active");
+      Object.keys(panels).forEach(function (key) {
+        if (!panels[key]) return;
+        panels[key].classList.toggle("admin-panel--active", key === target);
+      });
+      if (target === "wotw" && !wotwLoaded) {
+        loadWotw();
+      }
+    });
+  });
+
+  /* ================================================
+     WORKOUT OF THE WEEK EDITOR
+     Stored as a single Firestore document: content/wotw
+     ================================================ */
+  var wotwDocRef = db.collection("content").doc("wotw");
+  var wotwLoaded = false;
+
+  var wf = {
+    form:       document.getElementById("wotwForm"),
+    date:       document.getElementById("wotwDate"),
+    tag:        document.getElementById("wotwTag"),
+    title:      document.getElementById("wotwTitle"),
+    weight:     document.getElementById("wotwWeight"),
+    source:     document.getElementById("wotwSource"),
+    image:      document.getElementById("wotwImage"),
+    thumb:      document.getElementById("wotwThumb"),
+    movements:  document.getElementById("wotwMovements"),
+    warmup:     document.getElementById("wotwWarmup"),
+    cooldown:   document.getElementById("wotwCooldown"),
+    notes:      document.getElementById("wotwNotes"),
+    saveBtn:    document.getElementById("wotwSaveBtn"),
+    status:     document.getElementById("wotwSaveStatus")
+  };
+
+  function setWotwStatus(text, kind) {
+    if (!wf.status) return;
+    wf.status.textContent = text;
+    wf.status.className = "wotw-save-status" + (kind ? " wotw-save-status--" + kind : "");
+  }
+
+  function updateThumb() {
+    if (!wf.thumb) return;
+    var url = (wf.image.value || "").trim();
+    if (url) {
+      wf.thumb.src = url;
+      wf.thumb.style.display = "block";
+    } else {
+      wf.thumb.style.display = "none";
+    }
+  }
+  if (wf.image) wf.image.addEventListener("input", updateThumb);
+
+  /* Convert stored arrays back into the textarea formats */
+  function movementsToText(arr) {
+    if (!arr || !arr.length) return "";
+    return arr.map(function (m) {
+      if (m && typeof m === "object") {
+        return (m.label ? m.label + " | " : "") + (m.text || "");
+      }
+      return String(m);
+    }).join("\n");
+  }
+  function notesToText(arr) {
+    if (!arr || !arr.length) return "";
+    return arr.map(function (n) {
+      if (n && typeof n === "object") {
+        return (n.label ? n.label + ": " : "") + (n.text || "");
+      }
+      return String(n);
+    }).join("\n");
+  }
+
+  /* Parse textareas into structured arrays for storage */
+  function parseMovements(text) {
+    return text.split("\n").map(function (line) { return line.trim(); })
+      .filter(function (line) { return line.length > 0; })
+      .map(function (line) {
+        var idx = line.indexOf("|");
+        if (idx === -1) return { label: "", text: line };
+        return { label: line.slice(0, idx).trim(), text: line.slice(idx + 1).trim() };
+      });
+  }
+  function parseNotes(text) {
+    return text.split("\n").map(function (line) { return line.trim(); })
+      .filter(function (line) { return line.length > 0; })
+      .map(function (line) {
+        var idx = line.indexOf(":");
+        if (idx === -1) return { label: "", text: line };
+        return { label: line.slice(0, idx).trim(), text: line.slice(idx + 1).trim() };
+      });
+  }
+
+  function loadWotw() {
+    wotwLoaded = true;
+    setWotwStatus("Loading current workout\u2026");
+    wotwDocRef.get().then(function (doc) {
+      if (doc.exists) {
+        var d = doc.data();
+        wf.date.value = d.date || "";
+        wf.tag.value = d.tag || "";
+        wf.title.value = d.title || "";
+        wf.weight.value = d.weight || "";
+        wf.source.value = d.source || "";
+        wf.image.value = d.image || "";
+        wf.movements.value = movementsToText(d.movements);
+        wf.warmup.value = d.warmup || "";
+        wf.cooldown.value = d.cooldown || "";
+        wf.notes.value = notesToText(d.notes);
+        updateThumb();
+        setWotwStatus("Loaded. Edit and save to publish.");
+      } else {
+        setWotwStatus("No saved workout yet \u2014 the page is showing its built-in default. Fill this in and save to take over.");
+      }
+    }).catch(function (err) {
+      console.error("Error loading WOTW:", err);
+      setWotwStatus("Could not load. Check your connection and try again.", "err");
+      wotwLoaded = false;
+    });
+  }
+
+  if (wf.form) {
+    wf.form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      wf.saveBtn.disabled = true;
+      var prevLabel = wf.saveBtn.textContent;
+      wf.saveBtn.textContent = "Saving\u2026";
+      setWotwStatus("Saving\u2026");
+
+      var payload = {
+        date: wf.date.value.trim(),
+        tag: wf.tag.value.trim(),
+        title: wf.title.value.trim(),
+        weight: wf.weight.value.trim(),
+        source: wf.source.value.trim(),
+        image: wf.image.value.trim(),
+        movements: parseMovements(wf.movements.value),
+        warmup: wf.warmup.value.replace(/^\n+|\n+$/g, ""),
+        cooldown: wf.cooldown.value.replace(/^\n+|\n+$/g, ""),
+        notes: parseNotes(wf.notes.value),
+        updatedAt: Date.now(),
+        updatedBy: (auth.currentUser && auth.currentUser.email) || ""
+      };
+
+      wotwDocRef.set(payload).then(function () {
+        wf.saveBtn.disabled = false;
+        wf.saveBtn.textContent = prevLabel;
+        setWotwStatus("Saved and published \u2713", "ok");
+      }).catch(function (err) {
+        console.error("Error saving WOTW:", err);
+        wf.saveBtn.disabled = false;
+        wf.saveBtn.textContent = prevLabel;
+        setWotwStatus("Save failed: " + (err && err.message ? err.message : "unknown error"), "err");
+      });
+    });
+  }
+
 })();

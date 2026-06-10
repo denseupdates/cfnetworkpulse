@@ -217,6 +217,116 @@
     color: var(--color-bg);
     border-color: var(--color-primary);
   }
+
+  /* ===== Top-level section switch (Ads vs Workout) ===== */
+  .admin-nav {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+    flex-wrap: wrap;
+  }
+  .admin-nav__btn {
+    padding: var(--space-2) var(--space-5);
+    border: 1px solid var(--color-divider);
+    border-radius: var(--radius-sm);
+    background: none;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all 180ms ease;
+  }
+  .admin-nav__btn--active {
+    background: var(--color-primary);
+    color: var(--color-bg);
+    border-color: var(--color-primary);
+  }
+  .admin-panel { display: none; }
+  .admin-panel--active { display: block; }
+
+  /* ===== WOTW editor form ===== */
+  .wotw-form {
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .wotw-field { display: flex; flex-direction: column; gap: 6px; }
+  .wotw-field label {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .wotw-field__hint {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    font-weight: 400;
+  }
+  .wotw-input, .wotw-textarea {
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-divider);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--color-text);
+    -webkit-appearance: none;
+    box-sizing: border-box;
+  }
+  .wotw-textarea { resize: vertical; line-height: 1.5; }
+  .wotw-input:focus, .wotw-textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+  }
+  .wotw-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+  @media (max-width: 640px) { .wotw-row { grid-template-columns: 1fr; } }
+  .wotw-save-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    margin-top: var(--space-2);
+  }
+  .wotw-save-btn {
+    padding: var(--space-3) var(--space-6);
+    background: #10b981;
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    cursor: pointer;
+    min-height: 44px;
+    transition: opacity 180ms ease;
+  }
+  .wotw-save-btn:hover { opacity: 0.9; }
+  .wotw-save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .wotw-save-status {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+  .wotw-save-status--ok { color: #10b981; font-weight: 600; }
+  .wotw-save-status--err { color: #e11d48; font-weight: 600; }
+  .wotw-preview-link {
+    font-size: var(--text-sm);
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .wotw-thumb {
+    max-width: 220px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-divider);
+    margin-top: 6px;
+    display: none;
+  }
 </style>
 </head>
 <body>
@@ -251,19 +361,98 @@
 <!-- ===== ADMIN DASHBOARD (hidden until auth) ===== -->
 <div class="admin-dash" id="adminDash">
   <div class="container">
-    <section class="admin-section">
-      <div class="admin-section__title">Ad Management</div>
-      <div class="admin-section__count" id="adminCount">Loading...</div>
 
-      <div class="admin-tabs">
-        <button class="admin-tab admin-tab--active" data-admin-tab="pending">Pending</button>
-        <button class="admin-tab" data-admin-tab="active">Active</button>
-        <button class="admin-tab" data-admin-tab="rejected">Rejected</button>
-        <button class="admin-tab" data-admin-tab="all">All</button>
-      </div>
+    <!-- Top-level section switch -->
+    <div class="admin-nav" style="margin-top:var(--space-6)">
+      <button class="admin-nav__btn admin-nav__btn--active" data-admin-panel="ads">Ads</button>
+      <button class="admin-nav__btn" data-admin-panel="wotw">Workout of the Week</button>
+    </div>
 
-      <div id="adminFeed"></div>
-    </section>
+    <!-- PANEL: Ads -->
+    <div class="admin-panel admin-panel--active" id="panelAds">
+      <section class="admin-section" style="padding-top:0">
+        <div class="admin-section__title">Ad Management</div>
+        <div class="admin-section__count" id="adminCount">Loading...</div>
+
+        <div class="admin-tabs">
+          <button class="admin-tab admin-tab--active" data-admin-tab="pending">Pending</button>
+          <button class="admin-tab" data-admin-tab="active">Active</button>
+          <button class="admin-tab" data-admin-tab="rejected">Rejected</button>
+          <button class="admin-tab" data-admin-tab="all">All</button>
+        </div>
+
+        <div id="adminFeed"></div>
+      </section>
+    </div>
+
+    <!-- PANEL: Workout of the Week -->
+    <div class="admin-panel" id="panelWotw">
+      <section class="admin-section" style="padding-top:0">
+        <div class="admin-section__title">Workout of the Week</div>
+        <div class="admin-section__count">Edit the workout shown on <a class="wotw-preview-link" href="./wotw.html" target="_blank" rel="noopener">wotw.html</a>. Changes go live the moment you save.</div>
+
+        <form class="wotw-form" id="wotwForm">
+          <div class="wotw-row">
+            <div class="wotw-field">
+              <label for="wotwDate">Date label <span class="wotw-field__hint">(shown top-right)</span></label>
+              <input type="text" id="wotwDate" class="wotw-input" placeholder="Week of June 10, 2026">
+            </div>
+            <div class="wotw-field">
+              <label for="wotwTag">Format tag <span class="wotw-field__hint">(blue badge)</span></label>
+              <input type="text" id="wotwTag" class="wotw-input" placeholder="10 Min EMOM">
+            </div>
+          </div>
+
+          <div class="wotw-row">
+            <div class="wotw-field">
+              <label for="wotwTitle">Workout title</label>
+              <input type="text" id="wotwTitle" class="wotw-input" placeholder="Sentinel Training">
+            </div>
+            <div class="wotw-field">
+              <label for="wotwWeight">Weight / loading line</label>
+              <input type="text" id="wotwWeight" class="wotw-input" placeholder="135 / 95 lbs  (61 / 43 kg)">
+            </div>
+          </div>
+
+          <div class="wotw-field">
+            <label for="wotwImage">Image URL <span class="wotw-field__hint">(leave blank to use the repo image img-wotw-current.jpg)</span></label>
+            <input type="text" id="wotwImage" class="wotw-input" placeholder="https://... (optional override)">
+            <img class="wotw-thumb" id="wotwThumb" alt="Image preview">
+          </div>
+
+          <div class="wotw-field">
+            <label for="wotwSource">Source line <span class="wotw-field__hint">(small italic credit under the title, e.g. “Sentinel Training Compete track · 6.16.26 · Strivee App”. Leave blank to hide.)</span></label>
+            <input type="text" id="wotwSource" class="wotw-input" placeholder="Sentinel Training Compete track · 6.16.26 · Strivee App">
+          </div>
+
+          <div class="wotw-field">
+            <label for="wotwMovements">Workout breakdown <span class="wotw-field__hint">(one line per row — use “Label | text”, e.g. “Min 1 | 20 GHD sit-ups + 1 clean &amp; jerk”. A plain line with no “|” just shows as text.)</span></label>
+            <textarea id="wotwMovements" class="wotw-textarea" rows="11" placeholder="Min 1 | 20 GHD sit-ups + 1 clean & jerk&#10;Min 2 | 18 GHD sit-ups + 2 clean & jerks"></textarea>
+          </div>
+
+          <div class="wotw-field">
+            <label for="wotwWarmup">Warm-up <span class="wotw-field__hint">(text only — one item per line. Line breaks are kept exactly as you type them.)</span></label>
+            <textarea id="wotwWarmup" class="wotw-textarea" rows="10" placeholder="2 rounds:&#10;2 minute bike erg&#10;1 minute ski erg&#10;Then…"></textarea>
+          </div>
+
+          <div class="wotw-field">
+            <label for="wotwCooldown">Cool-down <span class="wotw-field__hint">(text only — one item per line. Line breaks are kept exactly as you type them.)</span></label>
+            <textarea id="wotwCooldown" class="wotw-textarea" rows="6" placeholder="2 minute couch stretch, each side&#10;2 minute cobra stretch"></textarea>
+          </div>
+
+          <div class="wotw-field">
+            <label for="wotwNotes">Scaling notes <span class="wotw-field__hint">(one note per line — use “Label: text” to bold the label, e.g. “Beginner: 95/65 lbs…”)</span></label>
+            <textarea id="wotwNotes" class="wotw-textarea" rows="6" placeholder="Intermediate: 115 / 75 lbs, sub abmat sit-ups for GHD if needed.&#10;Beginner: 95 / 65 lbs, reduce GHD reps by half."></textarea>
+          </div>
+
+          <div class="wotw-save-bar">
+            <button type="submit" class="wotw-save-btn" id="wotwSaveBtn">Save &amp; Publish</button>
+            <span class="wotw-save-status" id="wotwSaveStatus">Loading current workout…</span>
+          </div>
+        </form>
+      </section>
+    </div>
+
   </div>
 </div>
 
