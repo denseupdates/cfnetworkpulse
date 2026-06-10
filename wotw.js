@@ -58,12 +58,15 @@
       if (!d) return;
 
       var dateEl = document.getElementById("wotwDate");
+      var sourceEl = document.getElementById("wotwSource");
       var imgEl = document.getElementById("wotwImage");
       var notesEl = document.getElementById("wotwNotesList");
       var warmupEl = document.getElementById("wotwWarmup");
       var cooldownEl = document.getElementById("wotwCooldown");
 
       if (dateEl && d.date) dateEl.textContent = d.date;
+      /* Source/attribution line: only override when provided (empty collapses via CSS :empty). */
+      if (sourceEl && typeof d.source === "string") sourceEl.textContent = d.source;
       /* Warm-up & cool-down are plain text; line breaks preserved by CSS white-space: pre-line.
          textContent is XSS-safe. Empty string collapses the block via CSS :empty. */
       if (warmupEl && typeof d.warmup === "string") warmupEl.textContent = d.warmup;

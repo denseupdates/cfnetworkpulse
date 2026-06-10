@@ -71,30 +71,33 @@
         <div class="section__label" style="color:#3b82f6">Train With Us</div>
         <h2 class="section__title">Workout of the Week</h2>
       </div>
-      <!-- Date label (admin-editable; falls back to this default) -->
-      <span class="wotw-date" id="wotwDate">Week of June 10, 2026</span>
+      <!-- Date label + source (admin-editable; fall back to these defaults) -->
+      <div class="wotw-dateblock">
+        <span class="wotw-date" id="wotwDate">Week of June 10, 2026</span>
+        <span class="wotw-source" id="wotwSource">Sentinel Training Compete track · 6.16.26 · Strivee App</span>
+      </div>
     </div>
 
-    <!-- ===== WORKOUT IMAGE =====
-         The image contains the full workout (title, format, weight, movements).
-         EDIT EACH WEEK: replace img-wotw-current.jpg with the new screenshot
-         (keep the same filename), or set an Image URL in the admin editor. -->
-    <figure class="wotw-figure wotw-figure--solo">
-      <img class="wotw-figure__img" id="wotwImage" src="./img-wotw-current.jpg"
-           alt="Workout of the Week" loading="eager">
-    </figure>
+    <!-- ===== TOP ROW: WORKOUT IMAGE + WARM-UP =====
+         Image at its natural size (capped) on the left, warm-up alongside it. -->
+    <div class="wotw-toprow">
+      <!-- ===== WORKOUT IMAGE =====
+           The image contains the full workout (title, format, weight, movements).
+           EDIT EACH WEEK: replace img-wotw-current.jpg with the new screenshot
+           (keep the same filename), or set an Image URL in the admin editor. -->
+      <figure class="wotw-figure wotw-figure--media">
+        <img class="wotw-figure__img" id="wotwImage" src="./img-wotw-current.jpg"
+             alt="Workout of the Week" loading="eager">
+      </figure>
 
-    <!-- ===== SUPPLEMENT: WARM-UP / COOL-DOWN / SCALING NOTES =====
-         Full-width responsive grid below the workout hero. -->
-    <div class="wotw-supplement">
-        <!-- ===== WARM-UP =====
-             EDIT EACH WEEK: text only, one item per line. -->
-        <div class="wotw-card wotw-card--block" id="wotwWarmupCard">
-          <h4 class="wotw-notes__heading">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            Warm-up
-          </h4>
-          <p class="wotw-block__text" id="wotwWarmup">2 rounds:
+      <!-- ===== WARM-UP =====
+           EDIT EACH WEEK: text only, one item per line. -->
+      <div class="wotw-card wotw-card--block" id="wotwWarmupCard">
+        <h4 class="wotw-notes__heading">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Warm-up
+        </h4>
+        <p class="wotw-block__text" id="wotwWarmup">2 rounds:
 2 minute bike erg
 1 minute ski erg
 1 minute of supine scorpion leg swings
@@ -109,8 +112,12 @@ Then&hellip;
 30 ft sandbag bearhug carry
 Then&hellip;
 Build to starting bearhug hold loading</p>
-        </div>
+      </div>
+    </div>
 
+    <!-- ===== BOTTOM ROW: COOL-DOWN + SCALING NOTES =====
+         Evenly spaced two-column row below the image/warm-up. -->
+    <div class="wotw-bottomrow">
         <!-- ===== COOL-DOWN =====
              EDIT EACH WEEK: text only, one item per line. -->
         <div class="wotw-card wotw-card--block" id="wotwCooldownCard">

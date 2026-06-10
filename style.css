@@ -3320,12 +3320,50 @@ a.athlete-card:hover .athlete-card__ig {
 /* ================================================
    WORKOUT OF THE WEEK
    ================================================ */
+/* Date + source attribution stack (top-right of the section header) */
+.wotw-dateblock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  text-align: right;
+}
 .wotw-date {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
   font-weight: 600;
   white-space: nowrap;
 }
+.wotw-source {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-style: italic;
+  opacity: 0.85;
+}
+.wotw-source:empty { display: none; }
+@media (max-width: 860px) {
+  .wotw-dateblock { align-items: flex-start; text-align: left; }
+}
+
+/* ---- TOP ROW: image (natural, capped) + warm-up alongside ---- */
+.wotw-toprow {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: var(--space-6, 1.5rem);
+  align-items: stretch;
+  margin-top: var(--space-5, 1.25rem);
+}
+.wotw-toprow .wotw-card { height: 100%; }
+
+/* ---- BOTTOM ROW: cool-down + scaling notes, evenly spaced ---- */
+.wotw-bottomrow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6, 1.5rem);
+  align-items: start;
+  margin-top: var(--space-6, 1.5rem);
+}
+.wotw-bottomrow .wotw-card { height: 100%; }
 
 .wotw-layout {
   display: grid;
@@ -3346,6 +3384,11 @@ a.athlete-card:hover .athlete-card__ig {
 .wotw-figure--solo {
   max-width: 720px;
   margin: var(--space-4, 1rem) auto 0;
+}
+/* Media image in the top row: sits at the top, natural aspect, not stretched */
+.wotw-figure--media {
+  margin: 0;
+  align-self: start;
 }
 .wotw-figure__img {
   display: block;
@@ -3487,12 +3530,23 @@ a.athlete-card:hover .athlete-card__ig {
   }
 }
 
+/* Tablet/mobile: stack the top row (image over warm-up) and cap image width */
 @media (max-width: 860px) {
   .wotw-layout {
     grid-template-columns: 1fr;
   }
   .wotw-supplement {
     grid-template-columns: 1fr;
+  }
+  .wotw-toprow {
+    grid-template-columns: 1fr;
+  }
+  .wotw-bottomrow {
+    grid-template-columns: 1fr;
+  }
+  .wotw-figure--media {
+    max-width: 520px;
+    margin: 0 auto;
   }
 }
 

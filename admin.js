@@ -307,6 +307,7 @@
   var wf = {
     form:       document.getElementById("wotwForm"),
     date:       document.getElementById("wotwDate"),
+    source:     document.getElementById("wotwSource"),
     image:      document.getElementById("wotwImage"),
     thumb:      document.getElementById("wotwThumb"),
     warmup:     document.getElementById("wotwWarmup"),
@@ -363,6 +364,7 @@
       if (doc.exists) {
         var d = doc.data();
         wf.date.value = d.date || "";
+        if (wf.source) wf.source.value = d.source || "";
         wf.image.value = d.image || "";
         wf.warmup.value = d.warmup || "";
         wf.cooldown.value = d.cooldown || "";
@@ -389,6 +391,7 @@
 
       var payload = {
         date: wf.date.value.trim(),
+        source: wf.source ? wf.source.value.trim() : "",
         image: wf.image.value.trim(),
         warmup: wf.warmup.value.replace(/^\n+|\n+$/g, ""),
         cooldown: wf.cooldown.value.replace(/^\n+|\n+$/g, ""),
