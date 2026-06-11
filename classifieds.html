@@ -1287,10 +1287,15 @@
         + '</div>';
     }).join('');
 
-    // Replace all cards
+    // Build the new cards in a detached container, then swap in one
+    // operation so the feed never appears empty mid-render (no flicker).
+    var temp = document.createElement('div');
+    temp.innerHTML = html;
     var oldCards = feedEl.querySelectorAll('.cf-card');
+    while (temp.firstChild) {
+      feedEl.appendChild(temp.firstChild);
+    }
     oldCards.forEach(function (c) { c.remove(); });
-    feedEl.insertAdjacentHTML('beforeend', html);
   }
 
   function escHtml(str) {
@@ -1497,10 +1502,9 @@
 
   // ===== Render =====
   function renderHosts() {
-    var oldCards = feedEl.querySelectorAll('.cf-card');
-    oldCards.forEach(function (c) { c.remove(); });
-
     if (allHosts.length === 0) {
+      var emptyCards = feedEl.querySelectorAll('.cf-card');
+      emptyCards.forEach(function (c) { c.remove(); });
       emptyEl.style.display = 'block';
       return;
     }
@@ -1569,7 +1573,15 @@
         + '</div>';
     }).join('');
 
-    feedEl.insertAdjacentHTML('beforeend', html);
+    // Build new cards detached, then swap in one operation so the feed
+    // never appears empty mid-render (no flicker).
+    var temp = document.createElement('div');
+    temp.innerHTML = html;
+    var oldCards = feedEl.querySelectorAll('.cf-card');
+    while (temp.firstChild) {
+      feedEl.appendChild(temp.firstChild);
+    }
+    oldCards.forEach(function (c) { c.remove(); });
   }
 
   function escHtml(str) {
