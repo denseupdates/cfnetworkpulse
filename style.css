@@ -3395,6 +3395,17 @@ a.athlete-card:hover .athlete-card__ig {
   width: 100%;
   height: auto;
 }
+/* Image container: images stack vertically so the PRIMARY workout image keeps its
+   original full width (it is not shrunk by the presence of a secondary image).
+   The secondary image, when shown, sits directly below at the same width. */
+.wotw-media {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 0.75rem);
+  align-items: stretch;
+}
+/* Hide the secondary image when [hidden] is set (e.g. admin field set to "none"). */
+.wotw-figure__img--secondary[hidden] { display: none; }
 
 .wotw-details {
   display: flex;

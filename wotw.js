@@ -60,6 +60,7 @@
       var dateEl = document.getElementById("wotwDate");
       var sourceEl = document.getElementById("wotwSource");
       var imgEl = document.getElementById("wotwImage");
+      var imgSecEl = document.getElementById("wotwImageSecondary");
       var notesEl = document.getElementById("wotwNotesList");
       var warmupEl = document.getElementById("wotwWarmup");
       var cooldownEl = document.getElementById("wotwCooldown");
@@ -76,6 +77,21 @@
          The image contains the full workout (title, format, weight, movements). */
       if (imgEl && d.image && String(d.image).trim()) {
         imgEl.src = String(d.image).trim();
+      }
+      /* Secondary image (optional). The HTML ships with the repo image visible by default.
+         - A non-empty URL in Firestore overrides the src.
+         - The literal "none" / "hide" / "off" hides the secondary image entirely.
+         - An empty/missing value leaves the repo default in place. */
+      if (imgSecEl) {
+        var sec = (typeof d.imageSecondary === "string") ? d.imageSecondary.trim() : "";
+        var secLower = sec.toLowerCase();
+        if (secLower === "none" || secLower === "hide" || secLower === "off") {
+          imgSecEl.hidden = true;
+        } else if (sec) {
+          imgSecEl.src = sec;
+          imgSecEl.hidden = false;
+        }
+        /* else: keep the repo default image already in the HTML */
       }
 
       /* Scaling notes */

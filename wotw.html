@@ -81,12 +81,14 @@
     <!-- ===== TOP ROW: WORKOUT IMAGE + WARM-UP =====
          Image at its natural size (capped) on the left, warm-up alongside it. -->
     <div class="wotw-toprow">
-      <!-- ===== WORKOUT IMAGE =====
-           The image contains the full workout (title, format, weight, movements).
+      <!-- ===== WORKOUT IMAGE(S) =====
+           Primary image contains the full workout (title, format, weight, movements).
            EDIT EACH WEEK: replace img-wotw-current.jpg with the new screenshot
-           (keep the same filename), or set an Image URL in the admin editor. -->
+           (keep the same filename), or set an Image URL in the admin editor.
+           SECONDARY image is optional: set a "Secondary image URL" in the admin editor
+           (or drop img-wotw-secondary.jpg in the repo). Leave blank to hide it. -->
       <figure class="wotw-figure wotw-figure--media">
-        <img class="wotw-figure__img" id="wotwImage" src="./assets/img-wotw-current.jpg"
+        <img class="wotw-figure__img" id="wotwImage" src="./img-wotw-current.jpg"
              alt="Workout of the Week" loading="eager">
       </figure>
 
