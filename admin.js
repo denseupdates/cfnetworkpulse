@@ -310,6 +310,8 @@
     source:     document.getElementById("wotwSource"),
     image:      document.getElementById("wotwImage"),
     thumb:      document.getElementById("wotwThumb"),
+    imageSecondary: document.getElementById("wotwImageSecondary"),
+    thumbSecondary: document.getElementById("wotwThumbSecondary"),
     warmup:     document.getElementById("wotwWarmup"),
     cooldown:   document.getElementById("wotwCooldown"),
     notes:      document.getElementById("wotwNotes"),
@@ -334,6 +336,18 @@
     }
   }
   if (wf.image) wf.image.addEventListener("input", updateThumb);
+
+  function updateThumbSecondary() {
+    if (!wf.thumbSecondary) return;
+    var url = (wf.imageSecondary && wf.imageSecondary.value || "").trim();
+    if (url) {
+      wf.thumbSecondary.src = url;
+      wf.thumbSecondary.style.display = "block";
+    } else {
+      wf.thumbSecondary.style.display = "none";
+    }
+  }
+  if (wf.imageSecondary) wf.imageSecondary.addEventListener("input", updateThumbSecondary);
 
   /* Convert stored arrays back into the textarea formats */
   function notesToText(arr) {
@@ -366,10 +380,12 @@
         wf.date.value = d.date || "";
         if (wf.source) wf.source.value = d.source || "";
         wf.image.value = d.image || "";
+        if (wf.imageSecondary) wf.imageSecondary.value = d.imageSecondary || "";
         wf.warmup.value = d.warmup || "";
         wf.cooldown.value = d.cooldown || "";
         wf.notes.value = notesToText(d.notes);
         updateThumb();
+        updateThumbSecondary();
         setWotwStatus("Loaded. Edit and save to publish.");
       } else {
         setWotwStatus("No saved workout yet \u2014 the page is showing its built-in default. Fill this in and save to take over.");
@@ -393,6 +409,7 @@
         date: wf.date.value.trim(),
         source: wf.source ? wf.source.value.trim() : "",
         image: wf.image.value.trim(),
+        imageSecondary: wf.imageSecondary ? wf.imageSecondary.value.trim() : "",
         warmup: wf.warmup.value.replace(/^\n+|\n+$/g, ""),
         cooldown: wf.cooldown.value.replace(/^\n+|\n+$/g, ""),
         notes: parseNotes(wf.notes.value),

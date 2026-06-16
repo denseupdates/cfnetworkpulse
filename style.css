@@ -3395,6 +3395,25 @@ a.athlete-card:hover .athlete-card__ig {
   width: 100%;
   height: auto;
 }
+/* Image container: a single column normally; switches to two side-by-side
+   columns automatically when the secondary image is shown (not [hidden]). */
+.wotw-media {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3, 0.75rem);
+  align-items: start;
+}
+.wotw-media:has(.wotw-figure__img--secondary:not([hidden])) {
+  grid-template-columns: 1fr 1fr;
+}
+/* Fallback for browsers without :has() — secondary image just stacks below. */
+.wotw-figure__img--secondary[hidden] { display: none; }
+@media (max-width: 600px) {
+  /* On small phones, stack the two images vertically so neither gets too tiny. */
+  .wotw-media:has(.wotw-figure__img--secondary:not([hidden])) {
+    grid-template-columns: 1fr;
+  }
+}
 
 .wotw-details {
   display: flex;
