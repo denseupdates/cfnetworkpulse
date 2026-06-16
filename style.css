@@ -3395,25 +3395,17 @@ a.athlete-card:hover .athlete-card__ig {
   width: 100%;
   height: auto;
 }
-/* Image container: a single column normally; switches to two side-by-side
-   columns automatically when the secondary image is shown (not [hidden]). */
+/* Image container: images stack vertically so the PRIMARY workout image keeps its
+   original full width (it is not shrunk by the presence of a secondary image).
+   The secondary image, when shown, sits directly below at the same width. */
 .wotw-media {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: var(--space-3, 0.75rem);
-  align-items: start;
+  align-items: stretch;
 }
-.wotw-media:has(.wotw-figure__img--secondary:not([hidden])) {
-  grid-template-columns: 1fr 1fr;
-}
-/* Fallback for browsers without :has() — secondary image just stacks below. */
+/* Hide the secondary image when [hidden] is set (e.g. admin field set to "none"). */
 .wotw-figure__img--secondary[hidden] { display: none; }
-@media (max-width: 600px) {
-  /* On small phones, stack the two images vertically so neither gets too tiny. */
-  .wotw-media:has(.wotw-figure__img--secondary:not([hidden])) {
-    grid-template-columns: 1fr;
-  }
-}
 
 .wotw-details {
   display: flex;
