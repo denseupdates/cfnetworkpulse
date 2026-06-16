@@ -78,32 +78,32 @@
       </div>
     </div>
 
-    <!-- ===== TOP ROW: WORKOUT IMAGE + WARM-UP =====
-         Image at its natural size (capped) on the left, warm-up alongside it. -->
-    <div class="wotw-toprow">
-      <!-- ===== WORKOUT IMAGE(S) =====
-           Primary image contains the full workout (title, format, weight, movements).
-           EDIT EACH WEEK: replace img-wotw-current.jpg with the new screenshot
-           (keep the same filename), or set an Image URL in the admin editor.
-           SECONDARY image is optional: set a "Secondary image URL" in the admin editor
-           (or drop img-wotw-secondary.jpg in the repo). Leave blank to hide it. -->
-      <figure class="wotw-figure wotw-figure--media">
-        <div class="wotw-media" id="wotwMedia">
-          <img class="wotw-figure__img" id="wotwImage" src="./assets/img-wotw-current.jpg"
-               alt="Workout of the Week" loading="eager">
-          <img class="wotw-figure__img wotw-figure__img--secondary" id="wotwImageSecondary"
-               src="./assets/img-wotw-secondary.jpg" alt="Dot Drill warm-up" loading="eager">
-        </div>
-      </figure>
+    <!-- ===== IMAGE ROW: large workout image(s), full width =====
+         Primary image contains the full workout (title, format, weight, movements).
+         EDIT EACH WEEK: replace img-wotw-current.jpg with the new screenshot
+         (keep the same filename), or set an Image URL in the admin editor.
+         SECONDARY image is optional: set a "Secondary image URL" in the admin editor
+         (or drop img-wotw-secondary.jpg in the repo). Leave blank to hide it. -->
+    <figure class="wotw-figure wotw-figure--media">
+      <div class="wotw-media" id="wotwMedia">
+        <img class="wotw-figure__img" id="wotwImage" src="./assets/img-wotw-current.jpg"
+             alt="Workout of the Week" loading="eager">
+        <img class="wotw-figure__img wotw-figure__img--secondary" id="wotwImageSecondary"
+             src="./assets/img-wotw-secondary.jpg" alt="Dot Drill warm-up" loading="eager">
+      </div>
+    </figure>
 
-      <!-- ===== WARM-UP =====
-           EDIT EACH WEEK: text only, one item per line. -->
-      <div class="wotw-card wotw-card--block" id="wotwWarmupCard">
-        <h4 class="wotw-notes__heading">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-          Warm-up
-        </h4>
-        <p class="wotw-block__text" id="wotwWarmup">2 rounds:
+    <!-- ===== DETAILS ROW: WARM-UP + COOL-DOWN + SCALING NOTES =====
+         Three evenly spaced columns below the images. -->
+    <div class="wotw-bottomrow">
+        <!-- ===== WARM-UP =====
+             EDIT EACH WEEK: text only, one item per line. -->
+        <div class="wotw-card wotw-card--block" id="wotwWarmupCard">
+          <h4 class="wotw-notes__heading">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Warm-up
+          </h4>
+          <p class="wotw-block__text" id="wotwWarmup">2 rounds:
 2 minute bike erg
 1 minute ski erg
 1 minute of supine scorpion leg swings
@@ -118,12 +118,8 @@ Then&hellip;
 30 ft sandbag bearhug carry
 Then&hellip;
 Build to starting bearhug hold loading</p>
-      </div>
-    </div>
+        </div>
 
-    <!-- ===== BOTTOM ROW: COOL-DOWN + SCALING NOTES =====
-         Evenly spaced two-column row below the image/warm-up. -->
-    <div class="wotw-bottomrow">
         <!-- ===== COOL-DOWN =====
              EDIT EACH WEEK: text only, one item per line. -->
         <div class="wotw-card wotw-card--block" id="wotwCooldownCard">
