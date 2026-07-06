@@ -10,7 +10,52 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
 <link rel="stylesheet" href="./base.css">
 <link rel="stylesheet" href="./style.css">
-<style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="./index.html" class="logo" aria-label="CF Network News home">
+      <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+        <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+        <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+      </svg>
+      <div class="logo__text">CF NETWORK<span>NEWS</span></div>
+    </a>
+
+    <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track"></div>
+</div>
+
+ <!-- ===== SECTION NAV ===== -->
+<nav class="section-nav" aria-label="Section navigation">
+  <div class="section-nav__track">
+    <a href="./news.html" class="section-nav__link">New Stories</a>
+    <a href="./gossip.html" class="section-nav__link">Gossip</a>
+    <a href="./shows.html" class="section-nav__link">Podcasts/Shows</a>
+    <a href="./rankings.html" class="section-nav__link">Rankings</a>
+    <a href="./rogue.html" class="section-nav__link">Rogue</a>
+    <a href="./season-info.html" class="section-nav__link">Season Info</a>
+    <a href="./wotw.html" class="section-nav__link">Workout of the Week</a>
+    <a href="./message-board.html" class="section-nav__link">Message Board</a>
+    <a href="./classifieds.html" class="section-nav__link">Classifieds</a>
+    <a href="./index.html#subscribe" class="section-nav__link">Subscribe</a>
+  </div>
+</nav>
+<style> 
+
 /* ================================
    CLASSIFIEDS PAGE STYLES
    ================================ */
