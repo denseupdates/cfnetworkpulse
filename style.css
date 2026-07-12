@@ -3585,3 +3585,13 @@ a.athlete-card:hover .athlete-card__ig {
 .mb-action--disliked:hover {
   color: #1d4ed8;
 }
+
+/* Fix: athlete/team names visible in dark mode (qualifying bracket cards) */
+.qualifier-event-card .spot-name,
+.qualifier-event-card .spot-value {
+  color: var(--color-text);
+}
+
+.qualifier-event-card .spot-label {
+  color: var(--color-text-muted);
+}
