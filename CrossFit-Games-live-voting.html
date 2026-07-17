@@ -141,11 +141,11 @@
 <body>
 <div class="container">
   <div class="hero">
-    <div class="hero-tag">Dense Updates \u00b7 CrossFit Games 2026</div>
+    <div class="hero-tag">Dense Updates · CrossFit Games 2026</div>
     <div class="hero-collage">
       <span class="hero-line l1">Rank</span>
       <span class="hero-line l2">The Field</span>
-      <span class="hero-line l3">\u25ba call every winner</span>
+      <span class="hero-line l3">► call every winner</span>
     </div>
     <p class="hero-sub">Rank all 30 men and all 30 women in the order you think they'll finish overall, and pick a winner for every one of the 20 events. Highest score wins.</p>
     <div class="voter-badge" id="voterBadge" style="display:none;"></div>
@@ -155,16 +155,16 @@
   <div class="section accent-teal">
     <div class="head">
       <h2 style="color:var(--teal);">The Athletes</h2>
-      <span class="status-bar"><span class="dot" id="connDot"></span><span id="connLabel">Connecting\u2026</span></span>
+      <span class="status-bar"><span class="dot" id="connDot"></span><span id="connLabel">Connecting…</span></span>
     </div>
     <p>60 athletes. 30 men. 30 women. Know them cold before you pick.</p>
     <div class="roster-grid">
       <div class="col">
-        <h4>Men \u00b7 30</h4>
+        <h4>Men · 30</h4>
         <ol id="rosterMen"></ol>
       </div>
       <div class="col">
-        <h4>Women \u00b7 30</h4>
+        <h4>Women · 30</h4>
         <ol id="rosterWomen"></ol>
       </div>
     </div>
@@ -183,7 +183,7 @@
 
     <div id="rankMenWrap" data-division="men">
       <div class="head" style="margin-top:0.75rem;">
-        <div><span class="badge men">Men \u00b7 30</span></div>
+        <div><span class="badge men">Men · 30</span></div>
         <div id="rankMenBadges"></div>
       </div>
       <ol class="rank-list" id="rankMen"></ol>
@@ -195,7 +195,7 @@
 
     <div id="rankWomenWrap" data-division="women" style="display:none;">
       <div class="head" style="margin-top:0.75rem;">
-        <div><span class="badge women">Women \u00b7 30</span></div>
+        <div><span class="badge women">Women · 30</span></div>
         <div id="rankWomenBadges"></div>
       </div>
       <ol class="rank-list" id="rankWomen"></ol>
@@ -213,7 +213,7 @@
     <div id="eventsList"></div>
   </div>
 
-  <p class="foot-note">Powered by <b>Dense Updates</b> \u00b7 Live scoring \u00b7 Picks lock as events start</p>
+  <p class="foot-note">Powered by <b>Dense Updates</b> · Live scoring · Picks lock as events start</p>
 </div>
 
 <!-- Register modal -->
@@ -298,7 +298,7 @@
   function showVoterBadge() {
     const el = document.getElementById('voterBadge');
     if (!state.voter) { el.style.display = 'none'; return; }
-    el.innerHTML = `Picking as <b>${esc(state.voter.name)}</b> \u00b7 ${esc(state.voter.email)}`;
+    el.innerHTML = `Picking as <b>${esc(state.voter.name)}</b> · ${esc(state.voter.email)}`;
     el.style.display = 'inline-flex';
   }
   function wireRegister() {
@@ -343,12 +343,12 @@
       <li class="rank-item ${disabled ? 'locked' : ''}" draggable="${disabled ? 'false' : 'true'}" data-idx="${i}">
         <span class="rank-num">${i + 1}</span>
         <span class="rank-name">${esc(name)}</span>
-        <span class="rank-handle" aria-hidden="true">${disabled ? '\u2013' : '\u2261'}</span>
+        <span class="rank-handle" aria-hidden="true">${disabled ? '–' : '≡'}</span>
       </li>
     `).join('');
 
     const badges = [];
-    if (submitted) badges.push('<span class="badge saved">Submitted \u2713</span>');
+    if (submitted) badges.push('<span class="badge saved">Submitted ✓</span>');
     if (locked) badges.push('<span class="badge locked">Locked</span>');
     badgesEl.innerHTML = badges.join(' ');
 
@@ -356,7 +356,7 @@
     const resetBtn  = document.getElementById(division === 'men' ? 'resetMen'  : 'resetWomen');
     submitBtn.disabled = disabled;
     resetBtn.disabled = disabled;
-    if (submitted) submitBtn.textContent = 'Done \u2713';
+    if (submitted) submitBtn.textContent = 'Done ✓';
     else if (locked) submitBtn.textContent = 'Ranking locked';
     else submitBtn.textContent = `Submit ${division === 'men' ? "men's" : "women's"} ranking`;
 
@@ -457,7 +457,7 @@
   // ============================================================
   function renderEvents() {
     const wrap = document.getElementById('eventsList');
-    if (!state.events.length) { wrap.innerHTML = '<p>Loading events\u2026</p>'; return; }
+    if (!state.events.length) { wrap.innerHTML = '<p>Loading events…</p>'; return; }
 
     wrap.innerHTML = state.events.map(evt => {
       const menKey   = `${evt.event_num}:men`;
@@ -477,10 +477,10 @@
         .join('');
 
       const menStatus = menPicked
-        ? `<div class="status saved">Locked in: ${esc(menPicked)} \u2713</div>`
+        ? `<div class="status saved">Locked in: ${esc(menPicked)} ✓</div>`
         : (menLocked ? `<div class="status closed">Voting closed</div>` : '');
       const womenStatus = womenPicked
-        ? `<div class="status saved">Locked in: ${esc(womenPicked)} \u2713</div>`
+        ? `<div class="status saved">Locked in: ${esc(womenPicked)} ✓</div>`
         : (womenLocked ? `<div class="status closed">Voting closed</div>` : '');
 
       return `
@@ -497,13 +497,13 @@
               <div class="label"><span>Men's winner</span> ${menLocked ? '<span class="badge locked">Closed</span>' : ''}</div>
               <select data-pick-event="${evt.event_num}" data-pick-div="men" ${menDisabled ? 'disabled' : ''}>${optsMen}</select>
               ${menStatus}
-              <button class="btn primary" data-submit-event="${evt.event_num}" data-submit-div="men" style="width:100%;margin-top:0.5rem;" ${menDisabled ? 'disabled' : ''}>${menPicked ? 'Done \u2713' : (menLocked ? 'Closed' : 'Submit pick')}</button>
+              <button class="btn primary" data-submit-event="${evt.event_num}" data-submit-div="men" style="width:100%;margin-top:0.5rem;" ${menDisabled ? 'disabled' : ''}>${menPicked ? 'Done ✓' : (menLocked ? 'Closed' : 'Submit pick')}</button>
             </div>
             <div class="pick-cell women">
               <div class="label"><span>Women's winner</span> ${womenLocked ? '<span class="badge locked">Closed</span>' : ''}</div>
               <select data-pick-event="${evt.event_num}" data-pick-div="women" ${womenDisabled ? 'disabled' : ''}>${optsWomen}</select>
               ${womenStatus}
-              <button class="btn primary" data-submit-event="${evt.event_num}" data-submit-div="women" style="width:100%;margin-top:0.5rem;" ${womenDisabled ? 'disabled' : ''}>${womenPicked ? 'Done \u2713' : (womenLocked ? 'Closed' : 'Submit pick')}</button>
+              <button class="btn primary" data-submit-event="${evt.event_num}" data-submit-div="women" style="width:100%;margin-top:0.5rem;" ${womenDisabled ? 'disabled' : ''}>${womenPicked ? 'Done ✓' : (womenLocked ? 'Closed' : 'Submit pick')}</button>
             </div>
           </div>
         </div>
