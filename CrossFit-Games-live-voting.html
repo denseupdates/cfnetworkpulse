@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="noindex,nofollow" />
-<title>CrossFit Games 2026 — CF Network News Picks</title>
+<title>CrossFit Games 2026 — CF Network Picks</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -28,36 +28,7 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
   body { padding: 0 0 4rem; }
-  .container { max-width: 1360px; margin: 0 auto; padding: 1.25rem; }
-  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 1.5rem; align-items: start; }
-  @media (max-width: 1100px) { .layout { grid-template-columns: 1fr; } }
-  .layout__main { min-width: 0; }
-  /* Leaderboard sidebar */
-  .lb-stack { position: sticky; top: 1rem; display: flex; flex-direction: column; gap: 0.75rem; max-height: calc(100vh - 2rem); overflow-y: auto; }
-  @media (max-width: 1100px) { .lb-stack { position: static; max-height: none; } }
-  .lb-panel { background: var(--panel); border: 3px solid var(--cf); box-shadow: 0 0 0 1px rgba(200,255,0,0.2); display: flex; flex-direction: column; }
-  .lb-panel--purple { border-color: var(--purple); box-shadow: 0 0 0 1px rgba(123,46,143,0.3); }
-  .lb-panel__head { display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0.9rem; background: var(--cf); color: #000; font-family: 'Anton', sans-serif; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.95rem; cursor: pointer; }
-  .lb-panel__head--purple { background: var(--purple); color: #fff; }
-  .lb-panel__head--purple .lb-panel__toggle { color: #fff; }
-  .lb-panel__head--purple .live-dot { background: #fff; }
-  .lb-panel__head .live-dot { display: inline-block; width: 8px; height: 8px; background: #000; border-radius: 50%; margin-right: 0.4rem; animation: lbpulse 1.4s infinite; }
-  @keyframes lbpulse { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
-  .lb-panel__body { flex: 1; overflow-y: auto; padding: 0; max-height: 320px; }
-  .lb-panel.collapsed .lb-panel__body, .lb-panel.collapsed .lb-panel__foot { display: none; }
-  .lb-list { padding: 0.4rem 0; }
-  .lb-note { padding: 0.5rem 0.9rem; color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.04em; text-transform: uppercase; border-bottom: 1px solid var(--border); background: rgba(200,255,0,0.04); }
-  .lb-panel__toggle { background: transparent; border: none; color: #000; font-family: 'Anton', sans-serif; font-size: 1.05rem; cursor: pointer; padding: 0 0.25rem; }
-  .lb-row { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 0.5rem; padding: 0.5rem 0.9rem; border-bottom: 1px solid var(--border); }
-  .lb-row:last-child { border-bottom: none; }
-  .lb-row.me { background: rgba(246,214,42,0.08); }
-  .lb-row .rk { font-family: 'Anton', sans-serif; color: var(--yellow); font-size: 1.1rem; }
-  .lb-row .nm { color: var(--text); font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.9rem; }
-  .lb-row .pt { font-family: 'Anton', sans-serif; color: var(--cf); font-size: 1.15rem; }
-  .lb-panel--purple .lb-row .pt { color: var(--purple); }
-  .lb-empty { padding: 1rem 0.9rem; color: var(--text-muted); font-size: 0.85rem; text-align: center; }
-  .lb-panel__foot { padding: 0.45rem 0.9rem; border-top: 1px solid var(--border); font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; }
-
+  .container { max-width: 960px; margin: 0 auto; padding: 1.25rem; }
 
   h1, h2, h3, .display { font-family: 'Anton', 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.01em; font-weight: 400; line-height: 0.95; }
   h1 { font-size: clamp(2.6rem, 8vw, 4.5rem); margin: 0; }
@@ -65,7 +36,7 @@
   h3 { font-size: 1.05rem; margin: 0 0 0.5rem; color: var(--text-muted); letter-spacing: 0.05em; }
   p { color: var(--text-muted); margin: 0.25rem 0 0.75rem; line-height: 1.45; font-size: 0.95rem; }
 
-  /* HERO — CF Network News block-collage */
+  /* HERO — Dense Updates block-collage */
   .hero { position: relative; padding: 2rem 0 2.25rem; margin-bottom: 1rem; overflow: hidden; }
   .hero-collage {
     position: relative;
@@ -136,7 +107,7 @@
   .event-card .name .num { color: var(--yellow); margin-right: 0.5rem; }
   .event-card .badges { display: flex; gap: 0.35rem; flex-wrap: wrap; }
   .pick-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; margin-top: 0.35rem; }
-  @media (max-width: 620px) { .pick-row { grid-template-columns: 1fr; } .roster-grid { grid-template-columns: 1fr; } .lb-panel { margin: 1rem 0.5rem; } }
+  @media (max-width: 620px) { .pick-row { grid-template-columns: 1fr; } .roster-grid { grid-template-columns: 1fr; } }
   .pick-cell { background: var(--panel); border: 1px solid var(--border); padding: 0.6rem 0.7rem; }
   .pick-cell.men { border-top: 3px solid var(--blue); }
   .pick-cell.women { border-top: 3px solid var(--purple); }
@@ -169,16 +140,14 @@
 </head>
 <body>
 <div class="container">
-<div class="layout">
-<div class="layout__main">
   <div class="hero">
-    <div class="hero-tag">CF Network News · CrossFit Games 2026</div>
+    <div class="hero-tag">CF Network News· CrossFit Games 2026</div>
     <div class="hero-collage">
       <span class="hero-line l1">Rank</span>
-      <span class="hero-line l2">The Field</span>
-      <span class="hero-line l3">► call every winner</span>
+      <span class="hero-line l2">The Athletes</span>
+      <span class="hero-line l3">► Call every event winner</span>
     </div>
-    <p class="hero-sub">Rank all 30 men and all 30 women in the order you think they'll finish overall, and pick a winner for every one of the 20 events. Highest score wins.</p>
+    <p class="hero-sub">Rank all 30 men and all 30 women in the order where you think they'll finish overall, and pick a winner for every one of the 20 events. Highest score wins.</p>
     <div class="voter-badge" id="voterBadge" style="display:none;"></div>
   </div>
 
@@ -244,41 +213,8 @@
     <div id="eventsList"></div>
   </div>
 
-  <p class="foot-note">Powered by <b>CF Network News</b> · Live scoring · Picks lock as events start</p>
-</div><!-- /.layout__main -->
-
-<!-- LIVE LEADERBOARDS -->
-<aside class="lb-stack" id="lbStack">
-  <div class="lb-panel" id="lbPanelEvents" aria-label="Live event picks leaderboard">
-    <div class="lb-panel__head" data-collapse-target="lbPanelEvents">
-      <span><span class="live-dot"></span>Event Picks Winner</span>
-      <button class="lb-panel__toggle" aria-label="Toggle">–</button>
-    </div>
-    <div class="lb-panel__body">
-      <div class="lb-list" id="lbListEvents">
-        <div class="lb-empty">Waiting for votes…</div>
-      </div>
-    </div>
-    <div class="lb-panel__foot" id="lbFootEvents">Updates as each event finalizes</div>
-  </div>
-
-  <div class="lb-panel lb-panel--purple" id="lbPanelOverall" aria-label="Overall rank leaderboard">
-    <div class="lb-panel__head lb-panel__head--purple" data-collapse-target="lbPanelOverall">
-      <span><span class="live-dot"></span>Overall Rank Winner</span>
-      <button class="lb-panel__toggle" aria-label="Toggle">–</button>
-    </div>
-    <div class="lb-panel__body">
-      <div class="lb-list" id="lbListOverall">
-        <div class="lb-note">Locks after final standings are saved</div>
-        <div class="lb-empty">No results yet.</div>
-      </div>
-    </div>
-    <div class="lb-panel__foot" id="lbFootOverall">Scored at end of Games</div>
-  </div>
-</aside>
-
-</div><!-- /.layout -->
-</div><!-- /.container -->
+  <p class="foot-note">Powered by <b>CF Network</b> · Live scoring · Picks lock as events start</p>
+</div>
 
 <!-- Register modal -->
 <div class="modal-backdrop" id="registerModal">
@@ -325,12 +261,7 @@
     locks: {},
     myRankings: { men: null, women: null },
     myPicks: {},
-    orderDraft: { men: [...ROSTER_MEN], women: [...ROSTER_WOMEN] },
-    // Leaderboard data
-    allRankings: [],       // [{division, voter_id, voter_name, voter_email, ranking}]
-    allPicks: [],          // [{event_num, division, athlete_name, voter_id, voter_name, voter_email}]
-    winners: {},           // "eventNum:division" -> athlete
-    finalStandings: {}     // { men: [athlete@place1, ...30], women: [...] }
+    orderDraft: { men: [...ROSTER_MEN], women: [...ROSTER_WOMEN] }
   };
 
   // ============================================================
@@ -640,135 +571,6 @@
     renderRankList('women');
     renderEvents();
   }
-  // ============================================================
-  //  Leaderboard
-  // ============================================================
-  async function loadLeaderboardData() {
-    if (!state.supabase) return;
-    const [r1, r2, r3, r4] = await Promise.all([
-      state.supabase.from('cfg_rankings').select('division,voter_id,voter_name,voter_email,ranking'),
-      state.supabase.from('cfg_event_picks').select('event_num,division,athlete_name,voter_id,voter_name,voter_email'),
-      state.supabase.from('cfg_event_results').select('event_num,division,winner_name'),
-      state.supabase.from('cfg_final_standings').select('division,place,athlete_name').order('place')
-    ]);
-    state.allRankings = (r1 && r1.data) || [];
-    state.allPicks    = (r2 && r2.data) || [];
-    const wmap = {};
-    ((r3 && r3.data) || []).forEach(w => { wmap[`${w.event_num}:${w.division}`] = w.winner_name; });
-    state.winners = wmap;
-    const fs = { men: [], women: [] };
-    ((r4 && r4.data) || []).forEach(row => {
-      if (!fs[row.division]) fs[row.division] = [];
-      fs[row.division][row.place - 1] = row.athlete_name;
-    });
-    state.finalStandings = fs;
-    renderLeaderboard();
-  }
-
-  function scoreVoter(voterId) {
-    let overallMen = 0, overallWomen = 0, eventPts = 0;
-    const myRanks = state.allRankings.filter(r => r.voter_id === voterId);
-    myRanks.forEach(r => {
-      const actual = state.finalStandings[r.division];
-      if (!actual || !actual.length) return;
-      const actualMap = {};
-      actual.forEach((a, i) => { if (a) actualMap[a] = i + 1; });
-      let pts = 0;
-      (r.ranking || []).forEach((athlete, idx) => {
-        const guessedPlace = idx + 1;
-        const actualPlace = actualMap[athlete];
-        if (!actualPlace) return;
-        const diff = Math.abs(guessedPlace - actualPlace);
-        pts += Math.max(0, 30 - diff);
-      });
-      if (r.division === 'men') overallMen = pts; else overallWomen = pts;
-    });
-    const eventPtsByNum = {};
-    state.events.forEach(e => { eventPtsByNum[e.event_num] = e.points; });
-    state.allPicks.filter(p => p.voter_id === voterId).forEach(p => {
-      const key = `${p.event_num}:${p.division}`;
-      if (state.winners[key] && state.winners[key] === p.athlete_name) {
-        eventPts += (eventPtsByNum[p.event_num] || 0);
-      }
-    });
-    return {
-      eventPts,
-      overallPts: overallMen + overallWomen,
-      total: overallMen + overallWomen + eventPts
-    };
-  }
-
-  function allVoters() {
-    const map = {};
-    state.allRankings.forEach(r => { map[r.voter_id] = { name: r.voter_name, email: r.voter_email }; });
-    state.allPicks.forEach(p => { if (!map[p.voter_id]) map[p.voter_id] = { name: p.voter_name, email: p.voter_email }; });
-    return Object.entries(map).map(([id, v]) => ({ voter_id: id, ...v }));
-  }
-
-  function renderLbList(elId, rows, keyField, emptyMsg, prefixHtml) {
-    const el = document.getElementById(elId);
-    if (!rows.length) { el.innerHTML = (prefixHtml || '') + `<div class="lb-empty">${emptyMsg}</div>`; return; }
-    const myEmail = state.voter && state.voter.email;
-    el.innerHTML = (prefixHtml || '') + rows.map((r, i) => {
-      const me = myEmail && r.voter_id === myEmail;
-      return `<div class="lb-row ${me ? 'me' : ''}">
-        <div class="rk">#${i + 1}</div>
-        <div class="nm" title="${esc(r.email)}">${esc(r.name)}${me ? ' <span style="color:var(--yellow);font-size:0.7rem;">(you)</span>' : ''}</div>
-        <div class="pt">${r[keyField]}</div>
-      </div>`;
-    }).join('');
-  }
-
-  function renderLeaderboard() {
-    const footEvents  = document.getElementById('lbFootEvents');
-    const footOverall = document.getElementById('lbFootOverall');
-    const voters = allVoters();
-    const scoredEvents = Object.keys(state.winners).length;
-    const menDone   = (state.finalStandings.men   || []).filter(Boolean).length === 30;
-    const womenDone = (state.finalStandings.women || []).filter(Boolean).length === 30;
-    const hasAnyFinal = (state.finalStandings.men || []).filter(Boolean).length + (state.finalStandings.women || []).filter(Boolean).length > 0;
-
-    if (!voters.length) {
-      renderLbList('lbListEvents', [], 'eventPts', 'Waiting for votes…');
-      document.getElementById('lbListOverall').innerHTML = '<div class="lb-note">Locks after final standings are saved</div><div class="lb-empty">No results yet.</div>';
-      footEvents.textContent  = 'Updates as each event finalizes';
-      footOverall.textContent = 'Scored at end of Games';
-      return;
-    }
-
-    const scored = voters.map(v => ({ ...v, ...scoreVoter(v.voter_id) }));
-
-    // Event picks (running total)
-    const eventRows = scored.slice().sort((a, b) => b.eventPts - a.eventPts || a.name.localeCompare(b.name));
-    renderLbList('lbListEvents', eventRows, 'eventPts', 'Waiting for votes…');
-    footEvents.textContent = `${voters.length} voters · ${scoredEvents} events scored`;
-
-    // Overall rank
-    let noteText;
-    if (menDone && womenDone) noteText = 'Final — both divisions scored';
-    else if (hasAnyFinal)      noteText = 'Provisional — partial standings saved';
-    else                       noteText = 'Locks after final standings are saved';
-    const note = `<div class="lb-note">${noteText}</div>`;
-    if (!hasAnyFinal) {
-      document.getElementById('lbListOverall').innerHTML = note + '<div class="lb-empty">No results yet.</div>';
-    } else {
-      const overallRows = scored.slice().sort((a, b) => b.overallPts - a.overallPts || a.name.localeCompare(b.name));
-      renderLbList('lbListOverall', overallRows, 'overallPts', 'No ranking submissions yet.', note);
-    }
-    footOverall.textContent = hasAnyFinal ? `${voters.length} voters · rank live` : 'Scored at end of Games';
-  }
-
-  function wireLeaderboardToggle() {
-    document.querySelectorAll('[data-collapse-target]').forEach(head => {
-      head.addEventListener('click', () => {
-        const panel = document.getElementById(head.dataset.collapseTarget);
-        const isCollapsed = panel.classList.toggle('collapsed');
-        const btn = head.querySelector('.lb-panel__toggle');
-        if (btn) btn.textContent = isCollapsed ? '+' : '\u2013';
-      });
-    });
-  }
-
   async function loadMyData() {
     if (!state.voter || !state.supabase) return;
     const r1 = await state.supabase.from('cfg_rankings')
@@ -806,7 +608,6 @@
     document.getElementById('submitWomen').addEventListener('click', () => submitRanking('women'));
     document.getElementById('resetMen').addEventListener('click', () => resetOrder('men'));
     document.getElementById('resetWomen').addEventListener('click', () => resetOrder('women'));
-    wireLeaderboardToggle();
 
     renderRankList('men');
     renderRankList('women');
@@ -821,16 +622,12 @@
       await Promise.all([loadEvents(), loadLocks()]);
       await loadMyData();
 
-      await loadLeaderboardData();
-
       state.supabase
         .channel('cfg-live')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_events' }, () => { loadEvents(); loadLeaderboardData(); })
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_events' }, loadEvents)
         .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_locks' }, loadLocks)
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_rankings' }, () => { loadMyData(); loadLeaderboardData(); })
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_event_picks' }, () => { loadMyData(); loadLeaderboardData(); })
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_event_results' }, loadLeaderboardData)
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_final_standings' }, loadLeaderboardData)
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_rankings' }, loadMyData)
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_event_picks' }, loadMyData)
         .subscribe();
     } catch (err) {
       console.error(err);
