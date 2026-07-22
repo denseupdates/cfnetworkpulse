@@ -164,6 +164,19 @@
   .foot-note { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.6rem; text-align: center; text-transform: uppercase; letter-spacing: 0.15em; }
   .foot-note b { color: var(--yellow); }
 
+  /* Results So Far */
+  .results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.6rem; margin-top: 0.5rem; }
+  .result-card { background: var(--panel-2); border: 1px solid var(--border); border-left: 4px solid var(--teal); padding: 0.75rem; }
+  .result-card .r-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem; gap: 0.5rem; }
+  .result-card .r-num { font-family: 'Anton', sans-serif; font-size: 1.4rem; color: var(--yellow); line-height: 1; }
+  .result-card .r-name { font-family: 'Anton', sans-serif; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.1; flex: 1; }
+  .result-card .r-pts { font-family: 'Anton', sans-serif; font-size: 0.75rem; color: var(--text-muted); }
+  .result-card .r-win { display: grid; grid-template-columns: auto 1fr; gap: 0.35rem; align-items: center; font-size: 0.8rem; padding: 0.3rem 0; border-top: 1px solid var(--border); }
+  .result-card .r-win .r-div { font-family: 'Anton', sans-serif; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.15rem 0.4rem; border: 1px solid; }
+  .result-card .r-win.men .r-div { color: var(--blue); border-color: var(--blue); }
+  .result-card .r-win.women .r-div { color: var(--purple); border-color: var(--purple); }
+  .result-card .r-win .r-athlete { font-weight: 700; }
+  .result-card .r-win .r-empty { color: var(--text-muted); font-style: italic; font-weight: 400; }
   ::selection { background: var(--cf); color: #000; }
 </style>
 </head>
@@ -199,6 +212,16 @@
         <ol id="rosterWomen"></ol>
       </div>
     </div>
+  </div>
+
+  <!-- RESULTS SO FAR (hidden until at least one event is finalized) -->
+  <div class="section accent-teal" id="resultsSection" style="display:none;">
+    <div class="head">
+      <h2 style="color:var(--teal);">Results So Far</h2>
+      <span class="badge" id="resultsCount" style="background:var(--teal);color:#000;">0</span>
+    </div>
+    <p>Official event winners as they're announced. Locked events cannot be changed.</p>
+    <div id="resultsList" class="results-grid"></div>
   </div>
 
   <!-- OVERALL RANKINGS -->
@@ -639,6 +662,7 @@
     renderRankList('men');
     renderRankList('women');
     renderEvents();
+    renderResultsSoFar();
   }
   // ============================================================
   //  Leaderboard
@@ -656,6 +680,7 @@
     const wmap = {};
     ((r3 && r3.data) || []).forEach(w => { wmap[`${w.event_num}:${w.division}`] = w.winner_name; });
     state.winners = wmap;
+    renderResultsSoFar();
     const fs = { men: [], women: [] };
     ((r4 && r4.data) || []).forEach(row => {
       if (!fs[row.division]) fs[row.division] = [];
@@ -663,6 +688,46 @@
     });
     state.finalStandings = fs;
     renderLeaderboard();
+  }
+
+  function renderResultsSoFar() {
+    const section = document.getElementById('resultsSection');
+    const list = document.getElementById('resultsList');
+    const countEl = document.getElementById('resultsCount');
+    if (!section || !list || !state.events || !state.events.length) return;
+    const winners = state.winners || {};
+    const locks = state.locks || {};
+    const finalized = state.events.filter(ev => {
+      const menLocked   = !!locks[`${ev.event_num}:men`];
+      const womenLocked = !!locks[`${ev.event_num}:women`];
+      const hasMenWin   = !!winners[`${ev.event_num}:men`];
+      const hasWomenWin = !!winners[`${ev.event_num}:women`];
+      // Show event if EITHER division is locked AND has a winner
+      return (menLocked && hasMenWin) || (womenLocked && hasWomenWin);
+    });
+    if (!finalized.length) { section.style.display = 'none'; return; }
+    section.style.display = '';
+    if (countEl) countEl.textContent = String(finalized.length);
+    list.innerHTML = finalized.map(ev => {
+      const mw = winners[`${ev.event_num}:men`];
+      const ww = winners[`${ev.event_num}:women`];
+      const menLocked   = !!locks[`${ev.event_num}:men`];
+      const womenLocked = !!locks[`${ev.event_num}:women`];
+      const menBlock = (menLocked && mw)
+        ? `<div class="r-win men"><span class="r-div">Men</span><span class="r-athlete">🏆 ${esc(mw)}</span></div>`
+        : '';
+      const womenBlock = (womenLocked && ww)
+        ? `<div class="r-win women"><span class="r-div">Women</span><span class="r-athlete">🏆 ${esc(ww)}</span></div>`
+        : '';
+      return `<div class="result-card">
+        <div class="r-head">
+          <span class="r-num">#${ev.event_num}</span>
+          <span class="r-name">${esc(ev.name)}</span>
+          <span class="r-pts">${ev.points} PTS</span>
+        </div>
+        ${menBlock}${womenBlock}
+      </div>`;
+    }).join('');
   }
 
   function scoreVoter(voterId) {
