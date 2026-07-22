@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>CFG Mobile Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #000; --panel: #0e0e10; --panel-2: #17171a;
+    --text: #f5f5f5; --text-muted: #a3a3a3;
+    --border: #2a2a2e;
+    --cf: #C8FF00; --yellow: #F6D62A; --teal: #28B7BE;
+    --purple: #7B2E8F; --blue: #2E8CFF; --olive: #8A9500;
+    --red: #ff4d4d;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+  body { padding-bottom: 5rem; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 1rem; }
+  h1 { font-family: 'Anton', sans-serif; text-transform: uppercase; letter-spacing: 0.03em; margin: 0.5rem 0 0.25rem; font-size: 2rem; color: var(--cf); }
+  .subtitle { color: var(--text-muted); font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem; }
+  .conn { display: inline-block; padding: 0.25rem 0.5rem; border: 1px solid var(--border); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+  .conn.live { color: var(--cf); border-color: var(--cf); }
+  .conn.off { color: var(--red); border-color: var(--red); }
+
+  .event-card { background: var(--panel); border: 2px solid var(--border); padding: 1rem; margin-bottom: 0.75rem; }
+  .event-card.locked-full { border-color: var(--cf); }
+  .event-head { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+  .event-num { font-family: 'Anton', sans-serif; font-size: 1.6rem; color: var(--yellow); line-height: 1; }
+  .event-name { font-family: 'Anton', sans-serif; font-size: 1.15rem; line-height: 1.1; text-transform: uppercase; flex: 1; }
+  .event-pts { font-family: 'Anton', sans-serif; color: var(--teal); font-size: 1rem; }
+  .row { margin-top: 0.6rem; }
+  .row-label { display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem; font-weight: 700;}
+  .row-label.men { color: var(--blue); }
+  .row-label.women { color: var(--purple); }
+  .lock-pill { font-size: 0.65rem; padding: 0.15rem 0.5rem; border: 1px solid var(--border); }
+  .lock-pill.locked { color: var(--cf); border-color: var(--cf); background: rgba(200,255,0,0.08); }
+  .lock-pill.open { color: var(--yellow); border-color: var(--yellow); }
+  select { width: 100%; background: var(--panel-2); color: var(--text); border: 1px solid var(--border); padding: 0.75rem; font-size: 1rem; font-family: inherit; border-radius: 0; -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a3a3a3'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 0.5rem center; padding-right: 2.25rem; }
+  .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.75rem; }
+  .btn { padding: 0.85rem 0.5rem; font-family: 'Anton', sans-serif; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; border: 2px solid; background: transparent; cursor: pointer; border-radius: 0; }
+  .btn.primary { color: #000; background: var(--cf); border-color: var(--cf); }
+  .btn.secondary { color: var(--yellow); border-color: var(--yellow); }
+  .btn.danger { color: var(--red); border-color: var(--red); }
+  .btn:active { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .toast { position: fixed; bottom: 1rem; left: 1rem; right: 1rem; padding: 0.75rem; background: var(--cf); color: #000; font-family: 'Anton', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem; text-align: center; z-index: 100; transform: translateY(200%); transition: transform 0.25s; }
+  .toast.show { transform: translateY(0); }
+  .toast.err { background: var(--red); color: #fff; }
+  .foot { color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 2rem; text-align: center; }
+  .event-name-edit { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); padding: 0.55rem; width: 100%; font-family: inherit; font-size: 0.95rem; margin-bottom: 0.5rem; }
+  .name-edit-row { display: grid; grid-template-columns: 1fr auto auto; gap: 0.5rem; margin-bottom: 0.35rem; align-items: center; }
+  .pts-select { width: 90px; padding: 0.55rem; }
+  .save-name-btn { padding: 0.55rem 0.75rem; font-family: 'Anton', sans-serif; font-size: 0.8rem; text-transform: uppercase; background: var(--yellow); color: #000; border: none; }
+  .current-winners { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin: 0.5rem 0; font-size: 0.75rem; }
+  .cw { padding: 0.4rem 0.5rem; background: var(--panel-2); border-left: 3px solid; }
+  .cw.men { border-color: var(--blue); }
+  .cw.women { border-color: var(--purple); }
+  .cw-label { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  .cw-name { font-weight: 700; font-family: 'Anton', sans-serif; letter-spacing: 0.02em; }
+  .cw-name.empty { color: var(--text-muted); font-style: italic; font-family: 'Inter', sans-serif; font-weight: 400; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>CFG Admin</h1>
+  <div class="subtitle">Mobile · Event Winners</div>
+  <div class="conn off" id="conn">Connecting…</div>
+  <div id="events"></div>
+  <div class="foot">CF Network News · unlisted · keep this URL private</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+  const SUPABASE_URL = 'https://nkpdyyonpgmupwajhhfp.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5rcGR5eW9ucGdtdXB3YWpoaGZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyOTE3NzIsImV4cCI6MjA5MTg2Nzc3Mn0.9HoQa_Qz_xkGhNrfIHTp9ksgqrNl8WcRjCKL5ffezgM';
+
+  const ROSTER_MEN = [
+    "Victor Hoffer","Roman Khrennikov","Jeff Adler","Dallin Pepper","James Sprague",
+    "Kaylan Souza","Benjamin Reyes","Henrik Haapalainen","Jayson Hopper","Moritz Fiebig",
+    "Nika Maisuradze","Ricky Garard","Jay Crouch","Bayley Martin","Ben Fowler",
+    "Aniol Ekai","Luis Cueller","Calum Clements","Saxon Panchik","Ty Jenkins",
+    "Austin Hatfield","Tudor Magda","Dylan Hamming","Guilherme Malheiros","Quinn Robinson",
+    "Nick Matthew","Justin Medeiros","Spencer Panchik","Colten Mertens","Patrick Vellner"
+  ];
+  const ROSTER_WOMEN = [
+    "Paige Rodgers","Emma Lawson","Lucy Campbell","Olivia Kerstetter","Abigail Domit",
+    "Anikha Greer","Miley Wade","Siria Meha","Mirjam Von Rohr","Aimee Cringle",
+    "Elisa Fuliano","Maddie Sturt","Ellie Turner","Kyra Milligan","Hannah Black",
+    "Lucy McGonigle","Ella Wilkinson","Lydia Fish","Haley Adams","Danielle Brandon",
+    "Alex Gazan","Rachel Noel","Alexis Raptis","Erica Folo","Arielle Loewen",
+    "Matilde Garnes","Janie Cheverie","Bergros Bjornsdottir","Holly Tynan","Aline Wirz"
+  ];
+
+  const state = { supabase: null, events: [], locks: {}, results: {} };
+
+  function esc(s) { return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+  function toast(msg, isErr) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.toggle('err', !!isErr);
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  function setConn(ok, label) {
+    const c = document.getElementById('conn');
+    c.className = 'conn ' + (ok ? 'live' : 'off');
+    c.textContent = label;
+  }
+
+  async function loadAll() {
+    const [e, l, r] = await Promise.all([
+      state.supabase.from('cfg_events').select('*').order('event_num'),
+      state.supabase.from('cfg_locks').select('*'),
+      state.supabase.from('cfg_event_results').select('*')
+    ]);
+    state.events = e.data || [];
+    state.locks = {};
+    (l.data || []).forEach(row => { state.locks[`${row.event_num}:${row.division}`] = row.locked; });
+    state.results = {};
+    (r.data || []).forEach(row => { state.results[`${row.event_num}:${row.division}`] = row.winner_name; });
+    render();
+  }
+
+  function render() {
+    const wrap = document.getElementById('events');
+    wrap.innerHTML = state.events.map(ev => {
+      const menLocked   = !!state.locks[`${ev.event_num}:men`];
+      const womenLocked = !!state.locks[`${ev.event_num}:women`];
+      const bothLocked  = menLocked && womenLocked;
+      const menWinner   = state.results[`${ev.event_num}:men`]   || '';
+      const womenWinner = state.results[`${ev.event_num}:women`] || '';
+
+      const menOpts   = ['<option value="">— pick men\'s winner —</option>', ...ROSTER_MEN.map(n => `<option value="${esc(n)}" ${n===menWinner?'selected':''}>${esc(n)}</option>`)].join('');
+      const womenOpts = ['<option value="">— pick women\'s winner —</option>', ...ROSTER_WOMEN.map(n => `<option value="${esc(n)}" ${n===womenWinner?'selected':''}>${esc(n)}</option>`)].join('');
+
+      return `
+      <div class="event-card ${bothLocked?'locked-full':''}" data-event="${ev.event_num}">
+        <div class="event-head">
+          <div class="event-num">#${ev.event_num}</div>
+          <div class="event-name">${esc(ev.name)}</div>
+          <div class="event-pts">${ev.points} PTS</div>
+        </div>
+
+        <div class="name-edit-row">
+          <input class="event-name-edit" data-name-input="${ev.event_num}" value="${esc(ev.name)}" placeholder="Event name" />
+          <select class="pts-select" data-pts-input="${ev.event_num}">
+            <option value="50"  ${ev.points===50?'selected':''}>50 pts</option>
+            <option value="100" ${ev.points===100?'selected':''}>100 pts</option>
+          </select>
+          <button class="save-name-btn" data-save-name="${ev.event_num}">Save</button>
+        </div>
+
+        <div class="current-winners">
+          <div class="cw men">
+            <div class="cw-label">Men winner</div>
+            <div class="cw-name ${menWinner?'':'empty'}">${menWinner?esc(menWinner):'not set'}</div>
+          </div>
+          <div class="cw women">
+            <div class="cw-label">Women winner</div>
+            <div class="cw-name ${womenWinner?'':'empty'}">${womenWinner?esc(womenWinner):'not set'}</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row-label men">
+            <span>Men's winner</span>
+            <span class="lock-pill ${menLocked?'locked':'open'}">${menLocked?'🔒 locked':'🔓 open'}</span>
+          </div>
+          <select data-pick="men" data-event="${ev.event_num}">${menOpts}</select>
+          <div class="btn-group">
+            <button class="btn primary" data-save-winner="men" data-event="${ev.event_num}">Save + Lock</button>
+            <button class="btn ${menLocked?'danger':'secondary'}" data-toggle-lock="men" data-event="${ev.event_num}">${menLocked?'Unlock':'Lock only'}</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row-label women">
+            <span>Women's winner</span>
+            <span class="lock-pill ${womenLocked?'locked':'open'}">${womenLocked?'🔒 locked':'🔓 open'}</span>
+          </div>
+          <select data-pick="women" data-event="${ev.event_num}">${womenOpts}</select>
+          <div class="btn-group">
+            <button class="btn primary" data-save-winner="women" data-event="${ev.event_num}">Save + Lock</button>
+            <button class="btn ${womenLocked?'danger':'secondary'}" data-toggle-lock="women" data-event="${ev.event_num}">${womenLocked?'Unlock':'Lock only'}</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  async function saveWinner(eventNum, division) {
+    const sel = document.querySelector(`select[data-pick="${division}"][data-event="${eventNum}"]`);
+    const name = sel.value;
+    if (!name) { toast('Pick a winner first', true); return; }
+    const { error: e1 } = await state.supabase.from('cfg_event_results')
+      .upsert({ event_num: eventNum, division, winner_name: name, updated_at: new Date().toISOString() }, { onConflict: 'event_num,division' });
+    if (e1) { toast('Save failed: ' + e1.message, true); return; }
+    const { error: e2 } = await state.supabase.from('cfg_locks')
+      .upsert({ event_num: eventNum, division, locked: true, updated_at: new Date().toISOString() }, { onConflict: 'event_num,division' });
+    if (e2) { toast('Lock failed: ' + e2.message, true); return; }
+    toast(`Event ${eventNum} ${division}: ${name} saved + locked`);
+    await loadAll();
+  }
+
+  async function toggleLock(eventNum, division) {
+    const key = `${eventNum}:${division}`;
+    const nextLocked = !state.locks[key];
+    const { error } = await state.supabase.from('cfg_locks')
+      .upsert({ event_num: eventNum, division, locked: nextLocked, updated_at: new Date().toISOString() }, { onConflict: 'event_num,division' });
+    if (error) { toast('Failed: ' + error.message, true); return; }
+    toast(`Event ${eventNum} ${division} ${nextLocked ? 'locked' : 'unlocked'}`);
+    await loadAll();
+  }
+
+  async function saveEventName(eventNum) {
+    const nameEl = document.querySelector(`input[data-name-input="${eventNum}"]`);
+    const ptsEl  = document.querySelector(`select[data-pts-input="${eventNum}"]`);
+    const name = (nameEl.value || 'Unknown').trim();
+    const points = parseInt(ptsEl.value, 10);
+    const { error } = await state.supabase.from('cfg_events')
+      .update({ name, points, updated_at: new Date().toISOString() })
+      .eq('event_num', eventNum);
+    if (error) { toast('Save failed: ' + error.message, true); return; }
+    toast(`Event ${eventNum} updated`);
+    await loadAll();
+  }
+
+  document.addEventListener('click', async (e) => {
+    const t = e.target;
+    if (t.matches('[data-save-winner]')) {
+      await saveWinner(parseInt(t.dataset.event, 10), t.dataset.saveWinner);
+    } else if (t.matches('[data-toggle-lock]')) {
+      await toggleLock(parseInt(t.dataset.event, 10), t.dataset.toggleLock);
+    } else if (t.matches('[data-save-name]')) {
+      await saveEventName(parseInt(t.dataset.saveName, 10));
+    }
+  });
+
+  (async function init() {
+    try {
+      state.supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      setConn(true, 'Live');
+      await loadAll();
+      state.supabase
+        .channel('cfg-mobile-admin')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_events' }, loadAll)
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_locks' }, loadAll)
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_event_results' }, loadAll)
+        .subscribe();
+    } catch (err) {
+      console.error(err);
+      setConn(false, 'Offline');
+      toast('Connection failed', true);
+    }
+  })();
+</script>
+</body>
+</html>
