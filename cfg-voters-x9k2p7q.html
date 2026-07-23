@@ -137,18 +137,36 @@
     c.textContent = label;
   }
 
+  async function fetchAllPaged(tableName, orderCol) {
+    const pageSize = 1000;
+    let all = [];
+    let from = 0;
+    while (true) {
+      let q = state.supabase.from(tableName).select('*').range(from, from + pageSize - 1);
+      if (orderCol) q = q.order(orderCol, { ascending: false });
+      const { data, error } = await q;
+      if (error) { console.error(tableName, error); break; }
+      if (!data || !data.length) break;
+      all = all.concat(data);
+      if (data.length < pageSize) break;
+      from += pageSize;
+      if (from > 20000) break; // hard safety
+    }
+    return all;
+  }
+
   async function loadAll() {
-    const [ev, pk, rk] = await Promise.all([
+    const [ev, picks, ranks] = await Promise.all([
       state.supabase.from('cfg_events').select('*').order('event_num'),
-      state.supabase.from('cfg_event_picks').select('*').order('inserted_at', { ascending: false }).limit(5000),
-      state.supabase.from('cfg_rankings').select('*').limit(5000)
+      fetchAllPaged('cfg_event_picks', 'inserted_at'),
+      fetchAllPaged('cfg_rankings', 'inserted_at')
     ]);
     state.events = ev.data || [];
-    state.picks = pk.data || [];
-    state.ranks = rk.data || [];
+    state.picks = picks;
+    state.ranks = ranks;
     document.getElementById('statPicks').textContent = state.picks.length;
     document.getElementById('statRanks').textContent = state.ranks.length;
-    const uniqueVoters = new Set([...state.picks.map(p=>p.voter_id), ...state.ranks.map(r=>r.voter_id)]);
+    const uniqueVoters = new Set([...state.picks.map(p=>p.voter_id), ...state.ranks.map(r=>r.voter_id)].filter(Boolean));
     document.getElementById('statVoters').textContent = uniqueVoters.size;
     render();
   }
@@ -160,7 +178,7 @@
       if (!voter_id) return;
       let v = map.get(voter_id);
       if (!v) { v = { voter_id, voter_name: voter_name || '(no name)', picks: [], ranks: [], last: null }; map.set(voter_id, v); }
-      if (voter_name && !v.voter_name.startsWith(voter_name)) v.voter_name = voter_name;
+      if (voter_name && v.voter_name === '(no name)') v.voter_name = voter_name;
       if (kind === 'pick') v.picks.push(row);
       else v.ranks.push(row);
       const t = (row.inserted_at || row.created_at) ? new Date(row.inserted_at || row.created_at).getTime() : 0;
@@ -219,8 +237,11 @@
     if (!v) { state.selectedVoter = null; renderVotersList(); return; }
     const eventName = (n) => (state.events.find(e => e.event_num === n) || {}).name || `Event ${n}`;
     const picksSorted = [...v.picks].sort((a, b) => a.event_num - b.event_num || a.division.localeCompare(b.division));
-    const menRanks = v.ranks.filter(r => r.division === 'men').sort((a,b)=>a.place-b.place);
-    const womenRanks = v.ranks.filter(r => r.division === 'women').sort((a,b)=>a.place-b.place);
+    // Rankings are stored as JSON arrays in a `ranking` column, one row per (voter, division)
+    const menRankRow = v.ranks.find(r => r.division === 'men');
+    const womenRankRow = v.ranks.find(r => r.division === 'women');
+    const menRanks = (menRankRow && Array.isArray(menRankRow.ranking)) ? menRankRow.ranking.map((name, i) => ({ place: i + 1, athlete_name: name })) : [];
+    const womenRanks = (womenRankRow && Array.isArray(womenRankRow.ranking)) ? womenRankRow.ranking.map((name, i) => ({ place: i + 1, athlete_name: name })) : [];
     view.innerHTML = `
       <button class="back-btn" id="backBtn">← Back to voters</button>
       <div class="voter-detail">
