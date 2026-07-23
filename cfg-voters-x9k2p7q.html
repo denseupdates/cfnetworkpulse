@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>CFG Voters</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #000; --panel: #0e0e10; --panel-2: #17171a;
+    --text: #f5f5f5; --text-muted: #a3a3a3;
+    --border: #2a2a2e;
+    --cf: #C8FF00; --yellow: #F6D62A; --teal: #28B7BE;
+    --purple: #7B2E8F; --blue: #2E8CFF; --olive: #8A9500;
+    --red: #ff4d4d;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+  body { padding-bottom: 4rem; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 1rem; }
+  h1 { font-family: 'Anton', sans-serif; text-transform: uppercase; letter-spacing: 0.03em; margin: 0.5rem 0 0.25rem; font-size: 2rem; color: var(--cf); }
+  .subtitle { color: var(--text-muted); font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem; }
+  .conn { display: inline-block; padding: 0.25rem 0.5rem; border: 1px solid var(--border); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+  .conn.live { color: var(--cf); border-color: var(--cf); }
+  .conn.off { color: var(--red); border-color: var(--red); }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 1rem; }
+  .stat { background: var(--panel); border: 1px solid var(--border); padding: 0.75rem; text-align: center; }
+  .stat .n { font-family: 'Anton', sans-serif; font-size: 1.8rem; color: var(--yellow); line-height: 1; }
+  .stat .l { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.25rem; }
+
+  .tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 1rem; overflow-x: auto; }
+  .tab { padding: 0.75rem 1rem; font-family: 'Anton', sans-serif; text-transform: uppercase; letter-spacing: 0.03em; font-size: 0.9rem; background: none; border: none; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; }
+  .tab.active { color: var(--cf); border-bottom-color: var(--cf); }
+
+  .section-title { font-family: 'Anton', sans-serif; text-transform: uppercase; letter-spacing: 0.03em; color: var(--teal); font-size: 1.2rem; margin: 1rem 0 0.5rem; }
+  .filter-row { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+  .filter-row select, .filter-row input { flex: 1; min-width: 140px; background: var(--panel-2); color: var(--text); border: 1px solid var(--border); padding: 0.6rem; font-family: inherit; font-size: 0.9rem; border-radius: 0; }
+
+  .voter-card { background: var(--panel); border: 1px solid var(--border); border-left: 4px solid var(--yellow); padding: 0.75rem; margin-bottom: 0.5rem; }
+  .voter-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem; gap: 0.5rem; flex-wrap: wrap; }
+  .voter-name { font-family: 'Anton', sans-serif; font-size: 1.1rem; letter-spacing: 0.02em; }
+  .voter-email { font-size: 0.75rem; color: var(--text-muted); word-break: break-all; }
+  .voter-time { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.05em; }
+  .voter-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-top: 0.5rem; font-size: 0.75rem; }
+  .voter-stats .s { background: var(--panel-2); padding: 0.4rem 0.5rem; border-left: 3px solid var(--border); }
+  .voter-stats .s.picks { border-left-color: var(--cf); }
+  .voter-stats .s.ranks { border-left-color: var(--purple); }
+  .voter-stats .s .lbl { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  .voter-stats .s .val { font-family: 'Anton', sans-serif; font-size: 1rem; color: var(--text); }
+
+  .voter-detail { background: var(--panel); border: 2px solid var(--border); padding: 1rem; margin-bottom: 0.75rem; }
+  .detail-title { font-family: 'Anton', sans-serif; text-transform: uppercase; font-size: 1.3rem; color: var(--cf); margin-bottom: 0.25rem; }
+  .detail-sub { font-size: 0.75rem; color: var(--text-muted); word-break: break-all; margin-bottom: 0.75rem; }
+  .detail-block { margin-top: 0.75rem; }
+  .detail-block h4 { font-family: 'Anton', sans-serif; text-transform: uppercase; letter-spacing: 0.03em; font-size: 0.9rem; margin: 0 0 0.4rem; color: var(--yellow); }
+  .detail-block h4.men { color: var(--blue); }
+  .detail-block h4.women { color: var(--purple); }
+  .pick-row { display: grid; grid-template-columns: 40px 1fr 80px; gap: 0.5rem; padding: 0.35rem 0.5rem; border-bottom: 1px solid var(--border); font-size: 0.85rem; align-items: center; }
+  .pick-row .p-num { font-family: 'Anton', sans-serif; color: var(--yellow); }
+  .pick-row .p-div { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; text-align: right; }
+  .pick-row .p-div.men { color: var(--blue); }
+  .pick-row .p-div.women { color: var(--purple); }
+  .rank-list { list-style: none; padding: 0; margin: 0; column-count: 1; }
+  @media (min-width: 600px) { .rank-list { column-count: 2; } }
+  .rank-list li { font-size: 0.85rem; padding: 0.25rem 0; break-inside: avoid; display: grid; grid-template-columns: 32px 1fr; gap: 0.5rem; }
+  .rank-list li .rn { font-family: 'Anton', sans-serif; color: var(--text-muted); text-align: right; }
+
+  .back-btn { padding: 0.5rem 0.75rem; font-family: 'Anton', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.8rem; background: transparent; border: 2px solid var(--yellow); color: var(--yellow); cursor: pointer; margin-bottom: 0.75rem; border-radius: 0; }
+
+  .foot { color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 2rem; text-align: center; }
+  .empty { color: var(--text-muted); font-style: italic; padding: 1rem; text-align: center; }
+
+  /* Event totals view */
+  .event-tot-card { background: var(--panel); border: 1px solid var(--border); padding: 0.75rem; margin-bottom: 0.5rem; }
+  .event-tot-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem; }
+  .event-tot-num { font-family: 'Anton', sans-serif; color: var(--yellow); font-size: 1.3rem; }
+  .event-tot-name { font-family: 'Anton', sans-serif; font-size: 0.95rem; text-transform: uppercase; flex: 1; margin: 0 0.5rem; }
+  .picks-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.4rem; }
+  .picks-col h5 { font-family: 'Anton', sans-serif; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; margin: 0 0 0.25rem; }
+  .picks-col.men h5 { color: var(--blue); }
+  .picks-col.women h5 { color: var(--purple); }
+  .picks-col ol { list-style: none; padding: 0; margin: 0; font-size: 0.8rem; }
+  .picks-col ol li { display: flex; justify-content: space-between; padding: 0.2rem 0; border-bottom: 1px solid var(--border); }
+  .picks-col ol li .cnt { font-family: 'Anton', sans-serif; color: var(--cf); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>CFG Voters</h1>
+  <div class="subtitle">Private · read-only viewer</div>
+  <div class="conn off" id="conn">Connecting…</div>
+
+  <div class="stats">
+    <div class="stat"><div class="n" id="statVoters">0</div><div class="l">Voters</div></div>
+    <div class="stat"><div class="n" id="statPicks">0</div><div class="l">Event picks</div></div>
+    <div class="stat"><div class="n" id="statRanks">0</div><div class="l">Rankings</div></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="voters">Voters</button>
+    <button class="tab" data-tab="events">By Event</button>
+  </div>
+
+  <div id="view"></div>
+
+  <div class="foot">CF Network News · unlisted · keep this URL private</div>
+</div>
+
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+  const SUPABASE_URL = 'https://nkpdyyonpgmupwajhhfp.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5rcGR5eW9ucGdtdXB3YWpoaGZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyOTE3NzIsImV4cCI6MjA5MTg2Nzc3Mn0.9HoQa_Qz_xkGhNrfIHTp9ksgqrNl8WcRjCKL5ffezgM';
+
+  const state = {
+    supabase: null,
+    events: [],
+    picks: [],
+    ranks: [],
+    tab: 'voters',
+    selectedVoter: null
+  };
+
+  function esc(s) { return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+  function fmtTime(iso) {
+    if (!iso) return '';
+    try { const d=new Date(iso); return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}); } catch(e){ return iso; }
+  }
+  function setConn(ok, label) {
+    const c = document.getElementById('conn');
+    c.className = 'conn ' + (ok ? 'live' : 'off');
+    c.textContent = label;
+  }
+
+  async function loadAll() {
+    const [ev, pk, rk] = await Promise.all([
+      state.supabase.from('cfg_events').select('*').order('event_num'),
+      state.supabase.from('cfg_event_picks').select('*').order('created_at', { ascending: false }),
+      state.supabase.from('cfg_rankings').select('*')
+    ]);
+    state.events = ev.data || [];
+    state.picks = pk.data || [];
+    state.ranks = rk.data || [];
+    document.getElementById('statPicks').textContent = state.picks.length;
+    document.getElementById('statRanks').textContent = state.ranks.length;
+    const uniqueVoters = new Set([...state.picks.map(p=>p.voter_id), ...state.ranks.map(r=>r.voter_id)]);
+    document.getElementById('statVoters').textContent = uniqueVoters.size;
+    render();
+  }
+
+  // Group all rows into a map by voter_id
+  function buildVoterMap() {
+    const map = new Map();
+    const upsert = (voter_id, voter_name, row, kind) => {
+      if (!voter_id) return;
+      let v = map.get(voter_id);
+      if (!v) { v = { voter_id, voter_name: voter_name || '(no name)', picks: [], ranks: [], last: null }; map.set(voter_id, v); }
+      if (voter_name && !v.voter_name.startsWith(voter_name)) v.voter_name = voter_name;
+      if (kind === 'pick') v.picks.push(row);
+      else v.ranks.push(row);
+      const t = row.created_at ? new Date(row.created_at).getTime() : 0;
+      if (!v.last || t > v.last) v.last = t;
+    };
+    state.picks.forEach(p => upsert(p.voter_id, p.voter_name, p, 'pick'));
+    state.ranks.forEach(r => upsert(r.voter_id, r.voter_name, r, 'rank'));
+    return Array.from(map.values()).sort((a, b) => (b.last || 0) - (a.last || 0));
+  }
+
+  function renderVotersList() {
+    const voters = buildVoterMap();
+    const view = document.getElementById('view');
+    if (!voters.length) { view.innerHTML = '<div class="empty">No voters yet.</div>'; return; }
+    view.innerHTML = `
+      <div class="filter-row">
+        <input id="voterSearch" placeholder="Search name or email…" />
+      </div>
+      <div id="voterList">
+        ${voters.map(v => `
+          <div class="voter-card" data-voter="${esc(v.voter_id)}">
+            <div class="voter-head">
+              <div>
+                <div class="voter-name">${esc(v.voter_name)}</div>
+                <div class="voter-email">${esc(v.voter_id)}</div>
+              </div>
+              <div class="voter-time">${v.last ? fmtTime(new Date(v.last).toISOString()) : ''}</div>
+            </div>
+            <div class="voter-stats">
+              <div class="s picks"><div class="lbl">Event picks</div><div class="val">${v.picks.length}</div></div>
+              <div class="s ranks"><div class="lbl">Rankings</div><div class="val">${v.ranks.length}</div></div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    document.querySelectorAll('.voter-card').forEach(el => {
+      el.addEventListener('click', () => {
+        state.selectedVoter = el.dataset.voter;
+        renderVoterDetail();
+      });
+    });
+    document.getElementById('voterSearch').addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase();
+      document.querySelectorAll('.voter-card').forEach(el => {
+        const txt = el.textContent.toLowerCase();
+        el.style.display = txt.includes(q) ? '' : 'none';
+      });
+    });
+  }
+
+  function renderVoterDetail() {
+    const voter_id = state.selectedVoter;
+    const view = document.getElementById('view');
+    const v = buildVoterMap().find(x => x.voter_id === voter_id);
+    if (!v) { state.selectedVoter = null; renderVotersList(); return; }
+    const eventName = (n) => (state.events.find(e => e.event_num === n) || {}).name || `Event ${n}`;
+    const picksSorted = [...v.picks].sort((a, b) => a.event_num - b.event_num || a.division.localeCompare(b.division));
+    const menRanks = v.ranks.filter(r => r.division === 'men').sort((a,b)=>a.place-b.place);
+    const womenRanks = v.ranks.filter(r => r.division === 'women').sort((a,b)=>a.place-b.place);
+    view.innerHTML = `
+      <button class="back-btn" id="backBtn">← Back to voters</button>
+      <div class="voter-detail">
+        <div class="detail-title">${esc(v.voter_name)}</div>
+        <div class="detail-sub">${esc(v.voter_id)} · last activity ${v.last ? fmtTime(new Date(v.last).toISOString()) : 'unknown'}</div>
+
+        <div class="detail-block">
+          <h4>Event picks (${picksSorted.length})</h4>
+          ${picksSorted.length ? picksSorted.map(p => `
+            <div class="pick-row">
+              <span class="p-num">#${p.event_num}</span>
+              <span><b>${esc(p.athlete_name)}</b> <span style="color:var(--text-muted);font-size:0.75rem;">· ${esc(eventName(p.event_num))}</span></span>
+              <span class="p-div ${p.division}">${p.division}</span>
+            </div>
+          `).join('') : '<div class="empty">No event picks.</div>'}
+        </div>
+
+        <div class="detail-block">
+          <h4 class="men">Men rankings (${menRanks.length})</h4>
+          ${menRanks.length ? `<ol class="rank-list">${menRanks.map(r => `<li><span class="rn">${r.place}.</span><span>${esc(r.athlete_name)}</span></li>`).join('')}</ol>` : '<div class="empty">No rankings.</div>'}
+        </div>
+
+        <div class="detail-block">
+          <h4 class="women">Women rankings (${womenRanks.length})</h4>
+          ${womenRanks.length ? `<ol class="rank-list">${womenRanks.map(r => `<li><span class="rn">${r.place}.</span><span>${esc(r.athlete_name)}</span></li>`).join('')}</ol>` : '<div class="empty">No rankings.</div>'}
+        </div>
+      </div>
+    `;
+    document.getElementById('backBtn').addEventListener('click', () => {
+      state.selectedVoter = null;
+      renderVotersList();
+    });
+  }
+
+  function renderByEvent() {
+    const view = document.getElementById('view');
+    // Count picks per (event, division, athlete)
+    const counts = new Map();
+    state.picks.forEach(p => {
+      const k = `${p.event_num}:${p.division}:${p.athlete_name}`;
+      counts.set(k, (counts.get(k) || 0) + 1);
+    });
+    view.innerHTML = state.events.map(ev => {
+      const menTally = {};
+      const womenTally = {};
+      state.picks.filter(p => p.event_num === ev.event_num).forEach(p => {
+        const tally = p.division === 'men' ? menTally : womenTally;
+        tally[p.athlete_name] = (tally[p.athlete_name] || 0) + 1;
+      });
+      const menSorted = Object.entries(menTally).sort((a,b)=>b[1]-a[1]);
+      const womenSorted = Object.entries(womenTally).sort((a,b)=>b[1]-a[1]);
+      const totalMen = menSorted.reduce((s,[,c])=>s+c,0);
+      const totalWomen = womenSorted.reduce((s,[,c])=>s+c,0);
+      return `
+        <div class="event-tot-card">
+          <div class="event-tot-head">
+            <span class="event-tot-num">#${ev.event_num}</span>
+            <span class="event-tot-name">${esc(ev.name)}</span>
+            <span style="color:var(--text-muted);font-size:0.75rem;">${totalMen + totalWomen} votes</span>
+          </div>
+          <div class="picks-bar">
+            <div class="picks-col men">
+              <h5>Men (${totalMen})</h5>
+              <ol>${menSorted.slice(0,5).map(([n,c]) => `<li><span>${esc(n)}</span><span class="cnt">${c}</span></li>`).join('') || '<li style="color:var(--text-muted);font-style:italic;">No picks</li>'}</ol>
+            </div>
+            <div class="picks-col women">
+              <h5>Women (${totalWomen})</h5>
+              <ol>${womenSorted.slice(0,5).map(([n,c]) => `<li><span>${esc(n)}</span><span class="cnt">${c}</span></li>`).join('') || '<li style="color:var(--text-muted);font-style:italic;">No picks</li>'}</ol>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function render() {
+    if (state.tab === 'voters') {
+      if (state.selectedVoter) renderVoterDetail(); else renderVotersList();
+    } else if (state.tab === 'events') {
+      renderByEvent();
+    }
+  }
+
+  document.querySelectorAll('.tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.tab = btn.dataset.tab;
+      state.selectedVoter = null;
+      document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b === btn));
+      render();
+    });
+  });
+
+  (async function init() {
+    try {
+      state.supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      setConn(true, 'Live');
+      await loadAll();
+      state.supabase
+        .channel('cfg-voters-viewer')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_event_picks' }, loadAll)
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_rankings' }, loadAll)
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'cfg_events' }, loadAll)
+        .subscribe();
+    } catch (err) {
+      console.error(err);
+      setConn(false, 'Offline');
+    }
+  })();
+</script>
+</body>
+</html>
