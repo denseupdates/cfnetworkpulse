@@ -140,8 +140,8 @@
   async function loadAll() {
     const [ev, pk, rk] = await Promise.all([
       state.supabase.from('cfg_events').select('*').order('event_num'),
-      state.supabase.from('cfg_event_picks').select('*').order('created_at', { ascending: false }),
-      state.supabase.from('cfg_rankings').select('*')
+      state.supabase.from('cfg_event_picks').select('*').order('inserted_at', { ascending: false }).limit(5000),
+      state.supabase.from('cfg_rankings').select('*').limit(5000)
     ]);
     state.events = ev.data || [];
     state.picks = pk.data || [];
@@ -163,7 +163,7 @@
       if (voter_name && !v.voter_name.startsWith(voter_name)) v.voter_name = voter_name;
       if (kind === 'pick') v.picks.push(row);
       else v.ranks.push(row);
-      const t = row.created_at ? new Date(row.created_at).getTime() : 0;
+      const t = (row.inserted_at || row.created_at) ? new Date(row.inserted_at || row.created_at).getTime() : 0;
       if (!v.last || t > v.last) v.last = t;
     };
     state.picks.forEach(p => upsert(p.voter_id, p.voter_name, p, 'pick'));
