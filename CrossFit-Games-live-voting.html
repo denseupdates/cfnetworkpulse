@@ -667,16 +667,32 @@
   // ============================================================
   //  Leaderboard
   // ============================================================
+  async function fetchAllPaged(tableName, selectCols) {
+    const pageSize = 1000;
+    let all = [];
+    let from = 0;
+    while (true) {
+      const { data, error } = await state.supabase.from(tableName).select(selectCols).range(from, from + pageSize - 1);
+      if (error) { console.error(tableName, error); break; }
+      if (!data || !data.length) break;
+      all = all.concat(data);
+      if (data.length < pageSize) break;
+      from += pageSize;
+      if (from > 20000) break;
+    }
+    return all;
+  }
+
   async function loadLeaderboardData() {
     if (!state.supabase) return;
-    const [r1, r2, r3, r4] = await Promise.all([
-      state.supabase.from('cfg_rankings').select('division,voter_id,voter_name,voter_email,ranking'),
-      state.supabase.from('cfg_event_picks').select('event_num,division,athlete_name,voter_id,voter_name,voter_email'),
+    const [allRanks, allPicks, r3, r4] = await Promise.all([
+      fetchAllPaged('cfg_rankings', 'division,voter_id,voter_name,voter_email,ranking'),
+      fetchAllPaged('cfg_event_picks', 'event_num,division,athlete_name,voter_id,voter_name,voter_email'),
       state.supabase.from('cfg_event_results').select('event_num,division,winner_name'),
       state.supabase.from('cfg_final_standings').select('division,place,athlete_name').order('place')
     ]);
-    state.allRankings = (r1 && r1.data) || [];
-    state.allPicks    = (r2 && r2.data) || [];
+    state.allRankings = allRanks;
+    state.allPicks    = allPicks;
     const wmap = {};
     ((r3 && r3.data) || []).forEach(w => { wmap[`${w.event_num}:${w.division}`] = w.winner_name; });
     state.winners = wmap;
