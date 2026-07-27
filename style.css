@@ -3356,10 +3356,13 @@ a.athlete-card:hover .athlete-card__ig {
 }
 .wotw-toprow .wotw-card { height: 100%; }
 
-/* ---- DETAILS ROW: warm-up + cool-down + scaling notes, evenly spaced ---- */
+/* ---- DETAILS ROW: warm-up + cool-down + scaling notes ----
+   Column widths are weighted by expected content length: warm-up (medium),
+   cool-down (short), scaling notes (long). This keeps each card comfortably
+   readable instead of squeezing everything into equal narrow pills. */
 .wotw-bottomrow {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.7fr) minmax(0, 1.6fr);
   gap: var(--space-6, 1.5rem);
   align-items: start;
   margin-top: var(--space-6, 1.5rem);
