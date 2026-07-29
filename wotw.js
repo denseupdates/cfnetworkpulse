@@ -65,19 +65,24 @@
       var warmupEl = document.getElementById("wotwWarmup");
       var cooldownEl = document.getElementById("wotwCooldown");
 
-      if (dateEl && d.date) dateEl.textContent = d.date;
-      /* Source/attribution line: only override when provided (empty collapses via CSS :empty). */
-      if (sourceEl && typeof d.source === "string") sourceEl.textContent = d.source;
-      /* Warm-up & cool-down are plain text; line breaks preserved by CSS white-space: pre-line.
-         textContent is XSS-safe. Empty string collapses the block via CSS :empty. */
-      if (warmupEl && typeof d.warmup === "string") warmupEl.textContent = d.warmup;
-      if (cooldownEl && typeof d.cooldown === "string") cooldownEl.textContent = d.cooldown;
+      /* === TEMPORARY OVERRIDE (2026-07-27) ===
+         Firebase Admin connector is broken and cannot clear stale Firestore values.
+         Force the repo HTML defaults to render this week by skipping Firestore overrides
+         for date/source/warmup/cooldown/notes. Restore these lines next week AFTER the
+         admin editor has been used to blank the fields (or Firestore has been cleared). */
+      // if (dateEl && d.date) dateEl.textContent = d.date;
+      // if (sourceEl && typeof d.source === "string") sourceEl.textContent = d.source;
+      // if (warmupEl && typeof d.warmup === "string") warmupEl.textContent = d.warmup;
+      // if (cooldownEl && typeof d.cooldown === "string") cooldownEl.textContent = d.cooldown;
+      /* === END TEMPORARY OVERRIDE === */
 
       /* Image: only override if a non-empty URL was provided; otherwise keep repo image.
-         The image contains the full workout (title, format, weight, movements). */
-      if (imgEl && d.image && String(d.image).trim()) {
-        imgEl.src = String(d.image).trim();
-      }
+         The image contains the full workout (title, format, weight, movements).
+         TEMPORARY OVERRIDE (2026-07-27): skip Firestore image override so stale URL
+         doesn't win. Restore next week after admin editor is cleared. */
+      // if (imgEl && d.image && String(d.image).trim()) {
+      //   imgEl.src = String(d.image).trim();
+      // }
       /* Secondary image (optional). The HTML ships with the repo image visible by default.
          - A non-empty URL in Firestore overrides the src.
          - The literal "none" / "hide" / "off" hides the secondary image entirely.
@@ -94,18 +99,19 @@
         /* else: keep the repo default image already in the HTML */
       }
 
-      /* Scaling notes */
-      if (notesEl && Array.isArray(d.notes) && d.notes.length) {
-        var nhtml = "";
-        d.notes.forEach(function (n) {
-          var label = (n && n.label) ? esc(n.label) : "";
-          var text = (n && n.text != null) ? esc(n.text) : esc(n);
-          nhtml += "<li>";
-          if (label) nhtml += "<strong>" + label + ":</strong> ";
-          nhtml += text + "</li>";
-        });
-        notesEl.innerHTML = nhtml;
-      }
+      /* Scaling notes -- TEMPORARY OVERRIDE (2026-07-27): skip Firestore override; use repo HTML.
+         Restore this block next week once the admin editor has been used to blank the field. */
+      // if (notesEl && Array.isArray(d.notes) && d.notes.length) {
+      //   var nhtml = "";
+      //   d.notes.forEach(function (n) {
+      //     var label = (n && n.label) ? esc(n.label) : "";
+      //     var text = (n && n.text != null) ? esc(n.text) : esc(n);
+      //     nhtml += "<li>";
+      //     if (label) nhtml += "<strong>" + label + ":</strong> ";
+      //     nhtml += text + "</li>";
+      //   });
+      //   notesEl.innerHTML = nhtml;
+      // }
     }
 
     db.collection("content").doc("wotw").get().then(function (doc) {
