@@ -67,25 +67,6 @@
   </div>
 </div>
 
-<!-- ===== 2025 CROSSFIT GAMES ATHLETES — FLOATING REEL ===== -->
-<section class="section athletes-section" id="athletes" style="padding-top:var(--space-6);padding-bottom:var(--space-10);">
-  <div class="container">
-    <div class="section__header">
-      <div>
-        <div class="section__label" style="color:#3b82f6">2025 CrossFit Games &bull; Top 20 Finishers</div>
-        <h2 class="section__title">Athletes on Instagram</h2>
-      </div>
-      <a href="https://games.crossfit.com/leaderboard/finals/2025?final=245&division=1&sort=0" target="_blank" rel="noopener noreferrer" class="section__link" style="color:#3b82f6">Full Leaderboard &rarr;</a>
-    </div>
-
-    <div class="athlete-reel fade-in">
-      <div class="athlete-reel__fade athlete-reel__fade--left" aria-hidden="true"></div>
-      <div class="athlete-reel__fade athlete-reel__fade--right" aria-hidden="true"></div>
-      <div class="athlete-reel__track" id="athleteFloatTrack"></div>
-    </div>
-  </div>
-</section>
-
 <!-- ===== TOP STORIES ===== -->
 <section class="section" id="news" style="padding-top:var(--space-10);">
   <div class="container">
@@ -1470,79 +1451,6 @@
 </div>
 
 <script src="./app.js" defer></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const ATHLETES = [
-    { rank: "1st",  name: "Jayson Hopper",      handle: "@jhopper3",         url: "https://www.instagram.com/jhopper3/",         image: "./assets/Jayson Hopper.jpg" },
-    { rank: "2nd",  name: "Ricky Garard",       handle: "@rickygarard",      url: "https://www.instagram.com/rickygarard/",      image: "./assets/Ricky Garard.jpg" },
-    { rank: "3rd",  name: "James Sprague",      handle: "@spraguerrrr",      url: "https://www.instagram.com/spraguerrrr/",      image: "./assets/James Sprague.jpg" },
-    { rank: "4th",  name: "Dallin Pepper",      handle: "@dallinpepper",     url: "https://www.instagram.com/dallinpepper/",     image: "./assets/Dallin Pepper.jpg" },
-    { rank: "5th",  name: "Austin Hatfield",    handle: "@austinhatfield_1", url: "https://www.instagram.com/austinhatfield_1/", image: "./assets/Austin Hatfield.jpg" },
-    { rank: "6th",  name: "Jay Crouch",         handle: "@jaycrouch_",       url: "https://www.instagram.com/jaycrouch_/",       image: "./assets/Jay Crouch.jpg" },
-    { rank: "7th",  name: "Justin Medeiros",    handle: "@justinmedeiros34", url: "https://www.instagram.com/justinmedeiros34/", image: "./assets/Justin Medeiros.jpg" },
-    { rank: "8th",  name: "Jeffrey Adler",      handle: "@adlerjeff",        url: "https://www.instagram.com/adlerjeff/",        image: "./assets/Jeffrey Adler.jpg" },
-    { rank: "9th",  name: "Roman Khrennikov",   handle: "@roman_khrennikov", url: "https://www.instagram.com/roman_khrennikov/", image: "./assets/Roman Khrennikov.jpg" },
-    { rank: "10th", name: "Tudor Magda",        handle: "@tmagda1",          url: "https://www.instagram.com/tmagda1/",          image: "./assets/Tudor Magda.jpg" },
-    { rank: "11th", name: "Harry Lightfoot",    handle: "@harrylightfoot_",  url: "https://www.instagram.com/harrylightfoot_/",  image: "./assets/Harry Lightfoot.jpg" },
-    { rank: "12th", name: "Colten Mertens",     handle: "@colten_mertens",   url: "https://www.instagram.com/colten_mertens/",   image: "./assets/Colten Mertens.jpg" },
-    { rank: "13th", name: "Chris Ibarra",       handle: "@chrisibarra5",     url: "https://www.instagram.com/chrisibarra5/",     image: "./assets/Chris Ibarra.jpg" },
-    { rank: "14th", name: "Kalyan Souza",       handle: "@kalyancf",         url: "https://www.instagram.com/kalyancf/",         image: "./assets/Kalyan Souza.jpg" },
-    { rank: "15th", name: "Ty Jenkins",         handle: "@tyjenkins75",      url: "https://www.instagram.com/tyjenkins75/",      image: "./assets/Ty Jenkins.jpg" },
-    { rank: "16th", name: "Calum Clements",     handle: "@calum_clements",   url: "https://www.instagram.com/calum_clements/",   image: "./assets/Calum Clements.jpg" },
-    { rank: "17th", name: "Colin Bosshard",     handle: "@colinbosshard",    url: "https://www.instagram.com/colinbosshard/",    image: "./assets/Colin Bosshard.jpg" },
-    { rank: "18th", name: "Jack Rozema",        handle: "@jackrozema7",      url: "https://www.instagram.com/jackrozema7/",      image: "./assets/Jack Rozema.jpg" },
-    { rank: "19th", name: "Moritz Fiebig",      handle: "@moritz_fiebig",    url: "https://www.instagram.com/moritz_fiebig/",    image: "./assets/Moritz Fiebig.jpg" },
-    { rank: "20th", name: "Nick Mathew",        handle: "@coachnmathew",     url: "https://www.instagram.com/coachnmathew/",     image: "./assets/Nick Mathew.jpg" },
-
-    { rank: "1st",  name: "Tia-Clair Toomey",   handle: "@tiaclair1",        url: "https://www.instagram.com/tiaclair1/",        image: "./assets/Tia-Clair Toomey.jpg" },
-    { rank: "2nd",  name: "Lucy Campbell",      handle: "@lucycampbell5",    url: "https://www.instagram.com/lucycampbell5/",    image: "./assets/Lucy Campbell.jpg" },
-    { rank: "3rd",  name: "Olivia Kerstetter",  handle: "@oliviakerstetter", url: "https://www.instagram.com/oliviakerstetter/", image: "./assets/Olivia Kerstetter.jpg" },
-    { rank: "4th",  name: "Danielle Brandon",   handle: "@daniellebrandon7", url: "https://www.instagram.com/daniellebrandon7/", image: "./assets/Danielle Brandon.jpg" },
-    { rank: "5th",  name: "Arielle Loewen",     handle: "@arielleloewen",    url: "https://www.instagram.com/arielleloewen/",    image: "./assets/Arielle Loewen.jpg" },
-    { rank: "6th",  name: "Madeline Sturt",     handle: "@maddiesturt",      url: "https://www.instagram.com/maddiesturt/",      image: "./assets/Madeline Sturt.jpg" },
-    { rank: "7th",  name: "Mirjam von Rohr",    handle: "@mirjam_v.r",       url: "https://www.instagram.com/mirjam_v.r/",       image: "./assets/Mirjam von Rohr.jpg" },
-    { rank: "8th",  name: "Aimee Cringle",      handle: "@aimee_cringle",    url: "https://www.instagram.com/aimee_cringle/",    image: "./assets/Aimee Cringle.jpg" },
-    { rank: "9th",  name: "Anikha Greer",       handle: "@anikhagreer",      url: "https://www.instagram.com/anikhagreer/",      image: "./assets/Anikha Greer.jpg" },
-    { rank: "10th", name: "Alexis Raptis",      handle: "@alexis_raptis",    url: "https://www.instagram.com/alexis_raptis/",    image: "./assets/Alexis Raptis.jpg" },
-    { rank: "11th", name: "Lucy McGonigle",     handle: "@lucy.mcgonigle",   url: "https://www.instagram.com/lucy.mcgonigle/",   image: "./assets/Lucy McGonigle.jpg" },
-    { rank: "12th", name: "Abigail Domit",      handle: "@abbiedomit",       url: "https://www.instagram.com/abbiedomit/",       image: "./assets/Abigail Domit.jpg" },
-    { rank: "13th", name: "Lydia Fish",         handle: "@fish_lydia",       url: "https://www.instagram.com/fish_lydia/",       image: "./assets/Lydia Fish.jpg" },
-    { rank: "14th", name: "Claudia Gluck",      handle: "@claudia_glk",      url: "https://www.instagram.com/claudia_glk/",      image: "./assets/Claudia Gluck.jpg" },
-    { rank: "15th", name: "Grace Walton",       handle: "@graciewaltonn_",   url: "https://www.instagram.com/graciewaltonn_/",   image: "./assets/Grace Walton.jpg" },
-    { rank: "16th", name: "Brooke Wells",       handle: "@brookewellss",     url: "https://www.instagram.com/brookewellss/",     image: "./assets/Brooke Wells.jpg" },
-    { rank: "17th", name: "Fee Saghafi",        handle: "@fee.saghafi",      url: "https://www.instagram.com/fee.saghafi/",      image: "./assets/Fee Saghafi.jpg" },
-    { rank: "18th", name: "Lexi Neely",         handle: "@lexi_neely_",      url: "https://www.instagram.com/lexi_neely_/",      image: "./assets/Lexi Neely.jpg" },
-    { rank: "19th", name: "Haley Adams",        handle: "@haleyadamssss",    url: "https://www.instagram.com/haleyadamssss/",    image: "./assets/Haley Adams.jpg" },
-    { rank: "20th", name: "Jennifer Muir",      handle: "@jennifermuir99",   url: "https://www.instagram.com/jennifermuir99/",   image: "./assets/Jennifer Muir.jpg" }
-  ];
-
-  const track = document.getElementById("athleteFloatTrack");
-  if (!track) return;
-
-  const loopedAthletes = [...ATHLETES, ...ATHLETES];
-
-  track.innerHTML = loopedAthletes.map((athlete) => `
-    <a href="${athlete.url}"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="athlete-poster"
-       aria-label="${athlete.name} on Instagram">
-      <img
-        src="${athlete.image}"
-        alt="${athlete.name}"
-        width="180"
-        height="320"
-        loading="lazy">
-      <div class="athlete-poster__overlay">
-        <span class="athlete-poster__rank">${athlete.rank}</span>
-        <span class="athlete-poster__name">${athlete.name}</span>
-        <span class="athlete-poster__handle">${athlete.handle}</span>
-      </div>
-    </a>
-  `).join("");
-});
-</script>
 
   <script src="/ticker.js" defer></script>
 </body>
