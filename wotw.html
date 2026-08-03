@@ -2,14 +2,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Workout of the Week — CF Network News</title>
-<meta name="description" content="The CF Network News Workout of the Week. Post your scores, like and reply to other athletes. Sign in with Google to join the conversation.">
-<meta property="og:title" content="Workout of the Week — CF Network News">
-<meta property="og:description" content="This week's featured workout with scaling notes. Post your scores and discuss with the community.">
-<link rel="stylesheet" href="./base.css">
-<link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workout of the Week — CF Network News</title>
+  <meta name="description" content="The CF Network News Workout of the Week. Post your scores, like and reply to other athletes. Sign in with Google to join the conversation.">
+  <meta property="og:title" content="Workout of the Week — CF Network News">
+  <meta property="og:description" content="This week's featured workout with scaling notes. Post your scores and discuss with the community.">
+  <link rel="stylesheet" href="./base.css">
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    /* Ensure the bottom row pills wrap nicely */
+    .wotw-bottomrow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      align-items: stretch;
+    }
+
+    .wotw-bottomrow > .wotw-card {
+      flex: 1 1 280px;
+      min-width: 0;
+    }
+
+    .wotw-card {
+      border-radius: 20px;
+      padding: var(--space-4);
+      box-sizing: border-box;
+    }
+
+    .wotw-block__text {
+      line-height: 1.6;
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+  </style>
 </head>
 <body>
 
@@ -27,18 +53,19 @@
     </a>
 
     <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
     </button>
   </div>
 </header>
-
 
 <!-- ===== TICKER ===== -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker__track"></div>
 </div>
 
- <!-- ===== SECTION NAV ===== -->
+<!-- ===== SECTION NAV ===== -->
 <nav class="section-nav" aria-label="Section navigation">
   <div class="section-nav__track">
     <a href="./news.html" class="section-nav__link">New Stories</a>
@@ -51,14 +78,15 @@
     <a href="./message-board.html" class="section-nav__link">Message Board</a>
     <a href="./classifieds.html" class="section-nav__link">Classifieds</a>
     <a href="./index.html#subscribe" class="section-nav__link">Subscribe</a>
-
   </div>
 </nav>
 
 <div style="padding:var(--space-4) 0 0;">
   <div class="container">
     <a href="./index.html" style="font-size:var(--text-sm);color:var(--color-text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:var(--space-2);">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
       Back to Home
     </a>
   </div>
@@ -72,19 +100,13 @@
         <div class="section__label" style="color:#3b82f6">Train With Us</div>
         <h2 class="section__title">Workout of the Week</h2>
       </div>
-      <!-- Date label + source (admin-editable; fall back to these defaults) -->
       <div class="wotw-dateblock">
         <span class="wotw-date" id="wotwDate">Week of August 2nd, 2026</span>
         <span class="wotw-source" id="wotwSource">Sentinel Training CrossFit Charlotte Class Workout</span>
       </div>
     </div>
 
-    <!-- ===== IMAGE ROW: large workout image(s), full width =====
-         Primary image contains the full workout (title, format, weight, movements).
-         EDIT EACH WEEK: replace img-wotw-current.jpg with the new screenshot
-         (keep the same filename), or set an Image URL in the admin editor.
-         SECONDARY image is optional: set a "Secondary image URL" in the admin editor
-         (or drop img-wotw-secondary.jpg in the repo). Leave blank to hide it. -->
+    <!-- IMAGE ROW -->
     <figure class="wotw-figure wotw-figure--media">
       <div class="wotw-media" id="wotwMedia">
         <img class="wotw-figure__img" id="wotwImage" src="./assets/IMG-WOTW.jpg"
@@ -94,68 +116,76 @@
       </div>
     </figure>
 
-    <!-- ===== DETAILS ROW: WARM-UP + COOL-DOWN + SCALING NOTES =====
-         Three evenly spaced columns below the images. -->
+    <!-- DETAILS ROW: WARM-UP + COOL-DOWN + SCALING NOTES -->
     <div class="wotw-bottomrow">
-        <!-- ===== WARM-UP =====
-             EDIT EACH WEEK: text only, one item per line. -->
-        <div class="wotw-card wotw-card--block" id="wotwWarmupCard">
-          <h4 class="wotw-notes__heading">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            Warm-up
-          </h4>
-<p class="wotw-block__text" id="wotwWarmup">
-Warm-up (8&ndash;12 minutes)<br>
-<br>
-General (3&ndash;4 minutes)<br>
-2&ndash;3 minutes easy cardio: row, bike, or light jog.<br>
-10 shoulder circles each direction, 10 arm swings across chest, 10 band pull-aparts.<br>
-<br>
-Dynamic prep (4&ndash;6 minutes)<br>
-Move through 2 rounds, controlled pace:<br>
-10 air squats<br>
-10 walking lunges (5/leg)<br>
-10 ring rows<br>
-10 push-ups<br>
-10 PVC or light kettlebell good mornings<br>
-10 hollow rocks or dead bugs<br>
-<br>
-Specific warm-up (3&ndash;5 minutes)<br>
-With a lighter kettlebell than workout weight:<br>
-2 sets of 5 kettlebell sumo deadlift high pulls, slow tempo, focusing on hips then elbows high and outside.<br>
-1&ndash;2 sets of 10 Russian kettlebell swings.<br>
-2&ndash;3 sets of 3&ndash;5 controlled ring dips or your scaled version (feet assist, band, boxes) to groove bottom position and shoulder stability.
-</p>
+      <!-- WARM-UP -->
+      <div class="wotw-card wotw-card--block" id="wotwWarmupCard">
+        <h4 class="wotw-notes__heading">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+          Warm-up
+        </h4>
+        <p class="wotw-block__text" id="wotwWarmup">
+          Warm-up (8&ndash;12 minutes)<br>
+          <br>
+          General (3&ndash;4 minutes)<br>
+          2&ndash;3 minutes easy cardio: row, bike, or light jog.<br>
+          10 shoulder circles each direction, 10 arm swings across chest, 10 band pull-aparts.<br>
+          <br>
+          Dynamic prep (4&ndash;6 minutes)<br>
+          Move through 2 rounds, controlled pace:<br>
+          10 air squats<br>
+          10 walking lunges (5/leg)<br>
+          10 ring rows<br>
+          10 push-ups<br>
+          10 PVC or light kettlebell good mornings<br>
+          10 hollow rocks or dead bugs<br>
+          <br>
+          Specific warm-up (3&ndash;5 minutes)<br>
+          With a lighter kettlebell than workout weight:<br>
+          2 sets of 5 kettlebell sumo deadlift high pulls, slow tempo, focusing on hips then elbows high and outside.<br>
+          1&ndash;2 sets of 10 Russian kettlebell swings.<br>
+          2&ndash;3 sets of 3&ndash;5 controlled ring dips or your scaled version (feet assist, band, boxes) to groove bottom position and shoulder stability.
+        </p>
+      </div>
 
-        <!-- ===== COOL-DOWN =====
-             EDIT EACH WEEK: text only, one item per line. -->
-        <div class="wotw-card wotw-card--block" id="wotwCooldownCard">
-          <h4 class="wotw-notes__heading">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
-            Cool-down
-          </h4>
-<p class="wotw-block__text" id="wotwCooldown">
-Cool-down (6&ndash;10 minutes)<br>
-<br>
-Heart-rate down (2&ndash;3 minutes)<br>
-Easy walk around the gym or light bike until breathing is back to conversational.<br>
-<br>
-Stretch &amp; reset (4&ndash;7 minutes)<br>
-Hold each stretch ~30&ndash;45 seconds per side, 1&ndash;2 rounds:<br>
-Hamstrings: seated forward fold or standing toe-touch.<br>
-Hip/low back: modified pigeon or half-pancake stretch.<br>
-Chest/shoulders: doorway stretch or banded shoulder stretch, plus gentle ring or bar hang if available.<br>
-Triceps: overhead triceps stretch (especially after ring dips).<br>
-Glutes: lying figure-four stretch.
-</p>
+      <!-- COOL-DOWN -->
+      <div class="wotw-card wotw-card--block" id="wotwCooldownCard">
+        <h4 class="wotw-notes__heading">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h4l3 8 4-16 3 8h4"/>
+          </svg>
+          Cool-down
+        </h4>
+        <p class="wotw-block__text" id="wotwCooldown">
+          Cool-down (6&ndash;10 minutes)<br>
+          <br>
+          Heart-rate down (2&ndash;3 minutes)<br>
+          Easy walk around the gym or light bike until breathing is back to conversational.<br>
+          <br>
+          Stretch &amp; reset (4&ndash;7 minutes)<br>
+          Hold each stretch ~30&ndash;45 seconds per side, 1&ndash;2 rounds:<br>
+          Hamstrings: seated forward fold or standing toe-touch.<br>
+          Hip/low back: modified pigeon or half-pancake stretch.<br>
+          Chest/shoulders: doorway stretch or banded shoulder stretch, plus gentle ring or bar hang if available.<br>
+          Triceps: overhead triceps stretch (especially after ring dips).<br>
+          Glutes: lying figure-four stretch.
+        </p>
+      </div>
 
-        <!-- ===== SCALING NOTES =====
-             EDIT EACH WEEK: update the scaling guidance below. -->
-        <div class="wotw-card wotw-card--notes">
-          <h4 class="wotw-notes__heading">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-            Scaling Notes
-          </h4>
+      <!-- SCALING NOTES -->
+      <div class="wotw-card wotw-card--notes">
+        <h4 class="wotw-notes__heading">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+          </svg>
+          Scaling Notes
+        </h4>
+        <!-- Add your scaling notes text here -->
+      </div>
     </div>
   </div>
 </section>
@@ -180,10 +210,15 @@ Glutes: lying figure-four stretch.
         <!-- Search Bar -->
         <div class="mb-search">
           <div class="mb-search__inner">
-            <svg class="mb-search__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <svg class="mb-search__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="M21 21l-4.35-4.35"/>
+            </svg>
             <input type="text" id="mbSearch" class="mb-search__input" placeholder="Search scores..." autocomplete="off">
             <button type="button" id="mbSearchClear" class="mb-search__clear" style="display:none" aria-label="Clear search">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
             </button>
           </div>
           <div class="mb-search__results" id="mbSearchResults" style="display:none"></div>
@@ -193,7 +228,12 @@ Glutes: lying figure-four stretch.
         <div class="mb-auth" id="mbAuth">
           <div class="mb-auth__signed-out" id="mbSignedOut">
             <button type="button" class="mb-auth__google-btn" id="mbGoogleSignIn">
-              <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.99 23.99 0 0 0 0 24c0 3.77.9 7.34 2.44 10.5l8.09-5.91z"/><path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+              <svg width="18" height="18" viewBox="0 0 48 48">
+                <path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                <path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                <path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.99 23.99 0 0 0 0 24c0 3.77.9 7.34 2.44 10.5l8.09-5.91z"/>
+                <path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+              </svg>
               Sign in with Google
             </button>
             <span class="mb-auth__note">Sign in to post your score</span>
@@ -229,7 +269,9 @@ Glutes: lying figure-four stretch.
         <!-- Comments Feed -->
         <div class="mb-feed" id="mbFeed">
           <div class="mb-empty" id="mbEmpty">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
             <p>No scores yet. Be the first to post yours.</p>
           </div>
         </div>
@@ -264,7 +306,9 @@ Glutes: lying figure-four stretch.
         <button type="submit" class="newsletter__btn">Subscribe</button>
         <div class="newsletter__error" id="newsletterError" style="display:none;color:var(--color-text-muted);margin-top:0.75rem;font-size:var(--text-sm);"></div>
       </form>
-      <div class="newsletter__success" id="newsletterSuccess">Almost there! Check your inbox and click the confirmation link to complete your subscription.</div>
+      <div class="newsletter__success" id="newsletterSuccess">
+        Almost there! Check your inbox and click the confirmation link to complete your subscription.
+      </div>
     </div>
   </div>
 </section>
@@ -283,7 +327,9 @@ Glutes: lying figure-four stretch.
           </svg>
           <div class="logo__text">CF NETWORK<span>NEWS</span></div>
         </a>
-        <p class="footer__brand-text">Your daily source for CrossFit news, athlete updates, competition schedules, and community insights. Not affiliated with CrossFit LLC.</p>
+        <p class="footer__brand-text">
+          Your daily source for CrossFit news, athlete updates, competition schedules, and community insights. Not affiliated with CrossFit LLC.
+        </p>
       </div>
       <div>
         <h4 class="footer__heading">Sections</h4>
@@ -295,7 +341,7 @@ Glutes: lying figure-four stretch.
           <li><a href="./rogue.html">Rogue Fitness</a></li>
           <li><a href="./season-info.html">Season Info</a></li>
           <li><a href="./wotw.html">Workout of the Week</a></li>
-         <li><a href="./classifieds.html">Classifieds</a></li>
+          <li><a href="./classifieds.html">Classifieds</a></li>
           <li><a href="./message-board.html">Message Board</a></li>
         </ul>
       </div>
@@ -317,7 +363,9 @@ Glutes: lying figure-four stretch.
     </div>
 
     <div class="footer__bottom">
-      <p class="footer__copy">&copy; 2026 CF Network News. Independent fan site. Not affiliated with CrossFit LLC.</p>
+      <p class="footer__copy">
+        &copy; 2026 CF Network News. Independent fan site. Not affiliated with CrossFit LLC.
+      </p>
     </div>
   </div>
 </footer>
@@ -326,7 +374,8 @@ Glutes: lying figure-four stretch.
 <div class="fab-nav" id="fabNav">
   <div class="fab-nav__menu" id="fabMenu">
     <a href="./news.html" class="fab-nav__item">Top Stories</a>
-    <a href="./gossip.html" class="fab-nav__item">Gossip</a>    <a href="./shows.html" class="fab-nav__item">Podcasts/Shows</a>
+    <a href="./gossip.html" class="fab-nav__item">Gossip</a>
+    <a href="./shows.html" class="fab-nav__item">Podcasts/Shows</a>
     <a href="./rankings.html" class="fab-nav__item">Rankings</a>
     <a href="./rogue.html" class="fab-nav__item">Rogue</a>
     <a href="./season-info.html" class="fab-nav__item">Season Info</a>
@@ -336,8 +385,12 @@ Glutes: lying figure-four stretch.
     <a href="./index.html#subscribe" class="fab-nav__item">Subscribe</a>
   </div>
   <button class="fab-nav__btn" id="fabToggle" aria-label="Open navigation menu">
-    <svg class="fab-nav__icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
-    <svg class="fab-nav__icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    <svg class="fab-nav__icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <path d="M3 12h18M3 6h18M3 18h18"/>
+    </svg>
+    <svg class="fab-nav__icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <path d="M18 6L6 18M6 6l12 12"/>
+    </svg>
   </button>
 </div>
 
