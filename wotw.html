@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Workout of the Week — CF Network News</title>
@@ -10,30 +11,34 @@
   <meta property="og:description" content="This week's featured workout with scaling notes. Post your scores and discuss with the community.">
   <link rel="stylesheet" href="./base.css">
   <link rel="stylesheet" href="./style.css">
+
   <style>
-    /* Ensure the bottom row pills wrap nicely */
     .wotw-bottomrow {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: var(--space-4);
       align-items: stretch;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
     .wotw-bottomrow > .wotw-card {
-      flex: 1 1 280px;
+      width: 100%;
       min-width: 0;
     }
 
     .wotw-card {
+      width: 100%;
       border-radius: 20px;
-      padding: var(--space-4);
+      padding: var(--space-5);
       box-sizing: border-box;
     }
 
     .wotw-block__text {
-      line-height: 1.6;
+      line-height: 1.65;
       overflow-wrap: break-word;
       word-break: normal;
+      max-width: none;
     }
   </style>
 </head>
