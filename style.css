@@ -2961,18 +2961,20 @@ a.comp-item:hover .comp-item__arrow {
 }
 .wotw-toprow .wotw-card { height: 100%; }
 
-/* ---- DETAILS ROW: warm-up + cool-down + scaling notes ----
-   Column widths are weighted by expected content length: warm-up (medium),
-   cool-down (short), scaling notes (long). This keeps each card comfortably
-   readable instead of squeezing everything into equal narrow pills. */
+/* ---- DETAILS SECTION: warm-up, cool-down, scaling notes ----
+   Full-width horizontal cards stacked vertically. Each card spans the whole
+   container so content flows across the row instead of being crammed into a
+   tall narrow column. */
 .wotw-bottomrow {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.7fr) minmax(0, 1.6fr);
-  gap: var(--space-6, 1.5rem);
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 1rem);
   margin-top: var(--space-6, 1.5rem);
 }
-.wotw-bottomrow .wotw-card { height: 100%; }
+.wotw-bottomrow .wotw-card {
+  width: 100%;
+  box-sizing: border-box;
+}
 
 .wotw-layout {
   display: grid;
@@ -3146,12 +3148,9 @@ a.comp-item:hover .comp-item__arrow {
 .wotw-card--block:empty,
 .wotw-block__text:empty { display: none; }
 
-/* Tablet: supplement + details grids drop to 2 columns (3rd item wraps to its own row) */
+/* Tablet: supplement grid drops to 2 columns (bottomrow is already flex-column, no change needed) */
 @media (max-width: 1024px) {
   .wotw-supplement {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .wotw-bottomrow {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -3165,9 +3164,6 @@ a.comp-item:hover .comp-item__arrow {
     grid-template-columns: 1fr;
   }
   .wotw-toprow {
-    grid-template-columns: 1fr;
-  }
-  .wotw-bottomrow {
     grid-template-columns: 1fr;
   }
 }
