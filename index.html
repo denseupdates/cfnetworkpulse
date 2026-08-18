@@ -565,7 +565,7 @@
     <div class="section__header">
       <div>
         <div class="section__label" style="color:#ec9602">Monthly Views</div>
-        <h2 class="section__title">Top 5 CrossFit YouTube Channels</h2>
+        <h2 class="section__title">Top Channels by Category</h2>
       </div>
       <a href="./rankings.html" class="section__link" style="color:#c78305 !important; position:relative; z-index:9999; pointer-events:auto; display:inline-block; text-decoration:none;">
         Full Rankings &rarr;
@@ -573,7 +573,7 @@
     </div>
 
     <p class="rankings-intro">
-      Top 5 CrossFit YouTube channels ranked by estimated monthly views.
+      Leading channel in each category, ranked by estimated monthly views.
     </p>
 
     <div class="rankings-grid fade-in" id="homeRankingsGrid"></div>
@@ -904,41 +904,59 @@ document.addEventListener("DOMContentLoaded", () => {
 
   homeGrid.innerHTML = '<p style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-4) 0;">Loading rankings…</p>';
 
-  function renderTopFive(data) {
-    const channels = (data.channels || []).slice().sort((a, b) => {
-      const av = Number(a.monthlyViews) || 0;
-      const bv = Number(b.monthlyViews) || 0;
-      if (bv !== av) return bv - av;
-      return (Number(b.subscribers) || 0) - (Number(a.subscribers) || 0);
-    }).slice(0, 5);
+  const CATEGORY_ORDER = [
+    { key: "brand",    label: "Brand Channels" },
+    { key: "camp",     label: "Training Camps" },
+    { key: "athletes", label: "CrossFit Athletes" },
+    { key: "media",    label: "Outside Media" },
+  ];
 
-    if (channels.length === 0) {
+  function renderTopByCategory(data) {
+    const all = (data.channels || []).slice();
+    if (all.length === 0) {
       homeGrid.innerHTML = '<p style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-4) 0;">Rankings are being refreshed. Please check back shortly.</p>';
       return;
     }
 
-    homeGrid.innerHTML = channels.map((ch, i) => {
+    // Pick top channel in each category by monthly views
+    const leaders = CATEGORY_ORDER.map(({ key, label }) => {
+      const inCat = all
+        .filter((c) => (c.category || "").toLowerCase() === key)
+        .sort((a, b) => {
+          const av = Number(a.monthlyViews) || 0;
+          const bv = Number(b.monthlyViews) || 0;
+          if (bv !== av) return bv - av;
+          return (Number(b.subscribers) || 0) - (Number(a.subscribers) || 0);
+        });
+      return inCat.length ? { ch: inCat[0], label } : null;
+    }).filter(Boolean);
+
+    // Scale bars against the biggest leader across categories
+    const maxViews = Math.max(...leaders.map((l) => Number(l.ch.monthlyViews) || 0), 1);
+
+    homeGrid.innerHTML = leaders.map(({ ch, label }, i) => {
       const rank = i + 1;
       const rankClass =
         rank === 1 ? "rank-card__rank rank-card__rank--top1" :
         rank === 2 ? "rank-card__rank rank-card__rank--top2" :
         rank === 3 ? "rank-card__rank rank-card__rank--top3" :
         "rank-card__rank";
-      const barClass = rank <= 3 ? "rank-card__bar rank-card__bar--accent" : "rank-card__bar";
+      const barClass = "rank-card__bar rank-card__bar--accent";
       const subsLabel = ch.subsLabel || "—";
       const viewsLabel = ch.monthlyViewsLabel || "—";
-      const barWidth = ch.barWidth || "1%";
+      const views = Number(ch.monthlyViews) || 0;
+      const barPct = Math.max(1, Math.round((views / maxViews) * 100));
 
       return `
         <a href="${ch.url}" target="_blank" rel="noopener noreferrer" class="rank-card">
           <div class="${rankClass}">${rank}</div>
           <div class="rank-card__info">
             <div class="rank-card__header">
-              <span class="rank-card__name">${ch.name}</span>
+              <span class="rank-card__name">${ch.name} <span style="color:var(--color-text-muted);font-weight:400;font-size:0.85em;">• ${label}</span></span>
               <span class="rank-card__subs">${subsLabel}</span>
             </div>
             <div class="rank-card__bar-wrap">
-              <div class="${barClass}" style="width:${barWidth}"></div>
+              <div class="${barClass}" style="width:${barPct}%"></div>
             </div>
           </div>
           <div class="rank-card__views">${viewsLabel}</div>
@@ -949,10 +967,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetch("https://cf-rankings-refresh.denseupdates.workers.dev/rankings?t=" + Date.now())
     .then((r) => {
-      if (!r.ok) throw new Error("rankings.json HTTP " + r.status);
+      if (!r.ok) throw new Error("rankings HTTP " + r.status);
       return r.json();
     })
-    .then(renderTopFive)
+    .then(renderTopByCategory)
     .catch((err) => {
       console.warn("Could not load rankings.json:", err);
       homeGrid.innerHTML = '<p style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-4) 0;">Rankings are being refreshed. Please check back shortly.</p>';
