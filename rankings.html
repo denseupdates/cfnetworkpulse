@@ -73,20 +73,75 @@
     <div class="section__header">
       <div>
         <div class="section__label" style="color:#f59e0b">Monthly Views &bull; <span id="rankings-date-label">—</span></div>
-        <h2 class="section__title">Top CrossFit YouTube Channel Rankings</h2>
+        <h2 class="section__title">CrossFit YouTube Rankings</h2>
       </div>
     </div>
 
     <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-1);">Last Updated: <span id="rankings-updated">—</span></p>
-    <p class="rankings-intro">Data sourced from SocialBlade.</p>
+    <p class="rankings-intro">Ranked by 30-day YouTube views. Data sourced from SocialBlade.</p>
 
-    <div class="rankings-grid fade-in" id="rankings-grid">
-      <p style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-4) 0;">Loading rankings…</p>
+    <div id="rankings-loading" style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-4) 0;">Loading rankings…</div>
+
+    <div class="rankings-categories fade-in" id="rankings-categories" style="display:none;">
+      <div class="rankings-cat">
+        <div class="rankings-cat__header">
+          <h3 class="rankings-cat__title">Brand Channels</h3>
+        </div>
+        <div class="rankings-grid" id="cat-brand"></div>
+      </div>
+      <div class="rankings-cat">
+        <div class="rankings-cat__header">
+          <h3 class="rankings-cat__title">Training Camps</h3>
+        </div>
+        <div class="rankings-grid" id="cat-camp"></div>
+      </div>
+      <div class="rankings-cat">
+        <div class="rankings-cat__header">
+          <h3 class="rankings-cat__title">CrossFit Athletes</h3>
+        </div>
+        <div class="rankings-grid" id="cat-athletes"></div>
+      </div>
+      <div class="rankings-cat">
+        <div class="rankings-cat__header">
+          <h3 class="rankings-cat__title">Outside Media</h3>
+        </div>
+        <div class="rankings-grid" id="cat-media"></div>
+      </div>
     </div>
 
-    <p class="shows-note">If want your channel added this this ranking page, please email <a href="mailto:cfnetworknews@gmail.com">cfnetworknews@gmail.com</a>. Please include a link to your channel. Thank you.</p>
+    <p class="shows-note">If you want your channel added to this ranking page, please email <a href="mailto:cfnetworknews@gmail.com">cfnetworknews@gmail.com</a>. Please include a link to your channel. Thank you.</p>
   </div>
 </section>
+
+<style>
+  .rankings-categories {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .rankings-cat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .rankings-cat__header {
+    border-bottom: 2px solid var(--color-border, rgba(128,128,128,0.2));
+    padding-bottom: var(--space-2);
+  }
+  .rankings-cat__title {
+    font-size: var(--text-lg, 1.125rem);
+    font-weight: 700;
+    margin: 0;
+    color: var(--color-text);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  @media (max-width: 900px) {
+    .rankings-categories {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
 
 <hr class="section-divider">
 
@@ -196,25 +251,31 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ===== Channel rankings: fetch JSON, sort by monthly views, render =====
-  const grid = document.getElementById("rankings-grid");
+  // ===== Channel rankings: fetch JSON, group by category, sort by monthly views =====
+  const loadingEl = document.getElementById("rankings-loading");
+  const container = document.getElementById("rankings-categories");
   const dateEl = document.getElementById("rankings-date-label");
   const updatedEl = document.getElementById("rankings-updated");
 
-  function renderRankings(data) {
+  const CATEGORIES = [
+    { key: "brand",    gridId: "cat-brand" },
+    { key: "camp",     gridId: "cat-camp" },
+    { key: "athletes", gridId: "cat-athletes" },
+    { key: "media",    gridId: "cat-media" },
+  ];
+
+  function renderCategory(channels, gridId) {
+    const grid = document.getElementById(gridId);
     if (!grid) return;
     grid.innerHTML = "";
 
-    const channels = (data.channels || []).slice().sort((a, b) => {
-      // Always sort by monthly views desc — defends against stale/edited data
-      const av = Number(a.monthlyViews) || 0;
-      const bv = Number(b.monthlyViews) || 0;
-      if (bv !== av) return bv - av;
-      return (Number(b.subscribers) || 0) - (Number(a.subscribers) || 0);
-    });
+    if (!channels.length) {
+      grid.innerHTML = '<p style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-3) 0;">No channels in this category yet.</p>';
+      return;
+    }
 
-    if (dateEl) dateEl.textContent = data.updatedAtLabel || "—";
-    if (updatedEl) updatedEl.textContent = data.updatedAtLabel || "—";
+    // Determine max views within THIS category for bar scaling
+    const maxViews = Math.max(...channels.map((c) => Number(c.monthlyViews) || 0), 1);
 
     channels.forEach((ch, i) => {
       const rank = i + 1;
@@ -232,7 +293,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const barAccentClass = rank <= 3 ? "rank-card__bar--accent" : "";
       const subsLabel = ch.subsLabel || "—";
       const viewsLabel = ch.monthlyViewsLabel || "—";
-      const barWidth = ch.barWidth || "1%";
+      const views = Number(ch.monthlyViews) || 0;
+      const barPct = Math.max(1, Math.round((views / maxViews) * 100));
 
       a.innerHTML = `
         <div class="rank-card__rank ${rankClass}">${rank}</div>
@@ -242,7 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <span class="rank-card__subs">${subsLabel}</span>
           </div>
           <div class="rank-card__bar-wrap">
-            <div class="rank-card__bar ${barAccentClass}" style="width:${barWidth}"></div>
+            <div class="rank-card__bar ${barAccentClass}" style="width:${barPct}%"></div>
           </div>
         </div>
         <div class="rank-card__views">${viewsLabel}</div>
@@ -252,18 +314,38 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function renderRankings(data) {
+    const all = (data.channels || []).slice();
+    if (dateEl) dateEl.textContent = data.updatedAtLabel || "—";
+    if (updatedEl) updatedEl.textContent = data.updatedAtLabel || "—";
+
+    // Group by category and sort within
+    CATEGORIES.forEach(({ key, gridId }) => {
+      const inCat = all
+        .filter((c) => (c.category || "").toLowerCase() === key)
+        .sort((a, b) => {
+          const av = Number(a.monthlyViews) || 0;
+          const bv = Number(b.monthlyViews) || 0;
+          if (bv !== av) return bv - av;
+          return (Number(b.subscribers) || 0) - (Number(a.subscribers) || 0);
+        });
+      renderCategory(inCat, gridId);
+    });
+
+    if (loadingEl) loadingEl.style.display = "none";
+    if (container) container.style.display = "grid";
+  }
+
   // Cache-bust so updates show up immediately after the cron commit
   fetch("https://cf-rankings-refresh.denseupdates.workers.dev/rankings?t=" + Date.now())
     .then((r) => {
-      if (!r.ok) throw new Error("rankings.json HTTP " + r.status);
+      if (!r.ok) throw new Error("rankings HTTP " + r.status);
       return r.json();
     })
     .then(renderRankings)
     .catch((err) => {
-      console.warn("Could not load rankings.json:", err);
-      if (grid) {
-        grid.innerHTML = '<p style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-4) 0;">Rankings are being refreshed. Please check back shortly.</p>';
-      }
+      console.warn("Could not load rankings:", err);
+      if (loadingEl) loadingEl.textContent = "Rankings are being refreshed. Please check back shortly.";
     });
 
 });
