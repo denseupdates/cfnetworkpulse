@@ -67,6 +67,180 @@
 
 <hr class="section-divider">
 
+<!-- ===== WHO'S COMPETING AT ROGUE ===== -->
+<section class="section rogue-roster-section" id="rogue-roster" style="padding-top:var(--space-10);padding-bottom:var(--space-10);">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <div class="section__label">2026 Rogue Invitational</div>
+        <h2 class="section__title">Who&rsquo;s Competing at Rogue</h2>
+      </div>
+      <a href="https://www.instagram.com/rogueinvitational/" target="_blank" rel="noopener noreferrer" class="section__link">See All Announcements &rarr;</a>
+    </div>
+
+    <p class="rogue-roster__intro">
+      Rogue is rolling out the 2026 invitational field on Instagram. This roster updates as new athletes are announced. Aberdeen, Scotland &middot; October 23&ndash;25, 2026.
+    </p>
+
+    <div class="rogue-roster fade-in" role="list">
+
+      <article class="rogue-athlete" role="listitem">
+        <div class="rogue-athlete__imagewrap">
+          <img class="rogue-athlete__image" src="./assets/Tudor Magda.jpg" alt="Tudor Magda" loading="lazy">
+          <span class="rogue-athlete__badge">Invited</span>
+        </div>
+        <div class="rogue-athlete__body">
+          <div class="rogue-athlete__meta"><span class="rogue-athlete__flag" aria-hidden="true">&#127482;&#127480;</span><span>Men &middot; USA</span></div>
+          <h3 class="rogue-athlete__name">Tudor Magda</h3>
+        </div>
+      </article>
+
+      <article class="rogue-athlete" role="listitem">
+        <div class="rogue-athlete__imagewrap">
+          <img class="rogue-athlete__image" src="./assets/Paige Powers.jpg" alt="Paige Powers" loading="lazy">
+          <span class="rogue-athlete__badge">Invited</span>
+        </div>
+        <div class="rogue-athlete__body">
+          <div class="rogue-athlete__meta"><span class="rogue-athlete__flag" aria-hidden="true">&#127482;&#127480;</span><span>Women &middot; USA</span></div>
+          <h3 class="rogue-athlete__name">Paige Powers</h3>
+        </div>
+      </article>
+
+      <article class="rogue-athlete" role="listitem">
+        <div class="rogue-athlete__imagewrap">
+          <img class="rogue-athlete__image" src="./assets/Haley Adams.jpg" alt="Haley Adams" loading="lazy">
+          <span class="rogue-athlete__badge">Invited</span>
+        </div>
+        <div class="rogue-athlete__body">
+          <div class="rogue-athlete__meta"><span class="rogue-athlete__flag" aria-hidden="true">&#127482;&#127480;</span><span>Women &middot; USA</span></div>
+          <h3 class="rogue-athlete__name">Haley Adams</h3>
+        </div>
+      </article>
+
+      <article class="rogue-athlete" role="listitem">
+        <div class="rogue-athlete__imagewrap">
+          <img class="rogue-athlete__image" src="./assets/Elisa Fuliano.jpg" alt="Elisa Fuliano" loading="lazy">
+          <span class="rogue-athlete__badge">Invited</span>
+        </div>
+        <div class="rogue-athlete__body">
+          <div class="rogue-athlete__meta"><span class="rogue-athlete__flag" aria-hidden="true">&#127470;&#127481;</span><span>Women &middot; Italy</span></div>
+          <h3 class="rogue-athlete__name">Elisa Fuliano</h3>
+        </div>
+      </article>
+
+      <article class="rogue-athlete" role="listitem">
+        <div class="rogue-athlete__imagewrap">
+          <img class="rogue-athlete__image" src="./assets/Henrik Haapalainen.jpg" alt="Henrik Haapalainen" loading="lazy">
+          <span class="rogue-athlete__badge">Invited</span>
+        </div>
+        <div class="rogue-athlete__body">
+          <div class="rogue-athlete__meta"><span class="rogue-athlete__flag" aria-hidden="true">&#127467;&#127470;</span><span>Men &middot; Finland</span></div>
+          <h3 class="rogue-athlete__name">Henrik Haapalainen</h3>
+        </div>
+      </article>
+
+      <article class="rogue-athlete" role="listitem">
+        <div class="rogue-athlete__imagewrap">
+          <img class="rogue-athlete__image" src="./assets/Moritz Fiebig.jpg" alt="Moritz Fiebig" loading="lazy">
+          <span class="rogue-athlete__badge">Invited</span>
+        </div>
+        <div class="rogue-athlete__body">
+          <div class="rogue-athlete__meta"><span class="rogue-athlete__flag" aria-hidden="true">&#127465;&#127466;</span><span>Men &middot; Germany</span></div>
+          <h3 class="rogue-athlete__name">Moritz Fiebig</h3>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<style>
+/* Who's Competing at Rogue — scoped, matches Editorial Mono */
+.rogue-roster-section .section__header { align-items: flex-end; }
+.rogue-roster__intro {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  max-width: 62ch;
+  margin: 0 0 var(--space-8);
+}
+.rogue-roster {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+@media (max-width: 900px) {
+  .rogue-roster { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+}
+@media (max-width: 520px) {
+  .rogue-roster { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+}
+.rogue-athlete {
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-4);
+}
+.rogue-athlete__imagewrap {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--color-surface-2, #eee);
+  filter: grayscale(1) contrast(1.05);
+  transition: filter 220ms ease;
+}
+.rogue-athlete:hover .rogue-athlete__imagewrap { filter: grayscale(0) contrast(1); }
+.rogue-athlete__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.rogue-athlete__badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: rgba(17,17,17,0.72);
+  padding: 4px 10px;
+  border: 1px solid rgba(255,255,255,0.35);
+  backdrop-filter: blur(4px);
+}
+.rogue-athlete__body {
+  padding-top: var(--space-3);
+}
+.rogue-athlete__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+.rogue-athlete__flag { font-size: 1rem; letter-spacing: 0; }
+.rogue-athlete__name {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--color-text);
+}
+</style>
+
+
+<hr class="section-divider">
+
 <!-- ===== ROGUE FITNESS ===== -->
 <section class="section rogue-section" id="rogue">
   <div class="container">
