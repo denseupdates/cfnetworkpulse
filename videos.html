@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Feed — CF Network News</title>
+  <meta name="description" content="Every CF Network News video in one feed. Search or tap any hashtag to pull up all the videos on that topic.">
+  <meta property="og:title" content="CF Network News — Video Feed">
+  <meta property="og:description" content="Browse and search every CF Network News video by hashtag.">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="./base.css">
+  <link rel="stylesheet" href="./style.css">
+
+  <!-- ==================================================================
+       VIDEO FEED STYLES
+       Kept in this file on purpose. Nothing here touches style.css, so
+       this page can never break another page, and the whole feature
+       lifts out as one file if the content is ever sold.
+
+       Every color reads var(--site-token, fallback), so the page adopts
+       the CF Network News theme here and still looks correct standalone
+       on any other domain with no stylesheet at all.
+       ================================================================== -->
+  <style>
+    .vfeed {
+      --v-bg:        var(--color-bg, #0a0a0a);
+      --v-surface:   var(--color-surface, #111111);
+      --v-surface-2: var(--color-surface-2, #181818);
+      --v-offset:    var(--color-surface-offset, #1e1e1e);
+      --v-divider:   var(--color-divider, #2a2a2a);
+      --v-border:    var(--color-border, #333333);
+      --v-text:      var(--color-text, #f0eeeb);
+      --v-muted:     var(--color-text-muted, #9a9894);
+      --v-faint:     var(--color-text-faint, #5a5957);
+      --v-inverse:   var(--color-text-inverse, #0a0a0a);
+      --v-primary:   var(--color-primary, #ffffff);
+      --v-soft:      var(--color-accent-soft, rgba(255,255,255,0.10));
+      --v-display:   var(--font-display, 'Bebas Neue', Impact, sans-serif);
+      --v-radius:    0.75rem;
+      --v-t: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ---- Hero ---- */
+    .vfeed__hero { padding-block: var(--space-10, 2.5rem) var(--space-4, 1rem); }
+
+    .vfeed__eyebrow {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--v-faint); margin-bottom: 0.7rem;
+    }
+
+    .vfeed__title {
+      font-family: var(--v-display);
+      font-size: clamp(2.4rem, 1rem + 5.5vw, 4.5rem);
+      line-height: 0.95; letter-spacing: 0.01em;
+      text-transform: uppercase; margin: 0 0 0.75rem;
+    }
+
+    .vfeed__title span { color: var(--v-faint); }
+
+    .vfeed__tagline {
+      max-width: 58ch; margin: 0;
+      color: var(--v-muted); font-size: 0.98rem;
+    }
+
+    /* ---- Sticky search ---- */
+    .vfeed__searchwrap {
+      position: sticky; top: 0; z-index: 20;
+      padding-block: 0.9rem;
+      background: var(--v-bg);
+      border-bottom: 1px solid var(--v-divider);
+      margin-top: var(--space-6, 1.5rem);
+    }
+
+    .vfeed__search {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.7rem 1rem;
+      background: var(--v-surface-2);
+      border: 1px solid var(--v-border);
+      border-radius: 9999px;
+      transition: border-color var(--v-t);
+    }
+
+    .vfeed__search:focus-within { border-color: var(--v-faint); }
+    .vfeed__search svg { flex: none; color: var(--v-faint); }
+
+    .vfeed__input {
+      flex: 1; min-width: 0;
+      border: none; background: none; outline: none;
+      font: inherit; color: var(--v-text); font-size: 0.95rem;
+    }
+
+    .vfeed__input::placeholder { color: var(--v-faint); }
+
+    .vfeed__clear {
+      flex: none; border: none; background: none; cursor: pointer;
+      color: var(--v-faint); padding: 0.2rem; line-height: 0;
+      transition: color var(--v-t);
+    }
+    .vfeed__clear:hover { color: var(--v-text); }
+    .vfeed__clear[hidden] { display: none; }
+
+    /* ---- Tag cloud ---- */
+    .vfeed__tags {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem;
+      padding-top: var(--space-5, 1.25rem);
+    }
+
+    .vfeed__tags-label {
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--v-faint); margin-right: 0.25rem;
+    }
+
+    .vfeed__chip {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.3rem 0.7rem;
+      font: inherit; font-size: 0.8rem; font-weight: 500;
+      color: var(--v-muted);
+      background: none; cursor: pointer;
+      border: 1px solid var(--v-border); border-radius: 9999px;
+      white-space: nowrap;
+      transition: color var(--v-t), background var(--v-t), border-color var(--v-t);
+    }
+
+    .vfeed__chip:hover {
+      color: var(--v-text); border-color: var(--v-faint); background: var(--v-soft);
+    }
+
+    .vfeed__chip b { color: var(--v-faint); font-weight: 500; font-size: 0.72rem; }
+
+    .vfeed__chip[aria-pressed="true"] {
+      color: var(--v-inverse); background: var(--v-primary);
+      border-color: var(--v-primary); font-weight: 600;
+    }
+
+    .vfeed__chip[aria-pressed="true"] b { color: var(--v-inverse); opacity: 0.55; }
+
+    /* ---- Result bar ---- */
+    .vfeed__resultbar {
+      display: flex; flex-wrap: wrap; align-items: baseline;
+      justify-content: space-between; gap: 0.7rem;
+      padding-block: var(--space-6, 1.5rem) var(--space-4, 1rem);
+    }
+
+    .vfeed__count { font-size: 0.85rem; color: var(--v-muted); margin: 0; }
+    .vfeed__count strong { color: var(--v-text); font-weight: 600; }
+
+    .vfeed__reset {
+      font: inherit; font-size: 0.82rem;
+      color: var(--v-muted); background: none; border: none; cursor: pointer;
+      text-decoration: underline; text-underline-offset: 3px;
+      transition: color var(--v-t);
+    }
+    .vfeed__reset:hover { color: var(--v-text); }
+    .vfeed__reset[hidden] { display: none; }
+
+    /* ---- Grid ---- */
+    .vfeed__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 325px), 1fr));
+      gap: 1.6rem 1.4rem;
+      padding-bottom: var(--space-10, 2.5rem);
+    }
+
+    .vcard {
+      display: flex; flex-direction: column;
+      background: var(--v-surface);
+      border: 1px solid var(--v-divider);
+      border-radius: var(--v-radius);
+      overflow: hidden;
+      transition: border-color var(--v-t), transform var(--v-t);
+    }
+
+    .vcard[hidden] { display: none; }
+    .vcard:hover { border-color: var(--v-border); }
+
+    @media (hover: hover) {
+      .vcard:hover { transform: translateY(-2px); }
+    }
+
+    /* Thumbnail facade. The real YouTube iframe is only inserted on click,
+       so a feed with 200 videos still loads like a single page. */
+    .vcard__player {
+      position: relative; width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--v-offset);
+      overflow: hidden;
+    }
+
+    .vcard__btn {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      padding: 0; border: none; background: none; cursor: pointer;
+      display: block;
+    }
+
+    .vcard__thumb {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: opacity var(--v-t), transform 400ms cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .vcard__btn:hover .vcard__thumb { opacity: 0.82; transform: scale(1.03); }
+
+    .vcard__play {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px; height: 56px; border-radius: 9999px;
+      display: grid; place-items: center;
+      background: rgba(10,10,10,0.6);
+      border: 1.5px solid rgba(255,255,255,0.5);
+      color: #fff; pointer-events: none;
+      transition: background var(--v-t), border-color var(--v-t), transform var(--v-t);
+    }
+
+    .vcard__btn:hover .vcard__play {
+      background: rgba(10,10,10,0.85); border-color: #fff;
+      transform: translate(-50%, -50%) scale(1.06);
+    }
+
+    .vcard__play svg { margin-left: 3px; }
+
+    .vcard__player iframe {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; border: 0;
+    }
+
+    .vcard__body {
+      display: flex; flex-direction: column; gap: 0.65rem;
+      padding: 1rem 1.05rem 1.1rem; flex: 1;
+    }
+
+    .vcard__date {
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--v-faint);
+    }
+
+    .vcard__caption {
+      margin: 0; max-width: none;
+      font-size: 0.95rem; line-height: 1.5; color: var(--v-text);
+    }
+
+    .vcard__tags {
+      display: flex; flex-wrap: wrap; gap: 0.35rem;
+      margin-top: auto; padding-top: 0.2rem;
+    }
+
+    .vcard__tag {
+      font: inherit; font-size: 0.78rem; font-weight: 500;
+      color: var(--v-muted);
+      background: var(--v-surface-2);
+      border: 1px solid transparent; border-radius: 9999px;
+      padding: 0.22rem 0.6rem; cursor: pointer;
+      transition: color var(--v-t), background var(--v-t), border-color var(--v-t);
+    }
+
+    .vcard__tag:hover {
+      color: var(--v-text); background: var(--v-offset); border-color: var(--v-border);
+    }
+
+    .vcard__tag[data-on="true"] {
+      color: var(--v-inverse); background: var(--v-primary); font-weight: 600;
+    }
+
+    /* ---- Empty state ---- */
+    .vfeed__empty { padding: 3.5rem 1rem 4.5rem; text-align: center; }
+    .vfeed__empty[hidden] { display: none; }
+
+    .vfeed__empty h3 {
+      font-family: var(--v-display); font-size: 1.8rem;
+      letter-spacing: 0.03em; text-transform: uppercase; margin: 0 0 0.5rem;
+    }
+
+    .vfeed__empty p {
+      color: var(--v-muted); font-size: 0.92rem;
+      margin: 0 auto 1.3rem; max-width: 42ch;
+    }
+
+    .vfeed__empty button {
+      font: inherit; font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.7rem 1.6rem; cursor: pointer;
+      color: var(--v-text); background: none;
+      border: 1px solid var(--v-border); border-radius: 9999px;
+      transition: background var(--v-t), border-color var(--v-t);
+    }
+
+    .vfeed__empty button:hover { background: var(--v-soft); border-color: var(--v-faint); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .vcard:hover { transform: none; }
+      .vfeed * { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="./index.html" class="logo" aria-label="CF Network News home">
+      <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+        <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+        <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+      </svg>
+      <div class="logo__text">CF NETWORK<span>NEWS</span></div>
+    </a>
+
+    <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- ===== SECTION NAV ===== -->
+<nav class="section-nav" aria-label="Section navigation">
+  <div class="section-nav__track">
+    <a href="./news.html" class="section-nav__link">New Stories</a>
+    <a href="./gossip.html" class="section-nav__link">Gossip</a>
+    <a href="./videos.html" class="section-nav__link section-nav__link--active" aria-current="page">Videos</a>
+    <a href="./shows.html" class="section-nav__link">Podcasts/Shows</a>
+    <a href="./rankings.html" class="section-nav__link">Rankings</a>
+    <a href="./rogue.html" class="section-nav__link">Rogue</a>
+    <a href="./season-info.html" class="section-nav__link">Season Info</a>
+    <a href="./wotw.html" class="section-nav__link">Workout of the Week</a>
+    <a href="./message-board.html" class="section-nav__link">Message Board</a>
+    <a href="./classifieds.html" class="section-nav__link">Classifieds</a>
+    <a href="./index.html#subscribe" class="section-nav__link">Subscribe</a>
+  </div>
+</nav>
+
+<!-- ===== VIDEO FEED ===== -->
+<main class="vfeed">
+  <div class="container">
+
+    <div class="vfeed__hero">
+      <span class="vfeed__eyebrow">CF Network News</span>
+      <h1 class="vfeed__title">Video <span>Feed</span></h1>
+      <p class="vfeed__tagline">
+        Every clip, breakdown, and interview in one place. Tap any hashtag to pull up
+        all the videos on that topic, or search below.
+      </p>
+    </div>
+
+    <!-- Sticky search -->
+    <div class="vfeed__searchwrap">
+      <label class="vfeed__search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+        </svg>
+        <span class="sr-only">Search videos</span>
+        <input class="vfeed__input" id="vSearch" type="search" autocomplete="off"
+               placeholder="Search captions or type #hashtag">
+        <button class="vfeed__clear" id="vClear" type="button" aria-label="Clear search" hidden>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </label>
+    </div>
+
+    <!-- Tag cloud, built automatically from the cards below -->
+    <div class="vfeed__tags" id="vTags">
+      <span class="vfeed__tags-label">Hashtags</span>
+    </div>
+
+    <div class="vfeed__resultbar">
+      <p class="vfeed__count" id="vCount"></p>
+      <button class="vfeed__reset" id="vReset" type="button" hidden>Clear filters</button>
+    </div>
+
+    <!-- ==============================================================
+         VIDEO CARDS
+         To add a video, copy one card block and change four things:
+           1. data-id      the YouTube video id
+           2. data-tags    space separated hashtags, lowercase, no #
+           3. the date
+           4. the caption
+         The hashtag cloud, the counts, and the search all update on
+         their own. Nothing else to edit.
+         ============================================================== -->
+    <div class="vfeed__grid" id="vGrid">
+
+      <article class="vcard" data-id="rJt1bdqxSn0" data-tags="games2026 day4 finals recap">
+        <div class="vcard__player"></div>
+        <div class="vcard__body">
+          <span class="vcard__date">August 16, 2026</span>
+          <p class="vcard__caption">Day 4 closed out the 2026 Games with the final event on the floor and the podium decided in the last heat.</p>
+          <div class="vcard__tags"></div>
+        </div>
+      </article>
+
+      <article class="vcard" data-id="U_gUl7w24J0" data-tags="games2026 analysis breakdown">
+        <div class="vcard__player"></div>
+        <div class="vcard__body">
+          <span class="vcard__date">August 15, 2026</span>
+          <p class="vcard__caption">Part one of our full breakdown covering what actually happened at the 2026 CrossFit Games and where the leaderboard turned.</p>
+          <div class="vcard__tags"></div>
+        </div>
+      </article>
+
+      <article class="vcard" data-id="HeyM_2fyD04" data-tags="games2026 day3 recap">
+        <div class="vcard__player"></div>
+        <div class="vcard__body">
+          <span class="vcard__date">August 15, 2026</span>
+          <p class="vcard__caption">Day 3 recap with the moving pieces on the leaderboard heading into the final day of competition.</p>
+          <div class="vcard__tags"></div>
+        </div>
+      </article>
+
+      <article class="vcard" data-id="cQmMHvCChq8" data-tags="shows interview games2026">
+        <div class="vcard__player"></div>
+        <div class="vcard__body">
+          <span class="vcard__date">August 14, 2026</span>
+          <p class="vcard__caption">The CrossFit Show broadcasting live from the Games floor with athlete interviews between events.</p>
+          <div class="vcard__tags"></div>
+        </div>
+      </article>
+
+      <article class="vcard" data-id="oFpOaBbbArQ" data-tags="games2026 day2 recap">
+        <div class="vcard__player"></div>
+        <div class="vcard__body">
+          <span class="vcard__date">August 14, 2026</span>
+          <p class="vcard__caption">Day 2 night session. The evening events reshuffled the top ten and set up a tight day 3.</p>
+          <div class="vcard__tags"></div>
+        </div>
+      </article>
+
+      <article class="vcard" data-id="mIdPfNXkX04" data-tags="games2026 day2 recap">
+        <div class="vcard__player"></div>
+        <div class="vcard__body">
+          <span class="vcard__date">August 14, 2026</span>
+          <p class="vcard__caption">Day 2 morning session from the 2026 CrossFit Games.</p>
+          <div class="vcard__tags"></div>
+        </div>
+      </article>
+
+      <article class="vcard" data-id="ARIgS5-UYh4" data-tags="games2026 day1 recap">
+        <div class="vcard__player"></div>
+        <div class="vcard__body">
+          <span class="vcard__date">August 13, 2026</span>
+          <p class="vcard__caption">Day 1 of the 2026 CrossFit Games. First scores on the board and the early leaders after the opening events.</p>
+          <div class="vcard__tags"></div>
+        </div>
+      </article>
+
+      <article class="vcard" data-id="0DgZ-PDHcZw" data-tags="games2026 highlights">
+        <div class="vcard__player"></div>
+        <div class="vcard__body">
+          <span class="vcard__date">August 12, 2026</span>
+          <p class="vcard__caption">Highlight reel from the 2026 CrossFit Games for anyone who missed the live broadcast.</p>
+          <div class="vcard__tags"></div>
+        </div>
+      </article>
+
+      <article class="vcard" data-id="pTEmjuQekRw" data-tags="games2026 trailer">
+        <div class="vcard__player"></div>
+        <div class="vcard__body">
+          <span class="vcard__date">August 11, 2026</span>
+          <p class="vcard__caption">Setting the stage for the 2026 CrossFit Games ahead of the first event in Nashville.</p>
+          <div class="vcard__tags"></div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="vfeed__empty" id="vEmpty" hidden>
+      <h3>No videos found</h3>
+      <p id="vEmptyText">Nothing matches that search yet.</p>
+      <button type="button" id="vEmptyReset">Show all videos</button>
+    </div>
+
+  </div>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div>
+        <a href="./index.html" class="logo" aria-label="CF Network News home" style="margin-bottom:var(--space-2)">
+          <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+            <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+            <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+          </svg>
+          <div class="logo__text">CF NETWORK<span>NEWS</span></div>
+        </a>
+        <p class="footer__brand-text">
+          Your daily source for CrossFit news, athlete updates, competition schedules, and community insights. Not affiliated with CrossFit LLC.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="footer__heading">Sections</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="./news.html">Top Stories</a></li>
+          <li><a href="./gossip.html">Gossip &amp; Drama</a></li>
+          <li><a href="./videos.html">Videos</a></li>
+          <li><a href="./shows.html">Podcasts/Shows</a></li>
+          <li><a href="./rankings.html">Channel Rankings</a></li>
+          <li><a href="./rogue.html">Rogue Fitness</a></li>
+          <li><a href="./season-info.html">Season Info</a></li>
+          <li><a href="./classifieds.html">Classifieds</a></li>
+          <li><a href="./wotw.html">Workout of the Week</a></li>
+          <li><a href="./message-board.html">Message Board</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer__heading">Resources</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="https://games.crossfit.com" target="_blank" rel="noopener noreferrer">CrossFit Games</a></li>
+          <li><a href="https://www.roguefitness.com" target="_blank" rel="noopener noreferrer">Rogue Fitness</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 CF Network News. Independent fan site. Not affiliated with CrossFit LLC.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="./app.js" defer></script>
+
+<!-- ==================================================================
+     VIDEO FEED SCRIPT
+     Reads the cards already in the page. No database, no build step,
+     no dependency on any other file on this site.
+     ================================================================== -->
+<script>
+(function () {
+  "use strict";
+
+  var grid    = document.getElementById("vGrid");
+  var cards   = Array.prototype.slice.call(grid.querySelectorAll(".vcard"));
+  var tagBox  = document.getElementById("vTags");
+  var search  = document.getElementById("vSearch");
+  var clearBt = document.getElementById("vClear");
+  var countEl = document.getElementById("vCount");
+  var resetBt = document.getElementById("vReset");
+  var empty   = document.getElementById("vEmpty");
+  var emptyTx = document.getElementById("vEmptyText");
+  var emptyRs = document.getElementById("vEmptyReset");
+
+  var activeTags = [];
+  var query = "";
+
+  /* ---- Build each card: thumbnail facade and hashtag buttons ---- */
+
+  cards.forEach(function (card) {
+    var id   = card.getAttribute("data-id");
+    var tags = parseTags(card.getAttribute("data-tags"));
+    var caption = card.querySelector(".vcard__caption").textContent.trim();
+
+    card._tags = tags;
+    card._text = caption.toLowerCase();
+
+    var player = card.querySelector(".vcard__player");
+    player.innerHTML =
+      '<button class="vcard__btn" type="button" aria-label="Play video">' +
+        '<img class="vcard__thumb" loading="lazy" width="480" height="270" alt=""' +
+        ' src="https://i.ytimg.com/vi/' + id + '/hqdefault.jpg">' +
+        '<span class="vcard__play" aria-hidden="true">' +
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">' +
+            '<path d="M8 5v14l11-7z"/></svg>' +
+        '</span>' +
+      '</button>';
+
+    player.querySelector(".vcard__btn").addEventListener("click", function () {
+      var frame = document.createElement("iframe");
+      frame.src = "https://www.youtube-nocookie.com/embed/" + id +
+                  "?autoplay=1&rel=0&modestbranding=1";
+      frame.title = caption;
+      frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; " +
+                    "gyroscope; picture-in-picture; web-share";
+      frame.allowFullscreen = true;
+      player.innerHTML = "";
+      player.appendChild(frame);
+    });
+
+    var tagWrap = card.querySelector(".vcard__tags");
+    tags.forEach(function (tag) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "vcard__tag";
+      b.textContent = "#" + tag;
+      b.setAttribute("data-tag", tag);
+      b.addEventListener("click", function () { toggleTag(tag); });
+      tagWrap.appendChild(b);
+    });
+  });
+
+  /* ---- Tag cloud, most used first ---- */
+
+  var counts = {};
+  cards.forEach(function (c) {
+    c._tags.forEach(function (t) { counts[t] = (counts[t] || 0) + 1; });
+  });
+
+  Object.keys(counts)
+    .sort(function (a, b) { return counts[b] - counts[a] || a.localeCompare(b); })
+    .forEach(function (tag) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "vfeed__chip";
+      b.setAttribute("data-tag", tag);
+      b.setAttribute("aria-pressed", "false");
+      b.innerHTML = "#" + tag + " <b>" + counts[tag] + "</b>";
+      b.addEventListener("click", function () { toggleTag(tag); });
+      tagBox.appendChild(b);
+    });
+
+  /* ---- Filtering ---- */
+
+  function parseTags(raw) {
+    return (raw || "")
+      .toLowerCase()
+      .split(/[\s,]+/)
+      .map(function (t) { return t.replace(/^#/, "").trim(); })
+      .filter(Boolean);
+  }
+
+  function toggleTag(tag) {
+    var i = activeTags.indexOf(tag);
+    if (i === -1) { activeTags.push(tag); } else { activeTags.splice(i, 1); }
+    apply();
+  }
+
+  function apply() {
+    /* A hashtag typed into the search box counts as a tag filter,
+       so "#day2" and tapping the day2 chip behave identically. */
+    var typedTags = [];
+    var words = [];
+
+    query.toLowerCase().split(/\s+/).filter(Boolean).forEach(function (part) {
+      if (part.charAt(0) === "#" && part.length > 1) {
+        typedTags.push(part.slice(1));
+      } else {
+        words.push(part);
+      }
+    });
+
+    var needTags = activeTags.concat(typedTags);
+    var visible = 0;
+
+    cards.forEach(function (card) {
+      var okTags = needTags.every(function (t) {
+        return card._tags.some(function (ct) { return ct.indexOf(t) === 0; });
+      });
+      var okText = words.every(function (w) {
+        return card._text.indexOf(w) !== -1 ||
+               card._tags.some(function (ct) { return ct.indexOf(w) !== -1; });
+      });
+      var show = okTags && okText;
+      card.hidden = !show;
+      if (show) { visible++; }
+    });
+
+    /* Sync the chip and inline hashtag states */
+    var all = document.querySelectorAll(".vfeed__chip");
+    Array.prototype.forEach.call(all, function (chip) {
+      var on = activeTags.indexOf(chip.getAttribute("data-tag")) !== -1;
+      chip.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll(".vcard__tag"), function (t) {
+      t.setAttribute("data-on",
+        activeTags.indexOf(t.getAttribute("data-tag")) !== -1 ? "true" : "false");
+    });
+
+    /* Counts, empty state, and the shareable URL */
+    var filtering = needTags.length > 0 || words.length > 0;
+
+    countEl.innerHTML = filtering
+      ? "<strong>" + visible + "</strong> of " + cards.length + " videos"
+      : "<strong>" + cards.length + "</strong> videos";
+
+    resetBt.hidden = !filtering;
+    clearBt.hidden = query === "";
+    empty.hidden = visible !== 0;
+
+    if (visible === 0) {
+      emptyTx.textContent = needTags.length
+        ? "Nothing tagged " + needTags.map(function (t) { return "#" + t; }).join(" and ") + " yet."
+        : "Nothing matches that search yet.";
+    }
+
+    var params = new URLSearchParams();
+    if (activeTags.length) { params.set("tag", activeTags.join(",")); }
+    if (query.trim())      { params.set("q", query.trim()); }
+    var qs = params.toString();
+    history.replaceState(null, "", qs ? "?" + qs : location.pathname);
+  }
+
+  function reset() {
+    activeTags = [];
+    query = "";
+    search.value = "";
+    apply();
+  }
+
+  search.addEventListener("input", function () { query = search.value; apply(); });
+  clearBt.addEventListener("click", function () { query = ""; search.value = ""; apply(); search.focus(); });
+  resetBt.addEventListener("click", reset);
+  emptyRs.addEventListener("click", reset);
+
+  /* ---- Read the URL on load so a filtered link is shareable ---- */
+
+  var start = new URLSearchParams(location.search);
+  if (start.get("tag")) { activeTags = parseTags(start.get("tag").replace(/,/g, " ")); }
+  if (start.get("q"))   { query = start.get("q"); search.value = query; }
+  apply();
+})();
+</script>
+
+</body>
+</html>
