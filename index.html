@@ -504,10 +504,10 @@
 
   function cardHTML(card) {
     const isUpcoming = card.kind === "upcoming";
-    const icon = isUpcoming ? "🔴" : "&#9654;";
+    const icon = isUpcoming ? "&#9679;" : "&#9654;";
     const badge = isUpcoming ? "Upcoming" : "New";
-    const badgeBG = isUpcoming ? "#d60000" : "#454bf4";
-    const badgeFG = isUpcoming ? "#fff" : "#000";
+    const badgeBG = "transparent";
+    const badgeFG = "var(--color-text-muted)";
     const meta = isUpcoming
       ? `Upcoming &bull; ${fmtUpcoming(card.scheduledAt)}`
       : `New &bull; ${fmtRecent(card.publishedAt)}`;
@@ -515,7 +515,7 @@
     return `
       <a href="${escapeHTML(card.url)}"
          target="_blank" rel="noopener noreferrer"
-         class="show-card" style="border-left:3px solid #360bf5;">
+         class="show-card" style="border-left:3px solid var(--color-divider);">
         <div class="show-card__icon">${icon}</div>
         <div class="show-card__info">
           <span class="show-card__channel">${escapeHTML(card.channel)}</span>
@@ -571,9 +571,9 @@
     width: auto;
     max-width: max-content;
     padding: 0.3rem 0.7rem;
-    background: rgba(245, 158, 11, 0.12);
-    color: #d97706;
-    border: 1px solid rgba(245, 158, 11, 0.35);
+    background: transparent;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
     border-radius: 999px;
     font-size: 0.65rem;
     font-weight: 700;
@@ -593,7 +593,7 @@
         <div class="section__label" style="color:#ec9602">Monthly Views</div>
         <h2 class="section__title">Category Leaders</h2>
       </div>
-      <a href="./rankings.html" class="section__link" style="color:#c78305 !important; position:relative; z-index:9999; pointer-events:auto; display:inline-block; text-decoration:none;">
+      <a href="./rankings.html" class="section__link" style="position:relative; z-index:9999; pointer-events:auto; display:inline-block; text-decoration:none;">
         Full Rankings &rarr;
       </a>
     </div>
@@ -668,7 +668,7 @@
       <div>
         <h2 class="section__title">Season Info</h2>
       </div>
-      <a href="./season-info.html" class="section__link" style="color:#09bd09 !important; position: relative; z-index: 9999; pointer-events: auto; text-decoration:none;">
+      <a href="./season-info.html" class="section__link" style="position: relative; z-index: 9999; pointer-events: auto; text-decoration:none;">
         See All &rarr;
       </a>
     </div>
@@ -797,7 +797,7 @@
   <div class="container">
     <div class="section__header">
       <div>
-        <div class="section__label" style="color:#10b981">Community</div>
+        <div class="section__label">Community</div>
         <h2 class="section__title">Message Board</h2>
       </div>
       <a href="./message-board.html" class="section__link" style="color:#4d18c0; position: relative; z-index: 9999; pointer-events: auto;">
@@ -807,7 +807,7 @@
 
     <div class="mb-preview">
       <div class="mb-preview__icon">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
         </svg>
       </div>

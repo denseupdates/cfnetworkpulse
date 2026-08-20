@@ -97,13 +97,15 @@
 }
 
 /* Category Colors */
-.cf-cat--selling      { --cat-color: #22c55e; }
-.cf-cat--buying       { --cat-color: #3b82f6; }
-.cf-cat--hiring       { --cat-color: #f59e0b; }
-.cf-cat--dropins      { --cat-color: #8b5cf6; }
-.cf-cat--services     { --cat-color: #ec4899; }
-.cf-cat--events       { --cat-color: #06b6d4; }
-.cf-cat--other        { --cat-color: #9a9894; }
+/* Editorial Mono: every category shares one neutral chip. Give a category its
+   own colour back by editing its --cat-color here. */
+.cf-cat--selling      { --cat-color: var(--color-text-muted); } /* was #22c55e */
+.cf-cat--buying       { --cat-color: var(--color-text-muted); } /* was #3b82f6 */
+.cf-cat--hiring       { --cat-color: var(--color-text-muted); } /* was #f59e0b */
+.cf-cat--dropins      { --cat-color: var(--color-text-muted); } /* was #8b5cf6 */
+.cf-cat--services     { --cat-color: var(--color-text-muted); } /* was #ec4899 */
+.cf-cat--events       { --cat-color: var(--color-text-muted); } /* was #06b6d4 */
+.cf-cat--other        { --cat-color: var(--color-text-muted); }
 
 /* Classifieds Grid */
 .cf-grid {
@@ -153,8 +155,9 @@
   letter-spacing: 0.08em;
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-full);
-  background: var(--cat-color, #9a9894);
-  color: #fff;
+  background: transparent;
+  border: 1px solid var(--cat-color, var(--color-border));
+  color: var(--cat-color, var(--color-text-muted));
   white-space: nowrap;
 }
 

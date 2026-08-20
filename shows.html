@@ -114,10 +114,10 @@
 
       function cardHTML(card) {
         const isUpcoming = card.kind === "upcoming";
-        const icon = isUpcoming ? "🔴" : "&#9654;";
+        const icon = isUpcoming ? "&#9679;" : "&#9654;";
         const badge = isUpcoming ? "Upcoming" : "New";
-        const badgeBG = isUpcoming ? "#d60000" : "#454bf4";
-        const badgeFG = isUpcoming ? "#fff" : "#000";
+        const badgeBG = "transparent";
+        const badgeFG = "var(--color-text-muted)";
 
         const meta = (() => {
           if (isUpcoming) {
@@ -133,7 +133,7 @@
         return `
           <a href="${escapeHTML(card.url)}"
              target="_blank" rel="noopener noreferrer"
-             class="show-card" style="border-left:3px solid #360bf5;">
+             class="show-card" style="border-left:3px solid var(--color-divider);">
             <div class="show-card__icon">${icon}</div>
             <div class="show-card__info">
               <span class="show-card__channel">${escapeHTML(card.channel)}</span>
