@@ -566,19 +566,22 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 96px;
-    padding: 0.35rem 0.6rem;
+    width: auto;
+    max-width: max-content;
+    padding: 0.3rem 0.7rem;
     background: rgba(245, 158, 11, 0.12);
     color: #d97706;
     border: 1px solid rgba(245, 158, 11, 0.35);
-    border-radius: 6px;
-    font-size: 0.7rem;
+    border-radius: 999px;
+    font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     text-align: center;
-    line-height: 1.1;
-    flex-shrink: 0;
+    line-height: 1;
+    white-space: nowrap;
+    flex: 0 0 auto;
+    align-self: center;
   }
 </style>
 <section class="section" id="home-rankings">
