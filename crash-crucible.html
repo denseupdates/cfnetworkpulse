@@ -104,6 +104,12 @@
 .cc-heat-name{color:var(--muted)}
 .cc-pending{margin:0;padding:12px 20px;background:rgba(217,35,46,.07);border-bottom:1px solid var(--crash-rule);border-left:4px solid var(--crash-red);font-size:13px;font-weight:600;color:var(--crash-ink)}
 @media(max-width:1000px){.cc-days{grid-template-columns:1fr}}
+.cc-tz{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.cc-tz-btn{font:800 12px Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:9px 14px;border-radius:var(--radius);border:1px solid var(--crash-black);background:#fff;color:var(--crash-black);cursor:pointer}
+.cc-tz-btn:hover{border-color:var(--crash-red);color:var(--crash-red)}
+.cc-tz-btn.is-active{background:var(--crash-red);border-color:var(--crash-red);color:#fff}
+.cc-page .cc-tz-note{margin:0 0 22px;font-size:13px;color:var(--muted);max-width:none}
+.cc-shift{display:inline-block;margin-left:4px;font-size:10px;font-weight:800;color:var(--crash-red);text-transform:uppercase}
 </style>
 </head>
 <body>
@@ -216,9 +222,17 @@
   <div class="cc-container">
     <div class="cc-label">Competition Schedule</div>
     <h2>Heat Times</h2>
-    <p class="cc-sub">Official Crash Crucible schedule from Competition Corner. All times Eastern and subject to change.</p>
+    <p class="cc-sub">Official Crash Crucible schedule from Competition Corner. Times subject to change. Choose your time zone below.</p>
+    <div class="cc-tz" role="group" aria-label="Time zone">
+      <button type="button" class="cc-tz-btn is-active" data-tz="ET">Eastern (EDT)</button>
+      <button type="button" class="cc-tz-btn" data-tz="CT">Central (CDT)</button>
+      <button type="button" class="cc-tz-btn" data-tz="PT">Pacific (PDT)</button>
+      <button type="button" class="cc-tz-btn" data-tz="EU">Central Europe (CEST)</button>
+      <button type="button" class="cc-tz-btn" data-tz="AU">Sydney (AEDT)</button>
+    </div>
+    <p class="cc-tz-note" id="ccTzNote">Showing local event time in Spartanburg, SC (Eastern).</p>
     <div class="cc-days">
-      <article class="cc-day">
+      <article class="cc-day" data-day="Friday">
         <div class="cc-day-head"><h3>Friday</h3><span>October 9</span></div>
         <div class="cc-event">
           <div class="cc-event-head"><span class="cc-event-time">9:00 AM to 2:27 PM</span><span class="cc-event-name">Soft Toss</span><span class="cc-kind cc-kind-individual">Individual</span></div>
@@ -252,7 +266,7 @@
           </ul>
         </div>
       </article>
-      <article class="cc-day">
+      <article class="cc-day" data-day="Saturday">
         <div class="cc-day-head"><h3>Saturday</h3><span>October 10</span></div>
         <p class="cc-pending">Lane assignments will be added once Friday is completed and the leaderboard is finalized.</p>
         <div class="cc-event">
@@ -274,7 +288,7 @@
           <div class="cc-event-head"><span class="cc-event-time">4:39 PM to 5:13 PM</span><span class="cc-event-name">Seeing Red</span><span class="cc-kind cc-kind-pairs">Pairs</span></div>
         </div>
       </article>
-      <article class="cc-day">
+      <article class="cc-day" data-day="Sunday">
         <div class="cc-day-head"><h3>Sunday</h3><span>October 11</span></div>
         <p class="cc-pending">Lane assignments will be added once Saturday is completed and the leaderboard is finalized.</p>
         <div class="cc-event">
@@ -425,6 +439,37 @@
 
 <script src="./ticker.js" defer></script>
 <script src="./app.js" defer></script>
+<script>
+(function(){
+  var zones={ET:{off:0,label:'Eastern time (EDT), local time in Spartanburg, SC'},CT:{off:-1,label:'Central time (CDT)'},PT:{off:-3,label:'Pacific time (PDT)'},EU:{off:6,label:'Central European Summer Time (CEST): Paris, Berlin, Madrid, Rome. For London (BST) subtract 1 hour'},AU:{off:15,label:'Sydney and Melbourne time (AEDT). Brisbane (AEST) is 1 hour earlier'}};
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var re=/(\d{1,2}):(\d{2}) (AM|PM)/g;
+  function conv(t,off,day){
+    var di=days.indexOf(day);
+    return t.replace(re,function(m,h,mm,ap){
+      h=parseInt(h,10)%12+(ap==='PM'?12:0);
+      var total=h*60+parseInt(mm,10)+off*60, shift=Math.floor(total/1440);
+      total=((total%1440)+1440)%1440;
+      var nh=Math.floor(total/60), nm=total%60, nap=nh>=12?'PM':'AM';
+      nh=nh%12||12;
+      var out=nh+':'+(nm<10?'0':'')+nm+' '+nap;
+      if(shift!==0&&di>=0){out+='<span class="cc-shift">'+days[(di+shift+7)%7].slice(0,3)+'</span>';}
+      return out;
+    });
+  }
+  var els=document.querySelectorAll('#heats .cc-heat-time, #heats .cc-event-time');
+  els.forEach(function(el){el.setAttribute('data-et',el.textContent);});
+  function apply(z){
+    els.forEach(function(el){
+      var et=el.getAttribute('data-et'), day=(el.closest('.cc-day')||{}).getAttribute?el.closest('.cc-day').getAttribute('data-day'):'';
+      el.innerHTML=z==='ET'?et:conv(et,zones[z].off,day);
+    });
+    document.querySelectorAll('.cc-tz-btn').forEach(function(b){b.classList.toggle('is-active',b.getAttribute('data-tz')===z);});
+    document.getElementById('ccTzNote').textContent='Showing '+zones[z].label+'.';
+  }
+  document.querySelectorAll('.cc-tz-btn').forEach(function(b){b.addEventListener('click',function(){apply(b.getAttribute('data-tz'));});});
+})();
+</script>
 <script async src="https://www.instagram.com/embed.js"></script>
 </body>
 </html>
