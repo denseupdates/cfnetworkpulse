@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crash Crucible 2026 | CF Network News</title>
+<meta name="description" content="CF Network News coverage of the 2026 Crash Crucible at CrossFit CRASH in Spartanburg, SC. Livestreams, broadcast team, elite workouts, athletes and leaderboard.">
+<link rel="stylesheet" href="./base.css">
+<link rel="stylesheet" href="./style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crash-red:#d9232e;--crash-red-bright:#ff3b45;--crash-black:#0f0f0f;
+  --crash-ink:#1b1b1b;--crash-paper:#f4f1ea;--crash-rule:rgba(217,35,46,.25);
+  --muted:#5f5a54;--radius:6px;
+}
+.cc-container{max-width:1180px;margin:0 auto;padding:0 20px}
+.cc-page h1,.cc-page h2,.cc-page h3{font-family:Oswald,Impact,sans-serif;text-transform:uppercase;letter-spacing:.01em;margin:0}
+
+.cc-hero{position:relative;overflow:hidden;color:#fff;padding:clamp(48px,8vw,96px) 0;
+  background:linear-gradient(135deg,var(--crash-red) 0 24%,var(--crash-black) 24% 100%)}
+.cc-hero::after{content:"";position:absolute;inset:0;opacity:.12;pointer-events:none;
+  background:repeating-linear-gradient(-45deg,transparent 0 12px,rgba(255,255,255,.3) 12px 13px)}
+.cc-hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:end}
+.cc-kicker{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin:0 0 12px}
+.cc-hero h1{font-size:clamp(52px,9vw,120px);line-height:.88}
+.cc-hero p.cc-copy{max-width:56ch;color:rgba(255,255,255,.88);margin:20px 0 0}
+.cc-meta{text-align:right;display:grid;gap:8px;justify-items:end}
+.cc-meta p{margin:0;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:14px}
+.cc-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 22px;
+  background:var(--crash-red);color:#fff;border:1px solid #fff;border-radius:var(--radius);
+  font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:.04em;text-decoration:none}
+.cc-btn:hover{background:var(--crash-red-bright)}
+.cc-btn.cc-ghost{background:transparent}
+.cc-btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;justify-content:flex-end}
+
+.cc-section{padding:64px 0}
+.cc-label{color:var(--crash-red);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.cc-section h2{font-size:clamp(30px,4vw,46px);line-height:1}
+.cc-sub{color:var(--muted);max-width:64ch;margin:10px 0 28px}
+.cc-grid3{display:grid;gap:18px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.cc-grid2{display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.cc-card{background:#fff;border:1px solid var(--crash-rule);border-radius:var(--radius);padding:24px;height:100%}
+.cc-card.cc-dark{background:var(--crash-black);color:#fff;border-color:#000}
+.cc-card.cc-dark .cc-muted{color:#bbb}
+.cc-card h3{font-size:24px;margin-bottom:8px}
+.cc-tag{display:inline-block;background:var(--crash-red);color:#fff;font-size:11px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;padding:4px 8px;border-radius:3px;margin-bottom:12px}
+.cc-muted{color:var(--muted);font-size:14px}
+.cc-link{display:inline-block;margin-top:14px;color:var(--crash-red);font-weight:800;font-size:14px;text-transform:uppercase;text-decoration:none}
+.cc-link:hover{text-decoration:underline}
+.cc-card.cc-dark .cc-link{color:var(--crash-red-bright)}
+
+.cc-schedule td,.cc-schedule th{padding:14px 16px;text-align:left;font-size:14px}
+.cc-schedule{width:100%;border-collapse:collapse;background:#fff;border-radius:var(--radius);overflow:hidden;border:1px solid var(--crash-rule)}
+.cc-schedule th{background:var(--crash-black);color:#fff;font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.05em}
+.cc-schedule tr+tr td{border-top:1px solid #eee}
+.cc-schedule strong{color:var(--crash-red)}
+
+.cc-commentators{display:grid;gap:18px;grid-template-columns:repeat(3,1fr)}
+.cc-commentator{background:var(--crash-black);color:#fff;border-radius:var(--radius);padding:28px 22px;border-left:5px solid var(--crash-red)}
+.cc-commentator h3{font-size:26px}
+.cc-commentator p{margin:6px 0 0;color:#bbb;font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+
+.crash-ig-wrap{display:flex;justify-content:center;padding:20px;border:1px solid var(--crash-rule);
+  border-top:4px solid var(--crash-red);border-radius:var(--radius);background:rgba(217,35,46,.04)}
+
+.cc-athletes{list-style:none;margin:14px 0 0;padding:0;columns:2;column-gap:24px}
+.cc-athletes li{break-inside:avoid;margin-bottom:8px;font-size:14px;font-weight:600}
+
+.cc-divisions .cc-card h3{font-size:22px}
+.cc-note{margin-top:22px;padding:16px;background:rgba(217,35,46,.07);border-left:3px solid var(--crash-red);font-size:14px;color:var(--muted)}
+
+
+@media(max-width:900px){
+  .cc-hero-inner,.cc-grid3,.cc-commentators{grid-template-columns:1fr}
+  .cc-meta{text-align:left;justify-items:start}.cc-btn-row{justify-content:flex-start}
+}
+@media(max-width:640px){.cc-grid2{grid-template-columns:1fr}.cc-athletes{columns:1}
+  .cc-schedule th:nth-child(3),.cc-schedule td:nth-child(3){display:none}}
+.cc-page{background:var(--crash-paper);color:var(--crash-ink);font-family:Inter,system-ui,sans-serif;line-height:1.55}
+.cc-page a{color:inherit}
+.cc-page .cc-btn{color:#fff}
+.cc-page .cc-link{color:var(--crash-red)}
+.cc-page .cc-card.cc-dark .cc-link{color:var(--crash-red-bright)}
+.cc-page .cc-container{max-width:1180px;margin:0 auto;padding:0 20px}
+</style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="./index.html" class="logo" aria-label="CF Network News home">
+      <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+        <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+        <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+      </svg>
+      <div class="logo__text">CF NETWORK <span>NEWS</span></div>
+    </a>
+
+    <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track"></div>
+</div>
+
+
+ <!-- ===== SECTION NAV ===== -->
+<nav class="section-nav" aria-label="Section navigation">
+  <div class="section-nav__track">
+    <a href="./news.html" class="section-nav__link">New Stories</a>
+    <a href="./gossip.html" class="section-nav__link">Gossip</a>
+    <a href="./videos.html" class="section-nav__link">Media</a>
+    <a href="./shows.html" class="section-nav__link">Podcasts/Shows</a>
+    <a href="./rankings.html" class="section-nav__link">Rankings</a>
+    <a href="./rogue.html" class="section-nav__link">Rogue</a>
+    <a href="./season-info.html" class="section-nav__link">Season Info</a>
+    <a href="./crash-crucible.html" class="section-nav__link">Crash Crucible</a>
+    <a href="./message-board.html" class="section-nav__link">Message Board</a>
+    <a href="./classifieds.html" class="section-nav__link">Classifieds</a>
+    <a href="./index.html#subscribe" class="section-nav__link">Subscribe</a>
+
+  </div>
+</nav>
+
+<main class="cc-page">
+<section class="cc-hero">
+  <div class="cc-container cc-hero-inner">
+    <div>
+      <p class="cc-kicker">CF Network Event Hub</p>
+      <h1>Crash<br>Crucible</h1>
+      <p class="cc-copy">Three days of elite fitness in Spartanburg, South Carolina. Created and programmed by JR Howell at CrossFit CRASH, the Crucible brings elite individuals and pairs together for one of the toughest local tests on the calendar.</p>
+    </div>
+    <div class="cc-meta">
+      <p>October 9 to 11, 2026</p>
+      <p>CrossFit CRASH · Spartanburg, SC</p>
+      <p>112 Belton Drive</p>
+      <div class="cc-btn-row">
+        <a class="cc-btn" href="https://www.youtube.com/@CF-Network" target="_blank" rel="noopener noreferrer">Watch Friday on CF Network</a>
+        <a class="cc-btn cc-ghost" href="https://competitioncorner.net/ff/22204/results#male_149314" target="_blank" rel="noopener noreferrer">Leaderboard</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cc-section" id="watch">
+  <div class="cc-container">
+    <div class="cc-label">Watch Live</div>
+    <h2>Livestreams</h2>
+    <p class="cc-sub">Every division, including pairs, is streamed live every day. CF Network carries Friday's competition live, plus preview and post shows all weekend. FloElite carries Saturday and Sunday.</p>
+    <div class="cc-grid3">
+      <article class="cc-card cc-dark">
+        <span class="cc-tag">Friday Live</span>
+        <h3>CF Network YouTube</h3>
+        <p class="cc-muted">Full Friday competition live on the CF Network channel, with preview and post shows every day of the event.</p>
+        <a class="cc-link" href="https://www.youtube.com/@CF-Network" target="_blank" rel="noopener noreferrer">Open CF Network →</a>
+      </article>
+      <article class="cc-card">
+        <span class="cc-tag">Saturday &amp; Sunday Live</span>
+        <h3>FloElite</h3>
+        <p class="cc-muted">Saturday and Sunday competition streams live on FloElite. A subscription may be required.</p>
+        <a class="cc-link" href="https://www.floelite.com" target="_blank" rel="noopener noreferrer">Watch on FloElite →</a>
+      </article>
+      <article class="cc-card">
+        <span class="cc-tag">Live Scoring</span>
+        <h3>Competition Corner</h3>
+        <p class="cc-muted">Live results and standings for Elite Men, Elite Women, Female Pairs and Male Pairs.</p>
+        <a class="cc-link" href="https://competitioncorner.net/ff/22204/results#male_149314" target="_blank" rel="noopener noreferrer">Open Leaderboard →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="cc-section" id="schedule" style="padding-top:0">
+  <div class="cc-container">
+    <div class="cc-label">Broadcast Plan</div>
+    <h2>Where to Watch Each Day</h2>
+    <p class="cc-sub">All divisions streamed live each day.</p>
+    <table class="cc-schedule">
+      <tr><th>Day</th><th>Live Competition</th><th>Divisions</th><th>CF Network Shows</th></tr>
+      <tr><td><strong>Friday, Oct 9</strong></td><td>CF Network YouTube</td><td>Elite Men, Elite Women</td><td>Preview Show, Live Coverage, Post Show</td></tr>
+      <tr><td><strong>Saturday, Oct 10</strong></td><td>FloElite</td><td>Elite Men, Elite Women, Female Pairs, Male Pairs</td><td>Preview Show and Post Show</td></tr>
+      <tr><td><strong>Sunday, Oct 11</strong></td><td>FloElite</td><td>Elite Men, Elite Women, Female Pairs, Male Pairs</td><td>Preview Show and Post Show</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="cc-section" id="broadcast" style="padding-top:0">
+  <div class="cc-container">
+    <div class="cc-label">On the Call</div>
+    <h2>Broadcast Team</h2>
+    <p class="cc-sub">The voices of the 2026 Crash Crucible.</p>
+    <div class="cc-commentators">
+      <div class="cc-commentator"><h3>Pedro White</h3><p>Commentator</p></div>
+      <div class="cc-commentator"><h3>James Hobart</h3><p>Commentator</p></div>
+      <div class="cc-commentator"><h3>Angelo DiCicco</h3><p>Commentator</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cc-section" id="workouts" style="padding-top:0">
+  <div class="cc-container">
+    <div class="cc-label">Elite Programming</div>
+    <h2>The Elite Workouts</h2>
+    <p class="cc-sub">Official Crash Crucible elite workouts as released by @crashcrucible. Swipe through all seven events.</p>
+    <div class="crash-ig-wrap">
+      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DeKGTUlkeAo/" data-instgrm-version="14" data-instgrm-captioned
+        style="margin:0 auto;max-width:540px;width:100%;min-width:280px;background:#fff;border:0;">
+        <a href="https://www.instagram.com/p/DeKGTUlkeAo/" target="_blank" rel="noopener noreferrer">View the Crash Crucible elite workouts on Instagram</a>
+      </blockquote>
+    </div>
+    <p style="text-align:center"><a class="cc-link" href="https://www.instagram.com/p/DeKGTUlkeAo/" target="_blank" rel="noopener noreferrer">Open Workouts on Instagram →</a></p>
+  </div>
+</section>
+
+<section class="cc-section" id="athletes" style="padding-top:0">
+  <div class="cc-container">
+    <div class="cc-label">Elite Field</div>
+    <h2>Elite Athletes</h2>
+    <p class="cc-sub">Returning champions, Games veterans and proven semifinal athletes.</p>
+    <div class="cc-grid2">
+      <article class="cc-card">
+        <span class="cc-tag">Elite Men</span><h3>Men's Field</h3>
+        <ul class="cc-athletes">
+          <li>Alexander Majors</li><li>Anthonee Yim</li><li>Bobby Gierszal</li><li>Colten Mertens</li><li>Daniel Goulet</li>
+          <li>David Johnston</li><li>Grant Griffin</li><li>Hudson Fricke</li><li>Jeremy Gwizdala</li><li>Joe Pierro</li>
+          <li>Josh Felix</li><li>JT Ferguson</li><li>Korby Foxall</li><li>Logan Brown</li><li>Lucas Purdy</li>
+          <li>Maguire Nickerson</li><li>Mason Griffin</li><li>Mathias Porter</li><li>Mitch Wagner</li><li>Nick Azorr</li>
+          <li>Noah Wilson</li><li>Robert Yates</li><li>Roy Cohen</li><li>Rudolph Berger</li><li>Samuel Demeester</li>
+          <li>Samuel Spurlin</li><li>Sarin Suvanasai</li><li>Sergio Briceno</li><li>Zachary Gibbon</li><li>Zachary Levy</li>
+        </ul>
+      </article>
+      <article class="cc-card">
+        <span class="cc-tag">Elite Women</span><h3>Women's Field</h3>
+        <ul class="cc-athletes">
+          <li>Allison Nguyen</li><li>Ally Mertens</li><li>Amara Wylie</li><li>Arielle Sanders</li><li>Ashley Cope</li>
+          <li>Aubriana Montplaisir</li><li>Blair Chaney</li><li>Brianna Jacobson</li><li>Caitlin Bernardin</li><li>Caroline Kluttz</li>
+          <li>Caroline Stanley</li><li>Christa Mack</li><li>Delia Moises</li><li>Elizabeth Wishart</li><li>Hattie Kanyo</li>
+          <li>Jenna Michelotti</li><li>Kendall Gilmore</li><li>Liz Peterson</li><li>Lydia Fish</li><li>Maddi Foutz</li>
+          <li>Marie Docken</li><li>Mary Helen Saunders</li><li>Mekenzie Riley</li><li>Nadia Szymialis</li><li>Nina Looper</li>
+          <li>Rylee Beebe</li><li>Samantha Pugh</li><li>Sydney Sanders</li><li>Trista Smith</li><li>Zoe Warren</li>
+        </ul>
+      </article>
+    </div>
+    <p class="cc-note">Heat assignments, pairs rosters and live standings are on Competition Corner.</p>
+  </div>
+</section>
+
+<section class="cc-section cc-divisions" id="divisions" style="padding-top:0">
+  <div class="cc-container">
+    <div class="cc-label">Competition Format</div>
+    <h2>Four Divisions. One Crucible.</h2>
+    <p class="cc-sub">Seven elite events over three days. Five pairs events across Saturday and Sunday.</p>
+    <div class="cc-grid3">
+      <article class="cc-card"><span class="cc-tag">Individuals</span><h3>Elite Men</h3><p class="cc-muted">Competes Friday through Sunday. Seven events.</p></article>
+      <article class="cc-card"><span class="cc-tag">Individuals</span><h3>Elite Women</h3><p class="cc-muted">Competes Friday through Sunday. Seven events.</p></article>
+      <article class="cc-card"><span class="cc-tag">Teams</span><h3>Female &amp; Male Pairs</h3><p class="cc-muted">Two athlete teams compete Saturday and Sunday. Five events.</p></article>
+    </div>
+    <p style="margin-top:22px"><a class="cc-link" href="https://www.instagram.com/crashcrucible/" target="_blank" rel="noopener noreferrer">Follow @crashcrucible for official updates →</a></p>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div>
+        <a href="./index.html" class="logo" aria-label="CF Network News home" style="margin-bottom:var(--space-2)">
+          <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+            <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+            <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+          </svg>
+          <div class="logo__text">CF NETWORK <span>NEWS</span></div>
+        </a>
+        <p class="footer__brand-text">Your daily source for CrossFit news, athlete updates, competition schedules, and community insights. Not affiliated with CrossFit LLC.</p>
+      </div>
+      <div>
+        <h4 class="footer__heading">Sections</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="./news.html">Top Stories</a></li>
+          <li><a href="./gossip.html">Gossip &amp; Drama</a></li>
+          <li><a href="./videos.html">Media</a></li>
+          <li><a href="./shows.html">Podcasts/Shows</a></li>
+          <li><a href="./rankings.html">Channel Rankings</a></li>
+          <li><a href="./rogue.html">Rogue Fitness</a></li>
+          <li><a href="./season-info.html">Season Info</a></li>
+         <li><a href="./classifieds.html">Classifieds</a></li>
+          <li><a href="./message-board.html">Message Board</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__heading">Resources</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="https://games.crossfit.com" target="_blank" rel="noopener noreferrer">CrossFit Games</a></li>
+          <li><a href="https://www.roguefitness.com" target="_blank" rel="noopener noreferrer">Rogue Fitness</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__heading">Upcoming</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="https://games.crossfit.com/finals/overview" target="_blank" rel="noopener noreferrer">2026 Games</a></li>
+          <li><a href="https://www.roguefitness.com/invitational" target="_blank" rel="noopener noreferrer">Rogue Invitational</a></li>
+          <li><a href="https://games.crossfit.com/competitions" target="_blank" rel="noopener noreferrer">Licensed Events</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 CF Network News. Independent fan site. Not affiliated with CrossFit LLC.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="./ticker.js" defer></script>
+<script src="./app.js" defer></script>
+<script async src="https://www.instagram.com/embed.js"></script>
+</body>
+</html>
