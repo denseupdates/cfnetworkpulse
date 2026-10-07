@@ -85,6 +85,25 @@
 .cc-page .cc-link{color:var(--crash-red)}
 .cc-page .cc-card.cc-dark .cc-link{color:var(--crash-red-bright)}
 .cc-page .cc-container{max-width:1180px;margin:0 auto;padding:0 20px}
+.cc-days{display:grid;gap:18px;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}
+.cc-day{background:#fff;border:1px solid var(--crash-rule);border-top:5px solid var(--crash-red);border-radius:var(--radius);overflow:hidden}
+.cc-day-head{background:var(--crash-black);color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:baseline}
+.cc-page .cc-day-head h3{font-size:26px;color:#fff}
+.cc-day-head span{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--crash-red-bright)}
+.cc-event{padding:14px 20px;border-bottom:1px solid #eee}
+.cc-event:last-child{border-bottom:0}
+.cc-event-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.cc-event-time{font-size:12px;font-weight:800;color:var(--crash-red);text-transform:uppercase;letter-spacing:.04em;width:100%}
+.cc-event-name{font-family:Oswald,sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;color:var(--crash-ink)}
+.cc-kind{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:3px}
+.cc-kind-individual{background:var(--crash-black);color:#fff}
+.cc-kind-pairs{background:rgba(217,35,46,.12);color:var(--crash-red)}
+.cc-heats{list-style:none;margin:10px 0 0;padding:0}
+.cc-heats li{display:flex;justify-content:space-between;gap:12px;padding:6px 0;font-size:14px;border-top:1px dashed #e6e1d8}
+.cc-heat-time{font-weight:800;color:var(--crash-ink);white-space:nowrap;order:2}
+.cc-heat-name{color:var(--muted)}
+.cc-pending{margin:0;padding:12px 20px;background:rgba(217,35,46,.07);border-bottom:1px solid var(--crash-rule);border-left:4px solid var(--crash-red);font-size:13px;font-weight:600;color:var(--crash-ink)}
+@media(max-width:1000px){.cc-days{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -190,6 +209,89 @@
       <tr><td><strong>Saturday, Oct 10</strong></td><td>FloElite</td><td>Elite Men, Elite Women, Female Pairs, Male Pairs</td><td>Preview Show and Post Show</td></tr>
       <tr><td><strong>Sunday, Oct 11</strong></td><td>FloElite</td><td>Elite Men, Elite Women, Female Pairs, Male Pairs</td><td>Preview Show and Post Show</td></tr>
     </table>
+  </div>
+</section>
+
+<section class="cc-section" id="heats" style="padding-top:0">
+  <div class="cc-container">
+    <div class="cc-label">Competition Schedule</div>
+    <h2>Heat Times</h2>
+    <p class="cc-sub">Official Crash Crucible schedule from Competition Corner. All times Eastern and subject to change.</p>
+    <div class="cc-days">
+      <article class="cc-day">
+        <div class="cc-day-head"><h3>Friday</h3><span>October 9</span></div>
+        <div class="cc-event">
+          <div class="cc-event-head"><span class="cc-event-time">9:00 AM to 2:27 PM</span><span class="cc-event-name">Soft Toss</span><span class="cc-kind cc-kind-individual">Individual</span></div>
+          <ul class="cc-heats">
+          <li><span class="cc-heat-time">9:00 AM</span><span class="cc-heat-name">Heat 1 · Elite Men</span></li>
+          <li><span class="cc-heat-time">9:33 AM</span><span class="cc-heat-name">Heat 2 · Elite Men</span></li>
+          <li><span class="cc-heat-time">10:06 AM</span><span class="cc-heat-name">Heat 3 · Elite Men</span></li>
+          <li><span class="cc-heat-time">10:39 AM</span><span class="cc-heat-name">Heat 4 · Elite Men</span></li>
+          <li><span class="cc-heat-time">11:12 AM</span><span class="cc-heat-name">Heat 5 · Elite Men</span></li>
+          <li><span class="cc-heat-time">11:45 AM</span><span class="cc-heat-name">Heat 1 · Elite Women</span></li>
+          <li><span class="cc-heat-time">12:18 PM</span><span class="cc-heat-name">Heat 2 · Elite Women</span></li>
+          <li><span class="cc-heat-time">12:51 PM</span><span class="cc-heat-name">Heat 3 · Elite Women</span></li>
+          <li><span class="cc-heat-time">1:24 PM</span><span class="cc-heat-name">Heat 4 · Elite Women</span></li>
+          <li><span class="cc-heat-time">1:57 PM</span><span class="cc-heat-name">Heat 5 · Elite Women</span></li>
+          </ul>
+        </div>
+        <div class="cc-event">
+          <div class="cc-event-head"><span class="cc-event-time">3:00 PM to 5:00 PM</span><span class="cc-event-name">Delt Dividends</span><span class="cc-kind cc-kind-individual">Individual</span></div>
+          <ul class="cc-heats">
+          <li><span class="cc-heat-time">Demo</span><span class="cc-heat-name">Heat 0 · Demo Team</span></li>
+          <li><span class="cc-heat-time">3:00 PM</span><span class="cc-heat-name">Heat 1 · Elite Men</span></li>
+          <li><span class="cc-heat-time">3:12 PM</span><span class="cc-heat-name">Heat 2 · Elite Men</span></li>
+          <li><span class="cc-heat-time">3:24 PM</span><span class="cc-heat-name">Heat 3 · Elite Men</span></li>
+          <li><span class="cc-heat-time">3:36 PM</span><span class="cc-heat-name">Heat 4 · Elite Men</span></li>
+          <li><span class="cc-heat-time">3:48 PM</span><span class="cc-heat-name">Heat 5 · Elite Men</span></li>
+          <li><span class="cc-heat-time">4:03 PM</span><span class="cc-heat-name">Heat 1 · Elite Women</span></li>
+          <li><span class="cc-heat-time">4:15 PM</span><span class="cc-heat-name">Heat 2 · Elite Women</span></li>
+          <li><span class="cc-heat-time">4:27 PM</span><span class="cc-heat-name">Heat 3 · Elite Women</span></li>
+          <li><span class="cc-heat-time">4:39 PM</span><span class="cc-heat-name">Heat 4 · Elite Women</span></li>
+          <li><span class="cc-heat-time">4:51 PM</span><span class="cc-heat-name">Heat 5 · Elite Women</span></li>
+          </ul>
+        </div>
+      </article>
+      <article class="cc-day">
+        <div class="cc-day-head"><h3>Saturday</h3><span>October 10</span></div>
+        <p class="cc-pending">Lane assignments will be added once Friday is completed and the leaderboard is finalized.</p>
+        <div class="cc-event">
+          <div class="cc-event-head"><span class="cc-event-time">9:00 AM to 9:43 AM</span><span class="cc-event-name">Knot So Fast</span><span class="cc-kind cc-kind-pairs">Pairs</span></div>
+        </div>
+        <div class="cc-event">
+          <div class="cc-event-head"><span class="cc-event-time">9:48 AM to 1:45 PM</span><span class="cc-event-name">Push &amp; Tush</span><span class="cc-kind cc-kind-individual">Individual</span></div>
+        </div>
+        <div class="cc-event">
+          <div class="cc-event-head"><span class="cc-event-time">10:00 AM to 1:57 PM</span><span class="cc-event-name">All Hands</span><span class="cc-kind cc-kind-individual">Individual</span></div>
+        </div>
+        <div class="cc-event">
+          <div class="cc-event-head"><span class="cc-event-time">2:28 PM to 2:55 PM</span><span class="cc-event-name">Double Down</span><span class="cc-kind cc-kind-pairs">Pairs</span></div>
+        </div>
+        <div class="cc-event">
+          <div class="cc-event-head"><span class="cc-event-time">2:55 PM to 4:35 PM</span><span class="cc-event-name">Power Parcel (Max Watts)</span><span class="cc-kind cc-kind-individual">Individual</span></div>
+        </div>
+        <div class="cc-event">
+          <div class="cc-event-head"><span class="cc-event-time">4:39 PM to 5:13 PM</span><span class="cc-event-name">Seeing Red</span><span class="cc-kind cc-kind-pairs">Pairs</span></div>
+        </div>
+      </article>
+      <article class="cc-day">
+        <div class="cc-day-head"><h3>Sunday</h3><span>October 11</span></div>
+        <p class="cc-pending">Lane assignments will be added once Saturday is completed and the leaderboard is finalized.</p>
+        <div class="cc-event">
+          <div class="cc-event-head"><span class="cc-event-time">9:00 AM to 9:43 AM</span><span class="cc-event-name">Cheek to Cheek</span><span class="cc-kind cc-kind-pairs">Pairs</span></div>
+        </div>
+        <div class="cc-event">
+          <div class="cc-event-head"><span class="cc-event-time">9:48 AM to 12:57 PM</span><span class="cc-event-name">Singles Optional</span><span class="cc-kind cc-kind-individual">Individual</span></div>
+        </div>
+        <div class="cc-event">
+          <div class="cc-event-head"><span class="cc-event-time">1:20 PM to 1:53 PM</span><span class="cc-event-name">IPS</span><span class="cc-kind cc-kind-pairs">Pairs</span></div>
+        </div>
+        <div class="cc-event">
+          <div class="cc-event-head"><span class="cc-event-time">1:57 PM to 3:24 PM</span><span class="cc-event-name">Box Office</span><span class="cc-kind cc-kind-individual">Individual</span></div>
+        </div>
+      </article>
+    </div>
+    <p style="text-align:center;max-width:none"><a class="cc-link" href="https://competitioncorner.net/ff/22204/results#male_149314" target="_blank" rel="noopener noreferrer">Full Schedule and Leaderboard on Competition Corner →</a></p>
   </div>
 </section>
 
