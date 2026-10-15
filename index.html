@@ -662,6 +662,233 @@
 })();
 </script>
 
+<!-- ===== MEDIA (latest videos, read from videos.html) ===== -->
+<style>
+  #homeMedia[hidden] { display: none; }
+  .hmedia-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.4rem;
+  }
+  @media (max-width: 900px) {
+    .hmedia-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hmedia-grid .hmedia-card:nth-child(3) { display: none; }
+  }
+  @media (max-width: 600px) {
+    .hmedia-grid { grid-template-columns: 1fr; }
+    .hmedia-grid .hmedia-card:nth-child(3) { display: flex; }
+  }
+  .hmedia-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface, #111111);
+    border: 1px solid var(--color-divider, #2a2a2a);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 180ms ease, transform 180ms ease;
+  }
+  .hmedia-card:hover { border-color: var(--color-border, #333333); }
+  @media (hover: hover) {
+    .hmedia-card:hover { transform: translateY(-2px); }
+  }
+  .hmedia-card__player {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--color-surface-offset, #1e1e1e);
+    overflow: hidden;
+  }
+  .hmedia-card__btn {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: block;
+  }
+  .hmedia-card__thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 180ms ease, transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .hmedia-card__btn:hover .hmedia-card__thumb { opacity: 0.82; transform: scale(1.03); }
+  .hmedia-card__play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 9999px;
+    display: grid;
+    place-items: center;
+    background: rgba(10, 10, 10, 0.6);
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
+    pointer-events: none;
+    transition: background 180ms ease, border-color 180ms ease;
+  }
+  .hmedia-card__btn:hover .hmedia-card__play { background: rgba(10, 10, 10, 0.85); border-color: #fff; }
+  .hmedia-card__play svg { margin-left: 3px; }
+  .hmedia-card__player iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .hmedia-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.95rem 1rem 1.05rem;
+    flex: 1;
+  }
+  .hmedia-card__date {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-faint, #5a5957);
+  }
+  .hmedia-card__caption {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--color-text, #f0eeeb);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .hmedia-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: auto;
+    padding-top: 0.2rem;
+  }
+  .hmedia-card__tag {
+    font-size: 0.76rem;
+    font-weight: 500;
+    color: var(--color-text-muted, #9a9894);
+    background: var(--color-surface-2, #181818);
+    border: 1px solid transparent;
+    border-radius: 9999px;
+    padding: 0.2rem 0.58rem;
+    text-decoration: none;
+    transition: color 180ms ease, border-color 180ms ease;
+  }
+  .hmedia-card__tag:hover {
+    color: var(--color-text, #f0eeeb);
+    border-color: var(--color-border, #333333);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hmedia-card, .hmedia-card__thumb { transition: none; }
+    .hmedia-card:hover { transform: none; }
+  }
+</style>
+
+<section class="section" id="homeMedia" style="padding-bottom:var(--space-12)" hidden>
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <div class="section__label">Latest Uploads &bull; CF Network</div>
+        <h2 class="section__title">Media</h2>
+      </div>
+      <a href="./videos.html" class="section__link" style="position:relative; z-index:9999; pointer-events:auto;">
+        See All &rarr;
+      </a>
+    </div>
+
+    <div class="hmedia-grid" id="homeMediaGrid"></div>
+  </div>
+</section>
+
+<script>
+(function () {
+  "use strict";
+
+  /* Shows the newest videos from videos.html. To change what appears
+     here, add or reorder cards in videos.html. Nothing to edit on this page. */
+  var HOW_MANY = 3;
+
+  var section = document.getElementById("homeMedia");
+  var grid = document.getElementById("homeMediaGrid");
+  if (!section || !grid) { return; }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  fetch("./videos.html", { cache: "no-cache" })
+    .then(function (r) { if (!r.ok) { throw new Error(r.status); } return r.text(); })
+    .then(function (html) {
+      var doc = new DOMParser().parseFromString(html, "text/html");
+      var cards = Array.prototype.slice.call(doc.querySelectorAll("#vGrid .vcard"), 0, HOW_MANY);
+      if (!cards.length) { return; }
+
+      grid.innerHTML = cards.map(function (card) {
+        var id = (card.getAttribute("data-id") || "").trim();
+        var dateEl = card.querySelector(".vcard__date");
+        var capEl = card.querySelector(".vcard__caption");
+        var date = dateEl ? dateEl.textContent.trim() : "";
+        var caption = capEl ? capEl.textContent.trim() : "";
+        var tags = (card.getAttribute("data-tags") || "")
+          .toLowerCase().split(/[\s,]+/)
+          .map(function (t) { return t.replace(/^#/, ""); })
+          .filter(Boolean);
+
+        return '<article class="hmedia-card">' +
+          '<div class="hmedia-card__player" data-id="' + esc(id) + '" data-title="' + esc(caption) + '">' +
+            '<button class="hmedia-card__btn" type="button" aria-label="Play video">' +
+              '<img class="hmedia-card__thumb" loading="lazy" width="480" height="270" alt=""' +
+              ' src="https://i.ytimg.com/vi/' + encodeURIComponent(id) + '/hqdefault.jpg">' +
+              '<span class="hmedia-card__play" aria-hidden="true">' +
+                '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>' +
+              '</span>' +
+            '</button>' +
+          '</div>' +
+          '<div class="hmedia-card__body">' +
+            (date ? '<span class="hmedia-card__date">' + esc(date) + '</span>' : '') +
+            '<p class="hmedia-card__caption">' + esc(caption) + '</p>' +
+            '<div class="hmedia-card__tags">' +
+              tags.map(function (t) {
+                return '<a class="hmedia-card__tag" href="./videos.html?tag=' + encodeURIComponent(t) + '">#' + esc(t) + '</a>';
+              }).join("") +
+            '</div>' +
+          '</div>' +
+        '</article>';
+      }).join("");
+
+      grid.addEventListener("click", function (e) {
+        var btn = e.target.closest(".hmedia-card__btn");
+        if (!btn) { return; }
+        var player = btn.parentNode;
+        var frame = document.createElement("iframe");
+        frame.src = "https://www.youtube-nocookie.com/embed/" +
+          encodeURIComponent(player.getAttribute("data-id")) +
+          "?autoplay=1&rel=0&modestbranding=1";
+        frame.title = player.getAttribute("data-title") || "CF Network video";
+        frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        frame.allowFullscreen = true;
+        player.innerHTML = "";
+        player.appendChild(frame);
+      });
+
+      section.hidden = false;
+    })
+    .catch(function () { /* If videos.html cannot load, the section stays hidden. */ });
+})();
+</script>
+
 <!-- ===== HOME RANKINGS ===== -->
 <style>
   #homeRankingsGrid {
