@@ -8,3 +8,6 @@ eslint.config.mjs
 create_*.py
 qa_*.js
 *.md
+
+# Archived event pages (kept in repo, not served on the live site)
+crash-crucible.html
