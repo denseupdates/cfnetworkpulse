@@ -11,3 +11,6 @@ qa_*.js
 
 # Archived event pages (kept in repo, not served on the live site)
 crash-crucible.html
+
+# Rogue page archived (kept in repo, not served on the live site)
+rogue.html
