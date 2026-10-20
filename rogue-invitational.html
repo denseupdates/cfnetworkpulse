@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rogue Invitational 2026 | CF Network News</title>
+<meta name="description" content="CF Network News event hub for the 2026 Rogue Invitational in Aberdeen, Scotland. Live CrossFit leaderboard, all nine workouts, full schedule in every time zone and the men's and women's fields.">
+<link rel="stylesheet" href="./base.css">
+<link rel="stylesheet" href="./style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@600;800&family=Roboto+Condensed:ital,wght@0,500;0,700;0,800;1,700;1,800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ri-black:#0a0a0a;--ri-ink:#141414;--ri-panel:#1a1a1a;--ri-line:#2c2c2c;
+  --ri-red:#e1141c;--ri-red-hi:#ff3a40;--ri-bone:#efebe4;--ri-muted:#a3a09a;--ri-copper:#c07a3e;
+  --ri-radius:4px;
+}
+.ri-page{background:var(--ri-black);color:var(--ri-bone);font-family:Roboto,system-ui,sans-serif;line-height:1.55}
+.ri-page a{color:inherit}
+.ri-wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+.ri-page h1,.ri-page h2,.ri-page h3{margin:0;color:#fff}
+.ri-goth{font-family:"Grenze Gotisch",serif;font-weight:800;letter-spacing:.01em;line-height:.9}
+.ri-cond{font-family:"Roboto Condensed",Roboto,sans-serif;text-transform:uppercase}
+
+/* hero */
+.ri-hero{position:relative;overflow:hidden;min-height:min(78vh,700px);display:flex;align-items:flex-end;padding:120px 0 56px;
+  background:#000 url("./assets/rogue-invitational-2026/arena-floor.jpg") center 35%/cover no-repeat}
+.ri-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.35) 40%,rgba(10,10,10,.96) 100%)}
+.ri-hero-in{position:relative;z-index:1;width:100%}
+.ri-logo{width:150px;height:auto;display:block;margin-bottom:22px}
+.ri-hero h1{font-size:clamp(64px,13vw,168px);color:#fff;text-shadow:0 4px 30px rgba(0,0,0,.5)}
+.ri-hero-row{display:flex;flex-wrap:wrap;gap:24px 40px;align-items:flex-end;justify-content:space-between;margin-top:22px}
+.ri-hero-meta{font-family:"Roboto Condensed",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:clamp(17px,2vw,22px);line-height:1.25}
+.ri-hero-meta span{display:block;color:var(--ri-muted);font-weight:700;font-size:.78em;letter-spacing:.08em}
+.ri-btns{display:flex;flex-wrap:wrap;gap:10px}
+.ri-btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:12px 22px;border-radius:var(--ri-radius);background:var(--ri-red);color:#fff;
+  font:800 15px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.05em;text-decoration:none;border:1px solid var(--ri-red);transition:background .15s}
+.ri-btn:hover{background:var(--ri-red-hi);border-color:var(--ri-red-hi)}
+.ri-btn.ri-ghost{background:transparent;border-color:#fff}
+.ri-btn.ri-ghost:hover{background:#fff;color:#000}
+.ri-countdown{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
+.ri-cd{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--ri-radius);padding:10px 14px;min-width:78px;text-align:center}
+.ri-cd b{display:block;font:800 30px/1 "Roboto Condensed",sans-serif;color:#fff}
+.ri-cd small{font:700 11px "Roboto Condensed",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--ri-muted)}
+
+/* strip */
+.ri-strip{border-top:4px solid var(--ri-red);background:var(--ri-ink)}
+.ri-strip ul{list-style:none;margin:0 auto;padding:0 20px;max-width:1200px;display:grid;grid-template-columns:repeat(4,1fr)}
+.ri-strip li{padding:20px 12px;border-left:1px solid var(--ri-line);text-align:center}
+.ri-strip li:first-child{border-left:0}
+.ri-strip b{display:block;font:800 34px/1 "Roboto Condensed",sans-serif;color:#fff}
+.ri-strip span{font:700 12px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.12em;color:var(--ri-muted)}
+
+/* sections */
+.ri-sec{padding:72px 0 0}
+.ri-sec:last-of-type{padding-bottom:80px}
+.ri-label{font:800 13px "Roboto Condensed",sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--ri-red-hi);margin:0 0 6px}
+.ri-sec h2{font-size:clamp(44px,6vw,72px)}
+.ri-sub{color:var(--ri-muted);max-width:68ch;margin:12px 0 28px}
+.ri-link{color:var(--ri-red-hi)!important;font:800 14px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.06em;text-decoration:none}
+.ri-link:hover{text-decoration:underline}
+
+/* watch */
+.ri-watch{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ri-stream{background:var(--ri-panel);border:1px solid var(--ri-line);border-top:4px solid var(--ri-red);border-radius:var(--ri-radius);padding:22px}
+.ri-stream h3{font:800 28px/1 "Roboto Condensed",sans-serif;text-transform:uppercase}
+.ri-stream .ri-when{font:700 13px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--ri-muted);margin:6px 0 16px}
+.ri-stream .ri-btn{width:100%;justify-content:center}
+.ri-cams{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.ri-cams a{font:700 12px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.05em;padding:6px 9px;border:1px solid var(--ri-line);border-radius:3px;text-decoration:none;color:var(--ri-bone)}
+.ri-cams a:hover{border-color:var(--ri-red);color:#fff}
+
+/* leaderboard */
+.ri-tabs{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.ri-tab{font:800 15px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.06em;padding:11px 20px;border-radius:var(--ri-radius);
+  border:1px solid var(--ri-line);background:var(--ri-panel);color:var(--ri-bone);cursor:pointer}
+.ri-tab:hover{border-color:#fff}
+.ri-tab[aria-selected="true"]{background:#fff;color:#000;border-color:#fff}
+.ri-lb-status{margin-left:auto;font:700 12px "Roboto Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ri-muted);display:flex;align-items:center;gap:8px}
+.ri-dot{width:8px;height:8px;border-radius:50%;background:#555}
+.ri-dot.is-live{background:var(--ri-red-hi);box-shadow:0 0 0 0 rgba(255,58,64,.6);animation:riPulse 1.6s infinite}
+@keyframes riPulse{70%{box-shadow:0 0 0 8px rgba(255,58,64,0)}100%{box-shadow:0 0 0 0 rgba(255,58,64,0)}}
+.ri-refresh{background:none;border:1px solid var(--ri-line);color:var(--ri-bone);font:700 12px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.06em;padding:6px 10px;border-radius:3px;cursor:pointer}
+.ri-refresh:hover{border-color:#fff}
+.ri-lb-note{background:rgba(225,20,28,.08);border-left:3px solid var(--ri-red);padding:12px 14px;font-size:14px;color:var(--ri-bone);margin:0 0 14px}
+.ri-lb-wrap{overflow-x:auto;border:1px solid var(--ri-line);border-radius:var(--ri-radius);background:var(--ri-ink);-webkit-overflow-scrolling:touch}
+.ri-lb{width:100%;border-collapse:collapse;min-width:1100px;font-size:14px}
+.ri-lb th,.ri-lb td{padding:10px 10px;text-align:center;border-bottom:1px solid var(--ri-line);white-space:nowrap}
+.ri-lb thead th{background:#000;color:#fff;font:800 12px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.06em;position:sticky;top:0;z-index:2;vertical-align:bottom}
+.ri-lb thead th small{display:block;color:var(--ri-muted);font-weight:700;font-size:11px;letter-spacing:.04em;max-width:96px;margin:2px auto 0;white-space:normal;line-height:1.2}
+.ri-lb .ri-c-rank{width:54px;min-width:54px;position:sticky;left:0;z-index:1;background:var(--ri-ink);font:800 22px "Roboto Condensed",sans-serif;color:#fff}
+.ri-lb .ri-c-ath{text-align:left;position:sticky;left:54px;background:var(--ri-ink);z-index:1;min-width:230px}
+.ri-lb thead .ri-c-ath,.ri-lb thead .ri-c-rank{background:#000;z-index:3}
+.ri-lb .ri-c-pts{font:800 22px "Roboto Condensed",sans-serif;color:#fff;border-right:1px solid var(--ri-line)}
+.ri-lb thead th.ri-c-rank,.ri-lb thead th.ri-c-pts{font:800 12px "Roboto Condensed",sans-serif;color:#fff}
+.ri-lb tbody tr:hover td{background:#1d1d1d}
+.ri-lb tbody tr:nth-child(-n+3) .ri-c-rank{color:var(--ri-red-hi)}
+.ri-who{display:flex;align-items:center;gap:12px}
+.ri-who img.ri-face{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top;background:#fff;flex:none}
+.ri-who b{display:block;font:800 17px/1.1 "Roboto Condensed",sans-serif;text-transform:uppercase;color:#fff}
+.ri-who span{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ri-muted)}
+.ri-who span img{width:18px;height:12px;border-radius:1px}
+.ri-sc b{display:block;font-weight:700;color:#fff;font-size:14px}
+.ri-sc span{font-size:12px;color:var(--ri-muted)}
+.ri-sc.is-empty{color:#555}
+.ri-sc.is-win b{color:var(--ri-red-hi)}
+.ri-wd td{opacity:.5}
+.ri-lb-hint{display:none;font:700 12px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--ri-muted);margin:0 0 8px}
+
+/* workouts */
+.ri-wod-day+.ri-wod-day{margin-top:36px}
+.ri-wod-dayname{font:800 26px "Roboto Condensed",sans-serif;text-transform:uppercase;margin:0 0 14px!important;display:flex;align-items:baseline;gap:12px}
+.ri-wod-dayname span{color:var(--ri-muted);font-size:15px;letter-spacing:.08em}
+.ri-wod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ri-wod{background:var(--ri-panel);border:1px solid var(--ri-line);border-radius:var(--ri-radius);padding:22px;position:relative;overflow:hidden}
+.ri-wod::after{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--ri-red)}
+.ri-wod.is-tba::after{background:var(--ri-copper)}
+.ri-wod-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.ri-wod-num{font:800 44px/1 "Roboto Condensed",sans-serif;color:#333}
+.ri-wod-time{font:700 12px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--ri-muted);text-align:right}
+.ri-wod-time em{display:block;font-style:normal;color:#fff}
+.ri-wod h3{font-family:"Grenze Gotisch",serif;font-weight:800;font-size:40px;line-height:1;margin-bottom:12px!important}
+.ri-mv{list-style:none;margin:0;padding:0}
+.ri-mv li{padding:7px 0;border-top:1px solid var(--ri-line);font-weight:500}
+.ri-mv li:first-child{border-top:0;padding-top:0}
+.ri-tba{color:var(--ri-muted);font-style:italic;margin:0}
+
+/* schedule */
+.ri-day{margin-bottom:28px}
+.ri-day-head{display:flex;align-items:baseline;gap:14px;background:#000;border-top:4px solid var(--ri-red);padding:14px 18px;border-radius:var(--ri-radius) var(--ri-radius) 0 0}
+.ri-day-head h3{font-family:"Grenze Gotisch",serif;font-weight:800;font-size:38px;line-height:1}
+.ri-day-head span{font:700 14px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.1em;color:var(--ri-muted)}
+.ri-dst{margin:0;max-width:none;padding:12px 18px;background:rgba(192,122,62,.12);border-left:3px solid var(--ri-copper);font-size:14px}
+.ri-table-wrap{overflow-x:auto;border:1px solid var(--ri-line);border-top:0;background:var(--ri-ink)}
+.ri-sched{width:100%;border-collapse:collapse;font-size:14px}
+.ri-sched th,.ri-sched td{padding:12px 12px;text-align:center;border-bottom:1px solid var(--ri-line);white-space:nowrap}
+.ri-sched thead th{font:800 12px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#fff;background:#111}
+.ri-sched thead th small{display:block;color:var(--ri-muted);font-size:11px;font-weight:700}
+.ri-sched tbody th{text-align:left}
+.ri-evnum{display:block;font:700 11px "Roboto Condensed",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--ri-red-hi)}
+.ri-evname{font:800 18px "Roboto Condensed",sans-serif;text-transform:uppercase;color:#fff}
+.ri-sched td.ri-local{color:#fff;font-weight:700;background:rgba(255,255,255,.04)}
+.ri-sched td.ri-yours{color:var(--ri-red-hi);font-weight:700}
+.ri-end th .ri-evname{color:var(--ri-muted);font-size:14px}
+.ri-end td{color:var(--ri-muted)}
+.ri-shift{display:inline-block;margin-left:5px;font:800 10px "Roboto Condensed",sans-serif;text-transform:uppercase;color:var(--ri-copper);letter-spacing:.06em}
+.ri-tzline{font-size:13px;color:var(--ri-muted);margin:-14px 0 24px}
+
+/* athletes */
+.ri-field+.ri-field{margin-top:40px}
+.ri-field h3{font:800 26px "Roboto Condensed",sans-serif;text-transform:uppercase;margin-bottom:14px!important}
+.ri-field h3 span{color:var(--ri-muted);font-size:16px}
+.ri-aths{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.ri-ath{background:var(--ri-panel);border:1px solid var(--ri-line);border-radius:var(--ri-radius);overflow:hidden;padding-bottom:12px;text-align:center}
+.ri-ath>img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;object-position:top;display:block;background:#fff;margin-bottom:10px}
+.ri-ath-name{display:block;font:800 16px/1.15 "Roboto Condensed",sans-serif;text-transform:uppercase;color:#fff;padding:0 8px}
+.ri-ath-country{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ri-muted);margin-top:4px}
+.ri-ath-country img{width:20px;height:13px;border-radius:1px}
+
+.ri-src{margin-top:40px;padding-top:20px;border-top:1px solid var(--ri-line);font-size:13px;color:var(--ri-muted)}
+
+@media(max-width:960px){
+  .ri-watch,.ri-wod-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+  .ri-watch,.ri-wod-grid{grid-template-columns:1fr}
+  .ri-strip ul{grid-template-columns:1fr 1fr}
+  .ri-strip li:nth-child(3){border-left:0}
+  .ri-strip li:nth-child(n+3){border-top:1px solid var(--ri-line)}
+  .ri-hero{min-height:0;padding-top:80px}
+  .ri-cd{min-width:0;flex:1;padding:10px 6px}
+  .ri-cd b{font-size:26px}
+  .ri-countdown{flex-wrap:nowrap;gap:8px}
+  .ri-lb-status{margin-left:0;width:100%}
+  /* schedule tables become stacked cards */
+  .ri-table-wrap{overflow:visible}
+  .ri-sched thead{display:none}
+  .ri-sched,.ri-sched tbody,.ri-sched tr,.ri-sched th,.ri-sched td{display:block;width:100%}
+  .ri-sched tr{padding:12px 16px;border-bottom:1px solid var(--ri-line)}
+  .ri-sched tbody th{padding:0 0 8px;border:0}
+  .ri-sched td{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border:0;text-align:right;white-space:normal}
+  .ri-sched td::before{content:attr(data-label);font:700 12px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--ri-muted);text-align:left}
+  .ri-sched td.ri-local{background:none}
+  .ri-lb .ri-c-ath{min-width:150px;left:40px}
+  .ri-lb .ri-c-rank{width:40px;min-width:40px;font-size:18px;padding:10px 4px}
+  .ri-who{gap:8px}
+  .ri-lb-hint{display:block!important}
+  .ri-who img.ri-face{width:36px;height:36px}
+  .ri-who b{font-size:15px}
+}
+</style>
+</head>
+<body>
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="./index.html" class="logo" aria-label="CF Network News home">
+      <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+        <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+        <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+      </svg>
+      <div class="logo__text">CF NETWORK <span>NEWS</span></div>
+    </a>
+
+    <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track"></div>
+</div>
+
+
+ <!-- ===== SECTION NAV ===== -->
+<nav class="section-nav" aria-label="Section navigation">
+  <div class="section-nav__track">
+    <a href="./news.html" class="section-nav__link">New Stories</a>
+    <a href="./gossip.html" class="section-nav__link">Gossip</a>
+    <a href="./videos.html" class="section-nav__link">Media</a>
+    <a href="./shows.html" class="section-nav__link">Podcasts/Shows</a>
+    <a href="./rankings.html" class="section-nav__link">Rankings</a>
+    <a href="./rogue.html" class="section-nav__link">Rogue</a>
+    <a href="./season-info.html" class="section-nav__link">Season Info</a>
+    <a href="./rogue-invitational.html" class="section-nav__link">Rogue Invitational</a>
+    <a href="./message-board.html" class="section-nav__link">Message Board</a>
+    <a href="./classifieds.html" class="section-nav__link">Classifieds</a>
+    <a href="./index.html#subscribe" class="section-nav__link">Subscribe</a>
+
+  </div>
+</nav>
+
+<main class="ri-page">
+<section class="ri-hero">
+  <div class="ri-wrap ri-hero-in">
+    <img class="ri-logo" src="./assets/rogue-invitational-2026/invitational-logo-white.svg" alt="Rogue Invitational" width="150" height="99">
+    <h1 class="ri-goth">Rogue<br>Invitational</h1>
+    <div class="ri-hero-row">
+      <p class="ri-hero-meta">October 23 to 25, 2026<span>P&amp;J Live · Aberdeen, Scotland</span></p>
+      <div class="ri-btns">
+        <a class="ri-btn" href="#leaderboard">Live Leaderboard</a>
+        <a class="ri-btn ri-ghost" href="#watch">Watch Free</a>
+      </div>
+    </div>
+    <div class="ri-countdown" id="riCountdown" aria-live="polite"></div>
+  </div>
+</section>
+
+<div class="ri-strip">
+  <ul>
+    <li><b>9</b><span>CrossFit Events</span></li>
+    <li><b>19</b><span>Men</span></li>
+    <li><b>20</b><span>Women</span></li>
+    <li><b>3</b><span>Days in Aberdeen</span></li>
+  </ul>
+</div>
+
+<section class="ri-sec" id="watch">
+  <div class="ri-wrap">
+    <p class="ri-label">Watch Live</p>
+    <h2 class="ri-goth">Livestreams</h2>
+    <p class="ri-sub">Every day streams free on the Rogue Fitness YouTube channel, with four extra camera angles each day: cable cam, both end zones and overhead.</p>
+    <div class="ri-watch">
+      <article class="ri-stream">
+        <h3>Friday</h3><p class="ri-when">October 23 · Events 1 to 3</p>
+        <a class="ri-btn" href="https://www.youtube.com/watch?v=arbEk52Rqjc" target="_blank" rel="noopener noreferrer">Watch Friday</a>
+        <div class="ri-cams">
+          <a href="https://www.youtube.com/watch?v=r41sVTqhXMU" target="_blank" rel="noopener noreferrer">Cable Cam</a>
+          <a href="https://www.youtube.com/watch?v=2EKkf1BTa_o" target="_blank" rel="noopener noreferrer">High End Zone</a>
+          <a href="https://www.youtube.com/watch?v=NFOvSvpPoQ4" target="_blank" rel="noopener noreferrer">Low End Zone</a>
+          <a href="https://www.youtube.com/watch?v=BfHhqByE2pY" target="_blank" rel="noopener noreferrer">Overhead</a>
+        </div>
+      </article>
+      <article class="ri-stream">
+        <h3>Saturday</h3><p class="ri-when">October 24 · Events 4 to 6</p>
+        <a class="ri-btn" href="https://www.youtube.com/watch?v=H0BCVzOosfE" target="_blank" rel="noopener noreferrer">Watch Saturday</a>
+        <div class="ri-cams">
+          <a href="https://www.youtube.com/watch?v=k6m2y-V2P_s" target="_blank" rel="noopener noreferrer">Cable Cam</a>
+          <a href="https://www.youtube.com/watch?v=SWhto_9Eh14" target="_blank" rel="noopener noreferrer">High End Zone</a>
+          <a href="https://www.youtube.com/watch?v=mzsOyuSM6KM" target="_blank" rel="noopener noreferrer">Low End Zone</a>
+          <a href="https://www.youtube.com/watch?v=gycAPMf6yJI" target="_blank" rel="noopener noreferrer">Overhead</a>
+        </div>
+      </article>
+      <article class="ri-stream">
+        <h3>Sunday</h3><p class="ri-when">October 25 · Events 7 to 9</p>
+        <a class="ri-btn" href="https://www.youtube.com/watch?v=L6IsqcwLg0s" target="_blank" rel="noopener noreferrer">Watch Sunday</a>
+        <div class="ri-cams">
+          <a href="https://www.youtube.com/watch?v=5KUDBC22eB0" target="_blank" rel="noopener noreferrer">Cable Cam</a>
+          <a href="https://www.youtube.com/watch?v=RN9ybx6HBwI" target="_blank" rel="noopener noreferrer">High End Zone</a>
+          <a href="https://www.youtube.com/watch?v=TdOwvukZr5o" target="_blank" rel="noopener noreferrer">Low End Zone</a>
+          <a href="https://www.youtube.com/watch?v=XAG3gER5bSw" target="_blank" rel="noopener noreferrer">Overhead</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="ri-sec" id="leaderboard">
+  <div class="ri-wrap">
+    <p class="ri-label">Official Rogue Standings</p>
+    <h2 class="ri-goth">Leaderboard</h2>
+    <p class="ri-sub">The full CrossFit leaderboard, pulled straight from Rogue's official scoring. It refreshes on its own every minute during competition.</p>
+    <div class="ri-tabs" role="tablist" aria-label="Division">
+      <button class="ri-tab" role="tab" aria-selected="true" data-div="men" id="riTabMen">Men</button>
+      <button class="ri-tab" role="tab" aria-selected="false" data-div="women" id="riTabWomen">Women</button>
+      <div class="ri-lb-status"><span class="ri-dot" id="riDot"></span><span id="riStatus">Loading standings</span><button class="ri-refresh" id="riRefresh" type="button">Refresh</button></div>
+    </div>
+    <p class="ri-lb-note" id="riLbNote" hidden></p>
+    <p class="ri-lb-hint">Swipe the table for event scores</p>
+    <div class="ri-lb-wrap" role="tabpanel" aria-labelledby="riTabMen">
+      <table class="ri-lb" id="riLb"><thead></thead><tbody></tbody></table>
+    </div>
+    <p style="margin-top:14px"><a class="ri-link" href="https://www.roguefitness.com/invitational/leaderboard" target="_blank" rel="noopener noreferrer">Open the official Rogue leaderboard →</a></p>
+  </div>
+</section>
+
+<section class="ri-sec" id="workouts">
+  <div class="ri-wrap">
+    <p class="ri-label">CrossFit Programming</p>
+    <h2 class="ri-goth">The Workouts</h2>
+    <p class="ri-sub">All nine CrossFit events as posted by Rogue. Loads are listed men/women in pounds. The Duel VI and Highland Sprint will be revealed by Rogue closer to competition.</p>
+
+      <div class="ri-wod-day">
+        <h3 class="ri-wod-dayname">Friday <span>October 23</span></h3>
+        <div class="ri-wod-grid">
+        <article class="ri-wod">
+          <div class="ri-wod-top"><span class="ri-wod-num">01</span><span class="ri-wod-time" data-utc="2026-10-23T10:00:00Z">11:00 AM Aberdeen</span></div>
+          <h3>River Dee</h3>
+          <ul class="ri-mv"><li>7 Rounds:</li><li>11 Calorie Ski</li><li>7 Wall Walk</li><li>11 Calorie Ski</li><li>7 Devil’s Press (50/35)</li></ul>
+        </article>
+        <article class="ri-wod">
+          <div class="ri-wod-top"><span class="ri-wod-num">02</span><span class="ri-wod-time" data-utc="2026-10-23T13:15:00Z">2:15 PM Aberdeen</span></div>
+          <h3>Single Malt</h3>
+          <ul class="ri-mv"><li>10 Back Squat (315/225)</li><li>Sprint</li><li>8 Back Squat (335/235)</li><li>Sprint</li><li>6 Back Squat (355/250)</li><li>Sprint</li><li>4 Back Squat (375/265)</li><li>Sprint</li><li>2 Back Squat (405/285)</li><li>Sprint</li></ul>
+        </article>
+        <article class="ri-wod">
+          <div class="ri-wod-top"><span class="ri-wod-num">03</span><span class="ri-wod-time" data-utc="2026-10-23T15:50:00Z">4:50 PM Aberdeen</span></div>
+          <h3>The Viking</h3>
+          <ul class="ri-mv"><li>Viking Press</li><li>60 Second Max Reps</li></ul>
+        </article></div>
+      </div>
+      <div class="ri-wod-day">
+        <h3 class="ri-wod-dayname">Saturday <span>October 24</span></h3>
+        <div class="ri-wod-grid">
+        <article class="ri-wod">
+          <div class="ri-wod-top"><span class="ri-wod-num">04</span><span class="ri-wod-time" data-utc="2026-10-24T10:00:00Z">11:00 AM Aberdeen</span></div>
+          <h3>Packout</h3>
+          <ul class="ri-mv"><li>5 Rounds:</li><li>750 Meter Run</li><li>30/25 Toes to Bar</li><li>Yoke Carry</li></ul>
+        </article>
+        <article class="ri-wod is-tba">
+          <div class="ri-wod-top"><span class="ri-wod-num">05</span><span class="ri-wod-time" data-utc="2026-10-24T14:25:00Z">3:25 PM Aberdeen</span></div>
+          <h3>The Duel VI</h3>
+          <p class="ri-tba">Workout details to be announced by Rogue.</p>
+        </article>
+        <article class="ri-wod">
+          <div class="ri-wod-top"><span class="ri-wod-num">06</span><span class="ri-wod-time" data-utc="2026-10-24T17:10:00Z">6:10 PM Aberdeen</span></div>
+          <h3>Orlando</h3>
+          <ul class="ri-mv"><li>10 Axle Clean and Jerk (205/150)</li><li>15 Ring Muscle Up</li><li>10 Axle Clean and Jerk (205/150)</li><li>15 Log Muscle Up</li><li>10 Axle Clean and Jerk (205/150)</li></ul>
+        </article></div>
+      </div>
+      <div class="ri-wod-day">
+        <h3 class="ri-wod-dayname">Sunday <span>October 25</span></h3>
+        <div class="ri-wod-grid">
+        <article class="ri-wod">
+          <div class="ri-wod-top"><span class="ri-wod-num">07</span><span class="ri-wod-time" data-utc="2026-10-25T10:30:00Z">10:30 AM Aberdeen</span></div>
+          <h3>Pulling Power</h3>
+          <ul class="ri-mv"><li>3 Rope Climb</li><li>12 OHS (225/175)</li><li>12 Deadlift (275/195)</li><li>3 Rope Climb</li><li>9 OHS (225/175)</li><li>9 DL (315/225)</li><li>3 Rope Climb</li><li>6 OHS (225/175)</li><li>6 DL (385/270)</li><li>3 Rope Climb</li><li>3 OHS (225/175)</li><li>3 DL (405/285)</li></ul>
+        </article>
+        <article class="ri-wod">
+          <div class="ri-wod-top"><span class="ri-wod-num">08</span><span class="ri-wod-time" data-utc="2026-10-25T12:25:00Z">12:25 PM Aberdeen</span></div>
+          <h3>Dunnottar</h3>
+          <ul class="ri-mv"><li>100&#x27; HSW</li><li>75 Double Unders</li><li>25 GHD</li><li>50 Burpee Box Jump Over</li><li>25 GHD</li><li>75 Double Unders</li><li>100&#x27; HSW</li></ul>
+        </article>
+        <article class="ri-wod is-tba">
+          <div class="ri-wod-top"><span class="ri-wod-num">09</span><span class="ri-wod-time" data-utc="2026-10-25T13:30:00Z">1:30 PM Aberdeen</span></div>
+          <h3>Highland Sprint</h3>
+          <p class="ri-tba">Workout details to be announced by Rogue.</p>
+        </article></div>
+      </div>
+  </div>
+</section>
+
+<section class="ri-sec" id="schedule">
+  <div class="ri-wrap">
+    <p class="ri-label">Full Schedule</p>
+    <h2 class="ri-goth">Event Times</h2>
+    <p class="ri-sub">Official CrossFit event start times from Rogue, converted to every major time zone. The Your Time column uses your device's time zone automatically.</p>
+    <p class="ri-tzline" id="riYourZone"></p>
+
+      <div class="ri-day">
+        <div class="ri-day-head"><h3>Friday</h3><span>October 23</span></div>
+        
+        <div class="ri-table-wrap"><table class="ri-sched">
+          <thead><tr><th scope="col">Event</th><th scope="col">Aberdeen<small>BST</small></th><th scope="col">Eastern<small>EDT</small></th><th scope="col">Central<small>CDT</small></th><th scope="col">Mountain<small>MDT</small></th><th scope="col">Pacific<small>PDT</small></th><th scope="col">Central Europe<small>CEST</small></th><th scope="col">Sydney<small>AEDT</small></th><th scope="col">Your Time<small class="ri-yourzone">Local</small></th></tr></thead>
+          <tbody><tr><th scope="row"><span class="ri-evnum">Event 1</span><span class="ri-evname">River Dee</span></th><td data-label="Aberdeen (BST)" class="ri-local"><span>11:00 AM</span></td><td data-label="Eastern (EDT)"><span>6:00 AM</span></td><td data-label="Central (CDT)"><span>5:00 AM</span></td><td data-label="Mountain (MDT)"><span>4:00 AM</span></td><td data-label="Pacific (PDT)"><span>3:00 AM</span></td><td data-label="Central Europe (CEST)"><span>12:00 PM</span></td><td data-label="Sydney (AEDT)"><span>9:00 PM</span></td><td data-label="Your time" class="ri-yours" data-utc="2026-10-23T10:00:00Z">...</td></tr><tr><th scope="row"><span class="ri-evnum">Event 2</span><span class="ri-evname">Single Malt</span></th><td data-label="Aberdeen (BST)" class="ri-local"><span>2:15 PM</span></td><td data-label="Eastern (EDT)"><span>9:15 AM</span></td><td data-label="Central (CDT)"><span>8:15 AM</span></td><td data-label="Mountain (MDT)"><span>7:15 AM</span></td><td data-label="Pacific (PDT)"><span>6:15 AM</span></td><td data-label="Central Europe (CEST)"><span>3:15 PM</span></td><td data-label="Sydney (AEDT)"><span>12:15 AM<span class="ri-shift">Sat</span></span></td><td data-label="Your time" class="ri-yours" data-utc="2026-10-23T13:15:00Z">...</td></tr><tr><th scope="row"><span class="ri-evnum">Event 3</span><span class="ri-evname">The Viking</span></th><td data-label="Aberdeen (BST)" class="ri-local"><span>4:50 PM</span></td><td data-label="Eastern (EDT)"><span>11:50 AM</span></td><td data-label="Central (CDT)"><span>10:50 AM</span></td><td data-label="Mountain (MDT)"><span>9:50 AM</span></td><td data-label="Pacific (PDT)"><span>8:50 AM</span></td><td data-label="Central Europe (CEST)"><span>5:50 PM</span></td><td data-label="Sydney (AEDT)"><span>2:50 AM<span class="ri-shift">Sat</span></span></td><td data-label="Your time" class="ri-yours" data-utc="2026-10-23T15:50:00Z">...</td></tr><tr class="ri-end"><th scope="row"><span class="ri-evname">Competition Ends</span></th><td data-label="Aberdeen (BST)" class="ri-local"><span>7:30 PM</span></td><td data-label="Eastern (EDT)"><span>2:30 PM</span></td><td data-label="Central (CDT)"><span>1:30 PM</span></td><td data-label="Mountain (MDT)"><span>12:30 PM</span></td><td data-label="Pacific (PDT)"><span>11:30 AM</span></td><td data-label="Central Europe (CEST)"><span>8:30 PM</span></td><td data-label="Sydney (AEDT)"><span>5:30 AM<span class="ri-shift">Sat</span></span></td><td data-label="Your time" class="ri-yours" data-utc="2026-10-23T18:30:00Z">...</td></tr></tbody>
+        </table></div>
+      </div>
+      <div class="ri-day">
+        <div class="ri-day-head"><h3>Saturday</h3><span>October 24</span></div>
+        
+        <div class="ri-table-wrap"><table class="ri-sched">
+          <thead><tr><th scope="col">Event</th><th scope="col">Aberdeen<small>BST</small></th><th scope="col">Eastern<small>EDT</small></th><th scope="col">Central<small>CDT</small></th><th scope="col">Mountain<small>MDT</small></th><th scope="col">Pacific<small>PDT</small></th><th scope="col">Central Europe<small>CEST</small></th><th scope="col">Sydney<small>AEDT</small></th><th scope="col">Your Time<small class="ri-yourzone">Local</small></th></tr></thead>
+          <tbody><tr><th scope="row"><span class="ri-evnum">Event 4</span><span class="ri-evname">Packout</span></th><td data-label="Aberdeen (BST)" class="ri-local"><span>11:00 AM</span></td><td data-label="Eastern (EDT)"><span>6:00 AM</span></td><td data-label="Central (CDT)"><span>5:00 AM</span></td><td data-label="Mountain (MDT)"><span>4:00 AM</span></td><td data-label="Pacific (PDT)"><span>3:00 AM</span></td><td data-label="Central Europe (CEST)"><span>12:00 PM</span></td><td data-label="Sydney (AEDT)"><span>9:00 PM</span></td><td data-label="Your time" class="ri-yours" data-utc="2026-10-24T10:00:00Z">...</td></tr><tr><th scope="row"><span class="ri-evnum">Event 5</span><span class="ri-evname">The Duel VI</span></th><td data-label="Aberdeen (BST)" class="ri-local"><span>3:25 PM</span></td><td data-label="Eastern (EDT)"><span>10:25 AM</span></td><td data-label="Central (CDT)"><span>9:25 AM</span></td><td data-label="Mountain (MDT)"><span>8:25 AM</span></td><td data-label="Pacific (PDT)"><span>7:25 AM</span></td><td data-label="Central Europe (CEST)"><span>4:25 PM</span></td><td data-label="Sydney (AEDT)"><span>1:25 AM<span class="ri-shift">Sun</span></span></td><td data-label="Your time" class="ri-yours" data-utc="2026-10-24T14:25:00Z">...</td></tr><tr><th scope="row"><span class="ri-evnum">Event 6</span><span class="ri-evname">Orlando</span></th><td data-label="Aberdeen (BST)" class="ri-local"><span>6:10 PM</span></td><td data-label="Eastern (EDT)"><span>1:10 PM</span></td><td data-label="Central (CDT)"><span>12:10 PM</span></td><td data-label="Mountain (MDT)"><span>11:10 AM</span></td><td data-label="Pacific (PDT)"><span>10:10 AM</span></td><td data-label="Central Europe (CEST)"><span>7:10 PM</span></td><td data-label="Sydney (AEDT)"><span>4:10 AM<span class="ri-shift">Sun</span></span></td><td data-label="Your time" class="ri-yours" data-utc="2026-10-24T17:10:00Z">...</td></tr><tr class="ri-end"><th scope="row"><span class="ri-evname">Competition Ends</span></th><td data-label="Aberdeen (BST)" class="ri-local"><span>9:00 PM</span></td><td data-label="Eastern (EDT)"><span>4:00 PM</span></td><td data-label="Central (CDT)"><span>3:00 PM</span></td><td data-label="Mountain (MDT)"><span>2:00 PM</span></td><td data-label="Pacific (PDT)"><span>1:00 PM</span></td><td data-label="Central Europe (CEST)"><span>10:00 PM</span></td><td data-label="Sydney (AEDT)"><span>7:00 AM<span class="ri-shift">Sun</span></span></td><td data-label="Your time" class="ri-yours" data-utc="2026-10-24T20:00:00Z">...</td></tr></tbody>
+        </table></div>
+      </div>
+      <div class="ri-day">
+        <div class="ri-day-head"><h3>Sunday</h3><span>October 25</span></div>
+        <p class="ri-dst">UK and European clocks go back one hour early Sunday morning. US clocks do not change until November 1, so Sunday conversions are one hour closer to US time than Friday and Saturday.</p>
+        <div class="ri-table-wrap"><table class="ri-sched">
+          <thead><tr><th scope="col">Event</th><th scope="col">Aberdeen<small>GMT</small></th><th scope="col">Eastern<small>EDT</small></th><th scope="col">Central<small>CDT</small></th><th scope="col">Mountain<small>MDT</small></th><th scope="col">Pacific<small>PDT</small></th><th scope="col">Central Europe<small>CET</small></th><th scope="col">Sydney<small>AEDT</small></th><th scope="col">Your Time<small class="ri-yourzone">Local</small></th></tr></thead>
+          <tbody><tr><th scope="row"><span class="ri-evnum">Event 7</span><span class="ri-evname">Pulling Power</span></th><td data-label="Aberdeen (GMT)" class="ri-local"><span>10:30 AM</span></td><td data-label="Eastern (EDT)"><span>6:30 AM</span></td><td data-label="Central (CDT)"><span>5:30 AM</span></td><td data-label="Mountain (MDT)"><span>4:30 AM</span></td><td data-label="Pacific (PDT)"><span>3:30 AM</span></td><td data-label="Central Europe (CET)"><span>11:30 AM</span></td><td data-label="Sydney (AEDT)"><span>9:30 PM</span></td><td data-label="Your time" class="ri-yours" data-utc="2026-10-25T10:30:00Z">...</td></tr><tr><th scope="row"><span class="ri-evnum">Event 8</span><span class="ri-evname">Dunnottar</span></th><td data-label="Aberdeen (GMT)" class="ri-local"><span>12:25 PM</span></td><td data-label="Eastern (EDT)"><span>8:25 AM</span></td><td data-label="Central (CDT)"><span>7:25 AM</span></td><td data-label="Mountain (MDT)"><span>6:25 AM</span></td><td data-label="Pacific (PDT)"><span>5:25 AM</span></td><td data-label="Central Europe (CET)"><span>1:25 PM</span></td><td data-label="Sydney (AEDT)"><span>11:25 PM</span></td><td data-label="Your time" class="ri-yours" data-utc="2026-10-25T12:25:00Z">...</td></tr><tr><th scope="row"><span class="ri-evnum">Event 9</span><span class="ri-evname">Highland Sprint</span></th><td data-label="Aberdeen (GMT)" class="ri-local"><span>1:30 PM</span></td><td data-label="Eastern (EDT)"><span>9:30 AM</span></td><td data-label="Central (CDT)"><span>8:30 AM</span></td><td data-label="Mountain (MDT)"><span>7:30 AM</span></td><td data-label="Pacific (PDT)"><span>6:30 AM</span></td><td data-label="Central Europe (CET)"><span>2:30 PM</span></td><td data-label="Sydney (AEDT)"><span>12:30 AM<span class="ri-shift">Mon</span></span></td><td data-label="Your time" class="ri-yours" data-utc="2026-10-25T13:30:00Z">...</td></tr><tr class="ri-end"><th scope="row"><span class="ri-evname">Competition Ends</span></th><td data-label="Aberdeen (GMT)" class="ri-local"><span>2:45 PM</span></td><td data-label="Eastern (EDT)"><span>10:45 AM</span></td><td data-label="Central (CDT)"><span>9:45 AM</span></td><td data-label="Mountain (MDT)"><span>8:45 AM</span></td><td data-label="Pacific (PDT)"><span>7:45 AM</span></td><td data-label="Central Europe (CET)"><span>3:45 PM</span></td><td data-label="Sydney (AEDT)"><span>1:45 AM<span class="ri-shift">Mon</span></span></td><td data-label="Your time" class="ri-yours" data-utc="2026-10-25T14:45:00Z">...</td></tr></tbody>
+        </table></div>
+      </div>
+    <p><a class="ri-link" href="https://www.roguefitness.com/invitational/schedule" target="_blank" rel="noopener noreferrer">Official Rogue schedule →</a></p>
+  </div>
+</section>
+
+<section class="ri-sec" id="athletes">
+  <div class="ri-wrap">
+    <p class="ri-label">The Field</p>
+    <h2 class="ri-goth">Athletes</h2>
+    <p class="ri-sub">The 39 CrossFit athletes competing in Aberdeen, 19 men and 20 women, with headshots from Rogue.</p>
+    <div class="ri-field">
+      <h3>Men <span>19 athletes</span></h3>
+      <ul class="ri-aths"><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/nate-ackermann.jpg" alt="Nate Ackermann" width="160" height="160"><span class="ri-ath-name">Nate Ackermann</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/jeffrey-adler.jpg" alt="Jeffrey Adler" width="160" height="160"><span class="ri-ath-name">Jeffrey Adler</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/CA.png" alt="" width="20" height="13">Canada</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/jay-crouch.jpg" alt="Jay Crouch" width="160" height="160"><span class="ri-ath-name">Jay Crouch</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/AU.png" alt="" width="20" height="13">Australia</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/moritz-fiebig.jpg" alt="Moritz Fiebig" width="160" height="160"><span class="ri-ath-name">Moritz Fiebig</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/DE.png" alt="" width="20" height="13">Germany</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/ricky-garard.jpg" alt="Ricky Garard" width="160" height="160"><span class="ri-ath-name">Ricky Garard</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/AU.png" alt="" width="20" height="13">Australia</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/henrik-haapalainen.jpg" alt="Henrik Haapalainen" width="160" height="160"><span class="ri-ath-name">Henrik Haapalainen</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/FI.png" alt="" width="20" height="13">Finland</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/fabian-hermans.jpg" alt="Fabian Hermans" width="160" height="160"><span class="ri-ath-name">Fabian Hermans</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/NL.png" alt="" width="20" height="13">Netherlands</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/jayson-hopper.jpg" alt="Jayson Hopper" width="160" height="160"><span class="ri-ath-name">Jayson Hopper</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/chris-ibarra.jpg" alt="Chris Ibarra" width="160" height="160"><span class="ri-ath-name">Chris Ibarra</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/harry-lightfoot.jpg" alt="Harry Lightfoot" width="160" height="160"><span class="ri-ath-name">Harry Lightfoot</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/GB.png" alt="" width="20" height="13">United Kingdom</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/tudor-magda.jpg" alt="Tudor Magda" width="160" height="160"><span class="ri-ath-name">Tudor Magda</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/guilherme-malheiros.jpg" alt="Guilherme Malheiros" width="160" height="160"><span class="ri-ath-name">Guilherme Malheiros</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/BR.png" alt="" width="20" height="13">Brazil</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/bayley-martin.jpg" alt="Bayley Martin" width="160" height="160"><span class="ri-ath-name">Bayley Martin</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/NZ.png" alt="" width="20" height="13">New Zealand</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/colten-mertens.jpg" alt="Colten Mertens" width="160" height="160"><span class="ri-ath-name">Colten Mertens</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/isaac-newman.jpg" alt="Isaac Newman" width="160" height="160"><span class="ri-ath-name">Isaac Newman</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/AU.png" alt="" width="20" height="13">Australia</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/saxon-panchik.jpg" alt="Saxon Panchik" width="160" height="160"><span class="ri-ath-name">Saxon Panchik</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/dallin-pepper.jpg" alt="Dallin Pepper" width="160" height="160"><span class="ri-ath-name">Dallin Pepper</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/chandler-smith.jpg" alt="Chandler Smith" width="160" height="160"><span class="ri-ath-name">Chandler Smith</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/james-sprague.jpg" alt="James Sprague" width="160" height="160"><span class="ri-ath-name">James Sprague</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li></ul>
+    </div>
+    <div class="ri-field">
+      <h3>Women <span>20 athletes</span></h3>
+      <ul class="ri-aths"><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/danielle-brandon.jpg" alt="Danielle Brandon" width="160" height="160"><span class="ri-ath-name">Danielle Brandon</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/lucy-campbell.jpg" alt="Lucy Campbell" width="160" height="160"><span class="ri-ath-name">Lucy Campbell</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/GB.png" alt="" width="20" height="13">United Kingdom</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/aimee-cringle.jpg" alt="Aimee Cringle" width="160" height="160"><span class="ri-ath-name">Aimee Cringle</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/GB.png" alt="" width="20" height="13">United Kingdom</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/abigail-domit.jpg" alt="Abigail Domit" width="160" height="160"><span class="ri-ath-name">Abigail Domit</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/elisa-fuliano.jpg" alt="Elisa Fuliano" width="160" height="160"><span class="ri-ath-name">Elisa Fuliano</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/IT.png" alt="" width="20" height="13">Italy</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/alex-gazan.jpg" alt="Alex Gazan" width="160" height="160"><span class="ri-ath-name">Alex Gazan</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/laura-horvath.jpg" alt="Laura Horvath" width="160" height="160"><span class="ri-ath-name">Laura Horvath</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/HU.png" alt="" width="20" height="13">Hungary</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/olivia-kerstetter.jpg" alt="Olivia Kerstetter" width="160" height="160"><span class="ri-ath-name">Olivia Kerstetter</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/emma-lawson.jpg" alt="Emma Lawson" width="160" height="160"><span class="ri-ath-name">Emma Lawson</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/CA.png" alt="" width="20" height="13">Canada</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/arielle-loewen.jpg" alt="Arielle Loewen" width="160" height="160"><span class="ri-ath-name">Arielle Loewen</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/siria-meha.jpg" alt="Siria Meha" width="160" height="160"><span class="ri-ath-name">Siria Meha</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/AL.png" alt="" width="20" height="13">Albania</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/gabriela-migala.jpg" alt="Gabriela Migała" width="160" height="160"><span class="ri-ath-name">Gabriela Migała</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/PL.png" alt="" width="20" height="13">Poland</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/kyra-milligan.jpg" alt="Kyra Milligan" width="160" height="160"><span class="ri-ath-name">Kyra Milligan</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/jennifer-muir.jpg" alt="Jennifer Muir" width="160" height="160"><span class="ri-ath-name">Jennifer Muir</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/GB-SCT.png" alt="" width="20" height="13">Scotland</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/carolyne-prevost.jpg" alt="Carolyne Prevost" width="160" height="160"><span class="ri-ath-name">Carolyne Prevost</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/CA.png" alt="" width="20" height="13">Canada</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/paige-rodgers.jpg" alt="Paige Rodgers" width="160" height="160"><span class="ri-ath-name">Paige Rodgers</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/emily-rolfe.jpg" alt="Emily Rolfe" width="160" height="160"><span class="ri-ath-name">Emily Rolfe</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/CA.png" alt="" width="20" height="13">Canada</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/dani-speegle.jpg" alt="Dani Speegle" width="160" height="160"><span class="ri-ath-name">Dani Speegle</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/US.png" alt="" width="20" height="13">USA</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/madeline-sturt.jpg" alt="Madeline Sturt" width="160" height="160"><span class="ri-ath-name">Madeline Sturt</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/AU.png" alt="" width="20" height="13">Australia</span></li><li class="ri-ath"><img src="./assets/rogue-invitational-2026/athletes/emma-tall.jpg" alt="Emma Tall" width="160" height="160"><span class="ri-ath-name">Emma Tall</span><span class="ri-ath-country"><img src="./assets/rogue-invitational-2026/flags/SE.png" alt="" width="20" height="13">Sweden</span></li></ul>
+    </div>
+    <p class="ri-src">Leaderboard, workouts, schedule, athlete photos and logos courtesy of <a href="https://www.roguefitness.com/invitational" target="_blank" rel="noopener noreferrer">Rogue Fitness</a>. Follow <a href="https://www.instagram.com/rogueinvitational/" target="_blank" rel="noopener noreferrer">@rogueinvitational</a> for official updates.</p>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div>
+        <a href="./index.html" class="logo" aria-label="CF Network News home" style="margin-bottom:var(--space-2)">
+          <svg class="logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="36" height="36" rx="6" fill="currentColor" fill-opacity="0.08"/>
+            <path d="M10 18L16 12L22 18L16 24Z" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M18 14L24 8L30 14" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+            <path d="M6 22L12 28L18 22" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+          </svg>
+          <div class="logo__text">CF NETWORK <span>NEWS</span></div>
+        </a>
+        <p class="footer__brand-text">Your daily source for CrossFit news, athlete updates, competition schedules, and community insights. Not affiliated with CrossFit LLC.</p>
+      </div>
+      <div>
+        <h4 class="footer__heading">Sections</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="./news.html">Top Stories</a></li>
+          <li><a href="./gossip.html">Gossip &amp; Drama</a></li>
+          <li><a href="./videos.html">Media</a></li>
+          <li><a href="./shows.html">Podcasts/Shows</a></li>
+          <li><a href="./rankings.html">Channel Rankings</a></li>
+          <li><a href="./rogue.html">Rogue Fitness</a></li>
+          <li><a href="./season-info.html">Season Info</a></li>
+         <li><a href="./classifieds.html">Classifieds</a></li>
+          <li><a href="./message-board.html">Message Board</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__heading">Resources</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="https://games.crossfit.com" target="_blank" rel="noopener noreferrer">CrossFit Games</a></li>
+          <li><a href="https://www.roguefitness.com" target="_blank" rel="noopener noreferrer">Rogue Fitness</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__heading">Upcoming</h4>
+        <ul class="footer__links" role="list">
+          <li><a href="https://games.crossfit.com/finals/overview" target="_blank" rel="noopener noreferrer">2026 Games</a></li>
+          <li><a href="https://www.roguefitness.com/invitational" target="_blank" rel="noopener noreferrer">Rogue Invitational</a></li>
+          <li><a href="https://games.crossfit.com/competitions" target="_blank" rel="noopener noreferrer">Licensed Events</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 CF Network News. Independent fan site. Not affiliated with CrossFit LLC.</p>
+    </div>
+  </div>
+</footer>
+<script src="./ticker.js" defer></script>
+<script src="./app.js" defer></script>
+<script>
+(function(){
+  var API='https://compete-strongest-com.global.ssl.fastly.net/api/p/divisions/';
+  var DIVS={men:'HJRZKV',women:'EYHMMJ'};
+  var ATH={"Jeffrey Adler": {"s": "jeffrey-adler", "f": "CA", "c": "Canada"}, "Ricky Garard": {"s": "ricky-garard", "f": "AU", "c": "Australia"}, "Jayson Hopper": {"s": "jayson-hopper", "f": "US", "c": "USA"}, "James Sprague": {"s": "james-sprague", "f": "US", "c": "USA"}, "Jay Crouch": {"s": "jay-crouch", "f": "AU", "c": "Australia"}, "Dallin Pepper": {"s": "dallin-pepper", "f": "US", "c": "USA"}, "Colten Mertens": {"s": "colten-mertens", "f": "US", "c": "USA"}, "Guilherme Malheiros": {"s": "guilherme-malheiros", "f": "BR", "c": "Brazil"}, "Chandler Smith": {"s": "chandler-smith", "f": "US", "c": "USA"}, "Moritz Fiebig": {"s": "moritz-fiebig", "f": "DE", "c": "Germany"}, "Tudor Magda": {"s": "tudor-magda", "f": "US", "c": "USA"}, "Henrik Haapalainen": {"s": "henrik-haapalainen", "f": "FI", "c": "Finland"}, "Fabian Hermans": {"s": "fabian-hermans", "f": "NL", "c": "Netherlands"}, "Nate Ackermann": {"s": "nate-ackermann", "f": "US", "c": "USA"}, "Chris Ibarra": {"s": "chris-ibarra", "f": "US", "c": "USA"}, "Bayley Martin": {"s": "bayley-martin", "f": "NZ", "c": "New Zealand"}, "Harry Lightfoot": {"s": "harry-lightfoot", "f": "GB", "c": "United Kingdom"}, "Isaac Newman": {"s": "isaac-newman", "f": "AU", "c": "Australia"}, "Saxon Panchik": {"s": "saxon-panchik", "f": "US", "c": "USA"}, "Arielle Loewen": {"s": "arielle-loewen", "f": "US", "c": "USA"}, "Danielle Brandon": {"s": "danielle-brandon", "f": "US", "c": "USA"}, "Alex Gazan": {"s": "alex-gazan", "f": "US", "c": "USA"}, "Laura Horvath": {"s": "laura-horvath", "f": "HU", "c": "Hungary"}, "Emma Lawson": {"s": "emma-lawson", "f": "CA", "c": "Canada"}, "Lucy Campbell": {"s": "lucy-campbell", "f": "GB", "c": "United Kingdom"}, "Madeline Sturt": {"s": "madeline-sturt", "f": "AU", "c": "Australia"}, "Olivia Kerstetter": {"s": "olivia-kerstetter", "f": "US", "c": "USA"}, "Aimee Cringle": {"s": "aimee-cringle", "f": "GB", "c": "United Kingdom"}, "Gabriela Migała": {"s": "gabriela-migala", "f": "PL", "c": "Poland"}, "Emily Rolfe": {"s": "emily-rolfe", "f": "CA", "c": "Canada"}, "Abigail Domit": {"s": "abigail-domit", "f": "US", "c": "USA"}, "Dani Speegle": {"s": "dani-speegle", "f": "US", "c": "USA"}, "Paige Rodgers": {"s": "paige-rodgers", "f": "US", "c": "USA"}, "Elisa Fuliano": {"s": "elisa-fuliano", "f": "IT", "c": "Italy"}, "Emma Tall": {"s": "emma-tall", "f": "SE", "c": "Sweden"}, "Jennifer Muir": {"s": "jennifer-muir", "f": "GB-SCT", "c": "Scotland"}, "Carolyne Prevost": {"s": "carolyne-prevost", "f": "CA", "c": "Canada"}, "Kyra Milligan": {"s": "kyra-milligan", "f": "US", "c": "USA"}, "Siria Meha": {"s": "siria-meha", "f": "AL", "c": "Albania"}};
+  var SNAP={"men": [{"n": "Jeffrey Adler", "o": "", "p": "0", "sd": 1, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Ricky Garard", "o": "", "p": "0", "sd": 2, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Jayson Hopper", "o": "", "p": "0", "sd": 3, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "James Sprague", "o": "", "p": "0", "sd": 4, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Jay Crouch", "o": "", "p": "0", "sd": 6, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Dallin Pepper", "o": "", "p": "0", "sd": 7, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Colten Mertens", "o": "", "p": "0", "sd": 8, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Guilherme Malheiros", "o": "", "p": "0", "sd": 9, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Chandler Smith", "o": "", "p": "0", "sd": 10, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Tudor Magda", "o": "", "p": "0", "sd": 11, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Henrik Haapalainen", "o": "", "p": "0", "sd": 12, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Harry Lightfoot", "o": "", "p": "0", "sd": 13, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Saxon Panchik", "o": "", "p": "0", "sd": 14, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Moritz Fiebig", "o": "", "p": "0", "sd": 15, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Chris Ibarra", "o": "", "p": "0", "sd": 16, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Bayley Martin", "o": "", "p": "0", "sd": 17, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Nate Ackermann", "o": "", "p": "0", "sd": 18, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Fabian Hermans", "o": "", "p": "0", "sd": 19, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Isaac Newman", "o": "", "p": "0", "sd": 20, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}], "women": [{"n": "Laura Horvath", "o": "", "p": "0", "sd": 1, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Arielle Loewen", "o": "", "p": "0", "sd": 2, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Danielle Brandon", "o": "", "p": "0", "sd": 3, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Alex Gazan", "o": "", "p": "0", "sd": 4, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Emma Lawson", "o": "", "p": "0", "sd": 5, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Lucy Campbell", "o": "", "p": "0", "sd": 6, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Madeline Sturt", "o": "", "p": "0", "sd": 7, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Olivia Kerstetter", "o": "", "p": "0", "sd": 8, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Aimee Cringle", "o": "", "p": "0", "sd": 9, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Kyra Milligan", "o": "", "p": "0", "sd": 10, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Gabriela Migała", "o": "", "p": "0", "sd": 11, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Emily Rolfe", "o": "", "p": "0", "sd": 12, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Abigail Domit", "o": "", "p": "0", "sd": 13, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Dani Speegle", "o": "", "p": "0", "sd": 14, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Siria Meha", "o": "", "p": "0", "sd": 15, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Paige Rodgers", "o": "", "p": "0", "sd": 16, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Elisa Fuliano", "o": "", "p": "0", "sd": 17, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Emma Tall", "o": "", "p": "0", "sd": 18, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Jennifer Muir", "o": "", "p": "0", "sd": 19, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}, {"n": "Carolyne Prevost", "o": "", "p": "0", "sd": 20, "wd": false, "w": [["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"], ["-- (0p)", "", "0"]]}]};
+  var EVN={"1": "River Dee", "2": "Single Malt", "3": "The Viking", "4": "Packout", "5": "The Duel VI", "6": "Orlando", "7": "Pulling Power", "8": "Dunnottar", "9": "Highland Sprint"};
+  var START=Date.parse('2026-10-23T10:00:00Z'), END=Date.parse('2026-10-25T15:00:00Z');
+  var cur='men', data={}, live=false, timer=null;
+  var tbl=document.getElementById('riLb'), statusEl=document.getElementById('riStatus'), dot=document.getElementById('riDot'), note=document.getElementById('riLbNote');
+  var IMG='./assets/rogue-invitational-2026/';
+  var fmt=new Intl.DateTimeFormat([], {hour:'numeric',minute:'2-digit'});
+  var dayFmt=new Intl.DateTimeFormat([], {weekday:'short'});
+  function localTime(iso){return fmt.format(new Date(iso));}
+
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function ord(n){n=parseInt(n,10);if(!n)return '';var s=['th','st','nd','rd'],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0]);}
+
+  function normalize(json){
+    return json.data.body_rows.map(function(r){var h=r[0];return {n:h.competitor_name,o:h.overall,p:h.cum_workout_rank,sd:h.initialSeeding,wd:h.wd,
+      w:r.slice(1).map(function(w){return [w.workout_score_label,w.workout_rank,w.workout_score_points];})};});
+  }
+  function scoreCell(w){
+    var label=w[0]||'', rank=w[1], pts=w[2];
+    if(!rank){return '<td class="ri-sc is-empty">·</td>';}
+    var main=label.replace(/\s*\(\d+p\)\s*$/,'').replace(/\s*\([^)]*\)\s*$/,'').trim();
+    if(!main||main==='--')main='Scored';
+    return '<td class="ri-sc'+(rank==='1'?' is-win':'')+'"><b>'+esc(main)+'</b><span>'+ord(rank)+' · '+esc(pts)+' pts</span></td>';
+  }
+  function render(){
+    var rows=(data[cur]||SNAP[cur]).slice();
+    var scored=rows.some(function(r){return parseInt(r.o,10)>0;});
+    if(scored){rows.sort(function(a,b){return (parseInt(a.o,10)||999)-(parseInt(b.o,10)||999);});}
+    var head='<tr><th class="ri-c-rank">Rank</th><th class="ri-c-ath">Athlete</th><th class="ri-c-pts">Points</th>';
+    for(var i=1;i<=9;i++){head+='<th>E'+i+'<small>'+esc(EVN[i]||'')+'</small></th>';}
+    tbl.tHead.innerHTML=head+'</tr>';
+    tbl.tBodies[0].innerHTML=rows.map(function(r,idx){
+      var a=ATH[r.n]||{}, face=a.s?'<img class="ri-face" src="'+IMG+'athletes/'+a.s+'.jpg" alt="" width="44" height="44">':'';
+      var flag=a.f?'<img src="'+IMG+'flags/'+a.f+'.png" alt="" width="18" height="12">':'';
+      var rank=scored?(parseInt(r.o,10)||''):'';
+      if(r.wd)rank='WD';
+      return '<tr'+(r.wd?' class="ri-wd"':'')+'><td class="ri-c-rank">'+rank+'</td><td class="ri-c-ath"><div class="ri-who">'+face+'<div><b>'+esc(r.n)+'</b><span>'+flag+esc(a.c||'')+'</span></div></div></td><td class="ri-c-pts">'+(scored?esc(r.p||0):'0')+'</td>'+r.w.map(scoreCell).join('')+'</tr>';
+    }).join('');
+    if(!scored){note.hidden=false;note.textContent='Scoring opens Friday with Event 1, River Dee, at 11:00 AM in Aberdeen ('+localTime('2026-10-23T10:00:00Z')+' your time). Athletes are listed in Rogue\u2019s order until results post.';}
+    else{note.hidden=true;}
+  }
+  function load(){
+    statusEl.textContent='Updating';
+    var keys=Object.keys(DIVS);
+    Promise.all(keys.map(function(k){return fetch(API+DIVS[k]+'/leaderboard/?p=1',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();});}))
+    .then(function(res){
+      res.forEach(function(j,i){data[keys[i]]=normalize(j);});
+      var now=new Date();
+      statusEl.textContent=(live?'Live · ':'')+'Updated '+now.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});
+      render();
+    }).catch(function(){
+      statusEl.textContent='Showing saved standings';
+      render();
+    });
+  }
+  document.querySelectorAll('.ri-tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      cur=b.getAttribute('data-div');
+      document.querySelectorAll('.ri-tab').forEach(function(x){x.setAttribute('aria-selected',x===b?'true':'false');});
+      document.querySelector('.ri-lb-wrap').setAttribute('aria-labelledby',b.id);
+      render();
+    });
+  });
+  document.getElementById('riRefresh').addEventListener('click',load);
+  var now=Date.now();
+  live=now>=START-3600000&&now<=END;
+  if(live){dot.classList.add('is-live');timer=setInterval(load,60000);}
+  render();load();
+
+  /* local time conversions */
+  var zoneName='';
+  try{zoneName=Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(e){}
+  var short='';
+  try{short=new Intl.DateTimeFormat([], {timeZoneName:'short'}).formatToParts(new Date('2026-10-24T12:00:00Z')).filter(function(p){return p.type==='timeZoneName';})[0].value;}catch(e){}
+  document.querySelectorAll('.ri-yourzone').forEach(function(el){el.textContent=short||'Local';});
+  var yz=document.getElementById('riYourZone');
+  if(yz&&zoneName){yz.textContent='Your time zone: '+zoneName.replace(/_/g,' ')+(short?' ('+short+')':'')+'.';}
+  var dayNames={'23':'Fri','24':'Sat','25':'Sun'};
+  document.querySelectorAll('[data-utc]').forEach(function(el){
+    var iso=el.getAttribute('data-utc'), d=new Date(iso);
+    var t=fmt.format(d), wd=dayFmt.format(d);
+    var evDay=el.closest('.ri-day')?el.closest('.ri-day').querySelector('.ri-day-head span').textContent.slice(-2):'';
+    var shift=(evDay&&dayNames[evDay]&&new Intl.DateTimeFormat('en-US',{weekday:'short'}).format(d)!==dayNames[evDay])?'<span class="ri-shift">'+esc(wd)+'</span>':'';
+    if(el.classList.contains('ri-wod-time')){el.innerHTML=el.textContent+'<em>'+esc(wd)+' '+esc(t)+' your time</em>';}
+    else{el.innerHTML='<span>'+esc(t)+shift+'</span>';}
+  });
+
+  /* countdown */
+  var cd=document.getElementById('riCountdown');
+  function tick(){
+    var ms=START-Date.now();
+    if(ms<=0){cd.innerHTML=Date.now()<END?'<div class="ri-cd"><b>LIVE</b><small>Competition underway</small></div>':'';return;}
+    var d=Math.floor(ms/864e5),h=Math.floor(ms/36e5)%24,m=Math.floor(ms/6e4)%60,s=Math.floor(ms/1e3)%60;
+    cd.innerHTML=[[d,'Days'],[h,'Hours'],[m,'Minutes'],[s,'Seconds']].map(function(x){return '<div class="ri-cd"><b>'+x[0]+'</b><small>'+x[1]+'</small></div>';}).join('');
+  }
+  tick();setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>
