@@ -67,6 +67,14 @@
 .ri-stream h3{font:800 28px/1 "Roboto Condensed",sans-serif;text-transform:uppercase}
 .ri-stream .ri-when{font:700 13px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--ri-muted);margin:6px 0 16px}
 .ri-stream .ri-btn{width:100%;justify-content:center}
+.ri-st-head{font:800 11px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.12em;color:var(--ri-muted);margin:0 0 6px}
+.ri-st-head .ri-yourzone{color:var(--ri-red-hi)}
+.ri-st-list{list-style:none;margin:0 0 16px;padding:0}
+.ri-st-list li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:8px 0;border-top:1px solid var(--ri-line)}
+.ri-st-list li:last-child{border-bottom:1px solid var(--ri-line)}
+.ri-st-ev{font:700 15px "Roboto Condensed",sans-serif;text-transform:uppercase;color:#fff}
+.ri-st-ev b{color:var(--ri-muted);margin-right:8px;font-weight:800}
+.ri-st-time{font:800 16px "Roboto Condensed",sans-serif;color:var(--ri-red-hi);white-space:nowrap}
 .ri-cams{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .ri-cams a{font:700 12px "Roboto Condensed",sans-serif;text-transform:uppercase;letter-spacing:.05em;padding:6px 9px;border:1px solid var(--ri-line);border-radius:3px;text-decoration:none;color:var(--ri-bone)}
 .ri-cams a:hover{border-color:var(--ri-red);color:#fff}
@@ -288,6 +296,8 @@
     <div class="ri-watch">
       <article class="ri-stream">
         <h3>Friday</h3><p class="ri-when">October 23 · Events 1 to 3</p>
+        <p class="ri-st-head">Start times · Your time <span class="ri-yourzone">Local</span></p>
+        <ul class="ri-st-list" aria-label="Event start times in your time zone"><li><span class="ri-st-ev"><b>E1</b>River Dee</span><span class="ri-st-time" data-utc="2026-10-23T10:00:00Z">11:00 AM</span></li><li><span class="ri-st-ev"><b>E2</b>Single Malt</span><span class="ri-st-time" data-utc="2026-10-23T13:15:00Z">2:15 PM</span></li><li><span class="ri-st-ev"><b>E3</b>The Viking</span><span class="ri-st-time" data-utc="2026-10-23T15:50:00Z">4:50 PM</span></li></ul>
         <a class="ri-btn" href="https://www.youtube.com/watch?v=arbEk52Rqjc" target="_blank" rel="noopener noreferrer">Watch Friday</a>
         <div class="ri-cams">
           <a href="https://www.youtube.com/watch?v=r41sVTqhXMU" target="_blank" rel="noopener noreferrer">Cable Cam</a>
@@ -298,6 +308,8 @@
       </article>
       <article class="ri-stream">
         <h3>Saturday</h3><p class="ri-when">October 24 · Events 4 to 6</p>
+        <p class="ri-st-head">Start times · Your time <span class="ri-yourzone">Local</span></p>
+        <ul class="ri-st-list" aria-label="Event start times in your time zone"><li><span class="ri-st-ev"><b>E4</b>Packout</span><span class="ri-st-time" data-utc="2026-10-24T10:00:00Z">11:00 AM</span></li><li><span class="ri-st-ev"><b>E5</b>The Duel VI</span><span class="ri-st-time" data-utc="2026-10-24T14:25:00Z">3:25 PM</span></li><li><span class="ri-st-ev"><b>E6</b>Orlando</span><span class="ri-st-time" data-utc="2026-10-24T17:10:00Z">6:10 PM</span></li></ul>
         <a class="ri-btn" href="https://www.youtube.com/watch?v=H0BCVzOosfE" target="_blank" rel="noopener noreferrer">Watch Saturday</a>
         <div class="ri-cams">
           <a href="https://www.youtube.com/watch?v=k6m2y-V2P_s" target="_blank" rel="noopener noreferrer">Cable Cam</a>
@@ -308,6 +320,8 @@
       </article>
       <article class="ri-stream">
         <h3>Sunday</h3><p class="ri-when">October 25 · Events 7 to 9</p>
+        <p class="ri-st-head">Start times · Your time <span class="ri-yourzone">Local</span></p>
+        <ul class="ri-st-list" aria-label="Event start times in your time zone"><li><span class="ri-st-ev"><b>E7</b>Pulling Power</span><span class="ri-st-time" data-utc="2026-10-25T10:30:00Z">10:30 AM</span></li><li><span class="ri-st-ev"><b>E8</b>Dunnottar</span><span class="ri-st-time" data-utc="2026-10-25T12:25:00Z">12:25 PM</span></li><li><span class="ri-st-ev"><b>E9</b>Highland Sprint</span><span class="ri-st-time" data-utc="2026-10-25T13:30:00Z">1:30 PM</span></li></ul>
         <a class="ri-btn" href="https://www.youtube.com/watch?v=L6IsqcwLg0s" target="_blank" rel="noopener noreferrer">Watch Sunday</a>
         <div class="ri-cams">
           <a href="https://www.youtube.com/watch?v=5KUDBC22eB0" target="_blank" rel="noopener noreferrer">Cable Cam</a>
@@ -608,6 +622,7 @@
     var t=fmt.format(d), wd=dayFmt.format(d);
     var evDay=el.closest('.ri-day')?el.closest('.ri-day').querySelector('.ri-day-head span').textContent.slice(-2):'';
     var shift=(evDay&&dayNames[evDay]&&new Intl.DateTimeFormat('en-US',{weekday:'short'}).format(d)!==dayNames[evDay])?'<span class="ri-shift">'+esc(wd)+'</span>':'';
+    if(el.classList.contains('ri-st-time')){el.textContent=(new Intl.DateTimeFormat('en-US',{weekday:'short'}).format(d)!==(dayNames[iso.slice(8,10)]||'')?wd+' ':'')+t;return;}
     if(el.classList.contains('ri-wod-time')){el.innerHTML=el.textContent+'<em>'+esc(wd)+' '+esc(t)+' your time</em>';}
     else{el.innerHTML='<span>'+esc(t)+shift+'</span>';}
   });
