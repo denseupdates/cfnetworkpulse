@@ -1,0 +1,331 @@
+/* =====================================================
+   CF Network News: compact home layout (preview)
+   Loads after style.css. Only affects index.html.
+   ===================================================== */
+
+/* ---------- Jump bar (phones and small tablets only) ---------- */
+.home-jump { display: none; }
+@media (max-width: 860px) { .home-jump { display: block; } }
+.home-jump {
+  position: sticky;
+  top: var(--hj-top, 64px);
+  z-index: 90;
+  background: oklch(from var(--color-bg) l c h / 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-divider);
+}
+.home-jump__track {
+  max-width: 1320px;
+  margin-inline: auto;
+  padding: 0.55rem var(--space-6);
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.home-jump__track::-webkit-scrollbar { display: none; }
+.home-jump__link {
+  flex: 0 0 auto;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--color-divider);
+  border-radius: 999px;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+.home-jump__link:hover { color: var(--color-text); border-color: var(--color-border); }
+
+/* ---------- Two column shell ---------- */
+.home-layout {
+  max-width: 1320px;
+  margin-inline: auto;
+  padding: var(--space-6) var(--space-6) var(--space-12);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: var(--space-8);
+  align-items: start;
+}
+.home-main, .home-side { min-width: 0; display: flex; flex-direction: column; gap: var(--space-8); }
+
+/* Sections inside the shell drop their own big padding and inner container width */
+.home-layout .section { padding-block: 0 !important; scroll-margin-top: 120px; min-width: 0; max-width: 100%; }
+.home-layout .container { max-width: none; padding-inline: 0; }
+.home-layout .section__header { margin-bottom: var(--space-4); }
+.home-layout .fade-in { opacity: 1 !important; animation: none !important; }
+
+/* Sidebar boxes */
+.home-side .section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) !important;
+}
+.home-side .section__title { font-size: var(--text-xl); }
+.home-side .section__header { align-items: center; }
+.home-side .section__link { font-size: var(--text-xs); }
+
+/* ---------- Top stories: lead + headlines ---------- */
+.hs-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+.hs-lead {
+  display: flex; flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none; color: inherit;
+  transition: border-color 160ms ease;
+}
+.hs-lead:hover, .hs-card:hover, .hs-row:hover, .hs-more__item:hover { border-color: var(--color-primary); }
+.hs-lead__img { aspect-ratio: 4 / 3; overflow: hidden; background: var(--color-surface-2); }
+.hs-lead__img img, .hs-card__img img, .hs-row__img img, .hs-more__img img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block;
+}
+.hs-lead__body { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); }
+.hs-lead__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+  line-height: 1.12;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.hs-lead__excerpt { color: var(--color-text-muted); font-size: var(--text-sm); line-height: 1.55; }
+
+.hs-meta {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.hs-meta__kicker { color: var(--color-primary); }
+.hs-meta__date { color: var(--color-text-faint, var(--color-text-muted)); font-weight: 600; }
+.hs-cta { font-size: var(--text-sm); font-weight: 700; color: var(--color-primary); margin-top: auto; }
+
+.hs-headlines {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: var(--space-3);
+}
+.hs-headlines__label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-divider);
+}
+.hs-row {
+  display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-2);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-md, 10px);
+  background: var(--color-surface);
+  text-decoration: none; color: inherit;
+  transition: border-color 160ms ease;
+}
+.hs-row__img { aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; background: var(--color-surface-2); }
+.hs-row__body { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+.hs-row__title {
+  font-weight: 700; font-size: 0.92rem; line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* ---------- Top stories: 3 column grid ---------- */
+.hs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+.hs-card {
+  display: flex; flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none; color: inherit;
+  transition: border-color 160ms ease;
+}
+.hs-card__img { aspect-ratio: 4 / 3; overflow: hidden; background: var(--color-surface-2); }
+.hs-card__body { padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2); flex: 1; }
+.hs-card__title {
+  font-weight: 800; font-size: 1rem; line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.hs-card__excerpt {
+  color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.5;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* ---------- More stories (compact list) ---------- */
+#more-stories[hidden] { display: none; }
+.hs-more {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3);
+}
+.hs-more__item {
+  display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: var(--space-3); align-items: center;
+  padding: var(--space-2);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-md, 10px);
+  background: var(--color-surface);
+  text-decoration: none; color: inherit;
+  transition: border-color 160ms ease;
+}
+.hs-more__img { aspect-ratio: 1 / 1; border-radius: 6px; overflow: hidden; background: var(--color-surface-2); }
+.hs-more__title {
+  font-weight: 700; font-size: 0.88rem; line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* ---------- Gossip: shorter cards ---------- */
+.home-layout .gossip-grid { gap: var(--space-5); }
+.home-layout .gossip-card__image { aspect-ratio: 4 / 3 !important; }
+.home-layout .gossip-card__image img { width: 100%; height: 100%; object-fit: cover; }
+.home-layout .gossip-card__text {
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+  font-size: 0.88rem;
+}
+.home-layout .gossip-card__text + .gossip-card__text { display: none; }
+.home-layout .gossip-card__source { font-size: 0.75rem; }
+.home-layout .gossip-card__title { font-size: 1.3rem; line-height: 1.15; }
+.gossip-card__more {
+  display: inline-block; margin-top: var(--space-2);
+  font-size: var(--text-sm); font-weight: 700; color: #7f0fe8; text-decoration: none;
+}
+[data-theme="dark"] .gossip-card__more { color: #b57bff; }
+
+/* ---------- Shows + Media side by side ---------- */
+.home-media-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-6);
+  align-items: start;
+}
+.home-media-row:has(#homeMedia[hidden]) { grid-template-columns: 1fr; }
+.home-layout .hmedia-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+.home-layout .hmedia-grid .hmedia-card:nth-child(3) { display: none; }
+.home-layout .hmedia-card__caption { -webkit-line-clamp: 2; font-size: 0.85rem; }
+.home-layout .hmedia-card__tags { display: none; }
+
+/* ---------- Sidebar: rankings ---------- */
+.home-side .home-cat-card {
+  display: grid !important; grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: var(--space-3); row-gap: 0.4rem; align-items: center;
+}
+.home-side .home-cat-card__badge { grid-column: 1 / -1; justify-self: start; align-self: start; }
+.home-side .home-cat-card .rank-card__views { grid-column: 2; grid-row: 2; font-size: 1.05rem; white-space: nowrap; }
+.home-side .home-cat-card .rank-card__info { grid-column: 1; grid-row: 2; }
+.home-side .rank-card__header { display: flex; justify-content: space-between; gap: 0.5rem; }
+.home-side .rank-card__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.home-side #homeRankingsGrid { max-width: none; gap: var(--space-2); }
+.home-side .rankings-intro { font-size: 0.8rem; color: var(--color-text-muted); margin: 0 0 var(--space-3); }
+.home-side .rank-card { padding: var(--space-3) !important; gap: var(--space-3); flex-wrap: wrap; }
+.home-side .home-cat-card__badge { font-size: 0.58rem; padding: 0.22rem 0.5rem; }
+.home-side .rank-card__info { flex: 1 1 140px; min-width: 0; }
+.home-side .rank-card__name { font-size: 0.9rem; }
+
+/* ---------- Sidebar: season calendar ---------- */
+.home-side .comp-item {
+  padding: var(--space-3) var(--space-3);
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+.home-side .comp-item:last-of-type { margin-bottom: 0; }
+.home-side .comp-item__title { font-size: 0.95rem; }
+.home-side .comp-item__location { font-size: 0.78rem; }
+.season-extra {
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--color-divider);
+  padding-top: var(--space-3);
+}
+.season-extra > summary {
+  cursor: pointer; list-style: none;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--color-text-muted);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.season-extra > summary::-webkit-details-marker { display: none; }
+.season-extra > summary::after { content: "+"; font-size: 1.1rem; }
+.season-extra[open] > summary::after { content: "\2212"; }
+.season-extra .section { background: none; border: 0; padding: var(--space-3) 0 0 !important; }
+.season-extra .section__header { display: none; }
+.season-extra .news-grid { display: flex; flex-direction: column; gap: var(--space-3); }
+.season-extra .card { box-shadow: none; }
+.season-extra .card__image img { aspect-ratio: 16 / 9; object-fit: cover; width: 100%; }
+
+/* ---------- Sidebar: Rogue ---------- */
+.home-side .rogue-grid { grid-template-columns: 1fr !important; gap: var(--space-3); }
+.home-side .rogue-card {
+  display: grid; grid-template-columns: 92px minmax(0, 1fr); column-gap: var(--space-3); row-gap: 0.2rem;
+  padding: var(--space-3) !important;
+  align-items: start;
+}
+.home-side .rogue-card__icon { display: none; }
+.home-side .rogue-card__image {
+  grid-column: 1; grid-row: 1 / span 3;
+  aspect-ratio: 1 / 1; margin: 0 !important; border-radius: 6px; overflow: hidden;
+}
+.home-side .rogue-card__image img { width: 100%; height: 100%; object-fit: cover; }
+.home-side .rogue-card__label { grid-column: 2; margin: 0 !important; font-size: 0.65rem; }
+.home-side .rogue-card__title { grid-column: 2; font-size: 0.9rem; line-height: 1.25; margin: 0 !important; }
+.home-side .rogue-card__text {
+  grid-column: 2; font-size: 0.78rem; margin: 0 !important;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* ---------- Sidebar: message board + newsletter ---------- */
+.home-side .mb-preview { padding: var(--space-3) 0 0; background: none; border: 0; }
+.home-side .mb-preview__icon svg { width: 28px; height: 28px; }
+.home-side .mb-preview__text { font-size: 0.85rem; }
+.home-side .newsletter__inner { grid-template-columns: 1fr; gap: var(--space-3); }
+.home-side .newsletter__title { font-size: var(--text-xl); }
+.home-side .newsletter__row { flex-direction: column; }
+.home-side .newsletter__btn { width: 100%; }
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1100px) {
+  .home-layout { grid-template-columns: minmax(0, 1fr) 300px; gap: var(--space-6); }
+  .hs-top { grid-template-columns: 1fr; }
+  .hs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-media-row { grid-template-columns: 1fr; }
+  .home-layout .gossip-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ---------- Mobile: single column with sidebar woven in ---------- */
+@media (max-width: 860px) {
+  .home-layout {
+    display: flex; flex-direction: column; gap: var(--space-8);
+    padding: var(--space-4) var(--space-4) var(--space-10);
+  }
+  .home-main, .home-side, .home-media-row { display: contents; }
+  #news { order: 1; }
+  #home-rankings { order: 2; }
+  #gossip { order: 3; }
+  #season { order: 4; }
+  #shows { order: 5; }
+  #homeMedia { order: 6; }
+  #more-stories { order: 7; }
+  #rogue { order: 8; }
+  #message-board-preview { order: 9; }
+  #subscribe { order: 10; }
+  .hs-headlines { gap: var(--space-2); }
+  .hs-grid { grid-template-columns: 1fr; gap: var(--space-2); }
+  /* grid cards become compact rows on phones */
+  .hs-card { display: grid; grid-template-columns: 96px minmax(0, 1fr); align-items: center; border-color: var(--color-divider); padding: var(--space-2); gap: var(--space-3); }
+  .hs-card__img { aspect-ratio: 4 / 3; border-radius: 6px; }
+  .hs-card__body { padding: 0; gap: 0.25rem; }
+  .hs-card__excerpt, .hs-card .hs-cta { display: none; }
+  .hs-card__title { font-size: 0.92rem; font-weight: 700; }
+  .hs-more { grid-template-columns: 1fr; }
+  .home-layout .gossip-grid {
+    display: flex !important; overflow-x: auto; scroll-snap-type: x mandatory;
+    gap: var(--space-3); padding-bottom: var(--space-2); scrollbar-width: thin;
+  }
+  .home-layout .gossip-grid > .gossip-card { flex: 0 0 82%; scroll-snap-align: start; }
+  .home-layout .gossip-card__image { aspect-ratio: 16 / 9 !important; }
+  .home-layout .hmedia-grid { grid-template-columns: 1fr; }
+  .home-layout .hmedia-grid .hmedia-card:nth-child(n+2) { display: none; }
+  .home-jump__track { padding-inline: var(--space-4); }
+}

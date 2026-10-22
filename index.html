@@ -10,6 +10,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
   <link rel="stylesheet" href="./base.css">
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./home-layout.css">
 </head>
 <body>
 
@@ -56,6 +57,25 @@
   </div>
 </nav>
 
+
+<!-- ===== HOME JUMP BAR ===== -->
+<nav class="home-jump" aria-label="Jump to a section on this page">
+  <div class="home-jump__track">
+    <a href="#news" class="home-jump__link">Top Stories</a>
+    <a href="#gossip" class="home-jump__link">Gossip</a>
+    <a href="#shows" class="home-jump__link">Shows</a>
+    <a href="#homeMedia" class="home-jump__link">Media</a>
+    <a href="#home-rankings" class="home-jump__link">Rankings</a>
+    <a href="#season" class="home-jump__link">Season</a>
+    <a href="#rogue" class="home-jump__link">Rogue</a>
+    <a href="#more-stories" class="home-jump__link">More Stories</a>
+    <a href="#message-board-preview" class="home-jump__link">Message Board</a>
+    <a href="#subscribe" class="home-jump__link">Subscribe</a>
+  </div>
+</nav>
+
+<div class="home-layout">
+<div class="home-main">
 <!-- ===== TOP STORIES ===== -->
 <section class="section" id="news" style="padding-top:var(--space-10);">
   <div class="container">
@@ -531,7 +551,7 @@
 </section>
 
 <!-- ===== GOSSIP & DRAMA ===== -->
-<section class="section" style="padding-bottom:var(--space-12)">
+<section class="section" id="gossip" style="padding-bottom:var(--space-12)">
   <div class="container">
     <div class="section__header">
       <div>
@@ -610,8 +630,9 @@
   </div>
 </section>
 
+<div class="home-media-row">
 <!-- ===== PODCASTS / SHOWS ===== -->
-<section class="section" style="padding-bottom:var(--space-12)">
+<section class="section" id="shows" style="padding-bottom:var(--space-12)">
   <div class="container">
     <div class="section__header">
       <div>
@@ -950,6 +971,24 @@
 })();
 </script>
 
+</div>
+
+<!-- ===== MORE STORIES (filled automatically from Top Stories) ===== -->
+<section class="section" id="more-stories" hidden>
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <h2 class="section__title">More Stories</h2>
+      </div>
+      <a href="./news.html" class="section__link" style="color:#0ea5e9">See All &rarr;</a>
+    </div>
+    <div class="hs-more" id="moreStoriesList"></div>
+  </div>
+</section>
+
+</div>
+
+<aside class="home-side" aria-label="Rankings, events and community">
 <!-- ===== HOME RANKINGS ===== -->
 <style>
   #homeRankingsGrid {
@@ -997,67 +1036,12 @@
   </div>
 </section>
 
-<!-- ===== ROGUE FITNESS ===== -->
-<section class="section" style="padding-bottom:var(--space-12)">
-  <div class="container">
-    <div class="section__header">
-      <div>
-        <div class="section__label" style="color:#d97706">Gear &amp; Events</div>
-        <h2 class="section__title">Rogue Fitness</h2>
-      </div>
-      <a href="./rogue-invitational.html" class="section__link" style="color:#bd4804; position: relative; z-index: 9999; pointer-events: auto;">
-        See All &rarr;
-      </a>
-    </div>
-
-    <div class="rogue-grid rogue-grid--2col fade-in">
-      <a href="https://www.roguefitness.com/invitational" target="_blank" rel="noopener noreferrer" class="rogue-card">
-        <div class="rogue-card__icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-        </div>
-        <div class="rogue-card__label">Event</div>
-        <div class="rogue-card__image">
-          <img src="./assets/img-rogue-invitational.jpg" alt="Rogue Invitational Aberdeen Scotland">
-        </div>
-        <h3 class="rogue-card__title">2026 Rogue Invitational Returns to Scotland</h3>
-        <p class="rogue-card__text">
-          The 8th annual Rogue Invitational heads back to P&amp;J Live in Aberdeen for a third consecutive year, October 23-25.
-        </p>
-      </a>
-
-      <a href="https://www.roguefitness.com/arnold-strongman-classic/events" target="_blank" rel="noopener noreferrer" class="rogue-card">
-        <div class="rogue-card__icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-            <line x1="9" y1="9" x2="9.01" y2="9"/>
-            <line x1="15" y1="9" x2="15.01" y2="9"/>
-          </svg>
-        </div>
-        <div class="rogue-card__label">Just Happened</div>
-        <div class="rogue-card__image">
-          <img src="./assets/thumb-arnold.jpg" alt="Arnold Strongman Classic 2026">
-        </div>
-        <h3 class="rogue-card__title">Arnold Strongman Classic 2026 Recap</h3>
-        <p class="rogue-card__text">
-          The event wrapped March 6-7 in Columbus, Ohio, with the Rogue Elephant Bar Deadlift, Stone to Shoulder, and Ramp Rage finale headlining the weekend.
-        </p>
-      </a>
-    </div>
-  </div>
-</section>
-
 <!-- ===== SEASON INFO ===== -->
-<section class="section" style="padding-bottom:var(--space-12)">
+<section class="section" id="season" style="padding-bottom:var(--space-12)">
   <div class="container">
     <div class="section__header">
       <div>
-        <h2 class="section__title">Season Info</h2>
+        <h2 class="section__title">Season Calendar</h2>
       </div>
       <a href="./season-info.html" class="section__link" style="position: relative; z-index: 9999; pointer-events: auto; text-decoration:none;">
         See All &rarr;
@@ -1108,9 +1092,9 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </a>
-  </div>
-</section>
-
+  
+    <details class="season-extra">
+      <summary>2026 CrossFit Games and Road to the Games</summary>
 <!-- ===== 2026 CROSSFIT GAMES ===== -->
 <section class="section" style="padding-bottom:var(--space-12)">
   <div class="container">
@@ -1163,6 +1147,65 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+    </details>
+  </div>
+</section>
+
+<!-- ===== ROGUE FITNESS ===== -->
+<section class="section" id="rogue" style="padding-bottom:var(--space-12)">
+  <div class="container">
+    <div class="section__header">
+      <div>
+        <div class="section__label" style="color:#d97706">Gear &amp; Events</div>
+        <h2 class="section__title">Rogue Fitness</h2>
+      </div>
+      <a href="./rogue-invitational.html" class="section__link" style="color:#bd4804; position: relative; z-index: 9999; pointer-events: auto;">
+        See All &rarr;
+      </a>
+    </div>
+
+    <div class="rogue-grid rogue-grid--2col fade-in">
+      <a href="https://www.roguefitness.com/invitational" target="_blank" rel="noopener noreferrer" class="rogue-card">
+        <div class="rogue-card__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="rogue-card__label">Event</div>
+        <div class="rogue-card__image">
+          <img src="./assets/img-rogue-invitational.jpg" alt="Rogue Invitational Aberdeen Scotland">
+        </div>
+        <h3 class="rogue-card__title">2026 Rogue Invitational Returns to Scotland</h3>
+        <p class="rogue-card__text">
+          The 8th annual Rogue Invitational heads back to P&amp;J Live in Aberdeen for a third consecutive year, October 23-25.
+        </p>
+      </a>
+
+      <a href="https://www.roguefitness.com/arnold-strongman-classic/events" target="_blank" rel="noopener noreferrer" class="rogue-card">
+        <div class="rogue-card__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+            <line x1="9" y1="9" x2="9.01" y2="9"/>
+            <line x1="15" y1="9" x2="15.01" y2="9"/>
+          </svg>
+        </div>
+        <div class="rogue-card__label">Just Happened</div>
+        <div class="rogue-card__image">
+          <img src="./assets/thumb-arnold.jpg" alt="Arnold Strongman Classic 2026">
+        </div>
+        <h3 class="rogue-card__title">Arnold Strongman Classic 2026 Recap</h3>
+        <p class="rogue-card__text">
+          The event wrapped March 6-7 in Columbus, Ohio, with the Rogue Elephant Bar Deadlift, Stone to Shoulder, and Ramp Rage finale headlining the weekend.
+        </p>
+      </a>
     </div>
   </div>
 </section>
@@ -1224,6 +1267,9 @@
     </div>
   </div>
 </section>
+
+</aside>
+</div>
 
 <!-- ===== FOOTER ===== -->
 <footer class="footer">
@@ -1295,6 +1341,7 @@
 </div>
 
 <script src="./app.js" defer></script>
+<script src="./home-layout.js" defer></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
