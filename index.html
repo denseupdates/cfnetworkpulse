@@ -898,7 +898,7 @@
 
   /* Shows the newest videos from videos.html. To change what appears
      here, add or reorder cards in videos.html. Nothing to edit on this page. */
-  var HOW_MANY = 3;
+  var HOW_MANY = 6;
 
   var section = document.getElementById("homeMedia");
   var grid = document.getElementById("homeMediaGrid");
@@ -1155,57 +1155,50 @@
   </div>
 </section>
 
-<!-- ===== ROGUE FITNESS ===== -->
+<!-- ===== ROGUE INVITATIONAL ===== -->
 <section class="section" id="rogue" style="padding-bottom:var(--space-12)">
   <div class="container">
     <div class="section__header">
       <div>
-        <div class="section__label" style="color:#d97706">Gear &amp; Events</div>
-        <h2 class="section__title">Rogue Fitness</h2>
+        <div class="section__label" style="color:#d97706">Aberdeen, Scotland</div>
+        <h2 class="section__title">Rogue Invitational</h2>
       </div>
       <a href="./rogue-invitational.html" class="section__link" style="color:#bd4804; position: relative; z-index: 9999; pointer-events: auto;">
-        See All &rarr;
+        Event Hub &rarr;
       </a>
     </div>
 
-    <div class="rogue-grid rogue-grid--2col fade-in">
-      <a href="https://www.roguefitness.com/invitational" target="_blank" rel="noopener noreferrer" class="rogue-card">
-        <div class="rogue-card__icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-        </div>
-        <div class="rogue-card__label">Event</div>
-        <div class="rogue-card__image">
-          <img src="./assets/img-rogue-invitational.jpg" alt="Rogue Invitational Aberdeen Scotland">
-        </div>
-        <h3 class="rogue-card__title">2026 Rogue Invitational Returns to Scotland</h3>
-        <p class="rogue-card__text">
-          The 8th annual Rogue Invitational heads back to P&amp;J Live in Aberdeen for a third consecutive year, October 23-25.
-        </p>
-      </a>
+    <a href="./rogue-invitational.html" class="ri-home-hero">
+      <img class="ri-home-hero__logo" src="./assets/rogue-invitational-2026/invitational-logo-white.svg" alt="Rogue Invitational" width="96" height="63">
+      <span class="ri-home-hero__meta">October 23 to 25, 2026<small>P&amp;J Live, Aberdeen</small></span>
+      <span class="ri-home-hero__status" id="riHomeStatus"></span>
+    </a>
 
-      <a href="https://www.roguefitness.com/arnold-strongman-classic/events" target="_blank" rel="noopener noreferrer" class="rogue-card">
-        <div class="rogue-card__icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-            <line x1="9" y1="9" x2="9.01" y2="9"/>
-            <line x1="15" y1="9" x2="15.01" y2="9"/>
-          </svg>
-        </div>
-        <div class="rogue-card__label">Just Happened</div>
-        <div class="rogue-card__image">
-          <img src="./assets/thumb-arnold.jpg" alt="Arnold Strongman Classic 2026">
-        </div>
-        <h3 class="rogue-card__title">Arnold Strongman Classic 2026 Recap</h3>
-        <p class="rogue-card__text">
-          The event wrapped March 6-7 in Columbus, Ohio, with the Rogue Elephant Bar Deadlift, Stone to Shoulder, and Ramp Rage finale headlining the weekend.
-        </p>
-      </a>
+    <ul class="ri-home-stats">
+      <li><b>9</b><span>Events</span></li>
+      <li><b>19</b><span>Men</span></li>
+      <li><b>20</b><span>Women</span></li>
+    </ul>
+
+    <ul class="ri-home-days">
+      <li>
+        <div><b>Friday</b><span>Events 1 to 3 &bull; starts <time class="ri-home-time" data-utc="2026-10-23T10:00:00Z">5:00 AM CDT</time></span></div>
+        <a href="https://www.youtube.com/watch?v=arbEk52Rqjc" target="_blank" rel="noopener noreferrer">Watch</a>
+      </li>
+      <li>
+        <div><b>Saturday</b><span>Events 4 to 6 &bull; starts <time class="ri-home-time" data-utc="2026-10-24T10:00:00Z">5:00 AM CDT</time></span></div>
+        <a href="https://www.youtube.com/watch?v=H0BCVzOosfE" target="_blank" rel="noopener noreferrer">Watch</a>
+      </li>
+      <li>
+        <div><b>Sunday</b><span>Events 7 to 9 &bull; starts <time class="ri-home-time" data-utc="2026-10-25T10:30:00Z">5:30 AM CDT</time></span></div>
+        <a href="https://www.youtube.com/watch?v=L6IsqcwLg0s" target="_blank" rel="noopener noreferrer">Watch</a>
+      </li>
+    </ul>
+
+    <div class="ri-home-links">
+      <a href="./rogue-invitational.html#leaderboard" class="ri-home-btn">Live Leaderboard</a>
+      <a href="./rogue-invitational.html#schedule">Event Times</a>
+      <a href="./rogue-invitational.html#workouts">Workouts</a>
     </div>
   </div>
 </section>

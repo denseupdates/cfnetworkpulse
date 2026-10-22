@@ -112,6 +112,33 @@
     });
   }
 
+  /* Rogue Invitational box: live status and start times in the visitor's time zone */
+  function rogueBox() {
+    document.querySelectorAll(".ri-home-time[data-utc]").forEach(function (t) {
+      var d = new Date(t.getAttribute("data-utc"));
+      if (isNaN(d)) return;
+      t.textContent = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZoneName: "short" });
+    });
+    var st = document.getElementById("riHomeStatus");
+    if (!st) return;
+    var START = Date.parse("2026-10-23T10:00:00Z"), END = Date.parse("2026-10-25T14:45:00Z");
+    function tick() {
+      var now = Date.now();
+      st.classList.remove("is-live");
+      if (now < START) {
+        var ms = START - now, d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5), m = Math.floor(ms % 36e5 / 6e4);
+        st.textContent = "Starts in " + (d ? d + "d " : "") + h + "h " + m + "m";
+      } else if (now < END) {
+        st.textContent = "Live now";
+        st.classList.add("is-live");
+      } else {
+        st.textContent = "Final results on the event hub";
+      }
+    }
+    tick();
+    setInterval(tick, 60000);
+  }
+
   function jumpOffset() {
     var h = document.getElementById("header");
     if (h) document.documentElement.style.setProperty("--hj-top", h.offsetHeight + "px");
@@ -120,6 +147,7 @@
   function init() {
     try { buildStories(); } catch (e) { console.warn("home layout: stories", e); }
     try { gossipLinks(); } catch (e) { console.warn("home layout: gossip", e); }
+    try { rogueBox(); } catch (e) { console.warn("home layout: rogue", e); }
     jumpOffset();
     window.addEventListener("resize", jumpOffset);
   }
