@@ -48,6 +48,9 @@ const commits = commitsRaw.map(line => {
   const [hash, ...rest] = line.split(" ");
   return { hash, when: rest.join(" ") };
 });
+// Also read the current files, so stories dated this month but published
+// after month end (late recaps) are still picked up. Dates come from the card.
+commits.unshift({ hash: "HEAD", when: git(`log -1 --format=%ai HEAD`).trim() });
 
 // ---- walk each commit, parse out every card by slug ----
 const articles = new Map();   // slug -> { ...best record so far }
@@ -66,6 +69,13 @@ function parseDate(str) {
   return `${m[3]}-${months[m[1].slice(0,3).toLowerCase()]}-${String(+m[2]).padStart(2,"0")}`;
 }
 
+function firstAddedDate(slug, path) {
+  try {
+    const out = git(`log --reverse --format=%as -S"id=\\"${slug}\\"" -- ${path}`).trim().split("\n")[0];
+    return out || null;
+  } catch { return null; }
+}
+
 function stripTags(s) {
   return (s || "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 }
@@ -76,7 +86,7 @@ function pick(html, re) {
 }
 
 // ---- news.html: <div id="slug" class="card card--article ..."> ----
-const CARD_OPEN = /<div\s+id="([^"]+)"\s+class="card card--article[^"]*"[^>]*>/gi;
+const CARD_OPEN = /<(div|article)\s+id="([^"]+)"\s+class="card card--article[^"]*"[^>]*>/gi;
 
 function extractArticleBlocks(html) {
   const out = [];
@@ -84,11 +94,12 @@ function extractArticleBlocks(html) {
   let m;
   CARD_OPEN.lastIndex = 0;
   while ((m = CARD_OPEN.exec(html)) !== null) {
-    const slug = m[1];
+    const tagName = m[1].toLowerCase();
+    const slug = m[2];
     const start = m.index;
-    // Walk forward, counting <div> depth, to find the matching </div>.
+    // Walk forward, counting tag depth, to find the matching close tag.
     let depth = 1;
-    const tagRe = /<\/?div\b[^>]*>/gi;
+    const tagRe = new RegExp(`<\\/?${tagName}\\b[^>]*>`, "gi");
     tagRe.lastIndex = m.index + m[0].length;
     let end = -1, t;
     while ((t = tagRe.exec(html)) !== null) {
@@ -103,6 +114,8 @@ function extractArticleBlocks(html) {
 
 // ---- gossip.html: <a href="./gossip.html#slug" class="gossip-card"> ... </a> ----
 const GOSSIP_OPEN = /<a\s+href="\.?\/?gossip\.html#([^"]+)"\s+class="gossip-card"[^>]*>/gi;
+// Current gossip.html: <div id="slug" class="gossip-card" ...> ... </div>
+const GOSSIP_DIV_OPEN = /<div\s+id="([^"]+)"\s+class="gossip-card"[^>]*>/gi;
 
 function extractGossipBlocks(html) {
   const out = [];
@@ -116,6 +129,19 @@ function extractGossipBlocks(html) {
     const closeIdx = html.indexOf("</a>", m.index + m[0].length);
     if (closeIdx < 0) continue;
     out.push({ slug, block: html.slice(start, closeIdx + 4) });
+  }
+  GOSSIP_DIV_OPEN.lastIndex = 0;
+  while ((m = GOSSIP_DIV_OPEN.exec(html)) !== null) {
+    const slug = m[1];
+    let depth = 1, end = -1, t;
+    const tagRe = /<\/?div\b[^>]*>/gi;
+    tagRe.lastIndex = m.index + m[0].length;
+    while ((t = tagRe.exec(html)) !== null) {
+      if (t[0].startsWith("</")) { depth--; if (depth === 0) { end = t.index + t[0].length; break; } }
+      else depth++;
+    }
+    if (end < 0) continue;
+    out.push({ slug, block: html.slice(m.index, end) });
   }
   return out;
 }
@@ -153,7 +179,9 @@ function parseGossipBlock(slug, block, commitDate) {
     image_alt: title,
     canonical_url: `${SITE}/gossip.html#${slug}`,
     source_page: "gossip.html",
-    published_at: commitDate, // gossip.html doesn't carry a per-card date; use commit date
+    // gossip.html has no per-card date; use the commit that first added the card,
+    // so cards carried over from last month are not counted again.
+    published_at: firstAddedDate(slug, "gossip.html") || commitDate,
   };
 }
 
@@ -217,7 +245,7 @@ for (const [slug, rec] of gossips) {
 
 all.sort((a, b) => (b.published_at || "").localeCompare(a.published_at || ""));
 
-console.log(`\nMerged ${all.length} unique May 2026 items:`);
+console.log(`\nMerged ${all.length} unique ${MONTH} items:`);
 for (const r of all) {
   console.log(`  ${r.published_at}  [${r.category.padEnd(14)}]  ${r.slug}  \u2014 ${r.title?.slice(0, 60) || "(no title)"}`);
 }
